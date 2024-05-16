@@ -25,6 +25,6 @@
         <Button fx:id="homeButton" text="Home" styleClass="nav-button" onAction="#navigateToHome" />
         <Button fx:id="projectsButton" text="Projects" styleClass="nav-button" onAction="#navigateToProjects"/>
         <Button fx:id="fundsButton" text="Funds" styleClass="nav-button" onAction="#navigateToFunds" />
-        <Button fx:id="syncButton" text="Save Data" styleClass="nav-button" onAction="#saveData" />
+        <!-- <Button fx:id="syncButton" text="Save Data" styleClass="nav-button" onAction="#saveData" /> -->
     </VBox>
 </HBox>

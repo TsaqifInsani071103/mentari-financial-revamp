@@ -1,0 +1,119 @@
+/* all views share the same stylesheet btw  */
+
+.icon-button {
+  -fx-background-color: transparent;
+  -fx-padding: 0;
+  -fx-border-width: 0;
+}
+
+.nav-bar {
+  -fx-background-color: #2c3e50;
+  -fx-padding: 15px;
+  -fx-alignment: center;
+}
+
+.project-button {
+  -fx-background-color: #34495e;
+  -fx-text-fill: white;
+  -fx-padding: 20px; /* Adjust the padding as needed */
+  -fx-pref-width: 150px;
+}
+
+.nav-button {
+  -fx-background-color: #34495e;
+  -fx-text-fill: white;
+  -fx-pref-width: 150px;
+}
+
+.nav-button:hover {
+  -fx-background-color: #2c3e50;
+}
+
+.content-area {
+  -fx-padding: 20px;
+  -fx-hgap: 10px;
+  -fx-vgap: 10px;
+  -fx-background-color: #1c525f;
+}
+
+.home-scroll {
+  -fx-background-color: green;
+}
+.home-grid {
+  -fx-background-color: #1c525f;
+}
+
+.content-area > Label {
+  -fx-background-color: #bdc3c7;
+  -fx-alignment: center;
+  -fx-padding: 10px;
+  -fx-text-fill: #2c3e50;
+  -fx-font-size: 14px;
+}
+
+.tree-cell:selected,
+.tree-cell:focused {
+  -fx-background-color: #bdc3c7; /* Adjust this to match your TreeView's background */
+  -fx-text-fill: -fx-text-inner-color; /* Adjust text color if needed */
+}
+
+.content-area-label {
+  -fx-background-color: #bdc3c7;
+  -fx-alignment: center;
+  -fx-padding: 10px;
+  -fx-text-fill: #2c3e50;
+  -fx-font-size: 14px;
+}
+
+.hbox-style {
+  -fx-background-color: #34495e;
+  -fx-border-color: #ecf0f1;
+  -fx-border-width: 2;
+  -fx-padding: 10px;
+  -fx-spacing: 10px;
+}
+
+.text-field {
+  -fx-background-color: transparent;
+  -fx-background-insets: 0;
+  -fx-text-fill: black;
+  -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
+
+.black-underline {
+  -fx-border-color: transparent transparent black transparent;
+  -fx-border-width: 0 0 1 0;
+}
+
+.red-underline {
+  -fx-border-color: transparent transparent red transparent;
+  -fx-border-width: 0 0 1 0;
+}
+
+/* .text-field:focused {
+  -fx-border-color: #bdc3c7;
+} */
+
+.scroll-pane {
+  -fx-background-color: #ecf0f1;
+  -fx-padding: 10px;
+}
+.region {
+  -fx-background-color: #bdc3c7;
+}
+
+.title-label {
+  -fx-font-size: 18px;
+  -fx-text-fill: #2c3e50;
+  -fx-font-weight: bold;
+}
+.header-label {
+  -fx-font-size: 16px;
+  -fx-text-fill: #34495e;
+}
+
+.grid-pane {
+  -fx-background-color: #ecf0f1;
+  -fx-hgap: 10px;
+  -fx-vgap: 10px;
+}

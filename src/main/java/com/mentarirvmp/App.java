@@ -24,11 +24,11 @@ public class App extends Application {
         loadApp(stage);
     }
 
-        private static void loadApp(Stage stage) throws IOException{
+    private static void loadApp(Stage stage) throws IOException{
         FXMLLoader loader = getLoaderFXML("mainLayout"); 
         Parent newView = loader.load(); 
         scene = new Scene(newView, 1080, 1080);
-        // scene.getStylesheets().add(getCssString("firstStyle.css"));
+        scene.getStylesheets().add(getCssString("firstStyle.css"));
         stage.setScene(scene);
         stage.setMaximized(true); 
         stage.show();
@@ -36,7 +36,13 @@ public class App extends Application {
         MainLayoutController controller = loader.getController(); 
         controller.setStage(stage);
         controller.navigateToHome(); 
-    } 
+    }   
+
+
+    public static String getCssString(String cssName){
+        String cssPath = "/com/mentari/styles/" + cssName; 
+        return App.class.getResource(cssPath).toExternalForm(); 
+    }
 
 
     public static void setRoot(String fxml) throws IOException {
