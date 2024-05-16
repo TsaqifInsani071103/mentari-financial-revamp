@@ -40,7 +40,7 @@ public class App extends Application {
 
 
     public static String getCssString(String cssName){
-        String cssPath = "/com/mentari/styles/" + cssName; 
+        String cssPath = "/com/mentarirvmp/styles/" + cssName; 
         return App.class.getResource(cssPath).toExternalForm(); 
     }
 
