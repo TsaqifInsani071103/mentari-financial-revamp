@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<!-- 
+<BorderPane fx:id="mainBorderPane" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mentari.controllers.MainLayoutController">
+    <left>
+        <VBox styleClass="nav-bar" spacing="20">
+            <Button fx:id="homeButton" text="Home" styleClass="nav-button" onAction="#navigateToHome" />
+            <Button fx:id="projectsButton" text="Projects" styleClass="nav-button" onAction="#navigateToProjects"/>
+            <Button fx:id="fundsButton" text="Funds" styleClass="nav-button" onAction="#navigateToFunds" />
+            <Button fx:id="syncButton" text="Save Data" styleClass="nav-button" onAction="#saveData" />
+        </VBox>
+    </left>
+    <center>
+
+    </center>
+</BorderPane> -->
+
+<HBox fx:id="mainBox" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mentarirvmp.controllers.MainLayoutController"> 
+    <VBox styleClass="nav-bar" spacing="20">
+        <Button fx:id="homeButton" text="Home" styleClass="nav-button" onAction="#navigateToHome" />
+        <Button fx:id="projectsButton" text="Projects" styleClass="nav-button" onAction="#navigateToProjects"/>
+        <Button fx:id="fundsButton" text="Funds" styleClass="nav-button" onAction="#navigateToFunds" />
+        <Button fx:id="syncButton" text="Save Data" styleClass="nav-button" onAction="#saveData" />
+    </VBox>
+</HBox>
