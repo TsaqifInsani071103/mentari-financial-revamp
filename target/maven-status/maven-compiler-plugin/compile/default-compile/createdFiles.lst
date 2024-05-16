@@ -1,4 +1,5 @@
 module-info.class
+com/mentarirvmp/calculator/Calculator.class
 com/mentarirvmp/App.class
 com/mentarirvmp/SecondaryController.class
 com/mentarirvmp/PrimaryController.class
