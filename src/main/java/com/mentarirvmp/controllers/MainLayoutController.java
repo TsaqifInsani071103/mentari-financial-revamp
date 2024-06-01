@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class MainLayoutController {
 
-  private String fxmlPath = "/com/mentari/"; 
+  private String fxmlPath = "/com/mentarirvmp/"; 
   // private Model database; 
   private Stage stage; 
 
