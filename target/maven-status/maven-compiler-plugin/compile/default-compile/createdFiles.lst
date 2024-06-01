@@ -3,4 +3,5 @@ module-info.class
 com/mentarirvmp/calculator/Calculator.class
 com/mentarirvmp/App.class
 com/mentarirvmp/utils/LoaderHelper.class
+com/mentarirvmp/controllers/ProjectViewController.class
 com/mentarirvmp/controllers/MainLayoutController.class
