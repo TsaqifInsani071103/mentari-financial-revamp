@@ -1,5 +1,9 @@
 /* all views share the same stylesheet btw  */
 
+/* .root {
+  font-family: "Courier New", Courier, monospace;
+} */
+
 .icon-button {
   -fx-background-color: transparent;
   -fx-padding: 0;
