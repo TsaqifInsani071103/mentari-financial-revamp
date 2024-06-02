@@ -1,8 +1,0 @@
-com/mentarirvmp/utils/Project.class
-com/mentarirvmp/utils/ChildControllers.class
-module-info.class
-com/mentarirvmp/App.class
-com/mentarirvmp/utils/LoaderHelper.class
-com/mentarirvmp/controllers/HomeViewController.class
-com/mentarirvmp/controllers/ProjectViewController.class
-com/mentarirvmp/controllers/MainLayoutController.class
