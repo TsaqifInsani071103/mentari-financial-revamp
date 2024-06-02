@@ -1,0 +1,4 @@
+--patch-module
+com.mentarirvmp=_
+--add-reads
+com.mentarirvmp=ALL-UNNAMED
