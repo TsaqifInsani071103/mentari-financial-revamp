@@ -1,5 +1,7 @@
 package com.mentarirvmp.utils;
 
+import java.util.ArrayList;
+
 //since expenses is just one line of data entry, I think its fine to inject associated statement into this? 
 
 //but hide away the operations of Statement from this class. 
@@ -9,11 +11,13 @@ package com.mentarirvmp.utils;
 public class Expenses {
   private String name; 
   private String description; 
-
-
+  public static int uniqueCounter = 0; 
+  private int id; 
+  private ArrayList<Expenses> childArray = new ArrayList<Expenses>();  
 
   public Expenses(String name){
     this.name = name; 
+    this.id = uniqueCounter++; 
   } 
 
   public String getName(){
@@ -23,6 +27,12 @@ public class Expenses {
   public void setName(String newName){
     this.name = newName; 
   }
+
+  public int getId(){
+    return this.id; 
+  } 
+
+  
 }
 
 //Expense objects will have nested children baye.
