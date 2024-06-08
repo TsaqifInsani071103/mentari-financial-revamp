@@ -4,15 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
+//REMEMBER THAT IN JUNIT, EACH TEST METHOD S RUNS IN ITS OWN INSTANCE OF THE TEST CLASS, 
+//basically every method insantiates the class, making its own scope basically. 
 public class ExpensesTest {
   private String dummyName = "Testing"; 
   private int dummyId = 0; 
-  private Expenses dummyExpense; 
+  private Expenses dummyExpense = new Expenses(this.dummyName); 
 
-  @BeforeEach 
-  public void setUp(){
-    this.dummyExpense = new Expenses(this.dummyName); 
-  } 
 
   @Test
   public void getExpenseName(){
@@ -29,12 +27,18 @@ public class ExpensesTest {
   @Test 
   public void getId(){
     assertEquals(this.dummyId, dummyExpense.getId());
+    System.out.println(dummyExpense.getName());
   } 
 
   @Test 
   public void uniqueCounterIncremented(){
     //tests that the unique counter increases after every expense initialization. 
-    assertEquals(1, dummyExpense.getId()); 
+    int oldCounter = Expenses.uniqueCounter;
+    Expenses newExpense = new Expenses("testExpense"); 
+    int newCounter = Expenses.uniqueCounter; 
+    assertEquals(oldCounter + 1, newCounter); 
   } 
+
+
   
 }

@@ -17,7 +17,8 @@ public class Expenses {
 
   public Expenses(String name){
     this.name = name; 
-    this.id = uniqueCounter++; 
+    this.id = uniqueCounter; 
+    uniqueCounter++; 
   } 
 
   public String getName(){
