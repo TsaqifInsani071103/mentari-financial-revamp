@@ -15,9 +15,10 @@ public class Expenses {
   private int id; 
   private ArrayList<Expenses> childArray = new ArrayList<Expenses>();  
 
-  public Expenses(String name){
+  public Expenses(String name, String description){
     this.name = name; 
     this.id = uniqueCounter; 
+    this.description = description;
     uniqueCounter++; 
   } 
 
@@ -29,11 +30,19 @@ public class Expenses {
     this.name = newName; 
   }
 
+  public String getDescription(){
+    return this.description; 
+  } 
+
+  public void setDescription(String newDescription){
+    this.description = newDescription; 
+  }
+
+
   public int getId(){
     return this.id; 
   } 
 
-  
 }
 
 //Expense objects will have nested children baye.

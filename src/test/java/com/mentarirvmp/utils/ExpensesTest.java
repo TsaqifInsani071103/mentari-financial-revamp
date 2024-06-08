@@ -6,11 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //REMEMBER THAT IN JUNIT, EACH TEST METHOD S RUNS IN ITS OWN INSTANCE OF THE TEST CLASS, 
 //basically every method insantiates the class, making its own scope basically. 
+//also the test methods are ran at random so its not chronological to ensure that no method tests depend on one another, that they are independent. 
 public class ExpensesTest {
   private String dummyName = "Testing"; 
-  private int dummyId = 0; 
-  private Expenses dummyExpense = new Expenses(this.dummyName); 
+  private String dummyDescription = "dummy"; 
+  private Expenses dummyExpense = new Expenses(this.dummyName, dummyDescription); 
 
+  //I think its best if you learn how to make mock objects so you can test it better. 
 
   @Test
   public void getExpenseName(){
@@ -18,23 +20,40 @@ public class ExpensesTest {
   } 
 
   @Test 
-  public void setExpenseName(){
+  public void setNameTest(){
     String newName = "testing2"; 
     this.dummyExpense.setName(newName);
     assertEquals(newName, this.dummyExpense.getName()); 
   } 
 
+
+  @Test
+  public void getIdReturnsInteger() {
+    int id = this.dummyExpense.getId(); 
+    assertTrue(id >= 0); 
+  }
+
+  //testing that each expense have unique Id's 
+  @Test
+  public void uniqueCounterIncremented() {
+    Expenses firstExpense = new Expenses("First", "");
+    Expenses secondExpense = new Expenses("Second", "");
+    Expenses thirdExpense = new Expenses("Third", "");
+
+    assertEquals(firstExpense.getId() + 1, secondExpense.getId());
+    assertEquals(secondExpense.getId() + 1, thirdExpense.getId());
+  }
+
   @Test 
-  public void getId(){
-    assertEquals(this.dummyId, dummyExpense.getId());
-    System.out.println(dummyExpense.getName());
+  public void getDescriptionTest(){
+    assertEquals(this.dummyDescription, this.dummyExpense.getDescription()); 
   } 
 
   @Test 
-  public void uniqueCounterIncremented(){
-    //tests that the unique counter increases after every expense initialization. 
-    Expenses newExpense = new Expenses("testExpense"); 
-    assertEquals(newExpense.getId(), Expenses.uniqueCounter - 1); 
+  public void setDescriptionTest(){
+    this.dummyExpense.setDescription("newDescription");
+    //showing that we've changed the initial description 
+    assertNotEquals(this.dummyExpense.getDescription(), this.dummyDescription);
   } 
 
 
