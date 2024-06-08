@@ -33,10 +33,8 @@ public class ExpensesTest {
   @Test 
   public void uniqueCounterIncremented(){
     //tests that the unique counter increases after every expense initialization. 
-    int oldCounter = Expenses.uniqueCounter;
     Expenses newExpense = new Expenses("testExpense"); 
-    int newCounter = Expenses.uniqueCounter; 
-    assertEquals(oldCounter + 1, newCounter); 
+    assertEquals(newExpense.getId(), Expenses.uniqueCounter - 1); 
   } 
 
 
