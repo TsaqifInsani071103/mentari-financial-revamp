@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 //REMEMBER THAT IN JUNIT, EACH TEST METHOD S RUNS IN ITS OWN INSTANCE OF THE TEST CLASS, 
 //basically every method insantiates the class, making its own scope basically. 
 //also the test methods are ran at random so its not chronological to ensure that no method tests depend on one another, that they are independent. 
+
+//this class was good for TDD practice but I don't think all the unit tests here are important except for the uniqueCounterIncremented method. 
 public class ExpensesTest {
   private String dummyName = "Testing"; 
   private Expenses dummyExpense = new Expenses(this.dummyName); 
