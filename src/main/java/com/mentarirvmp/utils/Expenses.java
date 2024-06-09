@@ -10,15 +10,15 @@ import java.util.ArrayList;
 
 public class Expenses {
   private String name; 
-  private String description; 
+  private String description = ""; 
+  private String value = ""; 
   public static int uniqueCounter = 0; 
   private int id; 
   private ArrayList<Expenses> childArray = new ArrayList<Expenses>();  
 
-  public Expenses(String name, String description){
+  public Expenses(String name){
     this.name = name; 
     this.id = uniqueCounter; 
-    this.description = description;
     uniqueCounter++; 
   } 
 
@@ -28,6 +28,14 @@ public class Expenses {
 
   public void setName(String newName){
     this.name = newName; 
+  }
+
+  public String getValue(){
+    return this.value; 
+  }
+
+  public void setValue(String newValue){
+    this.value = newValue; 
   }
 
   public String getDescription(){
