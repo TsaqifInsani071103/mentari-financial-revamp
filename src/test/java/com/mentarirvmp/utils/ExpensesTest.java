@@ -69,6 +69,14 @@ public class ExpensesTest {
     assertEquals(dummyValue, dummyExpense.getValue());
   } 
 
+  @Test 
+  public void addChildTest(){
+    String newName = "childOne"; 
+    Expenses dummyChild = new Expenses(newName);
+    this.dummyExpense.addChild(dummyChild);
+    assertEquals(newName, this.dummyExpense.getChildArray().get(0).getName());
+  } 
+
 
   
 }

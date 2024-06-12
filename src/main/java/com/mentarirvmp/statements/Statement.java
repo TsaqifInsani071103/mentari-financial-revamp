@@ -29,5 +29,9 @@ public class Statement {
 
   //We can have a handler class the acts as a middle man between Statement and Expenses "POJO"s such that it holds reference to the Statement using it and then also manipulating the Expense POJOs non-destructively and whatnot. 
 
+  //if we're traversing the expenses by name we could just use a hashmap btw. 
+
+  
+
 
 }

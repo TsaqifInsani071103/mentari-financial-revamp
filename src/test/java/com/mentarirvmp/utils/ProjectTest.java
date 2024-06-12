@@ -1,7 +1,7 @@
 package com.mentarirvmp.utils;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import com.mentarirvmp.utils.Project; 
+
 
 public class ProjectTest {
 

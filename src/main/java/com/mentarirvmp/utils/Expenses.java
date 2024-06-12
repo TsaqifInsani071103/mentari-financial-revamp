@@ -51,6 +51,16 @@ public class Expenses {
     return this.id; 
   } 
 
+  //since this is a POJO and not a like a singular data type we can still include things like addChild and removeChild that is tightly related to this here. 
+  public void addChild(Expenses newChild){
+    this.childArray.add(newChild); 
+  } 
+
+  public ArrayList<Expenses> getChildArray(){
+    return this.childArray; 
+  } 
+
+
 }
 
 //Expense objects will have nested children baye.
