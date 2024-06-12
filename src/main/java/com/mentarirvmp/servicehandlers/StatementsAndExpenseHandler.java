@@ -10,6 +10,7 @@ public class StatementsAndExpenseHandler {
   //potential things this could do 
   //updateFormulas()
   //findExpenseByName() using while loop and not recursion hopefully 
+  //findExpenseById() I think is better. 
 
   //we also need to make FormulaObject so I could test this correctly. 
   

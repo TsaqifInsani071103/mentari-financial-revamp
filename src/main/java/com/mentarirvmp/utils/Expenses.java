@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 // since Statement and Expenses should just be POJO classes that means I'm going to have to make a service class to define how Statement.java and Expenses interact. 
 
+//I think I could make the formula object to act like a static class that's juggled by the Statements and Expense Handler Test.java. 
+
 public class Expenses {
   private String name; 
   private String description = ""; 
