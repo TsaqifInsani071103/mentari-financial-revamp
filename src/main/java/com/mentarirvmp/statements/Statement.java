@@ -6,7 +6,9 @@ public class Statement {
 
   //If I want the expense class to just be a single class I don't think I would need an expenseCounter like I did with the original codebase. 
   private String statementName; 
+  //
   private ArrayList<Expenses> expenseArrayList = new ArrayList<Expenses>(); //these are top level sibling expenses 
+  //but remember we need a default root expense so we could make nestable expense files and whatnot. 
 
   // private transient IndivProjectViewController projectViewController; for generating view purposes maybe, or I could just extract this into its own class instead. 
 
@@ -31,7 +33,7 @@ public class Statement {
 
   //if we're traversing the expenses by name we could just use a hashmap btw. 
 
-  
+
 
 
 }

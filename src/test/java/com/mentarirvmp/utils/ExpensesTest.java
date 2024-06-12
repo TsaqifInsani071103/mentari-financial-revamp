@@ -77,6 +77,7 @@ public class ExpensesTest {
     assertEquals(newName, this.dummyExpense.getChildArray().get(0).getName());
   } 
 
+  
 
   
 }
