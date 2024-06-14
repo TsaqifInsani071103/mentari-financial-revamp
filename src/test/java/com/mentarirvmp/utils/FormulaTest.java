@@ -20,10 +20,11 @@ public class FormulaTest {
 
     //testing that if the Formula doesn't have the parantheses(), it should return with "invalid" 
     assertEquals(new Formula("d").getEmptyFormula(), "invalid");
-
-    //testing that if there are nested formulas we would catch that too 
-    // assertEquals(new Formula());
-    
   }
+
+  @Test 
+  public void getContentInsideFormula(){
+    
+  } 
 
 }
