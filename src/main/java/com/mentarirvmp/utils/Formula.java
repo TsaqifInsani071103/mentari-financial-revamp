@@ -11,30 +11,33 @@ import java.math.BigDecimal;
 
 public class Formula {
   private String formula = ""; 
+  int openParanthesisIndex;
+  int closeParanthesisIndex;
   
   public Formula(String initialFormula){
     this.formula = initialFormula; 
+    refreshParanthesesIndex();
   } 
 
   public String getFormula(){
     return this.formula; 
   } 
+  
+  // public String getContentInsideFormula(){
+
+  // } 
 
   public String getEmptyFormula(){
     //we assume that all formulas has () for it to be a valid formula 
-    int startIndex = this.formula.indexOf('(');
-    int endIndex = this.formula.indexOf(')', startIndex);
-    if(validFormulaFormat(startIndex,endIndex)){
-      String emptyFormula = parseIntoEmptyFormula(startIndex, endIndex); 
+    if(validFormulaFormat()){
+      String emptyFormula = parseIntoEmptyFormula(); 
       return isRecognizedFormula(emptyFormula)? emptyFormula : "unrecognizedFormula";
     }
     return "invalid";
   } 
 
-  private boolean validFormulaFormat(int startIndex, int endIndex){
-    startIndex = this.formula.indexOf('(');
-    endIndex = this.formula.indexOf(')', startIndex);
-    if((startIndex != -1 && endIndex !=-1)) return true; 
+  private boolean validFormulaFormat(){
+    if((this.openParanthesisIndex != -1 && this.closeParanthesisIndex !=-1)) return true; 
     return false; 
   } 
 
@@ -48,9 +51,14 @@ public class Formula {
   } 
 
 
-  private String parseIntoEmptyFormula(int startIndex, int endIndex){
-    String emptyString = formula.substring(0, startIndex + 1) + formula.substring(endIndex); 
+  private String parseIntoEmptyFormula(){
+    String emptyString = formula.substring(0, this.openParanthesisIndex+ 1) + formula.substring(this.closeParanthesisIndex); 
       return emptyString;
   } 
+
+  private void refreshParanthesesIndex(){
+    this.openParanthesisIndex = this.formula.indexOf('('); 
+    this.closeParanthesisIndex = this.formula.indexOf(')', this.openParanthesisIndex);
+  }
 
 }

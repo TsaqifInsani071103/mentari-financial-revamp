@@ -22,7 +22,7 @@ public class FormulaTest {
     assertEquals("invalid", new Formula("d").getEmptyFormula());
 
     //testing that if the Formula isn't a recognized formula, it should also return invalid 
-    assertEquals("unrecognizedFormula", new Formula("=MULTIPLY()").getEmptyFormula());
+    assertEquals("unrecognizedFormula", new Formula("=DOODLE()").getEmptyFormula());
   }
 
   @Test 
