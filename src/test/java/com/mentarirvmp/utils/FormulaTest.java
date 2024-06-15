@@ -27,6 +27,12 @@ public class FormulaTest {
 
   @Test 
   public void getContentInsideFormula(){
+    //get content if the formula is recognized 
+    String dummyContent = "E10, E2, E3";
+    String dummyFormula = "=SUM(" + dummyContent+ ")";
+    assertEquals("E10, E2, E3", new Formula(dummyFormula).getContentInsideFormula());
+
+    //now check content if the formula is not recognized. 
     
   } 
 

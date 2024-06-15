@@ -19,13 +19,20 @@ public class Formula {
     refreshParanthesesIndex();
   } 
 
+  private void refreshParanthesesIndex(){
+    this.openParanthesisIndex = this.formula.indexOf('('); 
+    this.closeParanthesisIndex = this.formula.indexOf(')', this.openParanthesisIndex);
+  }
+
+
   public String getFormula(){
     return this.formula; 
   } 
   
-  // public String getContentInsideFormula(){
-
-  // } 
+  public String getContentInsideFormula(){
+    String contentInsideFormula = this.formula.substring(this.openParanthesisIndex + 1, closeParanthesisIndex); 
+    return contentInsideFormula;
+  } 
 
   public String getEmptyFormula(){
     //we assume that all formulas has () for it to be a valid formula 
@@ -41,6 +48,11 @@ public class Formula {
     return false; 
   } 
 
+  private String parseIntoEmptyFormula(){
+    String emptyString = formula.substring(0, this.openParanthesisIndex+ 1) + formula.substring(this.closeParanthesisIndex); 
+    return emptyString;
+  } 
+
   private boolean isRecognizedFormula(String emptyFormula){
     switch(this.formula){
       case "=SUM()":
@@ -50,15 +62,5 @@ public class Formula {
     }
   } 
 
-
-  private String parseIntoEmptyFormula(){
-    String emptyString = formula.substring(0, this.openParanthesisIndex+ 1) + formula.substring(this.closeParanthesisIndex); 
-      return emptyString;
-  } 
-
-  private void refreshParanthesesIndex(){
-    this.openParanthesisIndex = this.formula.indexOf('('); 
-    this.closeParanthesisIndex = this.formula.indexOf(')', this.openParanthesisIndex);
-  }
 
 }
