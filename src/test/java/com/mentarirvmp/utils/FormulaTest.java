@@ -16,10 +16,13 @@ public class FormulaTest {
   @Test 
   public void getEmptyFormula(){
     //testing that the default =SUM() formula emptied out is still =SUM() 
-    assertEquals(dummyFormulaObject.getEmptyFormula(), dummyFormulaString);
+    assertEquals(dummyFormulaString, dummyFormulaObject.getEmptyFormula());
 
     //testing that if the Formula doesn't have the parantheses(), it should return with "invalid" 
-    assertEquals(new Formula("d").getEmptyFormula(), "invalid");
+    assertEquals("invalid", new Formula("d").getEmptyFormula());
+
+    //testing that if the Formula isn't a recognized formula, it should also return invalid 
+    assertEquals("unrecognizedFormula", new Formula("=MULTIPLY()").getEmptyFormula());
   }
 
   @Test 
