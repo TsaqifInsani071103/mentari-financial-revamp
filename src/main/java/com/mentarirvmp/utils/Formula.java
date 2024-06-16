@@ -8,11 +8,14 @@ import java.util.stream.Collectors;
 // import com.mentari.statements.Statement;
 // import com.mentari.utils.InputHandler;
 import java.math.BigDecimal; 
+import java.util.HashMap;
 
 public class Formula {
   private String formula = ""; 
-  int openParanthesisIndex;
-  int closeParanthesisIndex;
+  private int openParanthesisIndex;
+  private int closeParanthesisIndex;
+  private String INVALID = "invalid";
+  private String UNRECOGNIZED = "unrecognizedFormula"; 
   
   public Formula(String initialFormula){
     this.formula = initialFormula; 
@@ -28,19 +31,31 @@ public class Formula {
   public String getFormula(){
     return this.formula; 
   } 
-  
-  public String getContentInsideFormula(){
-    String contentInsideFormula = this.formula.substring(this.openParanthesisIndex + 1, closeParanthesisIndex); 
-    return contentInsideFormula;
+
+  //this formula will get the empty formula as well as the content inside of the formula
+  public HashMap<String, String> getEmptyFormulaAndContent(){
+    HashMap<String, String> formulaSynthesized = new HashMap<>();
+    String emptyFormula = getEmptyFormula();
+    if(emptyFormula != this.UNRECOGNIZED && emptyFormula != this.INVALID){
+      formulaSynthesized.put("emptyFormula", emptyFormula);
+      formulaSynthesized.put("content", getContentInsideFormula());
+    }
+
+    return formulaSynthesized; 
   } 
 
   public String getEmptyFormula(){
     //we assume that all formulas has () for it to be a valid formula 
     if(validFormulaFormat()){
       String emptyFormula = parseIntoEmptyFormula(); 
-      return isRecognizedFormula(emptyFormula)? emptyFormula : "unrecognizedFormula";
+      return isRecognizedFormula(emptyFormula)? emptyFormula : this.UNRECOGNIZED;
     }
-    return "invalid";
+    return this.INVALID;
+  } 
+
+  public String getContentInsideFormula(){
+    String contentInsideFormula = this.formula.substring(this.openParanthesisIndex + 1, closeParanthesisIndex); 
+    return contentInsideFormula;
   } 
 
   private boolean validFormulaFormat(){
@@ -54,8 +69,8 @@ public class Formula {
   } 
 
   private boolean isRecognizedFormula(String emptyFormula){
-    switch(this.formula){
-      case "=SUM()":
+    switch(emptyFormula){
+      case "SUM()":
         return true; 
       default:
         return false; 
