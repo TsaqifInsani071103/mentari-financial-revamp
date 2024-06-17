@@ -9,8 +9,7 @@ public class FormulaTest {
   private String dummyEmptyFormula = "SUM()";
   private String dummyFormulaString = "SUM(" + dummyContent + ")";
   private Formula dummyFormulaObject = new Formula(dummyFormulaString); 
-  private String INVALID = "invalid";
-  private String UNRECOGNIZED = "unrecognizedFormula"; 
+ 
   
   @Test 
   public void getFormulaTest(){
@@ -23,10 +22,10 @@ public class FormulaTest {
     assertEquals(this.dummyEmptyFormula, dummyFormulaObject.getEmptyFormula());
 
     //testing that if the Formula doesn't have the parantheses(), it should return with "invalid" 
-    assertEquals(this.INVALID, new Formula("d").getEmptyFormula());
+    assertEquals(Formula.INVALID, new Formula("d").getEmptyFormula());
 
     //testing that if the Formula isn't a recognized formula, it should also return invalid 
-    assertEquals(this.UNRECOGNIZED, new Formula("DOODLE()").getEmptyFormula());
+    assertEquals(Formula.UNRECOGNIZED, new Formula("DOODLE()").getEmptyFormula());
   }
 
   @Test 
@@ -38,9 +37,14 @@ public class FormulaTest {
 
   @Test 
   public void getEmptyFormulaAndContent(){
-    // Formula formula1 = new Formula(dummyFormula);
-    // assertEquals(dummyContent, formula1.getEmptyFormulaAndContent().get("content"));
-    // assertEquals(dummyEmptyFormula, formula1.getEmptyFormulaAndContent().get("emptyFormula"));
+    //testing that we're getting the content inside and the empty formula when the formula is right. 
+    assertEquals(dummyContent, this.dummyFormulaObject.getEmptyFormulaAndContent().get("content"));
+    assertEquals(dummyEmptyFormula, this.dummyFormulaObject.getEmptyFormulaAndContent().get("emptyFormula"));
+
+    //testing when the sum isn't recognized 
+    Formula formula2 = new Formula("DOODLE(E10,E243)");
+    assertEquals(Formula.INVALID, formula2.getEmptyFormulaAndContent().get("content"));
+    assertEquals(Formula.INVALID, formula2.getEmptyFormulaAndContent().get("emptyFormula"));
   } 
 
 

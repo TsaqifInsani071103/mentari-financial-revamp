@@ -14,8 +14,8 @@ public class Formula {
   private String formula = ""; 
   private int openParanthesisIndex;
   private int closeParanthesisIndex;
-  private String INVALID = "invalid";
-  private String UNRECOGNIZED = "unrecognizedFormula"; 
+  public static String INVALID = "invalid";
+  public static String UNRECOGNIZED = "unrecognizedFormula"; 
   
   public Formula(String initialFormula){
     this.formula = initialFormula; 
@@ -36,9 +36,12 @@ public class Formula {
   public HashMap<String, String> getEmptyFormulaAndContent(){
     HashMap<String, String> formulaSynthesized = new HashMap<>();
     String emptyFormula = getEmptyFormula();
-    if(emptyFormula != this.UNRECOGNIZED && emptyFormula != this.INVALID){
+    if(emptyFormula != UNRECOGNIZED && emptyFormula != INVALID){
       formulaSynthesized.put("emptyFormula", emptyFormula);
       formulaSynthesized.put("content", getContentInsideFormula());
+    }else{
+      formulaSynthesized.put("emptyFormula", INVALID);
+      formulaSynthesized.put("content", INVALID); 
     }
 
     return formulaSynthesized; 
@@ -48,9 +51,9 @@ public class Formula {
     //we assume that all formulas has () for it to be a valid formula 
     if(validFormulaFormat()){
       String emptyFormula = parseIntoEmptyFormula(); 
-      return isRecognizedFormula(emptyFormula)? emptyFormula : this.UNRECOGNIZED;
+      return isRecognizedFormula(emptyFormula)? emptyFormula : UNRECOGNIZED;
     }
-    return this.INVALID;
+    return INVALID;
   } 
 
   public String getContentInsideFormula(){
