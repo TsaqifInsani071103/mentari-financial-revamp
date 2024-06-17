@@ -38,14 +38,27 @@ public class FormulaTest {
   @Test 
   public void getEmptyFormulaAndContent(){
     //testing that we're getting the content inside and the empty formula when the formula is right. 
+    assertValidFormulaContentMap();
+
+    //testing when the formula isn't recognized 
+    Formula formula2 = new Formula("DOODLE(E10,E243)");
+    assertInvalidFormulaContentMap(formula2);
+
+    //testing when the formula doesn't have the right parantheses, thus invalid format 
+    Formula formula3 = new Formula("SUM(E10E430");
+    assertInvalidFormulaContentMap(formula3);
+  } 
+
+  private void assertValidFormulaContentMap(){
     assertEquals(dummyContent, this.dummyFormulaObject.getEmptyFormulaAndContent().get("content"));
     assertEquals(dummyEmptyFormula, this.dummyFormulaObject.getEmptyFormulaAndContent().get("emptyFormula"));
-
-    //testing when the sum isn't recognized 
-    Formula formula2 = new Formula("DOODLE(E10,E243)");
-    assertEquals(Formula.INVALID, formula2.getEmptyFormulaAndContent().get("content"));
-    assertEquals(Formula.INVALID, formula2.getEmptyFormulaAndContent().get("emptyFormula"));
   } 
+
+  private void assertInvalidFormulaContentMap(Formula formula){
+    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get("content"));
+    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get("emptyFormula"));
+  } 
+
 
 
 }

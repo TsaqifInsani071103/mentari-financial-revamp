@@ -34,17 +34,20 @@ public class Formula {
 
   //this formula will get the empty formula as well as the content inside of the formula
   public HashMap<String, String> getEmptyFormulaAndContent(){
-    HashMap<String, String> formulaSynthesized = new HashMap<>();
+    HashMap<String, String> formulaMap = new HashMap<>();
+    initializeFormulaSynthesized(formulaMap);
+    return formulaMap; 
+  } 
+
+  private void initializeFormulaSynthesized( HashMap<String, String> formulaMap){
     String emptyFormula = getEmptyFormula();
     if(emptyFormula != UNRECOGNIZED && emptyFormula != INVALID){
-      formulaSynthesized.put("emptyFormula", emptyFormula);
-      formulaSynthesized.put("content", getContentInsideFormula());
+      formulaMap.put("emptyFormula", emptyFormula);
+      formulaMap.put("content", getContentInsideFormula());
     }else{
-      formulaSynthesized.put("emptyFormula", INVALID);
-      formulaSynthesized.put("content", INVALID); 
+      formulaMap.put("emptyFormula", INVALID);
+      formulaMap.put("content", INVALID); 
     }
-
-    return formulaSynthesized; 
   } 
 
   public String getEmptyFormula(){
