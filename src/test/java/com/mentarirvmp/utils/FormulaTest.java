@@ -47,6 +47,10 @@ public class FormulaTest {
     //testing when the formula doesn't have the right parantheses, thus invalid format 
     Formula formula3 = new Formula("SUM(E10E430");
     assertInvalidFormulaContentMap(formula3);
+
+    //testing when the formula is flipped 
+    Formula formula4 = new Formula("()SUM");
+    assertInvalidFormulaContentMap(formula4);
   } 
 
   private void assertValidFormulaContentMap(){

@@ -39,15 +39,23 @@ public class Formula {
     return formulaMap; 
   } 
 
-  private void initializeFormulaSynthesized( HashMap<String, String> formulaMap){
+  private void initializeFormulaSynthesized(HashMap<String, String> formulaMap){
     String emptyFormula = getEmptyFormula();
     if(emptyFormula != UNRECOGNIZED && emptyFormula != INVALID){
-      formulaMap.put("emptyFormula", emptyFormula);
-      formulaMap.put("content", getContentInsideFormula());
+      populateValidFormulaMap(formulaMap, emptyFormula);
     }else{
-      formulaMap.put("emptyFormula", INVALID);
-      formulaMap.put("content", INVALID); 
+      populateInvalidFormulaMap(formulaMap); 
     }
+  } 
+
+  private void populateValidFormulaMap(HashMap<String, String> formulaMap, String emptyFormula){
+    formulaMap.put("emptyFormula", emptyFormula);
+    formulaMap.put("content", getContentInsideFormula());
+  } 
+
+  private void populateInvalidFormulaMap(HashMap<String, String> formulaMap){
+    formulaMap.put("emptyFormula", INVALID);
+    formulaMap.put("content", INVALID); 
   } 
 
   public String getEmptyFormula(){
