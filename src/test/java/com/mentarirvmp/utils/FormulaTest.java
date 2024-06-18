@@ -97,6 +97,7 @@ public class FormulaTest {
   } 
 
   //simple test first with only 20, 10, blabla without the complicated structuring first 
+  //we only calculate the contents that are valid basically. 
   @Test 
   public void calculateFormulaValue(){
     int firstExpenseId = this.dummyExpensesArray.get(0).getId();
@@ -105,7 +106,7 @@ public class FormulaTest {
 
     String firstFormulaString = String.format("SUM(%d,%d,%d)", firstExpenseId, secondExpenseId, thirdExpenseId);
     Formula firstFormulaObject = new Formula(firstFormulaString); 
-    
+
 
   } 
 
