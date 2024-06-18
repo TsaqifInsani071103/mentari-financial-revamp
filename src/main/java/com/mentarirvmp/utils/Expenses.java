@@ -49,6 +49,7 @@ public class Expenses {
   }
 
 
+  //this needs to be completely unique 
   public int getId(){
     return this.id; 
   } 

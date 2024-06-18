@@ -32,6 +32,8 @@ public class Formula {
     return this.formula; 
   } 
 
+  
+
   //this formula will get the empty formula as well as the content inside of the formula
   public HashMap<String, String> getEmptyFormulaAndContent(){
     HashMap<String, String> formulaMap = new HashMap<>();
