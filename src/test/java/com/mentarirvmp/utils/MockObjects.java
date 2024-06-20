@@ -6,9 +6,18 @@ import java.util.Random;
 //this will hold static mock Expense objects and Statement objects for testing purposes. 
 public class MockObjects {
   
-  private ArrayList<Expenses> initializeDummyExpenses(){
+  public static ArrayList<Expenses> initializeDummyExpenses(){
     //use Random to make different random values 
     ArrayList<Expenses> dummyExpenses = new ArrayList<Expenses>(); 
+    for(int i = 0; i < 5; i++){
+      Expenses expenseDummy = new Expenses("Expense" + i);
+      Random randObj = new Random(); 
+      int randValue = randObj.nextInt(80);
+      expenseDummy.setValue("" + randValue);
+
+      dummyExpenses.add(expenseDummy); 
+      System.out.println(expenseDummy.getValue());
+    }
     return dummyExpenses; 
     
 

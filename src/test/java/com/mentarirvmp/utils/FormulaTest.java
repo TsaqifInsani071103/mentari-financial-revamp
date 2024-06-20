@@ -3,38 +3,17 @@ package com.mentarirvmp.utils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 
 public class FormulaTest {
+  //extract this to MockObjects too later. 
   private String dummyContent = "E10, E2, E3";
   private String dummyEmptyFormula = "SUM()";
   private String dummyFormulaString = "SUM(" + dummyContent + ")";
   private Formula dummyFormulaObject = new Formula(dummyFormulaString); 
-  private ArrayList<Expenses> dummyExpensesArray = initializeDummyExpenses(); 
+
  
-  private ArrayList<Expenses> initializeDummyExpenses(){
-    Expenses expense1 = new Expenses("Expense1");
-    expense1.setValue("10");
-    Expenses expense2 = new Expenses("Expense2");
-    expense2.setValue("5");
-    Expenses expense3 = new Expenses("Expense3");
-    expense3.setValue("2");
-    Expenses expense4 = new Expenses("Expense4");
-    expense4.setValue("20");
-    Expenses expense5 = new Expenses("Expense5");
-    expense5.setValue("25");
-    Expenses expense6 = new Expenses("Expense6");
-    expense6.setValue("30");
-    ArrayList<Expenses> dummyExpenses = new ArrayList<Expenses>();
-    dummyExpenses.add(expense1);
-    dummyExpenses.add(expense2);
-    dummyExpenses.add(expense3);
-    dummyExpenses.add(expense4);
-    dummyExpenses.add(expense5);
-    dummyExpenses.add(expense6);
-    return dummyExpenses;
-  } 
+
   
   @Test 
   public void getFormulaTest(){
@@ -93,7 +72,7 @@ public class FormulaTest {
   //if content is valid we calculate the value 
   @Test 
   public void getNestedFormula(){
-
+    MockObjects.initializeDummyExpenses(); 
   } 
 
   // //simple test first with only 20, 10, blabla without the complicated structuring first 

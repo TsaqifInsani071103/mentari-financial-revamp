@@ -36,6 +36,7 @@ public class Expenses {
     return this.value; 
   }
 
+  //set default value to be 0.0 aja 
   public void setValue(String newValue){
     this.value = newValue; 
   }
