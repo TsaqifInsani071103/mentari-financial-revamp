@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.mentarirvmp.servicehandlers.StatementsAndExpenseHandler;
+
 // import com.mentari.statements.Statement;
 // import com.mentari.utils.InputHandler;
 import java.math.BigDecimal; 
@@ -15,7 +17,8 @@ public class Formula {
   private int openParanthesisIndex;
   private int closeParanthesisIndex;
   public static String INVALID = "invalid";
-  public static String UNRECOGNIZED = "unrecognizedFormula"; 
+  public static String UNRECOGNIZED = "unrecognizedFormula";
+  private StatementsAndExpenseHandler dataHandler; 
   
   public Formula(String initialFormula){
     this.formula = initialFormula; 
@@ -37,6 +40,7 @@ public class Formula {
 
   // }
 
+  //if ID valid, get the value of the expense. 
   // private String[] getValueFromValidIds(String content){
   //   String[] contentParsed = content.split(",");
   //   Valid 

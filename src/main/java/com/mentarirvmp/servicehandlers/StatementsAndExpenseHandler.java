@@ -1,11 +1,25 @@
 package com.mentarirvmp.servicehandlers;
 import com.mentarirvmp.statements.Statement;
+import com.mentarirvmp.utils.Formula;
 
 
 public class StatementsAndExpenseHandler {
   //hold STATEMENT variable here with its EXPENSES ARRAY 
   //and hold a FORMULA object here for the calculations and whatnot 
-  Statement currentStatement; 
+
+  private Statement currentStatement; 
+  public StatementsAndExpenseHandler(Statement currentStatement){
+    this.currentStatement = currentStatement; 
+  }
+
+  
+
+
+  //cant formula just be a static class at this point? 
+
+  //thing is every expense might have a formula, so i'll just make the formula based on the currentExpense we're looking at or something like that 
+
+
   
   
 
