@@ -1,6 +1,7 @@
 package com.mentarirvmp.servicehandlers;
 import com.mentarirvmp.statements.Statement;
 
+
 public class StatementsAndExpenseHandler {
   //hold STATEMENT variable here with its EXPENSES ARRAY 
   //and hold a FORMULA object here for the calculations and whatnot 

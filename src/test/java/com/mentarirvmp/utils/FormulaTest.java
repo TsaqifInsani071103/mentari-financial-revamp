@@ -72,7 +72,9 @@ public class FormulaTest {
   //if content is valid we calculate the value 
   @Test 
   public void getNestedFormula(){
-    MockObjects.initializeDummyExpenses(); 
+    ArrayList<Expenses> dummyExpenses = MockObjects.initializeDummyExpenses(); 
+
+    
   } 
 
   // //simple test first with only 20, 10, blabla without the complicated structuring first 
