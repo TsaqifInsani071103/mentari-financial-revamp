@@ -53,6 +53,8 @@ public class ExpensesTest {
     Expenses fifthExpense = new Expenses("Fifth");
     assertEquals(fourthExpense.getId()+ 2, fifthExpense.getId());
 
+    Expenses.resetCounter(); 
+
   }
 
   @Test 
