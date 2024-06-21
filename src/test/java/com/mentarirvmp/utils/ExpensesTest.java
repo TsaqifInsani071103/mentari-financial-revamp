@@ -84,9 +84,28 @@ public class ExpensesTest {
   @Test 
   public void addChildTest(){
     String newName = "childOne"; 
+    insertDummyChild(newName);
+    assertEquals(newName, this.dummyExpense.getChildArray().get(0).getName());
+  } 
+
+  @Test 
+  public void deleteChildTest(){
+    insertDummyChild("child1");
+    insertDummyChild("child2");
+    Expenses dummyChild = this.dummyExpense.getChildArray().get(0);
+    int dummyChildId = dummyChild.getId(); 
+    this.dummyExpense.deleteChild(dummyChild);
+
+    assertEquals(this.dummyExpense.getChildArray().size(), 1);
+    
+    //check the decrementing of delete child test 
+    assertEquals(Expenses.getCurrentCounterValue(), dummyChildId); 
+    assertEquals(Expenses.getCurrentCounterValue() + 1, this.dummyExpense.getChildArray().get(0).getId()); //the child2
+  } 
+
+  private void insertDummyChild(String newName){
     Expenses dummyChild = new Expenses(newName);
     this.dummyExpense.addChild(dummyChild);
-    assertEquals(newName, this.dummyExpense.getChildArray().get(0).getName());
   } 
 
   

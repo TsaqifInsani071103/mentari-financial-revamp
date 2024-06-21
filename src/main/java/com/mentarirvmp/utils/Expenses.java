@@ -14,10 +14,14 @@ public class Expenses {
   private String name; 
   private String description = ""; 
   private String value = ""; 
-  public static int uniqueCounter = 0; 
+  private static int uniqueCounter = 0; 
   private int id; 
   private ArrayList<Expenses> childArray = new ArrayList<Expenses>(); 
   
+  public static int getCurrentCounterValue(){
+    return uniqueCounter;
+  } 
+
   public static void incrementCounter(){
     uniqueCounter++; 
   } 
@@ -31,9 +35,9 @@ public class Expenses {
   } 
 
   public Expenses(String name){
+    uniqueCounter++; 
     this.name = name; 
     this.id = uniqueCounter; 
-    uniqueCounter++; 
   } 
 
   public String getName(){
