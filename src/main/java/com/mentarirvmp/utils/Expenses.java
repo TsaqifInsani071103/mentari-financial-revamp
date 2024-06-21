@@ -85,6 +85,10 @@ public class Expenses {
     return this.childArray; 
   } 
 
+  public boolean hasChildren(){
+    return this.childArray.size() > 0? true: false; 
+  }
+
 
 }
 

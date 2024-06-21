@@ -108,6 +108,13 @@ public class ExpensesTest {
     this.dummyExpense.addChild(dummyChild);
   } 
 
+  @Test 
+  public void hasChildTest(){
+    assertEquals(this.dummyExpense.hasChildren(), false);
+    insertDummyChild("dummyName");
+    assertEquals(this.dummyExpense.hasChildren(), true); 
+  } 
+
   
 
 
