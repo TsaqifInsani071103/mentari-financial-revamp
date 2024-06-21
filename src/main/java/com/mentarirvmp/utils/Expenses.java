@@ -72,6 +72,11 @@ public class Expenses {
     this.childArray.add(newChild); 
   } 
 
+  public void deleteChild(Expenses childToDelete){
+    this.childArray.remove(childToDelete); 
+    decrementCounter();
+  } 
+
   public ArrayList<Expenses> getChildArray(){
     return this.childArray; 
   } 
