@@ -1,6 +1,7 @@
 package com.mentarirvmp.servicehandlers;
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Formula;
+import com.mentarirvmp.utils.Expenses;
 
 
 public class StatementsAndExpenseHandler {
@@ -8,11 +9,19 @@ public class StatementsAndExpenseHandler {
   //and hold a FORMULA object here for the calculations and whatnot 
 
   private Statement currentStatement; 
+
   public StatementsAndExpenseHandler(Statement currentStatement){
     this.currentStatement = currentStatement; 
   }
 
-  
+  // private Expenses getExpenseByID(){
+
+
+  // }
+
+
+
+
 
 
   //cant formula just be a static class at this point? 

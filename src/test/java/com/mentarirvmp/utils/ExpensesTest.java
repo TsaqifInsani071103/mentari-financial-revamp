@@ -43,6 +43,16 @@ public class ExpensesTest {
 
     assertEquals(firstExpense.getId() + 1, secondExpense.getId());
     assertEquals(secondExpense.getId() + 1, thirdExpense.getId());
+    
+    //testing incrementing and decrementing counter with respect to Expense Id's 
+    Expenses.decrementCounter(); 
+    Expenses fourthExpense = new Expenses("Fourth"); 
+    assertEquals(thirdExpense.getId(), fourthExpense.getId()); 
+
+    Expenses.incrementCounter(); 
+    Expenses fifthExpense = new Expenses("Fifth");
+    assertEquals(fourthExpense.getId()+ 2, fifthExpense.getId());
+
   }
 
   @Test 
@@ -76,6 +86,9 @@ public class ExpensesTest {
     this.dummyExpense.addChild(dummyChild);
     assertEquals(newName, this.dummyExpense.getChildArray().get(0).getName());
   } 
+
+  
+
 
   
 

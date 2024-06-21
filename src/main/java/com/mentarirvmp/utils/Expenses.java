@@ -16,7 +16,19 @@ public class Expenses {
   private String value = ""; 
   public static int uniqueCounter = 0; 
   private int id; 
-  private ArrayList<Expenses> childArray = new ArrayList<Expenses>();  
+  private ArrayList<Expenses> childArray = new ArrayList<Expenses>(); 
+  
+  public static void incrementCounter(){
+    uniqueCounter++; 
+  } 
+
+  public static void decrementCounter(){
+    uniqueCounter--; 
+  } 
+
+  public static void resetCounter(){
+    uniqueCounter = 0; 
+  } 
 
   public Expenses(String name){
     this.name = name; 
