@@ -67,29 +67,27 @@ public class FormulaTest {
     assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get("emptyFormula"));
   } 
 
-  //we want the code to work by: we check if the formula is valid, if it it, delete the outer formula SUM(DOODLE()) becomes DOODLE() and we continue with this. 
+  //we want the code to work by: we check if the formula is valid, if it does, delete the outer formula SUM(DOODLE()) becomes DOODLE() and we continue with this. This means we need to check from left index to right index for the parsing logic. 
 
   //if content is valid we calculate the value 
-  @Test 
-  public void getNestedFormula(){
-    ArrayList<Expenses> dummyExpenses = MockObjects.initializeDummyExpenses(); 
+  // @Test 
+  // public void getNestedFormula(){
+  //   ArrayList<Expenses> dummyExpenses = MockObjects.initializeDummyExpenses(); 
+  //   for(Expenses i : dummyExpenses){
+  //     System.out.println(i.getName());
+  //     System.out.println(i.getValue());
+  //   }
 
     
-  } 
+  // } 
 
   // //simple test first with only 20, 10, blabla without the complicated structuring first 
   // //we only calculate the contents that are valid basically. 
-  // @Test 
-  // public void calculateFormulaValue(){
-  //   int firstExpenseId = this.dummyExpensesArray.get(0).getId();
-  //   int secondExpenseId = this.dummyExpensesArray.get(1).getId();
-  //   int thirdExpenseId = this.dummyExpensesArray.get(2).getId();
+  @Test 
+  public void calculateFormulaValue(){
+   
 
-  //   String firstFormulaString = String.format("SUM(%d,%d,%d)", firstExpenseId, secondExpenseId, thirdExpenseId);
-  //   Formula firstFormulaObject = new Formula(firstFormulaString); 
-
-
-  // } 
+  } 
 
 
 }

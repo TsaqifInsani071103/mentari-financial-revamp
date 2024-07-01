@@ -35,6 +35,11 @@ public class Formula {
     return this.formula; 
   } 
 
+  public void setHandler(StatementsAndExpenseHandler dataHandler){
+    this.dataHandler = dataHandler; 
+
+  } 
+
   // public int calculateFormulaValue(){
   //   HashMap<String, String> formulaMap = getEmptyFormulaAndContent();
 
@@ -65,16 +70,6 @@ public class Formula {
     }
   } 
 
-  private void populateValidFormulaMap(HashMap<String, String> formulaMap, String emptyFormula){
-    formulaMap.put("emptyFormula", emptyFormula);
-    formulaMap.put("content", getContentInsideFormula());
-  } 
-
-  private void populateInvalidFormulaMap(HashMap<String, String> formulaMap){
-    formulaMap.put("emptyFormula", INVALID);
-    formulaMap.put("content", INVALID); 
-  } 
-
   public String getEmptyFormula(){
     //we assume that all formulas has () for it to be a valid formula 
     if(validFormulaFormat()){
@@ -84,9 +79,14 @@ public class Formula {
     return INVALID;
   } 
 
-  public String getContentInsideFormula(){
-    String contentInsideFormula = this.formula.substring(this.openParanthesisIndex + 1, closeParanthesisIndex); 
-    return contentInsideFormula;
+  private void populateValidFormulaMap(HashMap<String, String> formulaMap, String emptyFormula){
+    formulaMap.put("emptyFormula", emptyFormula);
+    formulaMap.put("content", getContentInsideFormula());
+  } 
+
+  private void populateInvalidFormulaMap(HashMap<String, String> formulaMap){
+    formulaMap.put("emptyFormula", INVALID);
+    formulaMap.put("content", INVALID); 
   } 
 
   private boolean validFormulaFormat(){
@@ -99,6 +99,7 @@ public class Formula {
     return emptyString;
   } 
 
+  //()SUM is automatically ruled out because when empty its not recognized as SUM() 
   private boolean isRecognizedFormula(String emptyFormula){
     switch(emptyFormula){
       case "SUM()":
@@ -107,6 +108,14 @@ public class Formula {
         return false; 
     }
   } 
+
+  public String getContentInsideFormula(){
+    String contentInsideFormula = this.formula.substring(this.openParanthesisIndex + 1, closeParanthesisIndex); 
+    return contentInsideFormula;
+  } 
+
+
+
 
 
 
