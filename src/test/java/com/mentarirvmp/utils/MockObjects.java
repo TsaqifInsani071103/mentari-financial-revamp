@@ -1,6 +1,7 @@
 package com.mentarirvmp.utils;
 import java.util.ArrayList;
 import java.util.Random;
+import com.mentarirvmp.statements.Statement;
 
 
 //this will hold static mock Expense objects and Statement objects for testing purposes. 
@@ -20,6 +21,11 @@ public class MockObjects {
     }
     return dummyExpenses; 
     
+  } 
 
+  public static Statement initializeDummyStatement(){
+    Statement dummyStatement = new Statement("dummyStatement");
+    
+    return dummyStatement;
   } 
 }

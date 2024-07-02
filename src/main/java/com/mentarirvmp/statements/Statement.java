@@ -27,6 +27,16 @@ public class Statement {
     this.statementName = newName; 
   } 
 
+  public void addExpense(Expenses newExpense){
+    this.expenseArrayList.add(newExpense);
+    
+  } 
+
+  public void setExpenseArray(ArrayList<Expenses> expenseArray){
+    this.expenseArrayList = expenseArray;
+
+  }
+
   //In the original codebase, the Statement acts as a manager of the Expense objects, and funnily enough, the expense objects themselves have reference to the Statement objects too, so It's sort of a circular reference. 
 
   //We can have a handler class the acts as a middle man between Statement and Expenses "POJO"s such that it holds reference to the Statement using it and then also manipulating the Expense POJOs non-destructively and whatnot. 
