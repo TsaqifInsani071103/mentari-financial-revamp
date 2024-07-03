@@ -2,6 +2,7 @@ package com.mentarirvmp.servicehandlers;
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Formula;
 import com.mentarirvmp.utils.Expenses;
+import java.util.ArrayList;
 
 
 public class StatementsAndExpenseHandler {
@@ -15,7 +16,7 @@ public class StatementsAndExpenseHandler {
   }
 
   // private Expenses getExpenseByID(int ID){
-
+  //   ArrayList<Expenses> expenseArray = currentStatement.
 
   // }
 
