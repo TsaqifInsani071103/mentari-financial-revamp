@@ -51,7 +51,7 @@ public class Statement {
 
   private Expenses recursiveGetExpenseById(ArrayList<Expenses> expenseArray, int ID){
     for(Expenses expense: expenseArray){
-      if(expenseMatchesId(expense, ID)){
+      if(expense.getId() == ID){
         return expense; 
       } else if(expense.hasChildren()){
         Expenses foundExpense = recursiveGetExpenseById(expense.getChildArray(), ID); 
@@ -63,14 +63,6 @@ public class Statement {
 
   } 
 
-  private Boolean expenseMatchesId(Expenses expense, int ID){
-    if(expense.getId() == ID){
-      return true; 
-    }
-
-    return false;
-
-  } 
 
   //In the original codebase, the Statement acts as a manager of the Expense objects, and funnily enough, the expense objects themselves have reference to the Statement objects too, so It's sort of a circular reference. 
 
