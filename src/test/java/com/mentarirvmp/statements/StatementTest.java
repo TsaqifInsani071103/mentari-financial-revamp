@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StatementTest {
 
+  //Now I need a recursion test that would test if I can query ALL the children for ALL the expenses in the mock statement. 
   @Test
   public void getExpenseByIDTest(){
     Statement dummyStatement = MockObjects.initializeDummyStatement(); 
@@ -28,6 +29,16 @@ public class StatementTest {
     // Expenses expense3 = expense2.getChildArray().get(0);
     // int Id3 = expense3.getId(); 
     // assertEquals(expense3, dummyStatement.getExpenseById(Id3));
+
+    for(Expenses expense:dummyStatement.getExpenseArray()){
+      if(expense.hasChildren()){
+
+      }
+    }
+  } 
+
+  private void testChildIdRecursive(){
+    
   } 
   
 }
