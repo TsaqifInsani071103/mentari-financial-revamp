@@ -49,21 +49,26 @@ public class Statement {
     return recursiveGetExpenseById(this.expenseArrayList, ID);
   } 
 
-  
   private Expenses recursiveGetExpenseById(ArrayList<Expenses> expenseArray, int ID){
-    Expenses foundExpense = checkSingleExpenseArrayByID(expenseArray, ID);
-    return foundExpense; 
-  } 
-
-  private Expenses checkSingleExpenseArrayByID(ArrayList<Expenses> expenseArray, int ID){
     for(Expenses expense: expenseArray){
-      if(expense.getId() == ID){
+      if(expenseMatchesId(expense, ID)){
         return expense; 
-      }else if(expense.hasChildren()){
-        return recursiveGetExpenseById(expense.getChildArray(), ID);
+      } else if(expense.hasChildren()){
+        Expenses foundExpense = recursiveGetExpenseById(expense.getChildArray(), ID); 
+        if(foundExpense != this.INVALID_EXPENSE_ID) return foundExpense;
       }
     }
-    return this.INVALID_EXPENSE_ID;
+    return this.INVALID_EXPENSE_ID; 
+
+
+  } 
+
+  private Boolean expenseMatchesId(Expenses expense, int ID){
+    if(expense.getId() == ID){
+      return true; 
+    }
+
+    return false;
 
   } 
 
