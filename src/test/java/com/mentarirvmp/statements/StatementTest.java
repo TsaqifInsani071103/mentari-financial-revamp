@@ -8,6 +8,8 @@ import com.mentarirvmp.utils.MockObjects;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 public class StatementTest {
 
   //Now I need a recursion test that would test if I can query ALL the children for ALL the expenses in the mock statement. 
@@ -15,30 +17,23 @@ public class StatementTest {
   public void getExpenseByIDTest(){
     Statement dummyStatement = MockObjects.initializeDummyStatement(); 
 
-    // //checking top level Expense's id 
-    // Expenses expense1 = dummyStatement.getExpenseArray().get(0);
-    // int Id1 = expense1.getId(); 
-    // assertEquals(expense1, dummyStatement.getExpenseById(Id1));
-
-    // //checking second levelExpense's id 
-    // Expenses expense2 = expense1.getChildArray().get(0);
-    // int Id2 = expense2.getId(); 
-    // assertEquals(expense2, dummyStatement.getExpenseById(Id2));
-
-    // //checking third levelExpense's id 
-    // Expenses expense3 = expense2.getChildArray().get(0);
-    // int Id3 = expense3.getId(); 
-    // assertEquals(expense3, dummyStatement.getExpenseById(Id3));
-
+    ArrayList<Expenses> allParentAndChildArray = new ArrayList<Expenses>();
     for(Expenses expense:dummyStatement.getExpenseArray()){
-      if(expense.hasChildren()){
-
-      }
+      populateAllNestedExpensesIntoArray(allParentAndChildArray, expense);
+    }
+    for(Expenses expense: allParentAndChildArray){
+      assertEquals(expense, dummyStatement.getExpenseById(expense.getId()));
     }
   } 
 
-  private void testChildIdRecursive(){
-    
+  private ArrayList<Expenses> populateAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildArray, Expenses expense){
+    allParentAndChildArray.add(expense);
+    if(expense.hasChildren()){
+      for(Expenses childExpense:expense.getChildArray()){
+        populateAllNestedExpensesIntoArray(allParentAndChildArray, childExpense);
+      }
+    } 
+    return allParentAndChildArray; 
   } 
   
 }

@@ -28,6 +28,7 @@ public class MockObjects {
       Random randObj = new Random(); 
       int randValue = randObj.nextInt(80);
       expenseDummy.setValue("" + randValue);
+      counter++; 
 
       expense.addChild(expenseDummy); 
     }
