@@ -6,7 +6,7 @@ public class Statement {
 
   //If I want the expense class to just be a single class I don't think I would need an expenseCounter like I did with the original codebase. 
   private String statementName; 
-  private Expenses INVALID_EXPENSE_ID = new Expenses("invalid"); 
+  public static Expenses INVALID_EXPENSE_ID = new Expenses("invalid"); 
   //
   //make like an array of hashmaps basically. 
   private ArrayList<Expenses> expenseArrayList = new ArrayList<Expenses>(); //these are top level sibling expenses 
@@ -55,10 +55,10 @@ public class Statement {
         return expense; 
       } else if(expense.hasChildren()){
         Expenses foundExpense = recursiveGetExpenseById(expense.getChildArray(), ID); 
-        if(foundExpense != this.INVALID_EXPENSE_ID) return foundExpense;
+        if(foundExpense != INVALID_EXPENSE_ID) return foundExpense;
       }
     }
-    return this.INVALID_EXPENSE_ID; 
+    return INVALID_EXPENSE_ID; 
 
 
   } 
