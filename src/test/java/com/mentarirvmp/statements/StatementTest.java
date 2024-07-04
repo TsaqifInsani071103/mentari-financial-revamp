@@ -17,14 +17,11 @@ public class StatementTest {
   public void getExpenseByIDTest(){
     Statement dummyStatement = MockObjects.initializeDummyStatement(); 
 
-    ArrayList<Expenses> allParentAndChildArray = new ArrayList<Expenses>();
-    //We're mapping All expenses and all nested expenses into allParentAndChildArray 
-    for(Expenses expense:dummyStatement.getExpenseArray()){
-      populateAllNestedExpensesIntoArray(allParentAndChildArray, expense);
-    }
+    //we flatten the nested arrays, so we can check on them easier. 
+    ArrayList<Expenses> allParentAndChildExpenses = populateAllNestedExpensesIntoArray(dummyStatement); 
 
     //were testing for successful querying 
-    for(Expenses expense: allParentAndChildArray){
+    for(Expenses expense: allParentAndChildExpenses){
       assertEquals(expense, dummyStatement.getExpenseById(expense.getId()));
     }
 
@@ -32,14 +29,23 @@ public class StatementTest {
     assertEquals(Statement.INVALID_EXPENSE_ID, dummyStatement.getExpenseById(120301));
   } 
 
-  private ArrayList<Expenses> populateAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildArray, Expenses expense){
-    allParentAndChildArray.add(expense);
+  private ArrayList<Expenses> populateAllNestedExpensesIntoArray(Statement dummyStatement){
+    ArrayList<Expenses> allParentAndChildExpenses = new ArrayList<Expenses>();
+    for(Expenses expense:dummyStatement.getExpenseArray()){
+      recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, expense);
+    }
+    return allParentAndChildExpenses;
+
+  } 
+
+  private ArrayList<Expenses> recursiveAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildExpenses, Expenses expense){
+    allParentAndChildExpenses.add(expense);
     if(expense.hasChildren()){
       for(Expenses childExpense:expense.getChildArray()){
-        populateAllNestedExpensesIntoArray(allParentAndChildArray, childExpense);
+        recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, childExpense);
       }
     } 
-    return allParentAndChildArray; 
+    return allParentAndChildExpenses; 
   } 
   
 }
