@@ -39,8 +39,7 @@ public class Statement {
 
   }
 
-  //I think right now the Statement object should take care of its own data, not that it meddles with the expenses data, but to make it a useless data structure, I would want searching the ID's and whatnot to transpire here?? 
-
+  //I think right now the Statement object should take care of its own data, not that it meddles with the expenses data, but to make it a useless data structure, I would want searching the ID's and whatnot to transpire here
   public ArrayList<Expenses> getExpenseArray(){
     return this.expenseArrayList; 
   } 
@@ -64,7 +63,7 @@ public class Statement {
   } 
 
 
-  //In the original codebase, the Statement acts as a manager of the Expense objects, and funnily enough, the expense objects themselves have reference to the Statement objects too, so It's sort of a circular reference. 
+  //In the original codebase, the Statement acts as a manager of the Expense objects, and funnily enough, the expense objects themselves have reference to the Statement objects too, so It's sort of a circular reference. We dont want this 
 
   //We can have a handler class the acts as a middle man between Statement and Expenses "POJO"s such that it holds reference to the Statement using it and then also manipulating the Expense POJOs non-destructively and whatnot. 
 
