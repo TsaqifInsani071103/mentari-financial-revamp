@@ -50,13 +50,23 @@ public class Formula {
 
   }
 
-  //if ID valid, get the value of the expense. 
+
+
   // private int getValueFromValidExpensesIn(String content){
-  //   String[] contentParsed = content.split(",");
+  //   String[] contentParsed = parseContentIntoArray(content);
   //   for(String id: contentParsed){
 
   //   }
   // } 
+
+  private String[] parseContentIntoArray(String content){
+    String[] contentParsed = content.split(",");
+    for(String item: contentParsed){
+      item = item.replace(" ", ""); 
+    }
+    return contentParsed; 
+
+  } 
 
   // private String[] getValidExpenses(String[] content){
 
