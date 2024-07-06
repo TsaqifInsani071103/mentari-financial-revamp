@@ -45,7 +45,7 @@ public class Formula {
 
   // }
 
-  //if ID valid, get the value of the expense. 
+  // if ID valid, get the value of the expense. 
   // private String[] getValueFromValidIds(String content){
   //   String[] contentParsed = content.split(",");
   //   Valid 

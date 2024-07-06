@@ -15,12 +15,9 @@ public class StatementsAndExpenseHandler {
     this.currentStatement = currentStatement; 
   }
 
-  // private Expenses getExpenseByID(int ID){
-  //   ArrayList<Expenses> expenseArray = currentStatement.
-
-  // }
-
-
+  public Expenses getExpenseByID(int ID){
+    return currentStatement.getExpenseById(ID); 
+  }
 
 
 

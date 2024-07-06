@@ -1,6 +1,8 @@
 package com.mentarirvmp.utils;
 import java.util.ArrayList;
 import java.util.Random;
+
+import com.mentarirvmp.servicehandlers.StatementsAndExpenseHandler;
 import com.mentarirvmp.statements.Statement;
 
 
@@ -43,5 +45,10 @@ public class MockObjects {
     dummyStatement.setExpenseArray(getDummyExpenseArray());
 
     return dummyStatement;
+  } 
+
+  public static StatementsAndExpenseHandler initializeDummyDataHandler(){
+    StatementsAndExpenseHandler dataHandler = new StatementsAndExpenseHandler(initializeDummyStatement());
+    return dataHandler; 
   } 
 }
