@@ -58,13 +58,13 @@ public class FormulaTest {
   } 
 
   private void assertValidFormulaContentMap(){
-    assertEquals(dummyContent, this.dummyFormulaObject.getEmptyFormulaAndContent().get("content"));
-    assertEquals(dummyEmptyFormula, this.dummyFormulaObject.getEmptyFormulaAndContent().get("emptyFormula"));
+    assertEquals(dummyContent, this.dummyFormulaObject.getEmptyFormulaAndContent().get(Formula.CONTENT));
+    assertEquals(dummyEmptyFormula, this.dummyFormulaObject.getEmptyFormulaAndContent().get(Formula.EMPTY_FORMULA));
   } 
 
   private void assertInvalidFormulaContentMap(Formula formula){
-    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get("content"));
-    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get("emptyFormula"));
+    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get(Formula.CONTENT));
+    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get(Formula.EMPTY_FORMULA));
   } 
 
   //we want the code to work by: we check if the formula is valid, if it does, delete the outer formula SUM(DOODLE()) becomes DOODLE() and we continue with this. This means we need to check from left index to right index for the parsing logic. 

@@ -18,6 +18,8 @@ public class Formula {
   private int closeParanthesisIndex;
   public static String INVALID = "invalid";
   public static String UNRECOGNIZED = "unrecognizedFormula";
+  public static String CONTENT = "content";
+  public static String EMPTY_FORMULA = "EmptyFormula";
   private StatementsAndExpenseHandler dataHandler; 
   
   public Formula(String initialFormula){
@@ -40,18 +42,25 @@ public class Formula {
 
   } 
 
-  // public int calculateFormulaValue(){
-  //   HashMap<String, String> formulaMap = getEmptyFormulaAndContent();
+  public int calculateFormulaValue(){
+    HashMap<String, String> formulaMap = getEmptyFormulaAndContent();
+    String content = formulaMap.get(CONTENT); 
 
-  // }
+    return 0; 
 
-  // if ID valid, get the value of the expense. 
-  // private String[] getValueFromValidIds(String content){
+  }
+
+  //if ID valid, get the value of the expense. 
+  // private int getValueFromValidExpensesIn(String content){
   //   String[] contentParsed = content.split(",");
-  //   Valid 
   //   for(String id: contentParsed){
 
   //   }
+  // } 
+
+  // private String[] getValidExpenses(String[] content){
+
+
   // } 
 
   //this formula will get the empty formula as well as the content inside of the formula
@@ -80,13 +89,13 @@ public class Formula {
   } 
 
   private void populateValidFormulaMap(HashMap<String, String> formulaMap, String emptyFormula){
-    formulaMap.put("emptyFormula", emptyFormula);
-    formulaMap.put("content", getContentInsideFormula());
+    formulaMap.put(EMPTY_FORMULA, emptyFormula);
+    formulaMap.put(CONTENT, getContentInsideFormula());
   } 
 
   private void populateInvalidFormulaMap(HashMap<String, String> formulaMap){
-    formulaMap.put("emptyFormula", INVALID);
-    formulaMap.put("content", INVALID); 
+    formulaMap.put(EMPTY_FORMULA, INVALID);
+    formulaMap.put(CONTENT, INVALID); 
   } 
 
   private boolean validFormulaFormat(){
