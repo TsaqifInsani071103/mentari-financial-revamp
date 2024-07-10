@@ -51,4 +51,15 @@ public class MockObjects {
     StatementsAndExpenseHandler dataHandler = new StatementsAndExpenseHandler(initializeDummyStatement());
     return dataHandler; 
   } 
+
+  //make dummy Formula from dummyStatement; 
+  public static Formula makeDummyFormulaFrom(Statement dummyStatement){
+    String content = ""; 
+    for(Expenses expense:getDummyExpenseArray()){
+      content += expense.getId(); 
+    }
+    String fullFormula = "(" +content+ ")";
+    return new Formula(fullFormula); 
+
+  } 
 }
