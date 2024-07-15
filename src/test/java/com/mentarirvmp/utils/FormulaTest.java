@@ -84,7 +84,7 @@ public class FormulaTest {
   // //simple test first with only 20, 10, blabla without the complicated structuring first 
   // //we only calculate the contents that are valid basically. 
   @Test 
-  public void calculateFormulaValue(){
+  public void getValueFromValidExpensesTest(){
    
 
   } 

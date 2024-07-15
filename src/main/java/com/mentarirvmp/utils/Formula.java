@@ -52,12 +52,12 @@ public class Formula {
 
 
 
-  // private int getValueFromValidExpensesIn(String content){
-  //   String[] contentParsed = parseContentIntoArray(content);
-  //   for(String id: contentParsed){
-
-  //   }
-  // } 
+  private int getValueFromValidExpensesIn(String content){
+    String[] contentParsed = parseContentIntoArray(content);
+    String[] validExpenses = getValidExpenses(contentParsed);
+    //this is a placeholder 
+    return 0;  
+  } 
 
   private String[] parseContentIntoArray(String content){
     String[] contentParsed = content.split(",");
@@ -68,7 +68,13 @@ public class Formula {
 
   } 
 
-  // private String[] getValidExpenses(String[] content){
+  // private String[] getValidExpenses(String[] idArray){
+  //   for(String id: idArray){
+  //     if(dataHandler.getExpenseByID(id).valid()){
+
+  //     }
+
+  //   } 
 
 
   // } 
