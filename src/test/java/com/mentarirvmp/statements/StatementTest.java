@@ -26,7 +26,7 @@ public class StatementTest {
     }
 
     //were testing for invalid ID 
-    assertEquals(Statement.INVALID_EXPENSE_ID, dummyStatement.getExpenseById(120301));
+    assertEquals(Expenses.INVALID_EXPENSE_BY_ID, dummyStatement.getExpenseById(120301));
   } 
 
   private ArrayList<Expenses> populateAllNestedExpensesIntoArray(Statement dummyStatement){

@@ -52,12 +52,12 @@ public class Formula {
 
 
 
-  private int getValueFromValidExpensesIn(String content){
-    String[] contentParsed = parseContentIntoArray(content);
-    String[] validExpenses = getValidExpenses(contentParsed);
-    //this is a placeholder 
-    return 0;  
-  } 
+  // private int getValueFromValidExpensesIn(String content){
+  //   String[] contentParsed = parseContentIntoArray(content);
+  //   String[] validExpenses = getValidExpenses(contentParsed);
+  //   //this is a placeholder 
+  //   return 0;  
+  // } 
 
   private String[] parseContentIntoArray(String content){
     String[] contentParsed = content.split(",");

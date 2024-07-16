@@ -11,12 +11,15 @@ import java.util.ArrayList;
 //I think I could make the formula object to act like a static class that's juggled by the Statements and Expense Handler Test.java. 
 
 public class Expenses {
+  public static Expenses INVALID_EXPENSE_BY_ID = new Expenses("invalid"); 
+  
   private String name; 
   private String description = ""; 
   private String value = ""; 
   private static int uniqueCounter = 0; 
   private int id; 
   private ArrayList<Expenses> childArray = new ArrayList<Expenses>(); 
+
   
   public static int getCurrentCounterValue(){
     return uniqueCounter;
