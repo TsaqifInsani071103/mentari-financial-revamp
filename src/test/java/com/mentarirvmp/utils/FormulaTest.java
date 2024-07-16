@@ -23,8 +23,7 @@ public class FormulaTest {
 
   @Test 
   public void getEmptyFormula(){
-    //testing that the default =SUM() formula emptied out is still =SUM() 
-    assertEquals(this.dummyEmptyFormula, dummyFormulaObject.getEmptyFormula());
+    assertEquals(MockObjects.FULL_DUMMY_FORMULA, dummyFormula.getEmptyFormula());
 
     //testing that if the Formula doesn't have the parantheses(), it should return with "invalid" 
     assertEquals(Formula.INVALID, new Formula("d").getEmptyFormula());
