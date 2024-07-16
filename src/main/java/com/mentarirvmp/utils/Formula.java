@@ -52,32 +52,33 @@ public class Formula {
 
 
 
-  // private int getValueFromValidExpensesIn(String content){
-  //   String[] contentParsed = parseContentIntoArray(content);
-  //   String[] validExpenses = getValidExpenses(contentParsed);
-  //   //this is a placeholder 
-  //   return 0;  
-  // } 
+  private int getValueFromValidExpensesIn(String content){
+    String[] contentParsed = parseContentIntoArray(content);
+    ArrayList<Expenses> validExpenses = getValidExpensesArray(contentParsed);
+    //this is a placeholder 
+    return 0;  
+  } 
 
   private String[] parseContentIntoArray(String content){
     String[] contentParsed = content.split(",");
-    for(String item: contentParsed){
-      item = item.replace(" ", ""); 
-    }
+    // for(String item: contentParsed){ do I need this for parsing integer into string? 
+    //   item = item.replace(" ", ""); 
+    // }
     return contentParsed; 
 
   } 
 
-  // private String[] getValidExpenses(String[] idArray){
-  //   for(String id: idArray){
-  //     if(dataHandler.getExpenseByID(id).valid()){
+  private ArrayList<Expenses> getValidExpensesArray(String[] idArray){
+    ArrayList<Expenses> validExpensesArray = new ArrayList<Expenses>(); 
+    for(String id: idArray){
+      Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
+      if(currentExpense != Expenses.INVALID_EXPENSE_BY_ID){
+        validExpensesArray.add(currentExpense);
+      }
+    } 
 
-  //     }
-
-  //   } 
-
-
-  // } 
+    return validExpensesArray; 
+   } 
 
   //this formula will get the empty formula as well as the content inside of the formula
   public HashMap<String, String> getEmptyFormulaAndContent(){
