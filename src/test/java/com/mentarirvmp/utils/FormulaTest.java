@@ -7,10 +7,7 @@ import java.util.ArrayList;
 
 public class FormulaTest {
   //extract this to MockObjects too later. 
-  private String dummyContent = "E10, E2, E3";
-  private String dummyEmptyFormula = "SUM()";
-  private String dummyFormulaString = "SUM(" + dummyContent + ")";
-  private Formula dummyFormulaObject = new Formula(dummyFormulaString); 
+  
 
  
 
@@ -83,11 +80,39 @@ public class FormulaTest {
 
   // //simple test first with only 20, 10, blabla without the complicated structuring first 
   // //we only calculate the contents that are valid basically. 
+  // //were testing that 
+  // @Test
+  // public void parseContentIntoArrayTest(){
+  //   String dummyContent = "30,  40,    500, 10";
+  //   String[] dummyContentParsed = {"30", "  40", "    500", " 10"};
+
+  //   assertEquals(String.join("", dummyContentParsed), String.join("",dummyFormulaObject.parseContentIntoArray(dummyContent)));
+  // } 
+
   @Test 
   public void getValueFromValidExpensesTest(){
    
 
   } 
+
+  @Test 
+  public void getValidExpensesArrayTest(){
+    //test Setup 
+    ArrayList<Expenses> dummyExpenses = MockObjects.getDummyExpenseArray();
+    String[] idArray = new String[dummyExpenses.size() + 3]; 
+    for(int i = 0; i < dummyExpenses.size(); i++){
+      idArray[i] = String.valueOf(dummyExpenses.get(i).getId()); 
+    }
+    //hardcoded invalidId's 
+    idArray[dummyExpenses.size()] = "noob";
+    idArray[dummyExpenses.size() + 1] = "123123123123";
+    idArray[dummyExpenses.size() + 2] = "12b";
+
+    //we test by ensuring that the valid Id's only have the size of the valid dummyExpenses
+    assertEquals(dummyExpenses.size(), dummyFormulaObject.getValidExpensesArray(idArray).size());
+  } 
+
+
 
 
 }

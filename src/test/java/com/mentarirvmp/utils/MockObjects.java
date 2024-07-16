@@ -47,9 +47,22 @@ public class MockObjects {
     return dummyStatement;
   } 
 
+  public static Statement initializeDummyStatement(ArrayList<Expenses> dummyExpenseArray){
+    Statement dummyStatement = new Statement("dummyStatement");
+    dummyStatement.setExpenseArray(dummyExpenseArray);
+
+    return dummyStatement;
+  } 
+
   public static StatementsAndExpenseHandler initializeDummyDataHandler(){
     StatementsAndExpenseHandler dataHandler = new StatementsAndExpenseHandler(initializeDummyStatement());
     return dataHandler; 
+  } 
+
+  public static StatementsAndExpenseHandler initializeDummyDataHandler(Statement statement){
+    StatementsAndExpenseHandler dataHandler = new StatementsAndExpenseHandler(statement);
+    return dataHandler; 
+
   } 
 
   //make dummy Formula from dummyStatement; 

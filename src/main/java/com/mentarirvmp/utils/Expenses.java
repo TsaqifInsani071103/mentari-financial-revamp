@@ -11,7 +11,7 @@ import java.util.ArrayList;
 //I think I could make the formula object to act like a static class that's juggled by the Statements and Expense Handler Test.java. 
 
 public class Expenses {
-  public static Expenses INVALID_EXPENSE_BY_ID = new Expenses("invalid"); 
+  public static Expenses INVALID_EXPENSE = new Expenses("invalid"); 
   
   private String name; 
   private String description = ""; 

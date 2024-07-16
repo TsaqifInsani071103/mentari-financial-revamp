@@ -52,7 +52,7 @@ public class Formula {
 
 
 
-  private int getValueFromValidExpensesIn(String content){
+  public int getValueFromValidExpensesIn(String content){
     String[] contentParsed = parseContentIntoArray(content);
     ArrayList<Expenses> validExpenses = getValidExpensesArray(contentParsed);
     //this is a placeholder 
@@ -61,18 +61,18 @@ public class Formula {
 
   private String[] parseContentIntoArray(String content){
     String[] contentParsed = content.split(",");
-    // for(String item: contentParsed){ do I need this for parsing integer into string? 
+    // for(String item: contentParsed){ 
     //   item = item.replace(" ", ""); 
     // }
     return contentParsed; 
 
   } 
 
-  private ArrayList<Expenses> getValidExpensesArray(String[] idArray){
+  public ArrayList<Expenses> getValidExpensesArray(String[] idArray){
     ArrayList<Expenses> validExpensesArray = new ArrayList<Expenses>(); 
     for(String id: idArray){
       Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
-      if(currentExpense != Expenses.INVALID_EXPENSE_BY_ID){
+      if(currentExpense != Expenses.INVALID_EXPENSE){
         validExpensesArray.add(currentExpense);
       }
     } 

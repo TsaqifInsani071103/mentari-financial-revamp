@@ -53,10 +53,10 @@ public class Statement {
         return expense; 
       } else if(expense.hasChildren()){
         Expenses foundExpense = recursiveGetExpenseById(expense.getChildArray(), ID); 
-        if(foundExpense != Expenses.INVALID_EXPENSE_BY_ID) return foundExpense;
+        if(foundExpense != Expenses.INVALID_EXPENSE) return foundExpense;
       }
     }
-    return Expenses.INVALID_EXPENSE_BY_ID; 
+    return Expenses.INVALID_EXPENSE; 
 
 
   } 
