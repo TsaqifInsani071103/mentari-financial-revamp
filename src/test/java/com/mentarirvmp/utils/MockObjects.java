@@ -71,7 +71,7 @@ public class MockObjects {
     for(Expenses expense:getDummyExpenseArray()){
       content += expense.getId(); 
     }
-    String fullFormula = "(" +content+ ")";
+    String fullFormula = "SUM(" +content+ ")";
     return new Formula(fullFormula); 
 
   } 

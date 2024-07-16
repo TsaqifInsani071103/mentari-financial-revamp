@@ -1,20 +1,24 @@
 package com.mentarirvmp.utils;
 //These are the annotations 
 import org.junit.jupiter.api.Test;
+
+import com.mentarirvmp.servicehandlers.StatementsAndExpenseHandler;
+import com.mentarirvmp.statements.Statement;
+
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 public class FormulaTest {
   //extract this to MockObjects too later. 
-  
+  Statement dummyStatement = MockObjects.initializeDummyStatement();
+  StatementsAndExpenseHandler dataHandler = MockObjects.initializeDummyDataHandler(dummyStatement);
+  Formula dummyFormula = MockObjects.makeDummyFormulaFrom(dummyStatement); 
 
  
-
-  
-  @Test 
-  public void getFormulaTest(){
-    assertEquals(this.dummyFormulaString, this.dummyFormulaObject.getFormula());
+  @BeforeEach
+  public void setDataHandlerToDummyFormula(){
+    dummyFormula.setHandler(dataHandler);
   } 
 
   @Test 
