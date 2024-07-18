@@ -10,9 +10,8 @@ import com.mentarirvmp.statements.Statement;
 public class MockObjects {
   public static final String STATEMENT_NAME = "dummyStatement"; 
   public static final String EXPENSE_NAME = "Expense";
-  public static final String DUMMY_FORMULA = "SUM"; 
-  public static final String FULL_DUMMY_FORMULA = "SUM()"; 
-  
+  public static final String DUMMY_FORMULA = "SUM()"; 
+
   public static ArrayList<Expenses> getDummyExpenseArray(){
     //use Random to make different random values 
     ArrayList<Expenses> dummyExpenses = new ArrayList<Expenses>(); 
@@ -75,11 +74,15 @@ public class MockObjects {
     for(Expenses expense:getDummyExpenseArray()){
       content += expense.getId(); 
     }
-    String fullFormula = DUMMY_FORMULA + "(" +content+ ")";
+    String fullFormula = putContentInsideFormulaString(content); 
     return new Formula(fullFormula); 
   } 
 
-  public static String getContentFromMockFormula(){
-    
+  private static String putContentInsideFormulaString(String content){
+    int firstParanthesisIndex = DUMMY_FORMULA.indexOf("(");
+    int secondParanthesisIndex = DUMMY_FORMULA.indexOf(")");
+    String fullFormula = DUMMY_FORMULA.substring(firstParanthesisIndex, firstParanthesisIndex+1) + content + DUMMY_FORMULA.substring(secondParanthesisIndex);
+    return fullFormula; 
   } 
+
 }

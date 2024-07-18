@@ -11,19 +11,10 @@ import java.util.ArrayList;
 
 public class FormulaTest {
   //extract this to MockObjects too later. 
-  Statement dummyStatement = MockObjects.initializeDummyStatement();
-  StatementsAndExpenseHandler dataHandler = MockObjects.initializeDummyDataHandler(dummyStatement);
-  Formula dummyFormula = MockObjects.makeDummyFormulaFrom(dummyStatement); 
-
- 
-  @BeforeEach
-  public void setDataHandlerToDummyFormula(){
-    dummyFormula.setHandler(dataHandler);
-  } 
-
   @Test 
   public void getEmptyFormula(){
-    assertEquals(MockObjects.FULL_DUMMY_FORMULA, dummyFormula.getEmptyFormula());
+
+    assertEquals("SUM()", new Formula("SUM(123,412,41,23)").getEmptyFormula());
 
     //testing that if the Formula doesn't have the parantheses(), it should return with "invalid" 
     assertEquals(Formula.INVALID, new Formula("d").getEmptyFormula());
@@ -35,7 +26,9 @@ public class FormulaTest {
   @Test 
   public void getContentInsideFormula(){
     //get content if the formula is recognized 
-    assertEquals(this.dummyContent, this.dummyFormulaObject.getContentInsideFormula());
+    assertEquals("10,30,20", new Formula("SUM(10,30,20)").getContentInsideFormula());
+
+    //what about if the formula is not recognized 
 
   } 
 
@@ -58,8 +51,11 @@ public class FormulaTest {
   } 
 
   private void assertValidFormulaContentMap(){
-    assertEquals(dummyContent, this.dummyFormulaObject.getEmptyFormulaAndContent().get(Formula.CONTENT));
-    assertEquals(dummyEmptyFormula, this.dummyFormulaObject.getEmptyFormulaAndContent().get(Formula.EMPTY_FORMULA));
+    String dummyEmptyFormula = "SUM()";
+    String dummyContent = "10,20,30,40";
+    Formula dummyFormula = new Formula("SUM(" + dummyContent + ")");
+    assertEquals(dummyContent, dummyFormula.getEmptyFormulaAndContent().get(Formula.CONTENT));
+    assertEquals(dummyEmptyFormula, dummyFormula.getEmptyFormulaAndContent().get(Formula.EMPTY_FORMULA));
   } 
 
   private void assertInvalidFormulaContentMap(Formula formula){
@@ -102,17 +98,24 @@ public class FormulaTest {
   public void getValidExpensesArrayTest(){
     //test Setup 
     ArrayList<Expenses> dummyExpenses = MockObjects.getDummyExpenseArray();
+    Statement dummyStatement = MockObjects.initializeDummyStatement(dummyExpenses);
+    StatementsAndExpenseHandler dataHandler = MockObjects.initializeDummyDataHandler(dummyStatement);
+    Formula dummyFormula = MockObjects.makeDummyFormulaFrom(dummyStatement);
+    dummyFormula.setHandler(dataHandler); 
+
     String[] idArray = new String[dummyExpenses.size() + 3]; 
     for(int i = 0; i < dummyExpenses.size(); i++){
       idArray[i] = String.valueOf(dummyExpenses.get(i).getId()); 
     }
+    
     //hardcoded invalidId's 
-    idArray[dummyExpenses.size()] = "noob";
-    idArray[dummyExpenses.size() + 1] = "123123123123";
-    idArray[dummyExpenses.size() + 2] = "12b";
+    idArray[dummyExpenses.size()] = "12b"; //String 
+    idArray[dummyExpenses.size() + 1] = "1312524351231345123";//bigInt
+    idArray[dummyExpenses.size() + 2] = "12.0.23";//decimal
+
 
     //we test by ensuring that the valid Id's only have the size of the valid dummyExpenses
-    assertEquals(dummyExpenses.size(), dummyFormulaObject.getValidExpensesArray(idArray).size());
+    assertEquals(dummyExpenses.size(), dummyFormula.getValidExpensesArray(idArray).size());
   } 
 
 

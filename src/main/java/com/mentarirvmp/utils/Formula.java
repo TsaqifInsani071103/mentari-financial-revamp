@@ -50,8 +50,6 @@ public class Formula {
 
   }
 
-
-
   public int getValueFromValidExpensesIn(String content){
     String[] contentParsed = parseContentIntoArray(content);
     ArrayList<Expenses> validExpenses = getValidExpensesArray(contentParsed);
@@ -71,13 +69,28 @@ public class Formula {
   public ArrayList<Expenses> getValidExpensesArray(String[] idArray){
     ArrayList<Expenses> validExpensesArray = new ArrayList<Expenses>(); 
     for(String id: idArray){
+      if(!canBeConvertedToInt(id)) continue; 
       Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
       if(currentExpense != Expenses.INVALID_EXPENSE){
         validExpensesArray.add(currentExpense);
       }
+      
     } 
 
     return validExpensesArray; 
+   } 
+
+   private boolean canBeConvertedToInt(String str){
+    if (str == null || str.isEmpty()) {
+      return false;
+     } 
+
+    try {
+        Integer.parseInt(str);
+        return true;
+    } catch (NumberFormatException e) {
+        return false;
+    }
    } 
 
   //this formula will get the empty formula as well as the content inside of the formula
