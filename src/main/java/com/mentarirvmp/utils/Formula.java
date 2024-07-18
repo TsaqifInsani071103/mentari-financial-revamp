@@ -21,7 +21,7 @@ public class Formula {
   //I can prolly extract this into like FormulaFinals. 
   public static final String INVALID = "invalid";
   public static final String UNRECOGNIZED = "unrecognizedFormula";
-  public static final String CONTENT = "content";
+  public static final String ID_STRINGS = "content";
   public static final String EMPTY_FORMULA = "EmptyFormula";
 
   
@@ -47,12 +47,12 @@ public class Formula {
   } 
 
   public int calculateFormulaValue(){
-    HashMap<String, String> formulaMap = getEmptyFormulaAndContent();
-    String content = formulaMap.get(CONTENT); 
+    HashMap<String, String> formulaMap = getEmptyFormulaAndIdStrings();
+    String idStrings = formulaMap.get(ID_STRINGS); 
     String emptyFormula = formulaMap.get(EMPTY_FORMULA);
-    String[] contentParsed = content.split(",");
+    String[] idStringsParsed = idStrings.split(",");
 
-    return getValueFromArrayByEquation(contentParsed, emptyFormula); 
+    return getValueFromArrayByEquation(idStringsParsed, emptyFormula); 
   }
 
   public int getValueFromArrayByEquation(String[] idArray, String equation){
@@ -125,7 +125,7 @@ public class Formula {
    } 
 
   //this formula will get the empty formula as well as the content inside of the formula
-  public HashMap<String, String> getEmptyFormulaAndContent(){
+  public HashMap<String, String> getEmptyFormulaAndIdStrings(){
     HashMap<String, String> formulaMap = new HashMap<>();
     initializeFormulaSynthesized(formulaMap);
     return formulaMap; 
@@ -151,12 +151,12 @@ public class Formula {
 
   private void populateValidFormulaMap(HashMap<String, String> formulaMap, String emptyFormula){
     formulaMap.put(EMPTY_FORMULA, emptyFormula);
-    formulaMap.put(CONTENT, getContentInsideFormula());
+    formulaMap.put(ID_STRINGS, getIdStringsInsideFormula());
   } 
 
   private void populateInvalidFormulaMap(HashMap<String, String> formulaMap){
     formulaMap.put(EMPTY_FORMULA, INVALID);
-    formulaMap.put(CONTENT, INVALID); 
+    formulaMap.put(ID_STRINGS, INVALID); 
   } 
 
   private boolean validFormulaFormat(){
@@ -181,7 +181,7 @@ public class Formula {
     }
   } 
 
-  private String getContentInsideFormula(){
+  private String getIdStringsInsideFormula(){
     String contentInsideFormula = this.formula.substring(this.openParanthesisIndex + 1, closeParanthesisIndex); 
     return contentInsideFormula;
   } 

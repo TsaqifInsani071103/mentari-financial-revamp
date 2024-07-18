@@ -45,13 +45,13 @@ public class FormulaTest {
     String dummyEmptyFormula = "SUM()";
     String dummyContent = "10,20,30,40";
     Formula dummyFormula = new Formula("SUM(" + dummyContent + ")");
-    assertEquals(dummyContent, dummyFormula.getEmptyFormulaAndContent().get(Formula.CONTENT));
-    assertEquals(dummyEmptyFormula, dummyFormula.getEmptyFormulaAndContent().get(Formula.EMPTY_FORMULA));
+    assertEquals(dummyContent, dummyFormula.getEmptyFormulaAndIdStrings().get(Formula.ID_STRINGS));
+    assertEquals(dummyEmptyFormula, dummyFormula.getEmptyFormulaAndIdStrings().get(Formula.EMPTY_FORMULA));
   } 
 
   private void assertInvalidFormulaContentMap(Formula formula){
-    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get(Formula.CONTENT));
-    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndContent().get(Formula.EMPTY_FORMULA));
+    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndIdStrings().get(Formula.ID_STRINGS));
+    assertEquals(Formula.INVALID, formula.getEmptyFormulaAndIdStrings().get(Formula.EMPTY_FORMULA));
   } 
 
   //we want the code to work by: we check if the formula is valid, if it does, delete the outer formula SUM(DOODLE()) becomes DOODLE() and we continue with this. This means we need to check from left index to right index for the parsing logic. 
