@@ -17,11 +17,13 @@ public class Formula {
   private String formula = ""; 
   private int openParanthesisIndex;
   private int closeParanthesisIndex;
-  public static String INVALID = "invalid";
-  public static String UNRECOGNIZED = "unrecognizedFormula";
-  public static String CONTENT = "content";
-  public static String EMPTY_FORMULA = "EmptyFormula";
   private StatementsAndExpenseHandler dataHandler; 
+  public static final String INVALID = "invalid";
+  public static final String UNRECOGNIZED = "unrecognizedFormula";
+  public static final String CONTENT = "content";
+  public static final String EMPTY_FORMULA = "EmptyFormula";
+
+  
   
   public Formula(String initialFormula){
     this.formula = initialFormula; 
@@ -46,15 +48,23 @@ public class Formula {
   public int calculateFormulaValue(){
     HashMap<String, String> formulaMap = getEmptyFormulaAndContent();
     String content = formulaMap.get(CONTENT); 
-    return getValueFromValidExpensesIn(content); 
-
-  }
-
-  //this one is only for SUM() btw. 
-  //make this more efficient by going through the array once and then immediately populating the value field instead of doing this like twice/thrice. 
-  public int getValueFromValidExpensesIn(String content){
+    String emptyFormula = formulaMap.get(EMPTY_FORMULA);
     String[] contentParsed = content.split(",");
     ArrayList<Expenses> validExpenses = getValidExpensesArray(contentParsed);
+
+    return getValueFromArrayByEquation(validExpenses, emptyFormula); 
+  }
+
+  public int getValueFromArrayByEquation(ArrayList<Expenses> validExpenses, String equation){
+    switch(equation){
+      case "SUM()":
+        return calculateArrayBySum(validExpenses);
+      default:
+        return 0; 
+    }
+  } 
+
+  private int calculateArrayBySum(ArrayList<Expenses> validExpenses){
     int value = 0;
     for(Expenses expense: validExpenses){
       //what happens if the value is not a number huh?? 
@@ -144,6 +154,8 @@ public class Formula {
   private boolean isRecognizedFormula(String emptyFormula){
     switch(emptyFormula){
       case "SUM()":
+        return true; 
+      case "MULTIPLY()":
         return true; 
       default:
         return false; 
