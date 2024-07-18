@@ -18,6 +18,7 @@ public class Formula {
   private int openParanthesisIndex;
   private int closeParanthesisIndex;
   private StatementsAndExpenseHandler dataHandler; 
+  //I can prolly extract this into like FormulaFinals. 
   public static final String INVALID = "invalid";
   public static final String UNRECOGNIZED = "unrecognizedFormula";
   public static final String CONTENT = "content";
@@ -67,7 +68,6 @@ public class Formula {
   private int calculateArrayBySum(ArrayList<Expenses> validExpenses){
     int value = 0;
     for(Expenses expense: validExpenses){
-      //what happens if the value is not a number huh?? 
       value += Integer.parseInt(expense.getValue()); 
     }
     //this is a placeholder 

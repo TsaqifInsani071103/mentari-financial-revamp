@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 public class ValidValuesFormulaTest {
-      //test Setup 
+  //test Setup 
   private ArrayList<Expenses> dummyExpenses = MockObjects.getDummyExpenseArray();
   private Statement dummyStatement = MockObjects.initializeDummyStatement(dummyExpenses);
   private StatementsAndExpenseHandler dataHandler = MockObjects.initializeDummyDataHandler(dummyStatement);
@@ -35,7 +35,7 @@ public class ValidValuesFormulaTest {
     //resetting dummyFormula 
     dummyFormula = MockObjects.makeDummyFormulaFrom(dummyStatement); 
     dummyFormula.setHandler(dataHandler);
-    
+
     assertEquals(30, dummyFormula.calculateFormulaValue()); 
 
   } 
