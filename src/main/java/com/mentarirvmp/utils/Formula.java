@@ -51,34 +51,29 @@ public class Formula {
   }
 
   public int getValueFromValidExpensesIn(String content){
-    String[] contentParsed = parseContentIntoArray(content);
+    String[] contentParsed = content.split(",");
     ArrayList<Expenses> validExpenses = getValidExpensesArray(contentParsed);
     //this is a placeholder 
     return 0;  
   } 
 
-  private String[] parseContentIntoArray(String content){
-    String[] contentParsed = content.split(",");
-    // for(String item: contentParsed){ 
-    //   item = item.replace(" ", ""); 
-    // }
-    return contentParsed; 
-
-  } 
-
   public ArrayList<Expenses> getValidExpensesArray(String[] idArray){
     ArrayList<Expenses> validExpensesArray = new ArrayList<Expenses>(); 
     for(String id: idArray){
-      if(!canBeConvertedToInt(id)) continue; 
-      Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
-      if(currentExpense != Expenses.INVALID_EXPENSE){
-        validExpensesArray.add(currentExpense);
-      }
+      populateArrayIfExpenseValid(validExpensesArray, id);
       
     } 
-
     return validExpensesArray; 
    } 
+
+  private void populateArrayIfExpenseValid(ArrayList<Expenses> validExpensesArray, String id){
+    if(!canBeConvertedToInt(id)) return; 
+    Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
+    if(currentExpense != Expenses.INVALID_EXPENSE){
+      validExpensesArray.add(currentExpense);
+    }
+
+  } 
 
    private boolean canBeConvertedToInt(String str){
     if (str == null || str.isEmpty()) {
@@ -148,7 +143,7 @@ public class Formula {
     }
   } 
 
-  public String getContentInsideFormula(){
+  private String getContentInsideFormula(){
     String contentInsideFormula = this.formula.substring(this.openParanthesisIndex + 1, closeParanthesisIndex); 
     return contentInsideFormula;
   } 

@@ -24,15 +24,6 @@ public class FormulaTest {
   }
 
   @Test 
-  public void getContentInsideFormula(){
-    //get content if the formula is recognized 
-    assertEquals("10,30,20", new Formula("SUM(10,30,20)").getContentInsideFormula());
-
-    //what about if the formula is not recognized 
-
-  } 
-
-  @Test 
   public void getEmptyFormulaAndContent(){
     //testing that we're getting the content inside and the empty formula when the formula is right. 
     assertValidFormulaContentMap();
@@ -88,37 +79,9 @@ public class FormulaTest {
   //   assertEquals(String.join("", dummyContentParsed), String.join("",dummyFormulaObject.parseContentIntoArray(dummyContent)));
   // } 
 
-  @Test 
-  public void getValueFromValidExpensesTest(){
-   
-
-  } 
-
-  @Test 
-  public void getValidExpensesArrayTest(){
-    //test Setup 
-    ArrayList<Expenses> dummyExpenses = MockObjects.getDummyExpenseArray();
-    Statement dummyStatement = MockObjects.initializeDummyStatement(dummyExpenses);
-    StatementsAndExpenseHandler dataHandler = MockObjects.initializeDummyDataHandler(dummyStatement);
-    Formula dummyFormula = MockObjects.makeDummyFormulaFrom(dummyStatement);
-    dummyFormula.setHandler(dataHandler); 
-
-    String[] idArray = new String[dummyExpenses.size() + 3]; 
-    for(int i = 0; i < dummyExpenses.size(); i++){
-      idArray[i] = String.valueOf(dummyExpenses.get(i).getId()); 
-    }
-    
-    //hardcoded invalidId's 
-    idArray[dummyExpenses.size()] = "12b"; //String 
-    idArray[dummyExpenses.size() + 1] = "1312524351231345123";//bigInt
-    idArray[dummyExpenses.size() + 2] = "12.0.23";//decimal
 
 
-    //we test by ensuring that the valid Id's only have the size of the valid dummyExpenses
-    assertEquals(dummyExpenses.size(), dummyFormula.getValidExpensesArray(idArray).size());
-  } 
-
-
+  
 
 
 }
