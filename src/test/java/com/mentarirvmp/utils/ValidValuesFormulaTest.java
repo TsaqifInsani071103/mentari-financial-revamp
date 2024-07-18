@@ -40,21 +40,7 @@ public class ValidValuesFormulaTest {
 
   } 
 
-  @Test 
-  public void getValidExpensesArrayTest(){
-    String[] idArray = new String[dummyExpenses.size() + 3]; 
-    for(int i = 0; i < dummyExpenses.size(); i++){
-      idArray[i] = String.valueOf(dummyExpenses.get(i).getId()); 
-    }
 
-    //hardcoded invalidId's 
-    idArray[dummyExpenses.size()] = "12b"; //String 
-    idArray[dummyExpenses.size() + 1] = "1312524351231345123";//bigInt
-    idArray[dummyExpenses.size() + 2] = "12.0.23";//decimal
-
-    //we test by ensuring that the valid Id's only have the size of the valid dummyExpenses
-    assertEquals(dummyExpenses.size(), dummyFormula.getValidExpensesArray(idArray).size());
-  } 
 
 
 }

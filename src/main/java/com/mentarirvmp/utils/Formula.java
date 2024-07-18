@@ -51,46 +51,65 @@ public class Formula {
     String content = formulaMap.get(CONTENT); 
     String emptyFormula = formulaMap.get(EMPTY_FORMULA);
     String[] contentParsed = content.split(",");
-    ArrayList<Expenses> validExpenses = getValidExpensesArray(contentParsed);
 
-    return getValueFromArrayByEquation(validExpenses, emptyFormula); 
+    return getValueFromArrayByEquation(contentParsed, emptyFormula); 
   }
 
-  public int getValueFromArrayByEquation(ArrayList<Expenses> validExpenses, String equation){
+  public int getValueFromArrayByEquation(String[] idArray, String equation){
     switch(equation){
       case "SUM()":
-        return calculateArrayBySum(validExpenses);
+        return calculateSumFromIds(idArray);
       default:
         return 0; 
     }
   } 
 
-  private int calculateArrayBySum(ArrayList<Expenses> validExpenses){
+  private int calculateSumFromIds(String[] idArray) {
     int value = 0;
-    for(Expenses expense: validExpenses){
-      value += Integer.parseInt(expense.getValue()); 
+    for (String id : idArray) {
+        if (canBeConvertedToInt(id)) {
+          value = addToValueIfExpenseValid(id, value);
+        }
     }
-    //this is a placeholder 
-    return value;  
+    return value;
   } 
 
-  public ArrayList<Expenses> getValidExpensesArray(String[] idArray){
-    ArrayList<Expenses> validExpensesArray = new ArrayList<Expenses>(); 
-    for(String id: idArray){
-      populateArrayIfExpenseValid(validExpensesArray, id);
-      
-    } 
-    return validExpensesArray; 
-   } 
-
-  private void populateArrayIfExpenseValid(ArrayList<Expenses> validExpensesArray, String id){
-    if(!canBeConvertedToInt(id)) return; 
+  private int addToValueIfExpenseValid(String id, int value){
     Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
-    if(currentExpense != Expenses.INVALID_EXPENSE){
-      validExpensesArray.add(currentExpense);
+    if (currentExpense != Expenses.INVALID_EXPENSE) {
+        value += Integer.parseInt(currentExpense.getValue());
     }
-
+    return value; 
   } 
+
+  // private int calculateArrayBySum(ArrayList<Expenses> validExpenses){
+  //   int value = 0;
+  //   for(Expenses expense: validExpenses){
+  //     value += Integer.parseInt(expense.getValue()); 
+  //   }
+  //   //this is a placeholder 
+  //   return value;  
+  // } 
+
+
+
+  // public ArrayList<Expenses> getValidExpensesArray(String[] idArray){
+  //   ArrayList<Expenses> validExpensesArray = new ArrayList<Expenses>(); 
+  //   for(String id: idArray){
+  //     populateArrayIfExpenseValid(validExpensesArray, id);
+      
+  //   } 
+  //   return validExpensesArray; 
+  //  } 
+
+  // private void populateArrayIfExpenseValid(ArrayList<Expenses> validExpensesArray, String id){
+  //   if(!canBeConvertedToInt(id)) return; 
+  //   Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
+  //   if(currentExpense != Expenses.INVALID_EXPENSE){
+  //     validExpensesArray.add(currentExpense);
+  //   }
+
+  // } 
 
    private boolean canBeConvertedToInt(String str){
     if (str == null || str.isEmpty()) {
