@@ -12,6 +12,7 @@ import com.mentarirvmp.servicehandlers.StatementsAndExpenseHandler;
 import java.math.BigDecimal; 
 import java.util.HashMap;
 
+//formula is basically just a tool for StatementsAndExpensehandler to use to basically calculate the valus of the formula strings in the expenses 
 public class Formula {
   private String formula = ""; 
   private int openParanthesisIndex;
@@ -45,16 +46,22 @@ public class Formula {
   public int calculateFormulaValue(){
     HashMap<String, String> formulaMap = getEmptyFormulaAndContent();
     String content = formulaMap.get(CONTENT); 
-
-    return 0; 
+    return getValueFromValidExpensesIn(content); 
 
   }
 
+  //this one is only for SUM() btw. 
+  //make this more efficient by going through the array once and then immediately populating the value field instead of doing this like twice/thrice. 
   public int getValueFromValidExpensesIn(String content){
     String[] contentParsed = content.split(",");
     ArrayList<Expenses> validExpenses = getValidExpensesArray(contentParsed);
+    int value = 0;
+    for(Expenses expense: validExpenses){
+      //what happens if the value is not a number huh?? 
+      value += Integer.parseInt(expense.getValue()); 
+    }
     //this is a placeholder 
-    return 0;  
+    return value;  
   } 
 
   public ArrayList<Expenses> getValidExpensesArray(String[] idArray){

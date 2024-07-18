@@ -71,8 +71,9 @@ public class MockObjects {
   //make dummy Formula from dummyStatement; 
   public static Formula makeDummyFormulaFrom(Statement dummyStatement){
     String content = ""; 
-    for(Expenses expense:getDummyExpenseArray()){
+    for(Expenses expense:dummyStatement.getExpenseArray()){
       content += expense.getId(); 
+      content += ",";
     }
     String fullFormula = putContentInsideFormulaString(content); 
     return new Formula(fullFormula); 
@@ -81,7 +82,7 @@ public class MockObjects {
   private static String putContentInsideFormulaString(String content){
     int firstParanthesisIndex = DUMMY_FORMULA.indexOf("(");
     int secondParanthesisIndex = DUMMY_FORMULA.indexOf(")");
-    String fullFormula = DUMMY_FORMULA.substring(firstParanthesisIndex, firstParanthesisIndex+1) + content + DUMMY_FORMULA.substring(secondParanthesisIndex);
+    String fullFormula = DUMMY_FORMULA.substring(0, firstParanthesisIndex+1) + content + DUMMY_FORMULA.substring(secondParanthesisIndex);
     return fullFormula; 
   } 
 

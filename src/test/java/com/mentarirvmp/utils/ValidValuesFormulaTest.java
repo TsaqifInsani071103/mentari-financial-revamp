@@ -20,6 +20,27 @@ public class ValidValuesFormulaTest {
   } 
 
   @Test 
+  public void getValueFromValidExpensesTest(){
+    this.dummyExpenses.clear();
+    Expenses expense1 = new Expenses("asfgearfw");
+    expense1.setValue("10"); 
+    Expenses expense2 = new Expenses("hrsthfdg");
+    expense2.setValue("10"); 
+    Expenses expense3 = new Expenses("yrsthfg");
+    expense3.setValue("10"); 
+    dummyExpenses.add(expense1);
+    dummyExpenses.add(expense2);
+    dummyExpenses.add(expense3);
+
+    //resetting dummyFormula 
+    dummyFormula = MockObjects.makeDummyFormulaFrom(dummyStatement); 
+    dummyFormula.setHandler(dataHandler);
+    
+    assertEquals(30, dummyFormula.calculateFormulaValue()); 
+
+  } 
+
+  @Test 
   public void getValidExpensesArrayTest(){
     String[] idArray = new String[dummyExpenses.size() + 3]; 
     for(int i = 0; i < dummyExpenses.size(); i++){
