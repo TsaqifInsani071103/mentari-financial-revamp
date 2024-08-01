@@ -52,10 +52,10 @@ public class Formula {
     String emptyFormula = formulaMap.get(EMPTY_FORMULA);
     String[] idStringsParsed = idStrings.split(",");
 
-    return getValueFromArrayByEquation(idStringsParsed, emptyFormula); 
+    return getValueFromArrayByRespectiveEquation(idStringsParsed, emptyFormula); 
   }
 
-  public int getValueFromArrayByEquation(String[] idArray, String equation){
+  public int getValueFromArrayByRespectiveEquation(String[] idArray, String equation){
     switch(equation){
       case "SUM()":
         return calculateSumFromIds(idArray);
@@ -63,7 +63,7 @@ public class Formula {
         return 0; 
     }
   } 
-  
+
   //legit right now I'm only using data Handler here, so I can make Formula into a static class and extract addToValueIfExpenseValid into dataHandler. 
   private int calculateSumFromIds(String[] idArray) {
     int value = 0;
@@ -99,9 +99,11 @@ public class Formula {
   private void initializeFormulaSynthesized(HashMap<String, String> formulaMap){
     String emptyFormula = getEmptyFormula();
     if(emptyFormula != UNRECOGNIZED && emptyFormula != INVALID){
-      populateValidFormulaMap(formulaMap, emptyFormula);
+      formulaMap.put(EMPTY_FORMULA, emptyFormula);
+      formulaMap.put(ID_STRINGS, getIdStringsInsideFormula());
     }else{
-      populateInvalidFormulaMap(formulaMap); 
+      formulaMap.put(EMPTY_FORMULA, INVALID);
+      formulaMap.put(ID_STRINGS, INVALID); 
     }
   } 
 
@@ -112,16 +114,6 @@ public class Formula {
       return isRecognizedFormula(emptyFormula)? emptyFormula : UNRECOGNIZED;
     }
     return INVALID;
-  } 
-
-  private void populateValidFormulaMap(HashMap<String, String> formulaMap, String emptyFormula){
-    formulaMap.put(EMPTY_FORMULA, emptyFormula);
-    formulaMap.put(ID_STRINGS, getIdStringsInsideFormula());
-  } 
-
-  private void populateInvalidFormulaMap(HashMap<String, String> formulaMap){
-    formulaMap.put(EMPTY_FORMULA, INVALID);
-    formulaMap.put(ID_STRINGS, INVALID); 
   } 
 
   private boolean validFormulaFormat(){

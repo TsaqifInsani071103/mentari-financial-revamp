@@ -7,6 +7,8 @@ import com.mentarirvmp.statements.Statement;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
+
+//definitely clean these tests up. 
 public class ValidValuesFormulaTest {
   //test Setup 
   private ArrayList<Expenses> dummyExpenses = MockObjects.getDummyExpenseArray();
