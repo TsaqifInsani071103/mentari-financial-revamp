@@ -19,12 +19,20 @@ public class StatementsAndExpenseHandler {
     return currentStatement.getExpenseById(ID); 
   }
 
+  public int getValueIfExpenseIdValid(String id){
+    Expenses currentExpense = getExpenseByID(Integer.parseInt(id));
+    if(currentExpense != Expenses.INVALID_EXPENSE){
+      return Integer.parseInt(currentExpense.getValue());
+    }
+    return 0; 
+
+  } 
+
+
 
 
 
   //cant formula just be a static class at this point? 
-
-  //thing is every expense might have a formula, so i'll just make the formula based on the currentExpense we're looking at or something like that 
 
 
   

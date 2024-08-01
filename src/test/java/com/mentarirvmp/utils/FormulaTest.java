@@ -52,32 +52,7 @@ public class FormulaTest {
   private void assertInvalidFormulaContentMap(Formula formula){
     assertEquals(Formula.INVALID, formula.getEmptyFormulaAndIdStrings().get(Formula.ID_STRINGS));
     assertEquals(Formula.INVALID, formula.getEmptyFormulaAndIdStrings().get(Formula.EMPTY_FORMULA));
-  } 
-
-  //we want the code to work by: we check if the formula is valid, if it does, delete the outer formula SUM(DOODLE()) becomes DOODLE() and we continue with this. This means we need to check from left index to right index for the parsing logic. 
-
-  //if content is valid we calculate the value 
-  // @Test 
-  // public void getNestedFormula(){
-  //   ArrayList<Expenses> dummyExpenses = MockObjects.initializeDummyExpenses(); 
-  //   for(Expenses i : dummyExpenses){
-  //     System.out.println(i.getName());
-  //     System.out.println(i.getValue());
-  //   }
-
-    
-  // } 
-
-  // //simple test first with only 20, 10, blabla without the complicated structuring first 
-  // //we only calculate the contents that are valid basically. 
-  // //were testing that 
-  // @Test
-  // public void parseContentIntoArrayTest(){
-  //   String dummyContent = "30,  40,    500, 10";
-  //   String[] dummyContentParsed = {"30", "  40", "    500", " 10"};
-
-  //   assertEquals(String.join("", dummyContentParsed), String.join("",dummyFormulaObject.parseContentIntoArray(dummyContent)));
-  // } 
+  }  
 
 
 

@@ -63,66 +63,31 @@ public class Formula {
         return 0; 
     }
   } 
-
+  
+  //legit right now I'm only using data Handler here, so I can make Formula into a static class and extract addToValueIfExpenseValid into dataHandler. 
   private int calculateSumFromIds(String[] idArray) {
     int value = 0;
     for (String id : idArray) {
         if (canBeConvertedToInt(id)) {
-          value = addToValueIfExpenseValid(id, value);
+          value = dataHandler.getValueIfExpenseIdValid(id); 
         }
     }
     return value;
   } 
 
-  private int addToValueIfExpenseValid(String id, int value){
-    Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
-    if (currentExpense != Expenses.INVALID_EXPENSE) {
-        value += Integer.parseInt(currentExpense.getValue());
-    }
-    return value; 
-  } 
 
-  // private int calculateArrayBySum(ArrayList<Expenses> validExpenses){
-  //   int value = 0;
-  //   for(Expenses expense: validExpenses){
-  //     value += Integer.parseInt(expense.getValue()); 
-  //   }
-  //   //this is a placeholder 
-  //   return value;  
-  // } 
+  private boolean canBeConvertedToInt(String str){
+  if (str == null || str.isEmpty()) {
+    return false;
+    } 
 
-
-
-  // public ArrayList<Expenses> getValidExpensesArray(String[] idArray){
-  //   ArrayList<Expenses> validExpensesArray = new ArrayList<Expenses>(); 
-  //   for(String id: idArray){
-  //     populateArrayIfExpenseValid(validExpensesArray, id);
-      
-  //   } 
-  //   return validExpensesArray; 
-  //  } 
-
-  // private void populateArrayIfExpenseValid(ArrayList<Expenses> validExpensesArray, String id){
-  //   if(!canBeConvertedToInt(id)) return; 
-  //   Expenses currentExpense = dataHandler.getExpenseByID(Integer.parseInt(id));
-  //   if(currentExpense != Expenses.INVALID_EXPENSE){
-  //     validExpensesArray.add(currentExpense);
-  //   }
-
-  // } 
-
-   private boolean canBeConvertedToInt(String str){
-    if (str == null || str.isEmpty()) {
+  try {
+      Integer.parseInt(str);
+      return true;
+  } catch (NumberFormatException e) {
       return false;
-     } 
-
-    try {
-        Integer.parseInt(str);
-        return true;
-    } catch (NumberFormatException e) {
-        return false;
-    }
-   } 
+  }
+  } 
 
   //this formula will get the empty formula as well as the content inside of the formula
   public HashMap<String, String> getEmptyFormulaAndIdStrings(){
