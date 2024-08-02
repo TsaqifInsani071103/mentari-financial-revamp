@@ -68,16 +68,16 @@ public class MockObjects {
 
   } 
 
-  //make dummy Formula from dummyStatement; 
-  public static Formula makeDummyFormulaFrom(Statement dummyStatement){
-    String content = ""; 
-    for(Expenses expense:dummyStatement.getExpenseArray()){
-      content += expense.getId(); 
-      content += ",";
-    }
-    String fullFormula = putContentInsideFormulaString(content); 
-    return new Formula(fullFormula); 
-  } 
+  // //make dummy Formula from dummyStatement; 
+  // public static Formula makeDummyFormulaFrom(Statement dummyStatement){
+  //   String content = ""; 
+  //   for(Expenses expense:dummyStatement.getExpenseArray()){
+  //     content += expense.getId(); 
+  //     content += ",";
+  //   }
+  //   String fullFormula = putContentInsideFormulaString(content); 
+  //   return new Formula(fullFormula); 
+  // } 
 
   private static String putContentInsideFormulaString(String content){
     int firstParanthesisIndex = DUMMY_FORMULA.indexOf("(");
