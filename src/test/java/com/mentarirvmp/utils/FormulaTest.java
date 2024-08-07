@@ -12,12 +12,18 @@ import java.util.ArrayList;
 public class FormulaTest {
   //extract this to MockObjects too later. 
 
+  //use Case: 
+  //
 
-
+  //first thing to test is if the passed formula is valid or not. 
   @Test 
   public void validFormulaFormat(){
-    //valid means you have correct numbe of enclosing paranthesis, accounting for nested formulas 
-    //SUM(MULTIPLY(ANOTHERONE())) regardless of the name of the equation it should be valid if the 
+
+    //remember that you need to check for a recognized formula preceeding the opening paranthesis. 
+    String dummyFormula = "SUM(MULTIPLY())"; 
+    Boolean formulaValidity = Formula.isFormulaValid(dummyFormula);
+    //first case SUM(MULTIPLY()) is true  
+    assertEquals(true, formulaValidity);
 
   } 
 
