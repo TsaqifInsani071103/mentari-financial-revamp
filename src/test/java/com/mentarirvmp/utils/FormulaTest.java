@@ -20,7 +20,7 @@ public class FormulaTest {
   public void validFormulaFormat(){
 
     //remember that you need to check for a recognized formula preceeding the opening paranthesis. 
-    String dummyFormula = "SUM(MULTIPLY())"; 
+    String dummyFormula = "SUM(MULTIPLY(12, 32, SUM(32,32)), SUM(32, 43,SUM(3,3)))"; 
     Boolean formulaValidity = Formula.isFormulaValid(dummyFormula);
     //first case SUM(MULTIPLY()) is true  
     assertEquals(true, formulaValidity);
