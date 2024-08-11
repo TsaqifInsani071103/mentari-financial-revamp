@@ -39,11 +39,11 @@ public class Formula {
     }
 
     private boolean formulaParanthesesValid(){
-      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1 || !sameNumberOfOpenAndCloseParanthesis()) return false;
+      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1 || !sameNumberOfOpenAndCloseParanthesis(this.formula)) return false;
       return true; 
     }
 
-    private boolean sameNumberOfOpenAndCloseParanthesis(){
+    public static boolean sameNumberOfOpenAndCloseParanthesis(String formula){
       Stack<Character> paranthesesStack = new Stack<>();
       for(int i = 0; i < formula.length(); i++){
         if(formula.charAt(i) == '(') paranthesesStack.push('(');
@@ -80,16 +80,16 @@ public class Formula {
 
     // ArrayList<String> nestedList = new ArrayList<String>(Arrays.asList(s.split("")))
     String[] nestedContentArray = nestedContent.split(",");
-    System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());
+    System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
     for(int i = 0; i < nestedContentArray.length; i++){
       String indivContent = nestedContentArray[i].trim();
       int openingParanthesisIndex = indivContent.indexOf("(");
       int closingParanthesisIndex = indivContent.indexOf(")");
       if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1){
         System.out.println("TIS THE PROBLEM STRING " + indivContent);
-        while(nestedContentArray[i].indexOf(')') == -1){
+        while(!FormulaAnatomy.sameNumberOfOpenAndCloseParanthesis(indivContent)){
           indivContent = indivContent + "," + nestedContentArray[i+1];
-          System.out.println("NEW STRING " + indivContent);
+          System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
           i++;
         }
       }
@@ -100,7 +100,8 @@ public class Formula {
       if(!isFormulaValid(indivContent)) return false; 
     }
 
-    parentFormulaNode.printAllFormulas();
+    System.out.println("==============");
+    parentFormulaNode.printAllFormulas();//!!!!!!!!!!!!!!!!!!
 
 
     return true; 

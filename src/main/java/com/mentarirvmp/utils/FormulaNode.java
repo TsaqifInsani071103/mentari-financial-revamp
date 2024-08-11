@@ -23,7 +23,7 @@ public class FormulaNode {
   public void printAllFormulas() {
     System.out.println(this.formula);  // Print the current node's formula
     for (FormulaNode child : children) {
-        child.printAllFormulas();  // Recursively print each child's formulas
+      child.printAllFormulas();  // Recursively print each child's formulas
     }
   }
 }
