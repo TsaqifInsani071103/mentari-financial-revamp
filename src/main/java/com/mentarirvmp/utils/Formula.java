@@ -31,31 +31,48 @@ public class Formula {
   //then I want to ensure that there is enough number of opening and closing paranthesis, each valid enclosing formula and paranthesis will then be extracted into a stack that I will in the end pop to calculate the formula. 
   //I want to check that the 
   public static boolean isFormulaValid(String formula){
+    ArrayList<Boolean> truthArray = new ArrayList<>();
+    //base case 
     //check if the formula can be split into array elements by using split(",") and then iterate through that. 
     int lastIndex = formula.length()-1; 
     int openingParanthesisIndex = formula.indexOf('(');
     if(formula.charAt(lastIndex) != ')') return false; 
     if(openingParanthesisIndex == -1) return false; 
+
     String formulaBehindOpenParanthesis = formula.substring(0, openingParanthesisIndex);
     if(!recognizedFormula(formulaBehindOpenParanthesis)) return false; 
+
     //put the formulaBehindOpenParanthesis into a parent node in the tree. 
-    FormulaNode rootNode = new FormulaNode(formulaBehindOpenParanthesis);
+    FormulaNode parentNode = new FormulaNode(formulaBehindOpenParanthesis);
     String nestedContent = formula.substring(openingParanthesisIndex + 1, lastIndex);
-    return isNestedFormulaValid(rootNode, nestedContent);
+
+    truthArray.add(isNestedFormulaValid(parentNode, nestedContent));
+
+    for(Boolean truth: truthArray){
+      if(truth == false) return false; 
+    }
+    return true; 
   } 
 
   private static boolean isNestedFormulaValid(FormulaNode parentFormula, String formula){
+    //base case 
+    if(formula.equals("")){ 
+      parentFormula.addChild(new FormulaNode("0"));
+      return true; 
+    }
+
     String[] splitFormula = formula.split(",");
     for(String nestedFormula:splitFormula){
       try{
         //check if its a number or a formula, if its a string its invalid 
         int number = Integer.parseInt(nestedFormula);
-        System.out.println(number);
+        parentFormula.addChild(new FormulaNode(nestedFormula)); //add the number as is
       }catch(Error e){
-        
+        return isFormulaValid(nestedFormula); 
       }
     }
-    return true;
+
+    return false; 
 
   }
 
