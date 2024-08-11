@@ -20,20 +20,20 @@ public class Formula {
     private String formula;
     private int lastIndex;
     private int openingParanthesisIndex;
-    private String parentFormula; 
-    private String nestedContent; 
+    public String parentFormula; 
+    public String nestedContent; 
     public boolean isValid = false; 
 
 
     public FormulaAnatomy(String formula){
-      this.formula= formula; 
+      this.formula = formula; 
       this.lastIndex = formula.length()-1; 
       this.openingParanthesisIndex = formula.indexOf('(');
       if(formulaParanthesesValid()){
         initializeParentFormulaAndNestedContent();
-      }
-      if(recognizedFormula()){
-        isValid = true; 
+        if(recognizedFormula()){
+          isValid = true; 
+        }
       }
     }
 
@@ -68,9 +68,7 @@ public class Formula {
     String nestedContent = formulaPackage.nestedContent;
 
     for(String indivContent: nestedContent.split(",")){
-      if(isInteger(indivContent)){
-        parentFormulaNode.addChild(new FormulaNode(indivContent));
-      }
+      System.out.println(indivContent instanceof String);
     }
 
 

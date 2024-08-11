@@ -44,11 +44,7 @@ public class FormulaTest {
 
   } 
 
-  //I can extract this into its own class 
-  @Test 
-  public void recognizedFormula(){
 
-  } 
   // @Test 
   // public void getEmptyFormula(){
 
