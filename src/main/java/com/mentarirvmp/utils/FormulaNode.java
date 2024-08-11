@@ -20,10 +20,14 @@ public class FormulaNode {
     child.setParent(this);
   }
 
-  public void printAllFormulas() {
-    System.out.println(this.formula);  // Print the current node's formula
+  public void printAllFormulas(int counter) {
+    counter++;
+    for(int i = 0; i<counter;i++){
+      System.out.print("-");
+    }
+    System.out.println(this.formula);
     for (FormulaNode child : children) {
-      child.printAllFormulas();  // Recursively print each child's formulas
+      child.printAllFormulas(counter);  // Recursively print each child's formulas
     }
   }
 }

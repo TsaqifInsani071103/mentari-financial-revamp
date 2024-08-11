@@ -113,7 +113,7 @@ public class Formula {
     }
 
     System.out.println("==============");
-    rootNode.printAllFormulas();//!!!!!!!!!!!!!!!!!!
+    rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
 
 
     return true; 
