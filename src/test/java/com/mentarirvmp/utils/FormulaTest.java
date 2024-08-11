@@ -20,10 +20,23 @@ public class FormulaTest {
   public void validFormulaFormat(){
 
     //remember that you need to check for a recognized formula preceeding the opening paranthesis. 
-    String dummyFormula = "SUM(MULTIPLY(12, 32, SUM(32,32)), SUM(32, 43,SUM(3,3)))"; 
-    Boolean formulaValidity = Formula.isFormulaValid(dummyFormula);
+    // String dummyFormula = "SUM(MULTIPLY(12, 32, SUM(32,32)), SUM(32, 43,SUM(3,3)))"; 
+    String dummyFormula = "SUM(MULTIPLY())";
     //first case SUM(MULTIPLY()) is true  
-    assertEquals(true, formulaValidity);
+    assertEquals(true, Formula.isFormulaValid(dummyFormula));
+
+    //second case SUM)( is false 
+    String dummyFormula2= "SUM)(";
+    assertEquals(false, Formula.isFormulaValid(dummyFormula2));
+
+    //third case SUM) is false 
+    String dummyFormula3 = "SUM)";
+    assertEquals(false, Formula.isFormulaValid(dummyFormula3));
+
+    //fourth case DUMMY() is false 
+    String dummyFormula4 = "DUMMY()";
+    assertEquals(false, Formula.isFormulaValid(dummyFormula4));
+    
 
   } 
 

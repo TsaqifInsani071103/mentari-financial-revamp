@@ -31,9 +31,25 @@ public class Formula {
   //then I want to ensure that there is enough number of opening and closing paranthesis, each valid enclosing formula and paranthesis will then be extracted into a stack that I will in the end pop to calculate the formula. 
   //I want to check that the 
   public static boolean isFormulaValid(String formula){
-    
+    int lastIndex = formula.length()-1; 
+    int openingParanthesisIndex = formula.indexOf('(');
+    if(formula.charAt(lastIndex) != ')') return false; 
+    if(openingParanthesisIndex == -1) return false; 
+    String formulaBehindOpenParanthesis = formula.substring(0, openingParanthesisIndex);
+    if(!recognizedFormula(formulaBehindOpenParanthesis)) return false; 
     return true; 
   } 
+
+  private static boolean recognizedFormula(String formula){
+    switch(formula){
+      case "SUM":
+        return true; 
+      case "MULTIPLY": 
+        return true; 
+    }
+    return false; 
+
+  }
 
  
 
