@@ -18,7 +18,6 @@ public class FormulaTest {
   //first thing to test is if the passed formula is valid or not. 
   @Test 
   public void validFormulaFormat(){
-
       // First case: SUM(MULTIPLY()) is true  
       String dummyFormula1 = "SUM(MULTIPLY(1,2,,), SUM(SUM(1,2,3),2,3), MULTIPLY(1))";
       assertEquals(true, Formula.isFormulaValid(dummyFormula1));
@@ -78,6 +77,53 @@ public class FormulaTest {
       // Fifteenth case: Only parentheses with no content
       String dummyFormula15 = "()";
       assertEquals(false, Formula.isFormulaValid(dummyFormula15));
+
+      String dummyFormula16 = "SUM(())))";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula16));
+
+      // Second case: Misplaced characters in the formula
+      String dummyFormula17 = "S(U)U(M)";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula17));
+
+      // Third case: Valid formula but with unnecessary nested empty parentheses
+      String dummyFormula18 = "SUM((()))";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula18));
+
+      // Fourth case: Nested empty parentheses that should be invalid
+      String dummyFormula19 = "SUM(MULTIPLY(()))";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula19));
+
+      // Fifth case: Multiple closing parentheses at the start
+      String dummyFormula20 = ")))SUM(1,2,3)";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula20));
+
+      // Sixth case: Multiple opening parentheses with no closing pair
+      String dummyFormula21 = "SUM(((1,2,3)";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula21));
+
+      // Seventh case: Correct functions but separated by incorrect characters
+      String dummyFormula22 = "SUM(SUM)MULTIPLY()";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula22));
+
+      // Eighth case: Functions with invalid nested parentheses and no content
+      String dummyFormula23 = "SUM((MULTIPLY))";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula23));
+
+      // Ninth case: Empty SUM function nested within a valid function
+      String dummyFormula24 = "SUM(MULTIPLY(SUM(), 1, 2))";
+      assertEquals(true, Formula.isFormulaValid(dummyFormula24));
+
+      // Tenth case: Multiple valid functions, but directly adjacent without commas
+      String dummyFormula25 = "SUM(1,2,3)SUM(4,5,6)";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula25));
+
+      // Eleventh case: Parentheses around a function name instead of after it
+      String dummyFormula26 = "(SUM)(1,2,3)";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula26));
+
+      // Twelfth case: Nested invalid characters inside a function
+      String dummyFormula27 = "SUM(1,2,MULTIPLY(1,@))";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula27));
 
   } 
 

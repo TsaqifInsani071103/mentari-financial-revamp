@@ -88,7 +88,7 @@ public class Formula {
   }
 
   //theres too many responsibilities going on here. 
-  // System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
+  // System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(formulaContentArray).toString());//!!!!!!!!!!!!!!!!!!
   // System.out.println("==============");
   // rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
   public static boolean isFormulaValid(String formula, FormulaNode rootNode){
@@ -112,6 +112,9 @@ public class Formula {
     }
     if(!parsedFormulaContentIsValid(formulaContentArray, emptyFormulaNode)) return false; 
 
+    System.out.println("==============");
+    rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
+
 
     return true; 
   }
@@ -122,24 +125,15 @@ public class Formula {
   private static boolean parsedFormulaContentIsValid(String[] formulaContentArray, FormulaNode parentNode){
     for(int i = 0; i < formulaContentArray.length; i++){
       String indivContent = formulaContentArray[i].trim();
-      if(indivContentIsMissingClosingParanthesis(indivContent)){
-        while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<formulaContentArray.length){
-          indivContent = indivContent + "," + formulaContentArray[i+1];
-          i++;
-        }
+      while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<formulaContentArray.length){
+        indivContent = indivContent + "," + formulaContentArray[i+1];
+        i++;
       }
+
       if(!isFormulaValid(indivContent, parentNode)) return false; 
     }
     return true; 
   } 
-
-  private static boolean indivContentIsMissingClosingParanthesis(String indivContent){ //e.g SUM(1
-    int openingParanthesisIndex = indivContent.indexOf("(");
-    int closingParanthesisIndex = indivContent.indexOf(")");
-    if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1) return true; 
-    return false; 
-  }
-
 
   //this is practically mutating the nodes so instead of just checking, we'll just get rootNode if formula is valid, else, nothing. 
 
