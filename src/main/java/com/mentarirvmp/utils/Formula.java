@@ -16,27 +16,17 @@ import java.util.HashMap;
 
 //formula is basically just a tool for StatementsAndExpensehandler to use to basically calculate the valus of the formula strings in the expenses 
 public class Formula {
-
-  // //hardcoding valid formulas right now: make a MAP of this brodie 
-  // private final static HashMap<String, String> validFormulaOperations = new HashMap<>();
-  // //static setup operations 
-  // static{
-  //   //change this to refer to methods later on instead of <String,String> you do <String, Method> or however you're supposed to do it 
-  //   validFormulaOperations.put("SUM()", "valid");
-  //   validFormulaOperations.put("MULTIPLY()", "valid");
-  // } 
-
   public static class FormulaAnatomy{
     private String formula;
     private int lastIndex;
     private int openingParanthesisIndex;
-    public String parentFormula; 
-    public String nestedContent; 
+    private String parentFormula; 
+    private String nestedContent; 
     public boolean isValid = false; 
 
 
     public FormulaAnatomy(String formula){
-      this.formula=formula; 
+      this.formula= formula; 
       this.lastIndex = formula.length()-1; 
       this.openingParanthesisIndex = formula.indexOf('(');
       if(formulaParanthesesValid()){
@@ -47,16 +37,15 @@ public class Formula {
       }
     }
 
-
-    private void initializeParentFormulaAndNestedContent(){
-      this.parentFormula = formula.substring(0, openingParanthesisIndex);
-      this.nestedContent = formula.substring(parentFormula.length(), lastIndex);
-    } 
-
     private boolean formulaParanthesesValid(){
       if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1) return false;
       return true; 
     }
+
+    private void initializeParentFormulaAndNestedContent(){
+      this.parentFormula = formula.substring(0, openingParanthesisIndex);
+      this.nestedContent = formula.substring(openingParanthesisIndex + 1, lastIndex);
+    } 
 
     private boolean recognizedFormula(){
       switch(this.parentFormula){
@@ -70,29 +59,27 @@ public class Formula {
   }
 
   public static boolean isFormulaValid(String formula){
-    
-    if(!formulaStructureValid(formula)) return false;
-    String parentFormula = formula.substring(0, formula.indexOf("("));
+    ArrayList<Boolean> truthArray = new ArrayList<>();
+    FormulaAnatomy formulaPackage = new FormulaAnatomy(formula);
+    if(!formulaPackage.isValid) return false; 
 
-    FormulaNode rootNode = new FormulaNode(parentFormula); 
-    String nestedContent = formula.substring(parentFormula.length(), formula.length()-1);
-    
- 
+    truthArray.add(true);
+    FormulaNode parentFormulaNode = new FormulaNode(formulaPackage.parentFormula);
+    String nestedContent = formulaPackage.nestedContent;
+
+    for(String indivContent: nestedContent.split(",")){
+      if(isInteger(indivContent)){
+        parentFormulaNode.addChild(new FormulaNode(indivContent));
+      }
+    }
+
 
     return true; 
+    
   }
 
 
-  private static boolean formulaStructureValid(String formula){
-    int lastIndex = formula.length()-1; 
-    int openingParanthesisIndex = formula.indexOf('(');
-    if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1) return false;
 
-    String formulaBehindOpenParanthesis = formula.substring(0, openingParanthesisIndex);
-    if(!recognizedFormula(formulaBehindOpenParanthesis)) return false;
-    return true;
-  } 
-  
 
   //this is practically mutating the nodes so instead of just checking, we'll just get rootNode if formula is valid, else, nothing. 
 
