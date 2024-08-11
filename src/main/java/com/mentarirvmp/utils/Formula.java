@@ -2,6 +2,7 @@ package com.mentarirvmp.utils;
 
 import java.util.ArrayList; 
 import java.util.Arrays;
+import java.util.EmptyStackException;
 import java.util.Set;
 import java.util.Stack;
 import java.util.function.Function;
@@ -47,7 +48,11 @@ public class Formula {
       Stack<Character> paranthesesStack = new Stack<>();
       for(int i = 0; i < formula.length(); i++){
         if(formula.charAt(i) == '(') paranthesesStack.push('(');
-        if(formula.charAt(i) == ')') paranthesesStack.pop(); 
+        try{
+          if(formula.charAt(i) == ')') paranthesesStack.pop(); 
+        }catch(EmptyStackException error){
+          return false; 
+        }
       }
       if(paranthesesStack.size() == 0) return true; 
       return false; 
@@ -101,7 +106,7 @@ public class Formula {
       int closingParanthesisIndex = indivContent.indexOf(")");
       if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1){
         System.out.println("TIS THE PROBLEM STRING " + indivContent);
-        while(!FormulaAnatomy.sameNumberOfOpenAndCloseParanthesis(indivContent)){
+        while(!FormulaAnatomy.sameNumberOfOpenAndCloseParanthesis(indivContent) && i+1<nestedContentArray.length){
           indivContent = indivContent + "," + nestedContentArray[i+1];
           System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
           i++;
