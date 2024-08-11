@@ -47,11 +47,11 @@ public class Formula {
     } 
 
     private boolean formulaParanthesesValid(){
-      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1 || !sameNumberOfOpenAndCloseParanthesis(this.formula)) return false;
+      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1 || !hasSameOpenAndCloseParantheses(this.formula)) return false;
       return true; 
     }
 
-    public static boolean sameNumberOfOpenAndCloseParanthesis(String formula){
+    public static boolean hasSameOpenAndCloseParantheses(String formula){
       Stack<Character> paranthesesStack = new Stack<>();
       for(int i = 0; i < formula.length(); i++){
         if(formula.charAt(i) == '(') paranthesesStack.push('(');
@@ -82,19 +82,25 @@ public class Formula {
     }
   }
 
+ 
   public static boolean isFormulaValid(String formula){
     return isFormulaValid(formula, null);
   }
 
   //theres too many responsibilities going on here. 
   public static boolean isFormulaValid(String formula, FormulaNode rootNode){
-   if(formulaEdgeCasesConfirmed(formula, rootNode)) return true; 
+    //edge cases 
+    if(formula.equals("")) return true; 
+    if(isInteger(formula)){
+      rootNode.addChild(new FormulaNode(formula));
+      return true;
+    }
 
     FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
     if(!analyzedFormula.isValid) return false; 
+
     FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.getFormulaWithoutNestedContent());
-    String nestedContent = analyzedFormula.getNestedContent();
-    String[] nestedContentArray = nestedContent.split(",");
+    String[] nestedContentArray = analyzedFormula.getNestedContent().split(",");
 
     if(rootNode == null) {
       rootNode = emptyFormulaNode;
@@ -103,13 +109,12 @@ public class Formula {
     }
     
     System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
+
     for(int i = 0; i < nestedContentArray.length; i++){
       String indivContent = nestedContentArray[i].trim();
-      int openingParanthesisIndex = indivContent.indexOf("(");
-      int closingParanthesisIndex = indivContent.indexOf(")");
-      if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1){
+      if(indivContentIsMissingClosingParanthesis(indivContent)){
         System.out.println("TIS THE PROBLEM STRING " + indivContent);
-        while(!FormulaAnatomy.sameNumberOfOpenAndCloseParanthesis(indivContent) && i+1<nestedContentArray.length){
+        while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<nestedContentArray.length){
           indivContent = indivContent + "," + nestedContentArray[i+1];
           System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
           i++;
@@ -129,16 +134,12 @@ public class Formula {
     
   }
 
-  private static boolean formulaEdgeCasesConfirmed(String formula, FormulaNode rootNode){
-    if(formula.equals("")) return true; 
-    if(isInteger(formula)){
-      rootNode.addChild(new FormulaNode(formula));
-      return true; 
-    }
+  private static boolean indivContentIsMissingClosingParanthesis(String indivContent){
+    int openingParanthesisIndex = indivContent.indexOf("(");
+    int closingParanthesisIndex = indivContent.indexOf(")");
+    if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1) return true; 
     return false; 
-  } 
-
-
+  }
 
   //this is practically mutating the nodes so instead of just checking, we'll just get rootNode if formula is valid, else, nothing. 
 
