@@ -59,16 +59,20 @@ public class Formula {
   }
 
   public static boolean isFormulaValid(String formula){
-    ArrayList<Boolean> truthArray = new ArrayList<>();
-    FormulaAnatomy formulaPackage = new FormulaAnatomy(formula);
-    if(!formulaPackage.isValid) return false; 
+    if(formula.equals("")) return true; 
 
-    truthArray.add(true);
-    FormulaNode parentFormulaNode = new FormulaNode(formulaPackage.parentFormula);
-    String nestedContent = formulaPackage.nestedContent;
+    FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
+    if(!analyzedFormula.isValid) return false; 
+
+    FormulaNode parentFormulaNode = new FormulaNode(analyzedFormula.parentFormula);
+    String nestedContent = analyzedFormula.nestedContent;
 
     for(String indivContent: nestedContent.split(",")){
-      System.out.println(indivContent instanceof String);
+      if(isInteger(indivContent)){
+        parentFormulaNode.addChild(new FormulaNode(indivContent));
+      }else{
+        if(!isFormulaValid(nestedContent)) return false; 
+      }
     }
 
 
@@ -84,7 +88,7 @@ public class Formula {
   private static boolean isInteger(String str){
     try{
       Integer.parseInt(str);
-    }catch(Error e){
+    }catch(NumberFormatException e){
       return false; 
     }
     return true; 
