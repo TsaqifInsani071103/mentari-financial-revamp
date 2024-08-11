@@ -21,7 +21,7 @@ public class FormulaTest {
 
     //remember that you need to check for a recognized formula preceeding the opening paranthesis. 
     // String dummyFormula = "SUM(MULTIPLY(12, 32, SUM(32,32)), SUM(32, 43,SUM(3,3)))"; 
-    String dummyFormula = "SUM(MULTIPLY())";
+    String dummyFormula = "SUM(MULTIPLY(1,2,3), SUM(1,2,3))";
     //first case SUM(MULTIPLY()) is true  
     assertEquals(true, Formula.isFormulaValid(dummyFormula));
 

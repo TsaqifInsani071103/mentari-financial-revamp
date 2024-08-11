@@ -67,11 +67,20 @@ public class Formula {
 
     FormulaNode parentFormulaNode = new FormulaNode(analyzedFormula.parentFormula);
     String nestedContent = analyzedFormula.nestedContent;
-
+    System.out.println("TIS THE NESTED CONTENT " + nestedContent);
 
     for(String indivContent: nestedContent.split(",")){
-      System.out.println("LOOKING AT: " + indivContent);
       indivContent = indivContent.trim();
+
+      int openingParanthesisIndex = indivContent.indexOf("(");
+      int closingParanthesisIndex = indivContent.indexOf(")");
+      if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1){
+        indivContent = indivContent.substring(0, indivContent.indexOf("(")) + "()";
+      }else if(openingParanthesisIndex == -1 &&closingParanthesisIndex != -1){
+        indivContent = indivContent.substring(0, closingParanthesisIndex);
+      }
+
+      System.out.println("LOOKING AT: " + indivContent);
       parentFormulaNode.addChild(new FormulaNode(indivContent));
       if(!isFormulaValid(indivContent)) return false; 
     }
@@ -80,6 +89,7 @@ public class Formula {
     return true; 
     
   }
+
 
 
 
