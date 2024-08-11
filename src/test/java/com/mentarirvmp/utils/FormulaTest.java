@@ -21,25 +21,26 @@ public class FormulaTest {
 
     //remember that you need to check for a recognized formula preceeding the opening paranthesis. 
     // String dummyFormula = "SUM(MULTIPLY(12, 32, SUM(32,32)), SUM(32, 43,SUM(3,3)))"; 
-    // String dummyFormula = "SUM(MULTIPLY(1,2,3), SUM(1,2,3))";
-    // //first case SUM(MULTIPLY()) is true  
-    // assertEquals(true, Formula.isFormulaValid(dummyFormula));
 
-    // //second case SUM)( is false 
-    // String dummyFormula2= "SUM)(";
-    // assertEquals(false, Formula.isFormulaValid(dummyFormula2));
+    String dummyFormula = "SUM(MULTIPLY(1,2,3), SUM(1,2,3))";
+    //first case SUM(MULTIPLY()) is true  
+    assertEquals(true, Formula.isFormulaValid(dummyFormula));
 
-    // //third case SUM) is false 
-    // String dummyFormula3 = "SUM)";
-    // assertEquals(false, Formula.isFormulaValid(dummyFormula3));
+    //second case SUM)( is false 
+    String dummyFormula2= "SUM)(";
+    assertEquals(false, Formula.isFormulaValid(dummyFormula2));
 
-    // //fourth case DUMMY() is false 
-    // String dummyFormula4 = "DUMMY()";
-    // assertEquals(false, Formula.isFormulaValid(dummyFormula4));
+    //third case SUM) is false 
+    String dummyFormula3 = "SUM)";
+    assertEquals(false, Formula.isFormulaValid(dummyFormula3));
+
+    //fourth case DUMMY() is false 
+    String dummyFormula4 = "DUMMY()";
+    assertEquals(false, Formula.isFormulaValid(dummyFormula4));
 
     //fifth case SUM(MULTIPLY(), SUM()) is false 
-    String dummyFormula5 = "SUM(MULTIPLY()"; 
-    assertEquals(true, Formula.isFormulaValid(dummyFormula5));
+    String dummyFormula5 = "SUM(MULTIPLY(), SUM(1,2,3)"; 
+    assertEquals(false, Formula.isFormulaValid(dummyFormula5));
     
 
   } 
