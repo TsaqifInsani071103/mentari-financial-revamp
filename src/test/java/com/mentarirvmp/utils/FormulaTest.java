@@ -39,7 +39,7 @@ public class FormulaTest {
     assertEquals(false, Formula.isFormulaValid(dummyFormula4));
 
     //fifth case SUM(MULTIPLY(), SUM()) is false 
-    String dummyFormula5 = "SUM(MULTIPLY(1,2), SUM(1,2,3)"; 
+    String dummyFormula5 = "SUM(MULTIPLY(1,2), SUM(1,2,3, mult()))"; 
     assertEquals(false, Formula.isFormulaValid(dummyFormula5));
     
     

@@ -68,14 +68,27 @@ public class Formula {
       return false; 
     }
   }
+
   public static boolean isFormulaValid(String formula){
+    return isFormulaValid(formula, null);
+  }
+
+  //theres too many responsibilities going on here. 
+  public static boolean isFormulaValid(String formula, FormulaNode rootNode){
     if(formula.equals("")) return true; 
-    if(isInteger(formula)) return true; 
+    if(isInteger(formula)){
+      rootNode.addChild(new FormulaNode(formula));
+      return true; 
+    }
 
     FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
     if(!analyzedFormula.isValid) return false; 
-
-    FormulaNode parentFormulaNode = new FormulaNode(analyzedFormula.parentFormula);
+    String emptyParentFormula = analyzedFormula.parentFormula;
+    if(rootNode == null) {
+      rootNode = new FormulaNode(emptyParentFormula);
+    }else{
+      rootNode.addChild(new FormulaNode(emptyParentFormula));
+    }
     String nestedContent = analyzedFormula.nestedContent;
 
     // ArrayList<String> nestedList = new ArrayList<String>(Arrays.asList(s.split("")))
@@ -96,12 +109,11 @@ public class Formula {
 
       System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
 
-      parentFormulaNode.addChild(new FormulaNode(indivContent));
-      if(!isFormulaValid(indivContent)) return false; 
+      if(!isFormulaValid(indivContent, rootNode)) return false; 
     }
 
     System.out.println("==============");
-    parentFormulaNode.printAllFormulas();//!!!!!!!!!!!!!!!!!!
+    rootNode.printAllFormulas();//!!!!!!!!!!!!!!!!!!
 
 
     return true; 
