@@ -24,7 +24,7 @@ public class FormulaTest {
 
     String dummyFormula = "SUM(MULTIPLY(1,2), SUM(1,2,3), MULTIPLY(1))";
     //first case SUM(MULTIPLY()) is true  
-    assertEquals(true, Formula.isFormulaValid(dummyFormula));
+    assertEquals(true, Formula.isFormulaValid2(dummyFormula));
     
     // //second case SUM)( is false 
     // String dummyFormula2= "SUM)(";

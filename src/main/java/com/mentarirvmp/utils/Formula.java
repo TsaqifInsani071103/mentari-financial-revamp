@@ -68,7 +68,6 @@ public class Formula {
       return false; 
     }
   }
-
   public static boolean isFormulaValid(String formula){
     if(formula.equals("")) return true; 
     if(isInteger(formula)) return true; 
@@ -87,20 +86,12 @@ public class Formula {
       int openingParanthesisIndex = indivContent.indexOf("(");
       int closingParanthesisIndex = indivContent.indexOf(")");
       if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1){
-
         System.out.println("TIS THE PROBLEM STRING " + indivContent);
-
-        String newNextString = indivContent.substring(openingParanthesisIndex + 1) +","+ nestedContentArray[i+1];
-
-        System.out.println("TIS THE NEXT STRING " + newNextString);//!!!!!!!!!!!!!!!!!!
-
-        indivContent = indivContent.substring(0, openingParanthesisIndex) + "(";
-        nestedContentArray[i+1] = indivContent + newNextString + ")"; 
-        indivContent = indivContent + ")";
-
-      }else if(openingParanthesisIndex == -1 &&closingParanthesisIndex != -1){
-        //this the edge case where the number is like 3) from (1,2,3)
-        indivContent = indivContent.substring(0, closingParanthesisIndex);
+        while(nestedContentArray[i].indexOf(')') == -1){
+          indivContent = indivContent + "," + nestedContentArray[i+1];
+          System.out.println("NEW STRING " + indivContent);
+          i++;
+        }
       }
 
       System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
@@ -115,8 +106,6 @@ public class Formula {
     return true; 
     
   }
-
-
 
 
 
