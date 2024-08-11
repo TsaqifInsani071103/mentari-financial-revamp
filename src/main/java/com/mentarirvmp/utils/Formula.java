@@ -23,7 +23,7 @@ public class Formula {
     private int lastIndex;
     private int openingParanthesisIndex;
     public String parentFormula; 
-    public String nestedContent; 
+    public String formulaContent; 
     public boolean isValid = false; 
 
 
@@ -42,8 +42,8 @@ public class Formula {
     public String getFormulaWithoutNestedContent(){
       return this.parentFormula;
     } 
-    public String getNestedContent(){
-      return this.nestedContent;
+    public String getFormulaContent(){
+      return this.formulaContent;
     } 
 
     private boolean formulaParanthesesValid(){
@@ -68,7 +68,7 @@ public class Formula {
 
     private void initializeParentFormulaAndNestedContent(){
       this.parentFormula = formula.substring(0, openingParanthesisIndex) + "()";
-      this.nestedContent = formula.substring(openingParanthesisIndex + 1, lastIndex);
+      this.formulaContent = formula.substring(openingParanthesisIndex + 1, lastIndex);
     } 
 
     private boolean recognizedFormula(){
@@ -100,7 +100,7 @@ public class Formula {
     if(!analyzedFormula.isValid) return false; 
 
     FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.getFormulaWithoutNestedContent());
-    String[] nestedContentArray = analyzedFormula.getNestedContent().split(",");
+    String[] formulaContentArray = analyzedFormula.getFormulaContent().split(",");
 
     if(rootNode == null) {
       rootNode = emptyFormulaNode;
@@ -108,7 +108,7 @@ public class Formula {
       rootNode.addChild(emptyFormulaNode);
     }
     // System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
-    if(!parsedAndAppendedContentIsValid(nestedContentArray, emptyFormulaNode)) return false; 
+    if(!parsedAndAppendedContentIsValid(formulaContentArray, emptyFormulaNode)) return false; 
 
     System.out.println("==============");
     rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
@@ -116,13 +116,13 @@ public class Formula {
     return true; 
   }
 
-  private static boolean parsedAndAppendedContentIsValid(String[] nestedContentArray, FormulaNode parentNode){
-    for(int i = 0; i < nestedContentArray.length; i++){
-      String indivContent = nestedContentArray[i].trim();
+  private static boolean parsedAndAppendedContentIsValid(String[] formulaContentArray, FormulaNode parentNode){
+    for(int i = 0; i < formulaContentArray.length; i++){
+      String indivContent = formulaContentArray[i].trim();
       if(indivContentIsMissingClosingParanthesis(indivContent)){
         // System.out.println("TIS THE PROBLEM STRING " + indivContent);
-        while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<nestedContentArray.length){
-          indivContent = indivContent + "," + nestedContentArray[i+1];
+        while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<formulaContentArray.length){
+          indivContent = indivContent + "," + formulaContentArray[i+1];
           i++;
           // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
         }
