@@ -102,38 +102,38 @@ public class Formula {
     FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
     if(!analyzedFormula.isValid) return false; 
 
-    FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.getFormulaWithoutNestedContent());
-    String[] formulaContentArray = analyzedFormula.getFormulaContent().split(",");
+    FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.getFormulaWithoutNestedContent());// e.g SUM() in SUM(1,2,3)
+    String[] formulaContentArray = analyzedFormula.getFormulaContent().split(",");// e.g 1,2,3 in SUM(1,2,3)
 
     if(rootNode == null) {
       rootNode = emptyFormulaNode;
     }else{
       rootNode.addChild(emptyFormulaNode);
     }
-    if(!parsedAndAppendedContentIsValid(formulaContentArray, emptyFormulaNode)) return false; 
+    if(!parsedFormulaContentIsValid(formulaContentArray, emptyFormulaNode)) return false; 
 
 
     return true; 
   }
 
-  private static boolean parsedAndAppendedContentIsValid(String[] formulaContentArray, FormulaNode parentNode){
+  // System.out.println("TIS THE PROBLEM STRING " + indivContent);
+  // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
+  // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
+  private static boolean parsedFormulaContentIsValid(String[] formulaContentArray, FormulaNode parentNode){
     for(int i = 0; i < formulaContentArray.length; i++){
       String indivContent = formulaContentArray[i].trim();
       if(indivContentIsMissingClosingParanthesis(indivContent)){
-        // System.out.println("TIS THE PROBLEM STRING " + indivContent);
         while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<formulaContentArray.length){
           indivContent = indivContent + "," + formulaContentArray[i+1];
           i++;
-          // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
         }
       }
-      // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
       if(!isFormulaValid(indivContent, parentNode)) return false; 
     }
     return true; 
   } 
 
-  private static boolean indivContentIsMissingClosingParanthesis(String indivContent){
+  private static boolean indivContentIsMissingClosingParanthesis(String indivContent){ //e.g SUM(1
     int openingParanthesisIndex = indivContent.indexOf("(");
     int closingParanthesisIndex = indivContent.indexOf(")");
     if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1) return true; 
