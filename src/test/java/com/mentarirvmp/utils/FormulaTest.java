@@ -42,6 +42,7 @@ public class FormulaTest {
     String dummyFormula5 = "SUM(MULTIPLY(), SUM(1,2,3)"; 
     assertEquals(false, Formula.isFormulaValid(dummyFormula5));
     
+    
 
   } 
 

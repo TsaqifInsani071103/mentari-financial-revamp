@@ -106,6 +106,8 @@ public class Formula {
       if(!isFormulaValid(indivContent)) return false; 
     }
 
+    //parentFormulaNode.printAllFormulas();
+
 
     return true; 
     
