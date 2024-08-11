@@ -68,10 +68,12 @@ public class Formula {
     FormulaNode parentFormulaNode = new FormulaNode(analyzedFormula.parentFormula);
     String nestedContent = analyzedFormula.nestedContent;
 
+
     for(String indivContent: nestedContent.split(",")){
+      System.out.println("LOOKING AT: " + indivContent);
+      indivContent = indivContent.trim();
       parentFormulaNode.addChild(new FormulaNode(indivContent));
-      if(!isFormulaValid(nestedContent)) return false; 
-      
+      if(!isFormulaValid(indivContent)) return false; 
     }
 
 
