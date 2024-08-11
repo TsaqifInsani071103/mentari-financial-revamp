@@ -3,6 +3,7 @@ package com.mentarirvmp.utils;
 import java.util.ArrayList; 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -38,8 +39,18 @@ public class Formula {
     }
 
     private boolean formulaParanthesesValid(){
-      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1) return false;
+      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1 || !sameNumberOfOpenAndCloseParanthesis()) return false;
       return true; 
+    }
+
+    private boolean sameNumberOfOpenAndCloseParanthesis(){
+      Stack<Character> paranthesesStack = new Stack<>();
+      for(int i = 0; i < formula.length(); i++){
+        if(formula.charAt(i) == '(') paranthesesStack.push('(');
+        if(formula.charAt(i) == ')') paranthesesStack.pop(); 
+      }
+      if(paranthesesStack.size() == 0) return true; 
+      return false; 
     }
 
     private void initializeParentFormulaAndNestedContent(){
@@ -73,7 +84,6 @@ public class Formula {
     String[] nestedContentArray = nestedContent.split(",");
     for(int i = 0; i < nestedContentArray.length; i++){
       String indivContent = nestedContentArray[i].trim();
-      
       int openingParanthesisIndex = indivContent.indexOf("(");
       int closingParanthesisIndex = indivContent.indexOf(")");
       if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1){
@@ -84,7 +94,9 @@ public class Formula {
         indivContent = indivContent.substring(0, openingParanthesisIndex) + "(";
         nestedContentArray[i+1] = indivContent + newNextString + ")"; 
         indivContent = indivContent + ")";
+
       }else if(openingParanthesisIndex == -1 &&closingParanthesisIndex != -1){
+        //this the edge case where the number is like 3) from (1,2,3)
         indivContent = indivContent.substring(0, closingParanthesisIndex);
       }
 
