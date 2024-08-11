@@ -19,4 +19,11 @@ public class FormulaNode {
     this.children.add(child);
     child.setParent(this);
   }
+
+  public void printAllFormulas() {
+    System.out.println(this.formula);  // Print the current node's formula
+    for (FormulaNode child : children) {
+        child.printAllFormulas();  // Recursively print each child's formulas
+    }
+  }
 }
