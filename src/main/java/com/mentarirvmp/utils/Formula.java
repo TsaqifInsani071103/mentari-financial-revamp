@@ -54,15 +54,15 @@ public class Formula {
     }
 
     private void initializeParentFormulaAndNestedContent(){
-      this.parentFormula = formula.substring(0, openingParanthesisIndex);
+      this.parentFormula = formula.substring(0, openingParanthesisIndex) + "()";
       this.nestedContent = formula.substring(openingParanthesisIndex + 1, lastIndex);
     } 
 
     private boolean recognizedFormula(){
       switch(this.parentFormula){
-        case "SUM":
+        case "SUM()":
           return true; 
-        case "MULTIPLY": 
+        case "MULTIPLY()": 
           return true; 
       }
       return false; 
@@ -106,7 +106,7 @@ public class Formula {
       if(!isFormulaValid(indivContent)) return false; 
     }
 
-    //parentFormulaNode.printAllFormulas();
+    parentFormulaNode.printAllFormulas();
 
 
     return true; 
