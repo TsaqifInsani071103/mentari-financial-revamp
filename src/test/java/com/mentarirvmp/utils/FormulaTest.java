@@ -68,7 +68,7 @@ public class FormulaTest {
       assertEquals(true, Formula.isFormulaValid(dummyFormula12));
 
       // Thirteenth case: Non-numeric content inside parentheses
-      String dummyFormula13 = "SUM(1,2,'text')";
+      String dummyFormula13 = "SUM(1,2,'text')MULTIPLY())";
       assertEquals(false, Formula.isFormulaValid(dummyFormula13));
 
       // Fourteenth case: Empty formula

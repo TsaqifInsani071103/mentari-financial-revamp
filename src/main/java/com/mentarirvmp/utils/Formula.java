@@ -81,15 +81,12 @@ public class Formula {
 
   //theres too many responsibilities going on here. 
   public static boolean isFormulaValid(String formula, FormulaNode rootNode){
-    if(formula.equals("")) return true; 
-    if(isInteger(formula)){
-      rootNode.addChild(new FormulaNode(formula));
-      return true; 
-    }
+   if(formulaEdgeCasesConfirmed(formula, rootNode)) return true; 
 
     FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
     if(!analyzedFormula.isValid) return false; 
     FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.parentFormula);
+
     if(rootNode == null) {
       rootNode = emptyFormulaNode;
     }else{
@@ -126,6 +123,15 @@ public class Formula {
     return true; 
     
   }
+
+  private static boolean formulaEdgeCasesConfirmed(String formula, FormulaNode rootNode){
+    if(formula.equals("")) return true; 
+    if(isInteger(formula)){
+      rootNode.addChild(new FormulaNode(formula));
+      return true; 
+    }
+    return false; 
+  } 
 
 
 
