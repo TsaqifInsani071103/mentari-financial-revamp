@@ -39,6 +39,13 @@ public class Formula {
       }
     }
 
+    public String getFormulaWithoutNestedContent(){
+      return this.parentFormula;
+    } 
+    public String getNestedContent(){
+      return this.nestedContent;
+    } 
+
     private boolean formulaParanthesesValid(){
       if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1 || !sameNumberOfOpenAndCloseParanthesis(this.formula)) return false;
       return true; 
@@ -85,7 +92,9 @@ public class Formula {
 
     FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
     if(!analyzedFormula.isValid) return false; 
-    FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.parentFormula);
+    FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.getFormulaWithoutNestedContent());
+    String nestedContent = analyzedFormula.getNestedContent();
+    String[] nestedContentArray = nestedContent.split(",");
 
     if(rootNode == null) {
       rootNode = emptyFormulaNode;
@@ -93,10 +102,6 @@ public class Formula {
       rootNode.addChild(emptyFormulaNode);
     }
     
-    String nestedContent = analyzedFormula.nestedContent;
-
-    // ArrayList<String> nestedList = new ArrayList<String>(Arrays.asList(s.split("")))
-    String[] nestedContentArray = nestedContent.split(",");
     System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
     for(int i = 0; i < nestedContentArray.length; i++){
       String indivContent = nestedContentArray[i].trim();
