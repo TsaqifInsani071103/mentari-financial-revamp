@@ -51,6 +51,7 @@ public class Formula {
         try{
           if(formula.charAt(i) == ')') paranthesesStack.pop(); 
         }catch(EmptyStackException error){
+          //if this error happens that means theres an imbalance between chronological open parantheses and closing parantheses 
           return false; 
         }
       }

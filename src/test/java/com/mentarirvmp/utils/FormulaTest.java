@@ -19,30 +19,65 @@ public class FormulaTest {
   @Test 
   public void validFormulaFormat(){
 
-    //remember that you need to check for a recognized formula preceeding the opening paranthesis. 
-    // String dummyFormula = "SUM(MULTIPLY(12, 32, SUM(32,32)), SUM(32, 43,SUM(3,3)))"; 
+      // First case: SUM(MULTIPLY()) is true  
+      String dummyFormula1 = "SUM(MULTIPLY(1,2,,), SUM(SUM(1,2,3),2,3), MULTIPLY(1))";
+      assertEquals(true, Formula.isFormulaValid(dummyFormula1));
 
-    String dummyFormula = "SUM(MULTIPLY(1,2,,), SUM(SUM(1,2,3),2,3), MULTIPLY(1))";
-    //first case SUM(MULTIPLY()) is true  
-    assertEquals(true, Formula.isFormulaValid(dummyFormula));
-    
-    //second case SUM)( is false 
-    String dummyFormula2= "SUM)(";
-    assertEquals(false, Formula.isFormulaValid(dummyFormula2));
+      // Second case: SUM)( is false 
+      String dummyFormula2 = "SUM)(";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula2));
 
-    //third case SUM) is false 
-    String dummyFormula3 = "SUM)";
-    assertEquals(false, Formula.isFormulaValid(dummyFormula3));
+      // Third case: SUM) is false 
+      String dummyFormula3 = "SUM)";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula3));
 
-    //fourth case DUMMY() is false 
-    String dummyFormula4 = "DUMMY()";
-    assertEquals(false, Formula.isFormulaValid(dummyFormula4));
+      // Fourth case: DUMMY() is false 
+      String dummyFormula4 = "DUMMY()";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula4));
 
-    //fifth case SUM(MULTIPLY(), SUM()) is false 
-    String dummyFormula5 = "SUM(MULTIPLY(1,2), SUM(1,2,3, mult()))"; 
-    assertEquals(false, Formula.isFormulaValid(dummyFormula5));
-    
-    
+      // Fifth case: SUM(MULTIPLY(), SUM()) is false 
+      String dummyFormula5 = "SUM(MULTIPLY(1,2), SUM(1,2,3, mult()))"; 
+      assertEquals(false, Formula.isFormulaValid(dummyFormula5));
+
+      // Sixth case: Nested and valid content
+      String dummyFormula6 = "SUM(MULTIPLY(1,2,SUM(3)),SUM(4,MULTIPLY(5,6)),7)";
+      assertEquals(true, Formula.isFormulaValid(dummyFormula6));
+
+      // Seventh case: Unrecognized function ADD() 
+      String dummyFormula7 = "SUM(1,2,ADD(3,4))";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula7));
+
+      // Eighth case: Extra closing parenthesis
+      String dummyFormula8 = "SUM(1,2,3))";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula8));
+
+      // Ninth case: Missing closing parenthesis
+      String dummyFormula9 = "SUM(MULTIPLY(1,2), SUM(3,4,5)";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula9));
+
+      // Tenth case: Empty parentheses
+      String dummyFormula10 = "SUM()";
+      assertEquals(true, Formula.isFormulaValid(dummyFormula10));
+
+      // Eleventh case: Consecutive functions without separator
+      String dummyFormula11 = "SUM(MULTIPLY(1,2)SUM(3,4))";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula11));
+
+      // Twelfth case: Valid nested and sequential formulas
+      String dummyFormula12 = "SUM(MULTIPLY(1,2), SUM(3, MULTIPLY(4,5)))";
+      assertEquals(true, Formula.isFormulaValid(dummyFormula12));
+
+      // Thirteenth case: Non-numeric content inside parentheses
+      String dummyFormula13 = "SUM(1,2,'text')";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula13));
+
+      // Fourteenth case: Empty formula
+      String dummyFormula14 = "";
+      assertEquals(true, Formula.isFormulaValid(dummyFormula14));
+
+      // Fifteenth case: Only parentheses with no content
+      String dummyFormula15 = "()";
+      assertEquals(false, Formula.isFormulaValid(dummyFormula15));
 
   } 
 
