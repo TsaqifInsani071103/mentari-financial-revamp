@@ -78,18 +78,21 @@ public class Formula {
 
     FormulaNode parentFormulaNode = new FormulaNode(analyzedFormula.parentFormula);
     String nestedContent = analyzedFormula.nestedContent;
-    System.out.println("TIS THE NESTED CONTENT " + nestedContent);
 
     // ArrayList<String> nestedList = new ArrayList<String>(Arrays.asList(s.split("")))
     String[] nestedContentArray = nestedContent.split(",");
+    System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());
     for(int i = 0; i < nestedContentArray.length; i++){
       String indivContent = nestedContentArray[i].trim();
       int openingParanthesisIndex = indivContent.indexOf("(");
       int closingParanthesisIndex = indivContent.indexOf(")");
       if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1){
+
+        System.out.println("TIS THE PROBLEM STRING " + indivContent);
+
         String newNextString = indivContent.substring(openingParanthesisIndex + 1) +","+ nestedContentArray[i+1];
 
-        System.out.println(newNextString);//!!!!!!!!!!!!!!!!!!
+        System.out.println("TIS THE NEXT STRING " + newNextString);//!!!!!!!!!!!!!!!!!!
 
         indivContent = indivContent.substring(0, openingParanthesisIndex) + "(";
         nestedContentArray[i+1] = indivContent + newNextString + ")"; 
