@@ -27,9 +27,8 @@ public class Formula {
   } 
   
 
-  //I want to backtrack and check the string preceeding a "(" when I find that opening paranthesis, and check for the string's validity. 
-  //then I want to ensure that there is enough number of opening and closing paranthesis, each valid enclosing formula and paranthesis will then be extracted into a stack that I will in the end pop to calculate the formula. 
-  //I want to check that the 
+  //this is practically mutating the nodes so instead of just checking, we'll just get rootNode if formula is valid, else, nothing. 
+  //get formulaStructure if all formulas are valid. 
   public static boolean isFormulaValid(String formula){
     //base case 
     //check if the formula can be split into array elements by using split(",") and then iterate through that. 
