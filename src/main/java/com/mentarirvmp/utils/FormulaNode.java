@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class FormulaNode {
   public FormulaNode parentNode; 
   public String formula;
-  public ArrayList<FormulaNode> children;
+  public ArrayList<FormulaNode> children = new ArrayList<>();
 
   public FormulaNode(String formula){
     this.formula=formula; 

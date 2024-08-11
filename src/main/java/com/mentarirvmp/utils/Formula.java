@@ -60,6 +60,7 @@ public class Formula {
 
   public static boolean isFormulaValid(String formula){
     if(formula.equals("")) return true; 
+    if(isInteger(formula)) return true; 
 
     FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
     if(!analyzedFormula.isValid) return false; 
@@ -68,11 +69,9 @@ public class Formula {
     String nestedContent = analyzedFormula.nestedContent;
 
     for(String indivContent: nestedContent.split(",")){
-      if(isInteger(indivContent)){
-        parentFormulaNode.addChild(new FormulaNode(indivContent));
-      }else{
-        if(!isFormulaValid(nestedContent)) return false; 
-      }
+      parentFormulaNode.addChild(new FormulaNode(indivContent));
+      if(!isFormulaValid(nestedContent)) return false; 
+      
     }
 
 
