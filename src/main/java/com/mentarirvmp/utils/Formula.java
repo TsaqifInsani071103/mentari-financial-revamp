@@ -88,6 +88,9 @@ public class Formula {
   }
 
   //theres too many responsibilities going on here. 
+  // System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
+  // System.out.println("==============");
+  // rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
   public static boolean isFormulaValid(String formula, FormulaNode rootNode){
     //edge cases 
     if(formula.equals("")) return true; 
@@ -107,11 +110,8 @@ public class Formula {
     }else{
       rootNode.addChild(emptyFormulaNode);
     }
-    // System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
     if(!parsedAndAppendedContentIsValid(formulaContentArray, emptyFormulaNode)) return false; 
 
-    System.out.println("==============");
-    rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
 
     return true; 
   }
