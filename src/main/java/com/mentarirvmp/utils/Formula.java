@@ -107,32 +107,31 @@ public class Formula {
     }else{
       rootNode.addChild(emptyFormulaNode);
     }
-    
-    System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
-
-    for(int i = 0; i < nestedContentArray.length; i++){
-      String indivContent = nestedContentArray[i].trim();
-      if(indivContentIsMissingClosingParanthesis(indivContent)){
-        System.out.println("TIS THE PROBLEM STRING " + indivContent);
-        while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<nestedContentArray.length){
-          indivContent = indivContent + "," + nestedContentArray[i+1];
-          System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
-          i++;
-        }
-      }
-
-      System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
-
-      if(!isFormulaValid(indivContent, emptyFormulaNode)) return false; 
-    }
+    // System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(nestedContentArray).toString());//!!!!!!!!!!!!!!!!!!
+    if(!parsedAndAppendedContentIsValid(nestedContentArray, emptyFormulaNode)) return false; 
 
     System.out.println("==============");
     rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
 
-
     return true; 
-    
   }
+
+  private static boolean parsedAndAppendedContentIsValid(String[] nestedContentArray, FormulaNode parentNode){
+    for(int i = 0; i < nestedContentArray.length; i++){
+      String indivContent = nestedContentArray[i].trim();
+      if(indivContentIsMissingClosingParanthesis(indivContent)){
+        // System.out.println("TIS THE PROBLEM STRING " + indivContent);
+        while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<nestedContentArray.length){
+          indivContent = indivContent + "," + nestedContentArray[i+1];
+          i++;
+          // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
+        }
+      }
+      // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
+      if(!isFormulaValid(indivContent, parentNode)) return false; 
+    }
+    return true; 
+  } 
 
   private static boolean indivContentIsMissingClosingParanthesis(String indivContent){
     int openingParanthesisIndex = indivContent.indexOf("(");
@@ -140,6 +139,7 @@ public class Formula {
     if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1) return true; 
     return false; 
   }
+
 
   //this is practically mutating the nodes so instead of just checking, we'll just get rootNode if formula is valid, else, nothing. 
 
