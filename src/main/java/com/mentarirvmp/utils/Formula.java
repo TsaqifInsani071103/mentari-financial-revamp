@@ -39,6 +39,7 @@ public class Formula {
     String formulaBehindOpenParanthesis = formula.substring(0, openingParanthesisIndex);
     if(!recognizedFormula(formulaBehindOpenParanthesis)) return false; 
     //put the formulaBehindOpenParanthesis into a parent node in the tree. 
+    FormulaNode rootNode = new FormulaNode(formulaBehindOpenParanthesis);
     return true; 
   } 
 
