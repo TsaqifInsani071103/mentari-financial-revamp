@@ -26,21 +26,71 @@ public class Formula {
   //   validFormulaOperations.put("MULTIPLY()", "valid");
   // } 
 
-  public static boolean isFormulaValid(String formula){
-    String parentFormula = getParentFormulaIfStructureValid(formula);
+  public static class FormulaAnatomy{
+    private String formula;
+    private int lastIndex;
+    private int openingParanthesisIndex;
+    public String parentFormula; 
+    public String nestedContent; 
+    public boolean isValid = false; 
 
-    if(parentFormula == "") return false; 
+
+    public FormulaAnatomy(String formula){
+      this.formula=formula; 
+      this.lastIndex = formula.length()-1; 
+      this.openingParanthesisIndex = formula.indexOf('(');
+      if(formulaParanthesesValid()){
+        initializeParentFormulaAndNestedContent();
+      }
+      if(recognizedFormula()){
+        isValid = true; 
+      }
+    }
+
+
+    private void initializeParentFormulaAndNestedContent(){
+      this.parentFormula = formula.substring(0, openingParanthesisIndex);
+      this.nestedContent = formula.substring(parentFormula.length(), lastIndex);
+    } 
+
+    private boolean formulaParanthesesValid(){
+      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1) return false;
+      return true; 
+    }
+
+    private boolean recognizedFormula(){
+      switch(this.parentFormula){
+        case "SUM":
+          return true; 
+        case "MULTIPLY": 
+          return true; 
+      }
+      return false; 
+    }
+  }
+
+  public static boolean isFormulaValid(String formula){
+    
+    if(!formulaStructureValid(formula)) return false;
+    String parentFormula = formula.substring(0, formula.indexOf("("));
+
+    FormulaNode rootNode = new FormulaNode(parentFormula); 
+    String nestedContent = formula.substring(parentFormula.length(), formula.length()-1);
+    
+ 
+
     return true; 
   }
 
-  private static String getParentFormulaIfStructureValid(String formula){
+
+  private static boolean formulaStructureValid(String formula){
     int lastIndex = formula.length()-1; 
     int openingParanthesisIndex = formula.indexOf('(');
-    if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1) return "";
+    if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1) return false;
 
     String formulaBehindOpenParanthesis = formula.substring(0, openingParanthesisIndex);
-    if(!recognizedFormula(formulaBehindOpenParanthesis)) return "";
-    return formulaBehindOpenParanthesis;
+    if(!recognizedFormula(formulaBehindOpenParanthesis)) return false;
+    return true;
   } 
   
 
@@ -55,16 +105,7 @@ public class Formula {
     return true; 
   } 
 
-  private static boolean recognizedFormula(String formula){
-    switch(formula){
-      case "SUM":
-        return true; 
-      case "MULTIPLY": 
-        return true; 
-    }
-    return false; 
 
-  }
 
  
 
