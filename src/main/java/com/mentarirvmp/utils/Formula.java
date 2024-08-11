@@ -31,7 +31,6 @@ public class Formula {
   //then I want to ensure that there is enough number of opening and closing paranthesis, each valid enclosing formula and paranthesis will then be extracted into a stack that I will in the end pop to calculate the formula. 
   //I want to check that the 
   public static boolean isFormulaValid(String formula){
-    ArrayList<Boolean> truthArray = new ArrayList<>();
     //base case 
     //check if the formula can be split into array elements by using split(",") and then iterate through that. 
     int lastIndex = formula.length()-1; 
@@ -46,11 +45,8 @@ public class Formula {
     FormulaNode parentNode = new FormulaNode(formulaBehindOpenParanthesis);
     String nestedContent = formula.substring(openingParanthesisIndex + 1, lastIndex);
 
-    truthArray.add(isNestedFormulaValid(parentNode, nestedContent));
+    // if(!isNestedFormulaValid(parentNode, nestedContent)) return false;
 
-    for(Boolean truth: truthArray){
-      if(truth == false) return false; 
-    }
     return true; 
   } 
 
@@ -66,8 +62,10 @@ public class Formula {
       try{
         //check if its a number or a formula, if its a string its invalid 
         int number = Integer.parseInt(nestedFormula);
+        System.out.println(number);
         parentFormula.addChild(new FormulaNode(nestedFormula)); //add the number as is
       }catch(Error e){
+        parentFormula.addChild(new FormulaNode(nestedFormula));
         return isFormulaValid(nestedFormula); 
       }
     }
