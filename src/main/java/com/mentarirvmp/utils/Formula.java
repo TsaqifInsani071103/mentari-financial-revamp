@@ -69,18 +69,27 @@ public class Formula {
     String nestedContent = analyzedFormula.nestedContent;
     System.out.println("TIS THE NESTED CONTENT " + nestedContent);
 
-    for(String indivContent: nestedContent.split(",")){
-      indivContent = indivContent.trim();
-
+    // ArrayList<String> nestedList = new ArrayList<String>(Arrays.asList(s.split("")))
+    String[] nestedContentArray = nestedContent.split(",");
+    for(int i = 0; i < nestedContentArray.length; i++){
+      String indivContent = nestedContentArray[i].trim();
+      
       int openingParanthesisIndex = indivContent.indexOf("(");
       int closingParanthesisIndex = indivContent.indexOf(")");
       if(openingParanthesisIndex != -1 && closingParanthesisIndex == -1){
-        indivContent = indivContent.substring(0, indivContent.indexOf("(")) + "()";
+        String newNextString = indivContent.substring(openingParanthesisIndex + 1) +","+ nestedContentArray[i+1];
+
+        System.out.println(newNextString);//!!!!!!!!!!!!!!!!!!
+
+        indivContent = indivContent.substring(0, openingParanthesisIndex) + "(";
+        nestedContentArray[i+1] = indivContent + newNextString + ")"; 
+        indivContent = indivContent + ")";
       }else if(openingParanthesisIndex == -1 &&closingParanthesisIndex != -1){
         indivContent = indivContent.substring(0, closingParanthesisIndex);
       }
 
-      System.out.println("LOOKING AT: " + indivContent);
+      System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
+
       parentFormulaNode.addChild(new FormulaNode(indivContent));
       if(!isFormulaValid(indivContent)) return false; 
     }
