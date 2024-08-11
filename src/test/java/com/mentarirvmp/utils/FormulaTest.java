@@ -36,6 +36,10 @@ public class FormulaTest {
     //fourth case DUMMY() is false 
     String dummyFormula4 = "DUMMY()";
     assertEquals(false, Formula.isFormulaValid(dummyFormula4));
+
+    //fifth case SUM(MULTIPLY(), SUM()) is true 
+    String dummyFormula5 = "SUM(MULTIPLY(), SUM())";
+    assertEquals(true, Formula.isFormulaValid(dummyFormula5));
     
 
   } 

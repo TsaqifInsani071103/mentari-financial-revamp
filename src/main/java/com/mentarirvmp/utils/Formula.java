@@ -40,8 +40,24 @@ public class Formula {
     if(!recognizedFormula(formulaBehindOpenParanthesis)) return false; 
     //put the formulaBehindOpenParanthesis into a parent node in the tree. 
     FormulaNode rootNode = new FormulaNode(formulaBehindOpenParanthesis);
-    return true; 
+    String nestedContent = formula.substring(openingParanthesisIndex + 1, lastIndex);
+    return isNestedFormulaValid(rootNode, nestedContent);
   } 
+
+  private static boolean isNestedFormulaValid(FormulaNode parentFormula, String formula){
+    String[] splitFormula = formula.split(",");
+    for(String nestedFormula:splitFormula){
+      try{
+        //check if its a number or a formula, if its a string its invalid 
+        int number = Integer.parseInt(nestedFormula);
+        System.out.println(number);
+      }catch(Error e){
+        
+      }
+    }
+    return true;
+
+  }
 
   private static boolean recognizedFormula(String formula){
     switch(formula){
