@@ -83,7 +83,7 @@ public class Formula {
   }
 
  
-  public static boolean isFormulaValid(String formula){
+  public boolean isFormulaValid(String formula){
     return isFormulaValid(formula, null);
   }
 
@@ -91,7 +91,7 @@ public class Formula {
   // System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(formulaContentArray).toString());//!!!!!!!!!!!!!!!!!!
   // System.out.println("==============");
   // rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
-  public static boolean isFormulaValid(String formula, FormulaNode rootNode){
+  public boolean isFormulaValid(String formula, FormulaNode rootNode){
     //edge cases 
     if(formula.equals("")) return true; 
     if(isInteger(formula)){
@@ -118,7 +118,7 @@ public class Formula {
   // System.out.println("TIS THE PROBLEM STRING " + indivContent);
   // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
   // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
-  private static boolean parsedFormulaContentIsValid(String[] formulaContentArray, FormulaNode parentNode){
+  private boolean parsedFormulaContentIsValid(String[] formulaContentArray, FormulaNode parentNode){
     for(int i = 0; i < formulaContentArray.length; i++){
       String indivContent = formulaContentArray[i].trim();
       while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<formulaContentArray.length){
@@ -130,7 +130,7 @@ public class Formula {
     return true; 
   } 
 
-  private static boolean isInteger(String str){
+  private boolean isInteger(String str){
     try{
       Integer.parseInt(str);
     }catch(NumberFormatException e){
