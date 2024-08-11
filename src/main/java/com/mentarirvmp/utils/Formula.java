@@ -83,12 +83,13 @@ public class Formula {
 
     FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
     if(!analyzedFormula.isValid) return false; 
-    String emptyParentFormula = analyzedFormula.parentFormula;
+    FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.parentFormula);
     if(rootNode == null) {
-      rootNode = new FormulaNode(emptyParentFormula);
+      rootNode = emptyFormulaNode;
     }else{
-      rootNode.addChild(new FormulaNode(emptyParentFormula));
+      rootNode.addChild(emptyFormulaNode);
     }
+    
     String nestedContent = analyzedFormula.nestedContent;
 
     // ArrayList<String> nestedList = new ArrayList<String>(Arrays.asList(s.split("")))
@@ -109,7 +110,7 @@ public class Formula {
 
       System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
 
-      if(!isFormulaValid(indivContent, rootNode)) return false; 
+      if(!isFormulaValid(indivContent, emptyFormulaNode)) return false; 
     }
 
     System.out.println("==============");

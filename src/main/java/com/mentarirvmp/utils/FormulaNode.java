@@ -21,11 +21,15 @@ public class FormulaNode {
   }
 
   public void printAllFormulas(int counter) {
-    counter++;
     for(int i = 0; i<counter;i++){
-      System.out.print("-");
+      if(i + 1 == counter){
+        System.out.print(" |-");
+      }else{
+        System.out.print(" ");
+      }
     }
     System.out.println(this.formula);
+    counter++;
     for (FormulaNode child : children) {
       child.printAllFormulas(counter);  // Recursively print each child's formulas
     }
