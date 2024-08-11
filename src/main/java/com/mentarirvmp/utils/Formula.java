@@ -112,10 +112,6 @@ public class Formula {
     }
     if(!parsedFormulaContentIsValid(formulaContentArray, emptyFormulaNode)) return false; 
 
-    System.out.println("==============");
-    rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
-
-
     return true; 
   }
 
@@ -129,13 +125,10 @@ public class Formula {
         indivContent = indivContent + "," + formulaContentArray[i+1];
         i++;
       }
-
       if(!isFormulaValid(indivContent, parentNode)) return false; 
     }
     return true; 
   } 
-
-  //this is practically mutating the nodes so instead of just checking, we'll just get rootNode if formula is valid, else, nothing. 
 
   private static boolean isInteger(String str){
     try{
