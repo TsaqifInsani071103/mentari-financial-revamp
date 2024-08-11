@@ -31,24 +31,7 @@ public class Formula {
   //then I want to ensure that there is enough number of opening and closing paranthesis, each valid enclosing formula and paranthesis will then be extracted into a stack that I will in the end pop to calculate the formula. 
   //I want to check that the 
   public static boolean isFormulaValid(String formula){
-    //hard coded testing right now.
-    int firstOpenParanthesisIndex = formula.indexOf("("); 
-    if(firstOpenParanthesisIndex == 0) return false; 
-    String substringToParanthesis = formula.substring(0, firstOpenParanthesisIndex); 
-    if(validFormulaOperations.get(substringToParanthesis) instanceof String){
-      //search for a closing parantehsis whose next index is either a comma or a space cuz those are the only valid ones for the outer parantehses
-    } 
-
-    // int lettersCounted = 0; 
-    // while(firstOpenParanthesisIndex > 0){
-    //   for(String validFormulaOperation: validFormulaOperations){
-    //     int lastIndex = validFormulaOperation.length() - 1; 
-    //     if(validFormulaOperation.charAt(lastIndex - lettersCounted) == formula.charAt(firstOpenParanthesisIndex - 1 - lettersCounted)){
-    //       lettersCounted++; 
-    //       continue;
-    //     }
-    //   }
-    // }
+    
     return true; 
   } 
 
