@@ -6,6 +6,7 @@ public class Statement {
 
   //If I want the expense class to just be a single class I don't think I would need an expenseCounter like I did with the original codebase. 
   private String statementName; 
+  private int uniqueCounter = 0; 
   //
   //make like an array of hashmaps basically. 
   private ArrayList<Expenses> expenseArrayList = new ArrayList<Expenses>(); 
@@ -31,6 +32,12 @@ public class Statement {
   public void setExpenseArray(ArrayList<Expenses> expenseArray){
     this.expenseArrayList = expenseArray;
 
+  }
+
+  private void setIdFor(Expenses expense){
+    String newId = "E" + this.uniqueCounter + "_" + this.statementName;
+    expense.setId(newId);
+    this.uniqueCounter++; 
   }
 
   //I think right now the Statement object should take care of its own data, not that it meddles with the expenses data, but to make it a useless data structure, I would want searching the ID's and whatnot to transpire here

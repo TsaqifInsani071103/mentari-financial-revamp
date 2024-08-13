@@ -16,32 +16,14 @@ public class Expenses {
   private String name; 
   private String description = ""; 
   private String value = ""; 
-  private static int uniqueCounter = 0; 
   private String id; 
   private ArrayList<Expenses> childArray = new ArrayList<Expenses>(); 
   private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); 
 
   
-  public static int getCurrentCounterValue(){
-    return uniqueCounter;
-  } 
-
-  public static void incrementCounter(){
-    uniqueCounter++; 
-  } 
-
-  public static void decrementCounter(){
-    uniqueCounter--; 
-  } 
-
-  public static void resetCounter(){
-    uniqueCounter = 0; 
-  } 
 
   public Expenses(String name){
-    uniqueCounter++; 
     this.name = name; 
-    this.id = "E" + uniqueCounter; 
   } 
 
   public String getName(){
@@ -75,6 +57,10 @@ public class Expenses {
     return this.id; 
   } 
 
+  public void setId(String newId){
+    this.id = newId;
+  } 
+
   //since this is a POJO and not a like a singular data type we can still include things like addChild and removeChild that is tightly related to this here. 
   public void addChild(Expenses newChild){
     this.childArray.add(newChild); 
@@ -82,7 +68,6 @@ public class Expenses {
 
   public void deleteChild(Expenses childToDelete){
     this.childArray.remove(childToDelete); 
-    decrementCounter();
   } 
 
   public ArrayList<Expenses> getChildArray(){
