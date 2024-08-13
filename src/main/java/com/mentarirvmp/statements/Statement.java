@@ -34,6 +34,16 @@ public class Statement {
 
   }
 
+  //check for unique expense name 
+  public void makeAndIncludeNewExpense(String expenseName){
+    //check if expense name is unique first 
+    Expenses newExpense = new Expenses(expenseName);
+    setIdFor(newExpense);
+    addExpense(newExpense);
+  } 
+
+  // public Expenses makeAndIncludeNewExpense(){} 
+
   private void setIdFor(Expenses expense){
     String newId = "E" + this.uniqueCounter + "_" + this.statementName;
     expense.setId(newId);
