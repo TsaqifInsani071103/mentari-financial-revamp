@@ -8,13 +8,7 @@ public class Statement {
   private String statementName; 
   //
   //make like an array of hashmaps basically. 
-  private ArrayList<Expenses> expenseArrayList = new ArrayList<Expenses>(); //these are top level sibling expenses 
-  //but remember we need a default root expense so we could make nestable expense files and whatnot. 
-
-  // private transient IndivProjectViewController projectViewController; for generating view purposes maybe, or I could just extract this into its own class instead. 
-
-  //Think of statements as the piece of paper and the expenses as the writings on it. 
-  //The projects hold several sheets of these papers. 
+  private ArrayList<Expenses> expenseArrayList = new ArrayList<Expenses>(); 
 
   public Statement(String statementName){
     this.statementName = statementName; 
@@ -28,6 +22,7 @@ public class Statement {
     this.statementName = newName; 
   } 
 
+  //this should be addExpense(String) 
   public void addExpense(Expenses newExpense){
     this.expenseArrayList.add(newExpense);
     
