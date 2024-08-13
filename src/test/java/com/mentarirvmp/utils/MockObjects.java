@@ -2,7 +2,7 @@ package com.mentarirvmp.utils;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.mentarirvmp.servicehandlers.StatementsAndExpenseHandler;
+
 import com.mentarirvmp.statements.Statement;
 
 
@@ -57,16 +57,6 @@ public class MockObjects {
     return dummyStatement;
   } 
 
-  public static StatementsAndExpenseHandler initializeDummyDataHandler(){
-    StatementsAndExpenseHandler dataHandler = new StatementsAndExpenseHandler(initializeDummyStatement());
-    return dataHandler; 
-  } 
-
-  public static StatementsAndExpenseHandler initializeDummyDataHandler(Statement statement){
-    StatementsAndExpenseHandler dataHandler = new StatementsAndExpenseHandler(statement);
-    return dataHandler; 
-
-  } 
 
   // //make dummy Formula from dummyStatement; 
   // public static Formula makeDummyFormulaFrom(Statement dummyStatement){
