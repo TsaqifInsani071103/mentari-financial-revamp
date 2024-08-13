@@ -7,6 +7,7 @@ public class FormulaNode {
   public String formula;
   public ArrayList<FormulaNode> children = new ArrayList<>();
   private boolean hasChild = false; 
+  public static FormulaNode INVALID = new FormulaNode("INVALID_FORMULA_123321123321");
 
   public FormulaNode(String formula){
     this.formula=formula; 
