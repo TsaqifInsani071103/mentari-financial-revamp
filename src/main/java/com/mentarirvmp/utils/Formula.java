@@ -39,7 +39,7 @@ public class Formula {
       }
     }
 
-    public String getFormulaWithoutNestedContent(){
+    public String getFormulaWithoutParanthesisContent(){
       return this.parentFormula;
     } 
     public String getFormulaContent(){
@@ -100,11 +100,11 @@ public class Formula {
       return true;
     }
 
-    FormulaAnatomy analyzedFormula = new FormulaAnatomy(formula);
-    if(!analyzedFormula.isValid) return false; 
+    FormulaAnatomy parsedFormula = new FormulaAnatomy(formula);
+    if(!parsedFormula.isValid) return false; 
 
-    FormulaNode emptyFormulaNode = new FormulaNode(analyzedFormula.getFormulaWithoutNestedContent());// e.g SUM() in SUM(1,2,3)
-    String[] formulaContentArray = analyzedFormula.getFormulaContent().split(",");// e.g 1,2,3 in SUM(1,2,3)
+    FormulaNode emptyFormulaNode = new FormulaNode(parsedFormula.getFormulaWithoutParanthesisContent());// e.g SUM() in SUM(1,2,3)
+    String[] formulaContentArray = parsedFormula.getFormulaContent().split(",");// e.g 1,2,3 in SUM(1,2,3)
 
     if(rootNode == null) {
       rootNode = emptyFormulaNode;

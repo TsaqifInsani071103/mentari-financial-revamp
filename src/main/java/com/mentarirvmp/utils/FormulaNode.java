@@ -6,6 +6,7 @@ public class FormulaNode {
   public FormulaNode parentNode; 
   public String formula;
   public ArrayList<FormulaNode> children = new ArrayList<>();
+  private boolean hasChild = false; 
 
   public FormulaNode(String formula){
     this.formula=formula; 
@@ -18,7 +19,12 @@ public class FormulaNode {
   public void addChild(FormulaNode child){
     this.children.add(child);
     child.setParent(this);
+    this.hasChild = true; 
   }
+
+  public boolean hasChild(){
+    return this.hasChild;
+  } 
 
   public void printAllFormulas(int counter) {
     for(int i = 0; i<counter;i++){
