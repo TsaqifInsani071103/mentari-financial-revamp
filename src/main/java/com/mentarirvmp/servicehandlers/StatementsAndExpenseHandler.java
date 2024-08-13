@@ -15,12 +15,12 @@ public class StatementsAndExpenseHandler {
     this.currentStatement = currentStatement; 
   }
 
-  public Expenses getExpenseByID(int ID){
+  public Expenses getExpenseByID(String ID){
     return currentStatement.getExpenseById(ID); 
   }
 
   public int getValueIfExpenseIdValid(String id){
-    Expenses currentExpense = getExpenseByID(Integer.parseInt(id));
+    Expenses currentExpense = getExpenseByID(id);
     if(currentExpense != Expenses.INVALID_EXPENSE){
       return Integer.parseInt(currentExpense.getValue());
     }

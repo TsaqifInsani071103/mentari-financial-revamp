@@ -43,11 +43,12 @@ public class Statement {
     return this.expenseArrayList; 
   } 
 
-  public Expenses getExpenseById(int ID){
+  //Might have to change this into a linked HashMap Anyways.
+  public Expenses getExpenseById(String ID){
     return recursiveGetExpenseById(this.expenseArrayList, ID);
   } 
 
-  private Expenses recursiveGetExpenseById(ArrayList<Expenses> expenseArray, int ID){
+  private Expenses recursiveGetExpenseById(ArrayList<Expenses> expenseArray, String ID){
     for(Expenses expense: expenseArray){
       if(expense.getId() == ID){
         return expense; 

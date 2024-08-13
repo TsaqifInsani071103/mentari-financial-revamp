@@ -17,7 +17,7 @@ public class Expenses {
   private String description = ""; 
   private String value = ""; 
   private static int uniqueCounter = 0; 
-  private int id; 
+  private String id; 
   private ArrayList<Expenses> childArray = new ArrayList<Expenses>(); 
   private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); 
 
@@ -41,7 +41,7 @@ public class Expenses {
   public Expenses(String name){
     uniqueCounter++; 
     this.name = name; 
-    this.id = uniqueCounter; 
+    this.id = "E" + uniqueCounter; 
   } 
 
   public String getName(){
@@ -71,7 +71,7 @@ public class Expenses {
 
 
   //this needs to be completely unique 
-  public int getId(){
+  public String getId(){
     return this.id; 
   } 
 
