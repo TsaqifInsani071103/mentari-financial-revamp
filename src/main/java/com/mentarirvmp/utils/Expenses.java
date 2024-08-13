@@ -1,6 +1,7 @@
 package com.mentarirvmp.utils;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 //since expenses is just one line of data entry, I think its fine to inject associated statement into this? 
 
@@ -17,8 +18,8 @@ public class Expenses {
   private String description = ""; 
   private String value = ""; 
   private String id; 
-  private ArrayList<Expenses> childArray = new ArrayList<Expenses>(); 
-  private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); 
+  private LinkedHashMap<String, Expenses> childMap = new LinkedHashMap<>();
+  private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); //maybe make this into a set of arrays in Statement.java? 
 
   
 
@@ -63,19 +64,19 @@ public class Expenses {
 
   //since this is a POJO and not a like a singular data type we can still include things like addChild and removeChild that is tightly related to this here. 
   public void addChild(Expenses newChild){
-    this.childArray.add(newChild); 
+    this.childMap.put(newChild.getId(), newChild); 
   } 
 
   public void deleteChild(Expenses childToDelete){
-    this.childArray.remove(childToDelete); 
+    this.childMap.remove(childToDelete.getId()); 
   } 
 
-  public ArrayList<Expenses> getChildArray(){
-    return this.childArray; 
+  public LinkedHashMap<String, Expenses> getChildMap(){
+    return this.childMap; 
   } 
 
   public boolean hasChildren(){
-    return this.childArray.size() > 0? true: false; 
+    return this.childMap.size() > 0? true: false; 
   }
 
 
