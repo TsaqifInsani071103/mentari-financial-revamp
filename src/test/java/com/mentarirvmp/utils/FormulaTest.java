@@ -73,7 +73,7 @@ public class FormulaTest {
 
       // Fourteenth case: Empty formula
       String dummyFormula14 = "";
-      assertEquals(true, frmlObject.isFormulaValid(dummyFormula14));
+      assertEquals(false, frmlObject.isFormulaValid(dummyFormula14));
 
       // Fifteenth case: Only parentheses with no content
       String dummyFormula15 = "()";

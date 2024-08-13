@@ -93,7 +93,8 @@ public class Formula {
   // rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
   public boolean isFormulaValid(String formula, FormulaNode rootNode){
     //edge cases 
-    if(formula.equals("")) return true; 
+    if(formula.equals("") && rootNode != null) return true; 
+    if(formula.equals("") && rootNode == null) return false; 
     if(isInteger(formula) && rootNode != null){
       rootNode.addChild(new FormulaNode(formula));
       return true;
