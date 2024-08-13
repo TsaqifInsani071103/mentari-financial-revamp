@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 //formula is basically just a tool for StatementsAndExpensehandler to use to basically calculate the valus of the formula strings in the expenses 
 public class Formula {
+  
   public static class FormulaAnatomy{
     private String formula;
     private int lastIndex;

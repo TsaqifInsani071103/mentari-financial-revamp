@@ -19,6 +19,7 @@ public class Expenses {
   private static int uniqueCounter = 0; 
   private int id; 
   private ArrayList<Expenses> childArray = new ArrayList<Expenses>(); 
+  private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); 
 
   
   public static int getCurrentCounterValue(){
