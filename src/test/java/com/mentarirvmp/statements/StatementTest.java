@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class StatementTest {
 
-  //Now I need a recursion test that would test if I can query ALL the children for ALL the expenses in the mock statement. 
+  // // Now I need a recursion test that would test if I can query ALL the children for ALL the expenses in the mock statement. 
   // @Test
   // public void getExpenseByIDTest(){
   //   Statement dummyStatement = MockObjects.initializeDummyStatement(); 
@@ -29,23 +29,23 @@ public class StatementTest {
   //   assertEquals(Expenses.INVALID_EXPENSE, dummyStatement.getExpenseById(120301));
   // } 
 
-  private ArrayList<Expenses> populateAllNestedExpensesIntoArray(Statement dummyStatement){
-    ArrayList<Expenses> allParentAndChildExpenses = new ArrayList<Expenses>();
-    for(Expenses expense:dummyStatement.getExpenseArray()){
-      recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, expense);
-    }
-    return allParentAndChildExpenses;
+  // private ArrayList<Expenses> populateAllNestedExpensesIntoArray(Statement dummyStatement){
+  //   ArrayList<Expenses> allParentAndChildExpenses = new ArrayList<Expenses>();
+  //   for(Expenses expense:dummyStatement.getExpenseArray()){
+  //     recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, expense);
+  //   }
+  //   return allParentAndChildExpenses;
 
-  } 
+  // } 
 
-  private ArrayList<Expenses> recursiveAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildExpenses, Expenses expense){
-    allParentAndChildExpenses.add(expense);
-    if(expense.hasChildren()){
-      for(Expenses childExpense:expense.getChildArray()){
-        recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, childExpense);
-      }
-    } 
-    return allParentAndChildExpenses; 
-  } 
+  // private ArrayList<Expenses> recursiveAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildExpenses, Expenses expense){
+  //   allParentAndChildExpenses.add(expense);
+  //   if(expense.hasChildren()){
+  //     for(Expenses childExpense:expense.getChildArray()){
+  //       recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, childExpense);
+  //     }
+  //   } 
+  //   return allParentAndChildExpenses; 
+  // } 
   
 }
