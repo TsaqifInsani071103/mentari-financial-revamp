@@ -94,7 +94,7 @@ public class Formula {
   public boolean isFormulaValid(String formula, FormulaNode rootNode){
     //edge cases 
     if(formula.equals("")) return true; 
-    if(isInteger(formula)){
+    if(isInteger(formula) && rootNode != null){
       rootNode.addChild(new FormulaNode(formula));
       return true;
     }

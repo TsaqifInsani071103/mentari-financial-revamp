@@ -126,6 +126,9 @@ public class FormulaTest {
       String dummyFormula27 = "SUM(1,2,MULTIPLY(1,@))";
       assertEquals(false, frmlObject.isFormulaValid(dummyFormula27));
 
+      String dummyFormula28 = "2";
+      assertEquals(false, frmlObject.isFormulaValid(dummyFormula28));
+
   } 
 
 
