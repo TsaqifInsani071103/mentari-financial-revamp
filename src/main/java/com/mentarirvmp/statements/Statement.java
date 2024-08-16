@@ -69,16 +69,20 @@ public class Statement {
 
   //Might have to change this into a linked HashMap Anyways.
   public Expenses getExpenseById(String ID){
-    if(!this.expenseMap.containsKey(ID)) return Expenses.INVALID_EXPENSE;
     return recursiveGetExpenseById(this.expenseMap, ID);
   } 
 
-  private Expenses recursiveGetExpenseById(LinkedHashMap<String,Expenses> expenseMap, String ID){
-    for(Map.Entry<String, Expenses> mapElement : this.expenseMap.entrySet()){
+  private Expenses recursiveGetExpenseById(LinkedHashMap<String,Expenses> childMap, String ID){
+    if(childMap.containsKey(ID)) return childMap.get(ID);
+
+    for(Map.Entry<String, Expenses> mapElement : childMap.entrySet()){
       Expenses expense = mapElement.getValue(); 
-      if(expense.getChildMap().containsKey(ID)) return expense.getChildMap().get(ID);
-      recursiveGetExpenseById(expense.getChildMap(), ID);
+      if(expense.hasChildren()){
+        if(expense.getChildMap().containsKey(ID)) return expense.getChildMap().get(ID);
+        recursiveGetExpenseById(expense.getChildMap(), ID);
+      }
     }
+
     return Expenses.INVALID_EXPENSE;
   } 
 

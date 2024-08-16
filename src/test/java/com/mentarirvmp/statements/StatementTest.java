@@ -18,10 +18,10 @@ public class StatementTest {
   public void getExpenseByIDTest(){
     Statement dummyStatement = MockObjects.getDummyStatementObject(); 
 
-    //we flatten the nested arrays, so we can check on them easier. 
+    // //we flatten the nested arrays, so we can check on them easier. 
     ArrayList<Expenses> allParentAndChildExpenses = populateAllNestedExpensesIntoArray(dummyStatement); 
 
-    //were testing for successful querying 
+    // //were testing for successful querying 
     for(Expenses expense: allParentAndChildExpenses){
       assertEquals(expense, dummyStatement.getExpenseById(expense.getId()));
     }
@@ -34,6 +34,11 @@ public class StatementTest {
     ArrayList<Expenses> allParentAndChildExpenses = new ArrayList<Expenses>();
     for(Map.Entry<String, Expenses> mapElement: dummyStatement.getExpensesMap().entrySet()){
       recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
+      // System.out.println("===========");
+      // for(Expenses expense : allParentAndChildExpenses){
+      //   System.out.println(expense.getName());
+      // }
+      // System.out.println("===========");
     }
     return allParentAndChildExpenses;
 
@@ -46,7 +51,9 @@ public class StatementTest {
         recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
       }
     } 
-    return allParentAndChildExpenses; 
+
+    return allParentAndChildExpenses;
+    
   } 
   
 }
