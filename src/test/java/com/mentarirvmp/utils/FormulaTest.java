@@ -132,49 +132,7 @@ public class FormulaTest {
   } 
 
 
-  // @Test 
-  // public void getEmptyFormula(){
-
-  //   assertEquals("SUM()", new Formula("SUM(123,412,41,23)").getEmptyFormula());
-
-  //   //testing that if the Formula doesn't have the parantheses(), it should return with "invalid" 
-  //   assertEquals(Formula.INVALID, new Formula("d").getEmptyFormula());
-
-  //   //testing that if the Formula isn't a recognized formula, it should also return invalid 
-  //   assertEquals(Formula.UNRECOGNIZED, new Formula("DOODLE()").getEmptyFormula());
-  // }
-
-  // @Test 
-  // public void getEmptyFormulaAndContent(){
-  //   //testing that we're getting the content inside and the empty formula when the formula is right. 
-  //   assertValidFormulaContentMap();
-
-  //   //testing when the formula isn't recognized 
-  //   Formula formula2 = new Formula("DOODLE(E10,E243)");
-  //   assertInvalidFormulaContentMap(formula2);
-
-  //   //testing when the formula doesn't have the right parantheses, thus invalid format 
-  //   Formula formula3 = new Formula("SUM(E10E430");
-  //   assertInvalidFormulaContentMap(formula3);
-
-  //   //testing when the formula is flipped 
-  //   Formula formula4 = new Formula("()SUM");
-  //   assertInvalidFormulaContentMap(formula4);
-  // } 
-
-  // private void assertValidFormulaContentMap(){
-  //   String dummyEmptyFormula = "SUM()";
-  //   String dummyContent = "10,20,30,40";
-  //   Formula dummyFormula = new Formula("SUM(" + dummyContent + ")");
-  //   assertEquals(dummyContent, dummyFormula.getEmptyFormulaAndIdStrings().get(Formula.ID_STRINGS));
-  //   assertEquals(dummyEmptyFormula, dummyFormula.getEmptyFormulaAndIdStrings().get(Formula.EMPTY_FORMULA));
-  // } 
-
-  // private void assertInvalidFormulaContentMap(Formula formula){
-  //   assertEquals(Formula.INVALID, formula.getEmptyFormulaAndIdStrings().get(Formula.ID_STRINGS));
-  //   assertEquals(Formula.INVALID, formula.getEmptyFormulaAndIdStrings().get(Formula.EMPTY_FORMULA));
-  // }  
-
+  
 
 
   

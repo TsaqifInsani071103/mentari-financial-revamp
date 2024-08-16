@@ -17,7 +17,7 @@ public class Expenses {
   private String name; 
   private String description = ""; 
   private String value = ""; 
-  private String id; 
+  private String id = ""; 
   private LinkedHashMap<String, Expenses> childMap = new LinkedHashMap<>();
   private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); //maybe make this into a set of arrays in Statement.java? 
 

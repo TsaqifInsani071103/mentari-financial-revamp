@@ -31,8 +31,17 @@ public class Statement {
   // } 
 
   public void addExpense(Expenses newExpense){
+    if(newExpense.getId().equals("")) setIdFor(newExpense);
     this.expenseMap.put(newExpense.getId(), newExpense);
   }
+
+  //check for unique expense name 
+  public void makeAndIncludeNewExpense(String expenseName){
+    //check if expense name is unique first 
+    Expenses newExpense = new Expenses(expenseName);
+    addExpense(newExpense);
+  } 
+  
 
   // public void setExpenseArray(ArrayList<Expenses> expenseArray){
   //   this.expenseArrayList = expenseArray;
@@ -41,15 +50,6 @@ public class Statement {
   public void setExpenseMap(LinkedHashMap<String, Expenses> expenseMap){
     this.expenseMap = expenseMap;
   }
-
-  //check for unique expense name 
-  public void makeAndIncludeNewExpense(String expenseName){
-    //check if expense name is unique first 
-    Expenses newExpense = new Expenses(expenseName);
-    setIdFor(newExpense);
-    addExpense(newExpense);
-  } 
-
   // public Expenses makeAndIncludeNewExpense(){} 
 
   private void setIdFor(Expenses expense){
