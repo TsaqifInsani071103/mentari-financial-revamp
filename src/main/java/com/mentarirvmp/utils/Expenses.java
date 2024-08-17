@@ -22,6 +22,9 @@ public class Expenses {
   private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); //maybe make this into a set of arrays in Statement.java? 
 
   
+  public ArrayList<Expenses> getRelatedExpensesArray(){
+    return this.relatedExpensesByFormula; 
+  } 
 
   public Expenses(String name){
     this.name = name; 
