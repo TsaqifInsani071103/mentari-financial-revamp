@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Statement {
+  //I COULD HAVE A FLATTENED ARRAY OF ALL THE CHILDREN EXPENSES UPON SETUP FOR OPTIMIZATION AND EASE OF ADDING AND DELETING 
 
   //If I want the expense class to just be a single class I don't think I would need an expenseCounter like I did with the original codebase. 
   private String statementName; 
@@ -30,10 +31,20 @@ public class Statement {
   //   this.expenseArrayList.add(newExpense);
   // } 
 
+  public void addExpenseToParent(Expenses newExpense, Expenses parentExpense){
+    addExpense(newExpense, parentExpense.getChildMap());
+  } 
+
   public void addExpense(Expenses newExpense){
     if(newExpense.getId().equals("")) setIdFor(newExpense);
     this.expenseMap.put(newExpense.getId(), newExpense);
   }
+
+  public void addExpense(Expenses newExpense, LinkedHashMap<String, Expenses> childMap){
+    if(newExpense.getId().equals("")) setIdFor(newExpense);
+    childMap.put(newExpense.getId(), newExpense);
+  } 
+
 
   //check for unique expense name 
   public void makeAndIncludeNewExpense(String expenseName){
