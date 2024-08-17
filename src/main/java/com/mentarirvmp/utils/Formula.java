@@ -111,7 +111,15 @@ public class Formula {
     }else{
       rootNode.addChild(emptyFormulaNode);
     }
-    if(!parsedFormulaContentIsValid(formulaContentArray, emptyFormulaNode)) return false; 
+
+    for(int i = 0; i < formulaContentArray.length; i++){
+      String indivContent = formulaContentArray[i].trim();
+      while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<formulaContentArray.length){
+        indivContent = indivContent + "," + formulaContentArray[i+1];
+        i++;
+      }
+      if(!isFormulaValid(indivContent, emptyFormulaNode)) return false; 
+    }
 
     return true; 
   }
@@ -119,17 +127,7 @@ public class Formula {
   // System.out.println("TIS THE PROBLEM STRING " + indivContent);
   // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
   // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
-  private boolean parsedFormulaContentIsValid(String[] formulaContentArray, FormulaNode parentNode){
-    for(int i = 0; i < formulaContentArray.length; i++){
-      String indivContent = formulaContentArray[i].trim();
-      while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<formulaContentArray.length){
-        indivContent = indivContent + "," + formulaContentArray[i+1];
-        i++;
-      }
-      if(!isFormulaValid(indivContent, parentNode)) return false; 
-    }
-    return true; 
-  } 
+
 
   private boolean isInteger(String str){
     try{
