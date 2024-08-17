@@ -24,6 +24,10 @@ public class StatementTest {
     // //were testing for successful querying 
     for(Expenses expense: allParentAndChildExpenses){
       assertEquals(expense, dummyStatement.getExpenseById(expense.getId()));
+      // System.out.println("=============");
+      // System.out.println(expense.getName()); 
+      // System.out.println(dummyStatement.getExpenseById(expense.getId()).getName()); 
+      // System.out.println("=============");
     }
 
     //were testing for invalid ID 
@@ -34,11 +38,6 @@ public class StatementTest {
     ArrayList<Expenses> allParentAndChildExpenses = new ArrayList<Expenses>();
     for(Map.Entry<String, Expenses> mapElement: dummyStatement.getExpensesMap().entrySet()){
       recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
-      // System.out.println("===========");
-      // for(Expenses expense : allParentAndChildExpenses){
-      //   System.out.println(expense.getName());
-      // }
-      // System.out.println("===========");
     }
     return allParentAndChildExpenses;
 
