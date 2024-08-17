@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 //formula is basically just a tool for StatementsAndExpensehandler to use to basically calculate the valus of the formula strings in the expenses 
 public class Formula {
+  private FormulaNode validFormulaRootNode;
   
   public static class FormulaAnatomy{
     private String formula;
@@ -82,6 +83,13 @@ public class Formula {
     }
   }
 
+  //HARD CODED RIGHT NOW 
+  public int getValueIfFormulaValid(String formula){
+    if(isFormulaValid(formula)){
+      return 10;
+    }
+    return 0; 
+  } 
  
   public boolean isFormulaValid(String formula){
     return isFormulaValid(formula, null);
