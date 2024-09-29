@@ -90,7 +90,8 @@ public class Formula {
     }
     return 0; 
   } 
- 
+  
+  //isFormulaValid creates a formulaNode that has sort of this chronology of what formulas need to be fired? 
   public boolean isFormulaValid(String formula){
     return isFormulaValid(formula, null);
   }
