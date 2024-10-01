@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 //formula is basically just a tool for StatementsAndExpensehandler to use to basically calculate the valus of the formula strings in the expenses 
 public class Formula {
-  private FormulaNode validFormulaRootNode;
+  private FormulaNode validFormulaRootNode = null;
   
   public static class FormulaAnatomy{
     private String formula;
@@ -40,7 +40,7 @@ public class Formula {
       }
     }
 
-    public String getFormulaWithoutParanthesisContent(){
+    public String getFormulaWithoutFormulaContent(){
       return this.parentFormula;
     } 
     public String getFormulaContent(){
@@ -48,11 +48,11 @@ public class Formula {
     } 
 
     private boolean formulaParanthesesValid(){
-      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1 || !hasSameOpenAndCloseParantheses(this.formula)) return false;
+      if(formula.charAt(lastIndex) != ')' || openingParanthesisIndex == -1 || !hasSameOpenAndClosingParantheses(this.formula)) return false;
       return true; 
     }
 
-    public static boolean hasSameOpenAndCloseParantheses(String formula){
+    public static boolean hasSameOpenAndClosingParantheses(String formula){
       Stack<Character> paranthesesStack = new Stack<>();
       for(int i = 0; i < formula.length(); i++){
         if(formula.charAt(i) == '(') paranthesesStack.push('(');
@@ -86,6 +86,8 @@ public class Formula {
   //HARD CODED RIGHT NOW 
   public int getValueIfFormulaValid(String formula){
     if(isFormulaValid(formula)){
+      validFormulaRootNode.printAllFormulas(0);
+      // System.out.println("VALID FORMULA HERE: " + validFormulaRootNode);
       return 10;
     }
     return 0; 
@@ -108,22 +110,28 @@ public class Formula {
       rootNode.addChild(new FormulaNode(formula));
       return true;
     }
+    //checking if the formula is just a sole number 
+    //this is just to anticipate that we want sole numbers in our inputs to work without having to be in formula form?? 
+    if(isInteger(formula) && rootNode == null){
+      return true; 
+    }
 
     FormulaAnatomy parsedFormula = new FormulaAnatomy(formula);
     if(!parsedFormula.isValid) return false; 
 
-    FormulaNode emptyFormulaNode = new FormulaNode(parsedFormula.getFormulaWithoutParanthesisContent());// e.g SUM() in SUM(1,2,3)
-    String[] formulaContentArray = parsedFormula.getFormulaContent().split(",");// e.g 1,2,3 in SUM(1,2,3)
+    FormulaNode emptyFormulaNode = new FormulaNode(parsedFormula.getFormulaWithoutFormulaContent());// e.g SUM() in SUM(1,2,3)
+    String[] formulaContentArray = parsedFormula.getFormulaContent().split(",");// e.g 1,2,3 in SUM(1,2,3) or MULTIPLY(1,2,3) in SUM(MULTIPLY(1,2,3))
 
     if(rootNode == null) {
       rootNode = emptyFormulaNode;
+      this.validFormulaRootNode = rootNode;
     }else{
       rootNode.addChild(emptyFormulaNode);
     }
 
     for(int i = 0; i < formulaContentArray.length; i++){
       String indivContent = formulaContentArray[i].trim();
-      while(!FormulaAnatomy.hasSameOpenAndCloseParantheses(indivContent) && i+1<formulaContentArray.length){
+      while(!FormulaAnatomy.hasSameOpenAndClosingParantheses(indivContent) && i+1<formulaContentArray.length){
         indivContent = indivContent + "," + formulaContentArray[i+1];
         i++;
       }

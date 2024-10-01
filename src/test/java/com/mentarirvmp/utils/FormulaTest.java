@@ -127,11 +127,24 @@ public class FormulaTest {
       assertEquals(false, frmlObject.isFormulaValid(dummyFormula27));
 
       String dummyFormula28 = "2";
-      assertEquals(false, frmlObject.isFormulaValid(dummyFormula28));
+      assertEquals(true, frmlObject.isFormulaValid(dummyFormula28));
 
   } 
 
+  @Test
+  public void getValueIfFormulaValid(){
+    Formula frmlObject = new Formula();
+    // String dummyFormula = "MULTIPLY(SUM(1,2), 3)";
 
+    // assertEquals(10, frmlObject.getValueIfFormulaValid(dummyFormula));
+
+    // String dummyFormula1 = "SUM(MULTIPLY(1,2,,), SUM(SUM(1,2,3),2,3), MULTIPLY(1))";
+    // assertEquals(10, frmlObject.getValueIfFormulaValid(dummyFormula1));
+
+    String dummyFormula2 = "1";
+
+
+  } 
   
 
 
