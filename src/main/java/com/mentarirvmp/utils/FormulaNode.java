@@ -13,6 +13,14 @@ public class FormulaNode {
     this.formula=formula; 
   } 
 
+  public String getValue(){
+    return this.formula;
+  } 
+
+  public ArrayList<FormulaNode> getChildNodes(){
+    return this.children;
+  } 
+
   public void setParent(FormulaNode parentNode){
     this.parentNode = parentNode; 
   } 
@@ -37,8 +45,10 @@ public class FormulaNode {
     }
     System.out.println(this.formula);
     counter++;
-    for (FormulaNode child : children) {
+    for (FormulaNode child : this.children) {
       child.printAllFormulas(counter);  // Recursively print each child's formulas
     }
   }
+
+
 }

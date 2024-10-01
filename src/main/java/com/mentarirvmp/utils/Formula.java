@@ -88,6 +88,7 @@ public class Formula {
     if(isFormulaValid(formula)){
       validFormulaRootNode.printAllFormulas(0);
       // System.out.println("VALID FORMULA HERE: " + validFormulaRootNode);
+      if(isInteger(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
       return 10;
     }
     return 0; 
@@ -113,6 +114,7 @@ public class Formula {
     //checking if the formula is just a sole number 
     //this is just to anticipate that we want sole numbers in our inputs to work without having to be in formula form?? 
     if(isInteger(formula) && rootNode == null){
+      this.validFormulaRootNode = new FormulaNode(formula); 
       return true; 
     }
 
