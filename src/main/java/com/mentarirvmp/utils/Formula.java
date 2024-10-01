@@ -87,11 +87,24 @@ public class Formula {
   public int getValueIfFormulaValid(String formula){
     if(isFormulaValid(formula)){
       validFormulaRootNode.printAllFormulas(0);
-      // System.out.println("VALID FORMULA HERE: " + validFormulaRootNode);
+      //if its only a sole integer, just return the number 
       if(isInteger(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
-      return 10;
+
+      return getValueOfNodesRecursively(this.validFormulaRootNode);
+
     }
     return 0; 
+  } 
+
+  public int getValueOfNodesRecursively(FormulaNode rootNode){
+    //if its a formula
+    if(!isInteger(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
+      for(FormulaNode child: rootNode.getChildNodes()){
+        
+      }
+    }
+    return 10; 
+
   } 
   
   //isFormulaValid creates a formulaNode that has sort of this chronology of what formulas need to be fired? 
@@ -146,7 +159,22 @@ public class Formula {
   // System.out.println("TIS THE PROBLEM STRING " + indivContent);
   // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
   // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
+  private int calculateByFormula(String formula){
+    switch(formula){
+      case "SUM()":
+        return SUM();
+      default: 
+        return 0;
+    }
+  } 
 
+  private int SUM(int... values){
+    int total = 0; 
+    for(int num:values){
+      total += num;
+    }
+    return total;
+  }
 
   private boolean isInteger(String str){
     try{
