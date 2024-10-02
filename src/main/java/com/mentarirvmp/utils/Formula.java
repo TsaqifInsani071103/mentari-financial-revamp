@@ -91,14 +91,15 @@ public class Formula {
       if(isInteger(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
 
       return getValueOfNodesRecursively(this.validFormulaRootNode);
-
     }
+
     return 0; 
   } 
 
   public int getValueOfNodesRecursively(FormulaNode rootNode){
     int total = 0;
     String formula = rootNode.getValue();
+    if(formula.equals("MULTIPLY()")) total = 1; 
     //if its a formula
     if(!isInteger(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
       for(FormulaNode child: rootNode.getChildNodes()){
@@ -171,6 +172,8 @@ public class Formula {
     switch(formula){
       case "SUM()":
         return SUM(value, total);
+      case "MULTIPLY()":
+        return MULTIPLY(value, total);
       default: 
         return 0;
     }
@@ -178,6 +181,11 @@ public class Formula {
 
   private int SUM(int value, int total){
     total += value;
+    return total;
+  }
+
+  private int MULTIPLY(int value, int total){
+    total *= value;
     return total;
   }
 

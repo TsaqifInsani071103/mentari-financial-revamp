@@ -156,6 +156,9 @@ public class FormulaTest {
     String dummyFormula5 = "SUM(1,2,3, SUM(1,2,3))";
    assertEquals(12, frmlObject.getValueIfFormulaValid(dummyFormula5));
 
+    String dummyFormula6 = "MULTIPLY(3,3)";
+   assertEquals(9, frmlObject.getValueIfFormulaValid(dummyFormula6));
+
   } 
   
 
