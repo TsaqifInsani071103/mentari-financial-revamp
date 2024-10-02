@@ -159,6 +159,9 @@ public class FormulaTest {
     String dummyFormula6 = "MULTIPLY(3,3)";
    assertEquals(9, frmlObject.getValueIfFormulaValid(dummyFormula6));
 
+    String dummyFormula7 = "MULTIPLY(MULTIPLY(3,0), 2,1)";
+   assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula7));
+
   } 
   
 
