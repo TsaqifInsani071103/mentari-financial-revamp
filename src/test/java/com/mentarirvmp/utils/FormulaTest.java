@@ -150,8 +150,11 @@ public class FormulaTest {
     String dummyFormula3 = "3";
    assertEquals(3, frmlObject.getValueIfFormulaValid(dummyFormula3));
 
-  //   String dummyFormula4 = "SUM(1,2,3)";
-  //  assertEquals(6, frmlObject.getValueIfFormulaValid(dummyFormula4));
+    String dummyFormula4 = "SUM(1,2,3)";
+   assertEquals(6, frmlObject.getValueIfFormulaValid(dummyFormula4));
+
+    String dummyFormula5 = "SUM(1,2,3, SUM(1,2,3))";
+   assertEquals(12, frmlObject.getValueIfFormulaValid(dummyFormula5));
 
   } 
   

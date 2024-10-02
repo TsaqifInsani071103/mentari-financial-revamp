@@ -97,13 +97,19 @@ public class Formula {
   } 
 
   public int getValueOfNodesRecursively(FormulaNode rootNode){
+    int total = 0;
+    String formula = rootNode.getValue();
     //if its a formula
     if(!isInteger(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
       for(FormulaNode child: rootNode.getChildNodes()){
-        
+        if(isInteger(child.getValue())){
+          total = calculateByFormulaIntoTotal(formula, Integer.parseInt(child.getValue()), total);
+        }else{
+          total = getValueOfNodesRecursively(child); 
+        } 
       }
     }
-    return 10; 
+    return total; 
 
   } 
   
@@ -134,7 +140,7 @@ public class Formula {
     FormulaAnatomy parsedFormula = new FormulaAnatomy(formula);
     if(!parsedFormula.isValid) return false; 
 
-    FormulaNode emptyFormulaNode = new FormulaNode(parsedFormula.getFormulaWithoutFormulaContent());// e.g SUM() in SUM(1,2,3)
+    FormulaNode emptyFormulaNode = new FormulaNode(parsedFormula.getFormulaWithoutFormulaContent());// e.g SUM() in SUM(1,2,3), or SUM() in SUM(MULTIPLY())
     String[] formulaContentArray = parsedFormula.getFormulaContent().split(",");// e.g 1,2,3 in SUM(1,2,3) or MULTIPLY(1,2,3) in SUM(MULTIPLY(1,2,3))
 
     if(rootNode == null) {
@@ -156,23 +162,21 @@ public class Formula {
     return true; 
   }
 
+
   // System.out.println("TIS THE PROBLEM STRING " + indivContent);
   // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
   // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
-  private int calculateByFormula(String formula){
+  private int calculateByFormulaIntoTotal(String formula, int value, int total){
     switch(formula){
       case "SUM()":
-        return SUM();
+        return SUM(value, total);
       default: 
         return 0;
     }
   } 
 
-  private int SUM(int... values){
-    int total = 0; 
-    for(int num:values){
-      total += num;
-    }
+  private int SUM(int value, int total){
+    total += value;
     return total;
   }
 
