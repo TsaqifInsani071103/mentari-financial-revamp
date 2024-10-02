@@ -105,7 +105,8 @@ public class Formula {
         if(isInteger(child.getValue())){
           total = calculateByFormulaIntoTotal(formula, Integer.parseInt(child.getValue()), total);
         }else{
-          total = getValueOfNodesRecursively(child); 
+          int calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
+          total = calculateByFormulaIntoTotal(formula, calculatedInnerFormulaValue, total);
         } 
       }
     }
