@@ -160,6 +160,9 @@ public class FormulaTest {
    String dummyFormula8 = "SUM(MULTIPLY(1,2,SUM(3)),SUM(4,MULTIPLY(5,6)),7)";
    assertEquals(47, frmlObject.getValueIfFormulaValid(dummyFormula8));
 
+   String dummyFormula9 = "SUM(MULTIPLY(SUM(1,2,3), 10), SUM())";
+   assertEquals(60, frmlObject.getValueIfFormulaValid(dummyFormula9));
+
   } 
   
 
