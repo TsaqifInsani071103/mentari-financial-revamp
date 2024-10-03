@@ -99,9 +99,9 @@ public class Formula {
   public int getValueOfNodesRecursively(FormulaNode rootNode){
     int total = 0;
     String formula = rootNode.getValue();
-    if(formula.equals("MULTIPLY()")) total = 1; 
     //if its a formula
     if(!isInteger(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
+      if(formula.equals("MULTIPLY()")) total = 1; 
       for(FormulaNode child: rootNode.getChildNodes()){
         if(isInteger(child.getValue())){
           total = calculateByFormulaIntoTotal(formula, Integer.parseInt(child.getValue()), total);
@@ -121,9 +121,6 @@ public class Formula {
   }
 
   //theres too many responsibilities going on here. 
-  // System.out.println("TIS THE NESTED CONTENT " + Arrays.asList(formulaContentArray).toString());//!!!!!!!!!!!!!!!!!!
-  // System.out.println("==============");
-  // rootNode.printAllFormulas(0);//!!!!!!!!!!!!!!!!!!
   public boolean isFormulaValid(String formula, FormulaNode rootNode){
     //edge cases 
     if(formula.equals("") && rootNode != null) return true; 
