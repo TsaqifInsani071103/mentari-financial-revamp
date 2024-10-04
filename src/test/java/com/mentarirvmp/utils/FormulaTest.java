@@ -198,6 +198,11 @@ public class FormulaTest {
 
     String dummyFormula4 = "SUM("+id1+ "," + id2 +","+"bogusId"+")";
     assertEquals(false, frmlObject.isFormulaValid(dummyFormula4));
+    assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula4));
+
+    String dummyFormula5 = "MULTIPLY(SUM("+id1+ "," + id2 + ",MULTIPLY(10, "+ id3 +")))";
+    assertEquals(true, frmlObject.isFormulaValid(dummyFormula5));
+    assertEquals(15, frmlObject.getValueIfFormulaValid(dummyFormula5));
   } 
   
 }
