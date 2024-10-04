@@ -25,9 +25,7 @@ public class Formula {
     this.dataHandler = dataHandler;
 
   } 
-  public Formula(){
-
-  } 
+ 
   
   public static class FormulaAnatomy{
     private String formula;
