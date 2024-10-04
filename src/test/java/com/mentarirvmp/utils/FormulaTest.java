@@ -197,7 +197,7 @@ public class FormulaTest {
     String dummyFormula3 = "SUM("+id1+ "," + id2 +","+id3+")";
     assertEquals(15, frmlObject.getValueIfFormulaValid(dummyFormula3));
 
-    String dummyFormula4 = "SUM("+id1+ "," + id2 +","+bogusId+")";
+    String dummyFormula4 = "SUM("+id1+ "," + id2 +","+"bogusId"+")";
     assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula4));
   } 
   

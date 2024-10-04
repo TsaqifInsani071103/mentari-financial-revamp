@@ -152,7 +152,8 @@ public class Formula {
     }
 
     //CLEAN THESE UP BUDDY!!! 
-    if(this.dataHandler != null){
+    //INSTEAD, REGEXP THE FORMULA, CHECK IF ITS AN ID INSTEAD OF CHECKING ALL THE FORMULAS 
+    if(this.dataHandler != null){ //this is making unwanted side effect if we check for datahandler itself 
       String actualExpenseValue = "";
       Expenses checkedExpense; 
       checkedExpense=this.dataHandler.getExpenseById(formula);
