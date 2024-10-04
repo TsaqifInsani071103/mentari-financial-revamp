@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 public class FormulaTest {
-  //extract this to MockObjects too later. 
+  // Statement dummyStatement = new Statement("DummyStatement");
 
   //use Case: 
   //
@@ -198,7 +198,7 @@ public class FormulaTest {
     assertEquals(15, frmlObject.getValueIfFormulaValid(dummyFormula3));
 
     String dummyFormula4 = "SUM("+id1+ "," + id2 +","+"bogusId"+")";
-    assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula4));
+    assertEquals(false, frmlObject.isFormulaValid(dummyFormula4));
   } 
   
 }
