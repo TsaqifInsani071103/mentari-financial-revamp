@@ -8,6 +8,7 @@ import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.mentarirvmp.statements.Statement;
 
 import java.lang.reflect.Method;
 // import com.mentari.statements.Statement;
@@ -18,6 +19,15 @@ import java.util.HashMap;
 //formula is basically just a tool for StatementsAndExpensehandler to use to basically calculate the valus of the formula strings in the expenses 
 public class Formula {
   private FormulaNode validFormulaRootNode = null;
+  private Statement dataHandler = null;
+
+  public Formula(Statement dataHandler){
+    this.dataHandler = dataHandler;
+
+  } 
+  public Formula(){
+
+  } 
   
   public static class FormulaAnatomy{
     private String formula;
@@ -86,6 +96,7 @@ public class Formula {
   //HARD CODED RIGHT NOW 
   public int getValueIfFormulaValid(String formula){
     if(isFormulaValid(formula)){
+      //this is just to check 
       validFormulaRootNode.printAllFormulas(0);
       //if its only a sole integer, just return the number 
       if(isInteger(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
@@ -135,6 +146,25 @@ public class Formula {
       this.validFormulaRootNode = new FormulaNode(formula); 
       return true; 
     }
+
+    //CLEAN THESE UP BUDDY!!! 
+    if(this.dataHandler != null){
+      String actualExpenseValue = "";
+      Expenses checkedExpense; 
+      checkedExpense=this.dataHandler.getExpenseById(formula);
+      if(checkedExpense != Expenses.INVALID_EXPENSE){
+        actualExpenseValue = checkedExpense.getValue(); 
+        if(rootNode != null){
+          rootNode.addChild(new FormulaNode(actualExpenseValue));
+          return true; 
+        }else{
+          validFormulaRootNode = new FormulaNode(actualExpenseValue);
+          return true; 
+        }
+      }
+      
+    }
+
 
     FormulaAnatomy parsedFormula = new FormulaAnatomy(formula);
     if(!parsedFormula.isValid) return false; 

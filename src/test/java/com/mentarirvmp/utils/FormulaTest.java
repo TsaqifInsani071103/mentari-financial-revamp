@@ -162,11 +162,34 @@ public class FormulaTest {
 
    String dummyFormula9 = "SUM(MULTIPLY(SUM(1,2,3), 10), SUM())";
    assertEquals(60, frmlObject.getValueIfFormulaValid(dummyFormula9));
+   String dummyFormula10 = "MULTIPLY(12)";
+   assertEquals(12, frmlObject.getValueIfFormulaValid(dummyFormula10));
 
   } 
   
 
+  @Test
+  public void getValueIfExpenseIdValid(){
+    Statement dummyStatement = new Statement("DummyStatement");
+    Formula frmlObject = new Formula(dummyStatement);
+    Expenses newExpense1 = new Expenses("Expense1");
+    Expenses newExpense2 = new Expenses("Expense2");
+    Expenses newExpense3 = new Expenses("Expense3");
+    dummyStatement.addExpense(newExpense1);
+    dummyStatement.addExpense(newExpense2);
+    dummyStatement.addExpense(newExpense3);
+    newExpense1.setValue("10");
+    String id1 = newExpense1.getId(); 
+    String id2 = newExpense2.getId(); 
+    String id3 = newExpense3.getId(); 
+    String bogusId = "E100000_DummyStatement";
 
+
+  
+    String dummyFormula2 = "MULTIPLY("+id1+ ",10)";
+    System.out.println(dummyFormula2);
+    assertEquals(100, frmlObject.getValueIfFormulaValid(dummyFormula2));
+  } 
   
 
 

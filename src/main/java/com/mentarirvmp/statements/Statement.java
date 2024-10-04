@@ -35,6 +35,7 @@ public class Statement {
     this.expenseMap.put(newExpense.getId(), newExpense);
   }
 
+  //do I need to check for duplicate entries? 
   public void addExpense(Expenses newExpense, LinkedHashMap<String, Expenses> childMap){
     if(newExpense.getId().equals("")) setIdFor(newExpense);
     childMap.put(newExpense.getId(), newExpense);
@@ -53,8 +54,8 @@ public class Statement {
   public LinkedHashMap<String, Expenses> getExpensesMap(){
     return this.expenseMap;
   } 
+  
 
-  //Might have to change this into a linked HashMap Anyways.
   public Expenses getExpenseById(String ID){
     return recursiveGetExpenseById(this.expenseMap, ID);
   } 

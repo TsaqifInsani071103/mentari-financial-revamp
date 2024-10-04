@@ -1,5 +1,5 @@
 package com.mentarirvmp.servicehandlers;
 
-public interface IntegrationHandler {
+public interface DataHandler {
   
 }
