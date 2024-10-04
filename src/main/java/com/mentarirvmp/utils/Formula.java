@@ -149,8 +149,6 @@ public class Formula {
       }
     }
 
-
-
     FormulaAnatomy parsedFormula = new FormulaAnatomy(formula);
 
     String actualExpenseValue = "";
@@ -165,8 +163,6 @@ public class Formula {
         validFormulaRootNode = new FormulaNode(actualExpenseValue);
         return true; 
       }
-    }else{
-      if(!parsedFormula.isValid) return false; 
     }
     
     if(!parsedFormula.isValid) return false; 
