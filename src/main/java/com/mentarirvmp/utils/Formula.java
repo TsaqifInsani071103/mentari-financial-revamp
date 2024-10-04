@@ -155,26 +155,22 @@ public class Formula {
 
     FormulaAnatomy parsedFormula = new FormulaAnatomy(formula);
 
-        //CLEAN THESE UP BUDDY!!! 
-    //INSTEAD, REGEXP THE FORMULA, CHECK IF ITS AN ID INSTEAD OF CHECKING ALL THE FORMULAS 
-    if(this.dataHandler != null){ //this is making unwanted side effect if we check for datahandler itself 
-      String actualExpenseValue = "";
-      Expenses checkedExpense; 
-      checkedExpense=this.dataHandler.getExpenseById(formula);
-      if(checkedExpense != Expenses.INVALID_EXPENSE){
-        actualExpenseValue = checkedExpense.getValue(); 
-        if(rootNode != null){
-          rootNode.addChild(new FormulaNode(actualExpenseValue));
-          return true; 
-        }else{
-          validFormulaRootNode = new FormulaNode(actualExpenseValue);
-          return true; 
-        }
+    String actualExpenseValue = "";
+    Expenses checkedExpense; 
+    checkedExpense=this.dataHandler.getExpenseById(formula);
+    if(checkedExpense != Expenses.INVALID_EXPENSE){
+      actualExpenseValue = checkedExpense.getValue(); 
+      if(rootNode != null){
+        rootNode.addChild(new FormulaNode(actualExpenseValue));
+        return true; 
       }else{
-        if(!parsedFormula.isValid) return false; 
+        validFormulaRootNode = new FormulaNode(actualExpenseValue);
+        return true; 
       }
+    }else{
+      if(!parsedFormula.isValid) return false; 
     }
-
+    
     if(!parsedFormula.isValid) return false; 
 
     FormulaNode emptyFormulaNode = new FormulaNode(parsedFormula.getFormulaWithoutFormulaContent());// e.g SUM() in SUM(1,2,3), or SUM() in SUM(MULTIPLY())

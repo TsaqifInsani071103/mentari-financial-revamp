@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 public class FormulaTest {
-  // Statement dummyStatement = new Statement("DummyStatement");
+  Statement dummyStatement = new Statement("DummyStatement");
 
   //use Case: 
   //
@@ -18,7 +18,7 @@ public class FormulaTest {
   //first thing to test is if the passed formula is valid or not. 
   @Test 
   public void validFormulaFormat(){
-      Formula frmlObject = new Formula();
+      Formula frmlObject = new Formula(dummyStatement);
       // First case: SUM(MULTIPLY()) is true  
       String dummyFormula1 = "SUM(MULTIPLY(1,2,,), SUM(SUM(1,2,3),2,3), MULTIPLY(1))";
       assertEquals(true, frmlObject.isFormulaValid(dummyFormula1));
@@ -136,7 +136,7 @@ public class FormulaTest {
 
   @Test
   public void getValueIfFormulaValid(){
-    Formula frmlObject = new Formula();
+    Formula frmlObject = new Formula(dummyStatement);
 
     String dummyFormula2 = "MULTIPLY()";
     assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula2));
@@ -173,7 +173,6 @@ public class FormulaTest {
 
   @Test
   public void getValueIfExpenseIdValid(){
-    Statement dummyStatement = new Statement("DummyStatement");
     Formula frmlObject = new Formula(dummyStatement);
     Expenses newExpense1 = new Expenses("Expense1");
     Expenses newExpense2 = new Expenses("Expense2");
