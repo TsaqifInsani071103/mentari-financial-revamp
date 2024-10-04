@@ -135,7 +135,10 @@ public class Formula {
   public boolean isFormulaValid(String formula, FormulaNode rootNode){
     //edge cases 
     if(rootNode == null){
-      if(formula.equals("")) return false; 
+      if(formula.equals("")){
+        this.validFormulaRootNode = new FormulaNode("0");
+        return true;
+      }; 
       if(isInteger(formula)){
         this.validFormulaRootNode = new FormulaNode(formula);
         return true; 

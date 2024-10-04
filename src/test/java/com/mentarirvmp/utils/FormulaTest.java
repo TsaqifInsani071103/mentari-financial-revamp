@@ -73,7 +73,7 @@ public class FormulaTest {
 
       // Fourteenth case: Empty formula
       String dummyFormula14 = "";
-      assertEquals(false, frmlObject.isFormulaValid(dummyFormula14));
+      assertEquals(true, frmlObject.isFormulaValid(dummyFormula14));
 
       // Fifteenth case: Only parentheses with no content
       String dummyFormula15 = "()";
@@ -164,6 +164,9 @@ public class FormulaTest {
    assertEquals(60, frmlObject.getValueIfFormulaValid(dummyFormula9));
    String dummyFormula10 = "MULTIPLY(12)";
    assertEquals(12, frmlObject.getValueIfFormulaValid(dummyFormula10));
+
+   String dummyFormula11 = "";
+   assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula11));
 
   } 
   
