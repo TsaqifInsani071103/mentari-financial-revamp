@@ -183,7 +183,7 @@ public class FormulaTest {
     dummyStatement.addExpense(newExpense3);
     newExpense1.setValue("10");
     newExpense2.setValue("5");
-    newExpense3.setValue("50");
+    newExpense3.setValue("");
     String id1 = newExpense1.getId(); 
     String id2 = newExpense2.getId(); 
     String id3 = newExpense3.getId(); 
@@ -195,9 +195,10 @@ public class FormulaTest {
     assertEquals(100, frmlObject.getValueIfFormulaValid(dummyFormula2));
     //the formula isn't valid
     String dummyFormula3 = "SUM("+id1+ "," + id2 +","+id3+")";
-    assertEquals(65, frmlObject.getValueIfFormulaValid(dummyFormula3));
+    assertEquals(15, frmlObject.getValueIfFormulaValid(dummyFormula3));
+
+    String dummyFormula4 = "SUM("+id1+ "," + id2 +","+bogusId+")";
+    assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula4));
   } 
   
-
-
 }
