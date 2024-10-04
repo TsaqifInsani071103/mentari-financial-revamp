@@ -134,17 +134,18 @@ public class Formula {
   //theres too many responsibilities going on here. 
   public boolean isFormulaValid(String formula, FormulaNode rootNode){
     //edge cases 
-    if(formula.equals("") && rootNode != null) return true; 
-    if(formula.equals("") && rootNode == null) return false; 
-    if(isInteger(formula) && rootNode != null){
-      rootNode.addChild(new FormulaNode(formula));
-      return true;
-    }
-    //checking if the formula is just a sole number 
-    //this is just to anticipate that we want sole numbers in our inputs to work without having to be in formula form?? 
-    if(isInteger(formula) && rootNode == null){
-      this.validFormulaRootNode = new FormulaNode(formula); 
-      return true; 
+    if(rootNode == null){
+      if(formula.equals("")) return false; 
+      if(isInteger(formula)){
+        this.validFormulaRootNode = new FormulaNode(formula);
+        return true; 
+      }
+    }else{
+      if(formula.equals("")) return true; 
+      if(isInteger(formula) && rootNode != null){
+        rootNode.addChild(new FormulaNode(formula));
+        return true;
+      }
     }
 
     //CLEAN THESE UP BUDDY!!! 
@@ -162,7 +163,6 @@ public class Formula {
           return true; 
         }
       }
-      
     }
 
 
