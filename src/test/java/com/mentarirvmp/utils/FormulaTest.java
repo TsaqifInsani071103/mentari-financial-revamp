@@ -186,7 +186,6 @@ public class FormulaTest {
     String id1 = newExpense1.getId(); 
     String id2 = newExpense2.getId(); 
     String id3 = newExpense3.getId(); 
-    String bogusId = "E100000_DummyStatement";
 
 
   

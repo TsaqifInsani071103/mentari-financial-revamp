@@ -126,44 +126,17 @@ public class Formula {
   
   //isFormulaValid creates a formulaNode that has sort of this chronology of what formulas need to be fired? 
   public boolean isFormulaValid(String formula){
-    return isFormulaValid(formula, null);
-  }
+    return makeValidFormulaNode(formula, null);
+  } 
 
-  //theres too many responsibilities going on here. 
-  public boolean isFormulaValid(String formula, FormulaNode rootNode){
+
+  public boolean makeValidFormulaNode(String formula, FormulaNode rootNode){
     //edge cases 
-    if(rootNode == null){
-      if(formula.equals("")){
-        this.validFormulaRootNode = new FormulaNode("0");
-        return true;
-      }; 
-      if(isInteger(formula)){
-        this.validFormulaRootNode = new FormulaNode(formula);
-        return true; 
-      }
-    }else{
-      if(formula.equals("")) return true; 
-      if(isInteger(formula) && rootNode != null){
-        rootNode.addChild(new FormulaNode(formula));
-        return true;
-      }
-    }
+    if(edgeCasesTrue_AddAsNode(formula, rootNode)) return true; 
 
     FormulaAnatomy parsedFormula = new FormulaAnatomy(formula);
 
-    String actualExpenseValue = "";
-    Expenses checkedExpense; 
-    checkedExpense=this.dataHandler.getExpenseById(formula);
-    if(checkedExpense != Expenses.INVALID_EXPENSE){
-      actualExpenseValue = checkedExpense.getValue(); 
-      if(rootNode != null){
-        rootNode.addChild(new FormulaNode(actualExpenseValue));
-        return true; 
-      }else{
-        validFormulaRootNode = new FormulaNode(actualExpenseValue);
-        return true; 
-      }
-    }
+    if(formulaIsValidId_AddAsNode(formula, rootNode)) return true; 
     
     if(!parsedFormula.isValid) return false; 
 
@@ -183,10 +156,52 @@ public class Formula {
         indivContent = indivContent + "," + formulaContentArray[i+1];
         i++;
       }
-      if(!isFormulaValid(indivContent, emptyFormulaNode)) return false; 
+      if(!makeValidFormulaNode(indivContent, emptyFormulaNode)) return false; 
     }
 
     return true; 
+  }
+
+  private boolean edgeCasesTrue_AddAsNode(String formula, FormulaNode rootNode){
+    //edge cases 
+    if(rootNode == null){
+      //empty user inputs are still valid and defaults to 0 
+      if(formula.equals("")){
+        this.validFormulaRootNode = new FormulaNode("0");
+        return true;
+      }; 
+      //if the user input is just an integer that is also valid. 
+      if(isInteger(formula)){
+        this.validFormulaRootNode = new FormulaNode(formula);
+        return true; 
+      }
+    }else{
+      //if the child node is empty, its true defaults to 0 
+      if(formula.equals("")) return true; 
+      //if the child node is an integer, thts true 
+      if(isInteger(formula) && rootNode != null){
+        rootNode.addChild(new FormulaNode(formula));
+        return true;
+      }
+    }
+    return false; 
+  }
+
+  private boolean formulaIsValidId_AddAsNode(String formula, FormulaNode rootNode){
+    String actualExpenseValue = "";
+    Expenses checkedExpense; 
+    checkedExpense=this.dataHandler.getExpenseById(formula);
+    if(checkedExpense != Expenses.INVALID_EXPENSE){
+      actualExpenseValue = checkedExpense.getValue(); 
+      if(rootNode != null){
+        rootNode.addChild(new FormulaNode(actualExpenseValue));
+        return true; 
+      }else{
+        validFormulaRootNode = new FormulaNode(actualExpenseValue);
+        return true; 
+      }
+    }
+    return false; 
   }
 
 
