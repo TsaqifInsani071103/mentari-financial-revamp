@@ -179,6 +179,8 @@ public class FormulaTest {
     dummyStatement.addExpense(newExpense2);
     dummyStatement.addExpense(newExpense3);
     newExpense1.setValue("10");
+    newExpense2.setValue("5");
+    newExpense3.setValue("50");
     String id1 = newExpense1.getId(); 
     String id2 = newExpense2.getId(); 
     String id3 = newExpense3.getId(); 
@@ -187,8 +189,10 @@ public class FormulaTest {
 
   
     String dummyFormula2 = "MULTIPLY("+id1+ ",10)";
-    System.out.println(dummyFormula2);
     assertEquals(100, frmlObject.getValueIfFormulaValid(dummyFormula2));
+    //the formula isn't valid
+    String dummyFormula3 = "SUM("+id1+ "," + id2 +","+id3+")";
+    assertEquals(65, frmlObject.getValueIfFormulaValid(dummyFormula3));
   } 
   
 
