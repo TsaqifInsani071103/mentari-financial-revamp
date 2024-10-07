@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class FormulaTest {
   Statement dummyStatement = new Statement("DummyStatement");
+  DataHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
 
   //use Case: 
   //
@@ -18,7 +19,7 @@ public class FormulaTest {
   //first thing to test is if the passed formula is valid or not. 
   @Test 
   public void validFormulaFormat(){
-      Formula frmlObject = new Formula(dummyStatement);
+      Formula frmlObject = new Formula(dataHandler);
       // First case: SUM(MULTIPLY()) is true  
       String dummyFormula1 = "SUM(MULTIPLY(1,2,,), SUM(SUM(1,2,3),2,3), MULTIPLY(1))";
       assertEquals(true, frmlObject.isFormulaValid(dummyFormula1));
@@ -136,7 +137,7 @@ public class FormulaTest {
 
   @Test
   public void getValueIfFormulaValid(){
-    Formula frmlObject = new Formula(dummyStatement);
+    Formula frmlObject = new Formula(dataHandler);
 
     String dummyFormula2 = "MULTIPLY()";
     assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula2));
@@ -173,7 +174,7 @@ public class FormulaTest {
 
   @Test
   public void getValueIfExpenseIdValid(){
-    Formula frmlObject = new Formula(dummyStatement);
+    Formula frmlObject = new Formula(dataHandler);
     Expenses newExpense1 = new Expenses("Expense1");
     Expenses newExpense2 = new Expenses("Expense2");
     Expenses newExpense3 = new Expenses("Expense3");

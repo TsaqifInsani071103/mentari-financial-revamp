@@ -19,9 +19,9 @@ import java.util.HashMap;
 //formula is basically just a tool for StatementsAndExpensehandler to use to basically calculate the valus of the formula strings in the expenses 
 public class Formula {
   private FormulaNode validFormulaRootNode = null;
-  private Statement dataHandler = null;
+  private DataHandler dataHandler = null;
 
-  public Formula(Statement dataHandler){
+  public Formula(DataHandler dataHandler){
     this.dataHandler = dataHandler;
 
   } 
@@ -130,13 +130,13 @@ public class Formula {
   } 
 
 
-  public boolean makeValidFormulaNode(String formula, FormulaNode rootNode){
+  public boolean makeValidFormulaNode(String formulaSubstring, FormulaNode rootNode){
     //edge cases 
-    if(edgeCasesTrue_AddAsNode(formula, rootNode)) return true; 
+    if(edgeCasesTrue_AddAsNode(formulaSubstring, rootNode)) return true; 
 
-    FormulaAnatomy parsedFormula = new FormulaAnatomy(formula);
+    FormulaAnatomy parsedFormula = new FormulaAnatomy(formulaSubstring);
 
-    if(formulaIsValidId_AddAsNode(formula, rootNode)) return true; 
+    if(formulaIsValidId_AddAsNode(formulaSubstring, rootNode)) return true; 
     
     if(!parsedFormula.isValid) return false; 
 
@@ -162,46 +162,42 @@ public class Formula {
     return true; 
   }
 
-  private boolean edgeCasesTrue_AddAsNode(String formula, FormulaNode rootNode){
+  private boolean edgeCasesTrue_AddAsNode(String formulaSubstring, FormulaNode rootNode){
     //edge cases 
     if(rootNode == null){
       //empty user inputs are still valid and defaults to 0 
-      if(formula.equals("")){
+      if(formulaSubstring.equals("")){
         this.validFormulaRootNode = new FormulaNode("0");
         return true;
       }; 
       //if the user input is just an integer that is also valid. 
-      if(isInteger(formula)){
-        this.validFormulaRootNode = new FormulaNode(formula);
+      if(isInteger(formulaSubstring)){
+        this.validFormulaRootNode = new FormulaNode(formulaSubstring);
         return true; 
       }
     }else{
       //if the child node is empty, its true defaults to 0 
-      if(formula.equals("")) return true; 
+      if(formulaSubstring.equals("")) return true; 
       //if the child node is an integer, thts true 
-      if(isInteger(formula) && rootNode != null){
-        rootNode.addChild(new FormulaNode(formula));
+      if(isInteger(formulaSubstring) && rootNode != null){
+        rootNode.addChild(new FormulaNode(formulaSubstring));
         return true;
       }
     }
     return false; 
   }
 
-  private boolean formulaIsValidId_AddAsNode(String formula, FormulaNode rootNode){
-    String actualExpenseValue = "";
-    Expenses checkedExpense; 
-    checkedExpense=this.dataHandler.getExpenseById(formula);
-    if(checkedExpense != Expenses.INVALID_EXPENSE){
-      actualExpenseValue = checkedExpense.getValue(); 
-      if(rootNode != null){
-        rootNode.addChild(new FormulaNode(actualExpenseValue));
-        return true; 
-      }else{
-        validFormulaRootNode = new FormulaNode(actualExpenseValue);
-        return true; 
-      }
+  //change this next 
+  private boolean formulaIsValidId_AddAsNode(String formulaSubstring, FormulaNode rootNode){
+    String possibleValueFromId = dataHandler.getValueById(formulaSubstring);
+    if(possibleValueFromId == null) return false; 
+    if(rootNode != null){
+      rootNode.addChild(new FormulaNode(possibleValueFromId));
+      return true; 
+    }else{
+      validFormulaRootNode = new FormulaNode(possibleValueFromId);
+      return true; 
     }
-    return false; 
   }
 
 
