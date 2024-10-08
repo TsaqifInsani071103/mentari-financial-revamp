@@ -95,7 +95,7 @@ public class Formula {
   public int getValueIfFormulaValid(String formula){
     if(isFormulaValid(formula)){
       //this is just to check 
-      validFormulaRootNode.printAllFormulas(0);
+      // validFormulaRootNode.printAllFormulas(0);
       //if its only a sole integer, just return the number 
       if(isInteger(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
 
