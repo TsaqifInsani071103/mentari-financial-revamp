@@ -20,6 +20,11 @@ import java.util.HashMap;
 public class Formula {
   private FormulaNode validFormulaRootNode = null;
   private DataHandler dataHandler = null;
+  //valid Formulas 
+  private final String FORMULA_SUM = "SUM()";
+  private final String FORMULA_MULTIPLY = "MULTIPLY()";
+
+
 
   public Formula(DataHandler dataHandler){
     this.dataHandler = dataHandler;
@@ -27,7 +32,7 @@ public class Formula {
   } 
  
   
-  public static class FormulaAnatomy{
+  public class FormulaAnatomy{
     private String formula;
     private int lastIndex;
     private int openingParanthesisIndex;
@@ -60,7 +65,7 @@ public class Formula {
       return true; 
     }
 
-    public static boolean hasSameOpenAndClosingParantheses(String formula){
+    public boolean hasSameOpenAndClosingParantheses(String formula){
       Stack<Character> paranthesesStack = new Stack<>();
       for(int i = 0; i < formula.length(); i++){
         if(formula.charAt(i) == '(') paranthesesStack.push('(');
@@ -82,9 +87,9 @@ public class Formula {
 
     private boolean recognizedFormula(){
       switch(this.parentFormula){
-        case "SUM()":
+        case FORMULA_SUM:
           return true; 
-        case "MULTIPLY()": 
+        case FORMULA_MULTIPLY: 
           return true; 
       }
       return false; 
@@ -110,7 +115,7 @@ public class Formula {
     String formula = rootNode.getValue();
     //if its a formula
     if(!isInteger(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
-      if(formula.equals("MULTIPLY()")) total = 1; 
+      if(formula.equals(FORMULA_MULTIPLY)) total = 1; 
       for(FormulaNode child: rootNode.getChildNodes()){
         if(isInteger(child.getValue())){
           total = calculateByFormulaIntoTotal(formula, Integer.parseInt(child.getValue()), total);
@@ -142,7 +147,8 @@ public class Formula {
 
     FormulaNode emptyFormulaNode = new FormulaNode(parsedFormula.getFormulaWithoutFormulaContent());// e.g SUM() in SUM(1,2,3), or SUM() in SUM(MULTIPLY())
     String[] formulaContentArray = parsedFormula.getFormulaContent().split(",");// e.g 1,2,3 in SUM(1,2,3) or MULTIPLY(1,2,3) in SUM(MULTIPLY(1,2,3))
-
+    
+    //handling the emptyFormulaNode 
     if(rootNode == null) {
       rootNode = emptyFormulaNode;
       this.validFormulaRootNode = rootNode;
@@ -150,9 +156,10 @@ public class Formula {
       rootNode.addChild(emptyFormulaNode);
     }
 
+    //handling the formulaContentArray
     for(int i = 0; i < formulaContentArray.length; i++){
       String indivContent = formulaContentArray[i].trim();
-      while(!FormulaAnatomy.hasSameOpenAndClosingParantheses(indivContent) && i+1<formulaContentArray.length){
+      while(!parsedFormula.hasSameOpenAndClosingParantheses(indivContent) && i+1<formulaContentArray.length){
         indivContent = indivContent + "," + formulaContentArray[i+1];
         i++;
       }
@@ -206,9 +213,9 @@ public class Formula {
   // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
   private int calculateByFormulaIntoTotal(String formula, int value, int total){
     switch(formula){
-      case "SUM()":
+      case FORMULA_SUM:
         return SUM(value, total);
-      case "MULTIPLY()":
+      case FORMULA_MULTIPLY:
         return MULTIPLY(value, total);
       default: 
         return 0;
