@@ -7,6 +7,8 @@ import com.mentarirvmp.statements.Statement;
 
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class FormulaTest {
@@ -140,39 +142,41 @@ public class FormulaTest {
     Formula frmlObject = new Formula(dataHandler);
 
     String dummyFormula2 = "MULTIPLY()";
-    assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula2));
+    assertEquals(new BigDecimal("0"), frmlObject.getValueIfFormulaValid(dummyFormula2));
 
     String dummyFormula3 = "3000";
-   assertEquals(3000, frmlObject.getValueIfFormulaValid(dummyFormula3));
+   assertEquals(new BigDecimal("3000"), frmlObject.getValueIfFormulaValid(dummyFormula3));
 
     String dummyFormula4 = "SUM(1,2,3)";
-   assertEquals(6, frmlObject.getValueIfFormulaValid(dummyFormula4));
+   assertEquals(new BigDecimal("6"), frmlObject.getValueIfFormulaValid(dummyFormula4));
 
     String dummyFormula5 = "SUM(1,2,3, SUM(1,2,3))";
-   assertEquals(12, frmlObject.getValueIfFormulaValid(dummyFormula5));
+   assertEquals(new BigDecimal("12"), frmlObject.getValueIfFormulaValid(dummyFormula5));
 
     String dummyFormula6 = "MULTIPLY(3,3)";
-   assertEquals(9, frmlObject.getValueIfFormulaValid(dummyFormula6));
+   assertEquals(new BigDecimal("9"), frmlObject.getValueIfFormulaValid(dummyFormula6));
 
     String dummyFormula7 = "MULTIPLY(MULTIPLY(3,0), 2,1)";
-   assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula7));
+   assertEquals(new BigDecimal("0"), frmlObject.getValueIfFormulaValid(dummyFormula7));
    
     //SUM(6, 34,7) => 47
    String dummyFormula8 = "SUM(MULTIPLY(1,2,SUM(3)),SUM(4,MULTIPLY(5,6)),7)";
-   assertEquals(47, frmlObject.getValueIfFormulaValid(dummyFormula8));
+   assertEquals(new BigDecimal("47"), frmlObject.getValueIfFormulaValid(dummyFormula8));
 
    String dummyFormula9 = "SUM(MULTIPLY(SUM(1,2,3), 10), SUM())";
-   assertEquals(60, frmlObject.getValueIfFormulaValid(dummyFormula9));
-   String dummyFormula10 = "MULTIPLY(12)";
-   assertEquals(12, frmlObject.getValueIfFormulaValid(dummyFormula10));
+   assertEquals(new BigDecimal("60"), frmlObject.getValueIfFormulaValid(dummyFormula9));
+   String dummyFormula10 = "MULTIPLY(12, -1)";
+   assertEquals(new BigDecimal("-12"), frmlObject.getValueIfFormulaValid(dummyFormula10));
 
    String dummyFormula11 = "";
-   assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula11));
+   assertEquals(new BigDecimal("0"), frmlObject.getValueIfFormulaValid(dummyFormula11));
+
+   String dummyFormula12 = "SUM(100, -10)";
+   assertEquals(new BigDecimal("90"), frmlObject.getValueIfFormulaValid(dummyFormula12));
 
   } 
   
 
-  //change this into BigDecimal 
   @Test
   public void getValueIfExpenseIdValid(){
     Formula frmlObject = new Formula(dataHandler);
@@ -192,18 +196,18 @@ public class FormulaTest {
 
   
     String dummyFormula2 = "MULTIPLY("+id1+ ",10)";
-    assertEquals(100, frmlObject.getValueIfFormulaValid(dummyFormula2));
+    assertEquals(new BigDecimal("100"), frmlObject.getValueIfFormulaValid(dummyFormula2));
     //the formula isn't valid
     String dummyFormula3 = "SUM("+id1+ "," + id2 +","+id3+")";
-    assertEquals(15, frmlObject.getValueIfFormulaValid(dummyFormula3));
+    assertEquals(new BigDecimal("15"), frmlObject.getValueIfFormulaValid(dummyFormula3));
 
     String dummyFormula4 = "SUM("+id1+ "," + id2 +","+"bogusId"+")";
     assertEquals(false, frmlObject.isFormulaValid(dummyFormula4));
-    assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula4));
+    assertEquals(new BigDecimal("0"), frmlObject.getValueIfFormulaValid(dummyFormula4));
 
     String dummyFormula5 = "MULTIPLY(SUM("+id1+ "," + id2 + ",MULTIPLY(10, "+ id3 +")))";
     assertEquals(true, frmlObject.isFormulaValid(dummyFormula5));
-    assertEquals(15, frmlObject.getValueIfFormulaValid(dummyFormula5));
+    assertEquals(new BigDecimal("15"), frmlObject.getValueIfFormulaValid(dummyFormula5));
   } 
   
 }

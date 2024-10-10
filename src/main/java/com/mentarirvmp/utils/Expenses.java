@@ -17,6 +17,7 @@ public class Expenses {
   private String name; 
   private String description = ""; 
   private String value = "0"; 
+  //added a formulaString in Expenses so they can switch between formula and actual value in the UI. 
   private String formulaString =""; 
   private String id = ""; 
   private LinkedHashMap<String, Expenses> childMap = new LinkedHashMap<>();

@@ -11,13 +11,13 @@ public class NumberInputHandler {
 
   private static String validUserInputRegex = "^-?\\d{1,3}(,\\d{3})*(\\.\\d+)?$";
 
-  public BigDecimal parseInputToBigDecimal(String number){
+  public static BigDecimal parseInputToBigDecimal(String number){
     String strippedNumber = getCleanedCommas(number);
-    return new BigDecimal("0.0");
+    return new BigDecimal(strippedNumber);
   } 
   
   //to be used as a standalone 
-  private String getCleanedCommas(String number){
+  private static String getCleanedCommas(String number){
     if(number.contains(",")){
       return number.replaceAll(",", ""); 
     }

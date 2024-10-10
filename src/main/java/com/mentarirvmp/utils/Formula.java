@@ -98,36 +98,43 @@ public class Formula {
   }
 
   //HARD CODED RIGHT NOW 
-  public int getValueIfFormulaValid(String formula){
+  public BigDecimal getValueIfFormulaValid(String formula){
     if(isFormulaValid(formula)){
       //this is just to check 
       // validFormulaRootNode.printAllFormulas(0);
       //if its only a sole integer, just return the number 
       //AINT THIS OBSOLETE 
-      if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
+      if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return new BigDecimal(validFormulaRootNode.getValue());
 
       return getValueOfNodesRecursively(this.validFormulaRootNode);
     }
 
-    return 0; 
+    return new BigDecimal("0"); 
   } 
 
   //CLEAN THIS UP 
-  public int getValueOfNodesRecursively(FormulaNode rootNode){
-    int total = 0;
+  public BigDecimal getValueOfNodesRecursively(FormulaNode rootNode){
+    BigDecimal total = new BigDecimal("0");
     String formula = rootNode.getValue();
     //if its a formula
     if(!isIntegerOrProperNumberFormat(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
-      if(formula.equals(FORMULA_MULTIPLY)) total = 1; 
+      if(formula.equals(FORMULA_MULTIPLY)) total = new BigDecimal("1"); 
       for(FormulaNode child: rootNode.getChildNodes()){
         if(isIntegerOrProperNumberFormat(child.getValue())){
-          total = calculateByFormulaIntoTotal(formula, Integer.parseInt(child.getValue()), total);
+          total = calculateByFormulaIntoTotal(formula, NumberInputHandler.parseInputToBigDecimal(child.getValue()), total);
         }else{
-          int calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
+          BigDecimal calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
           total = calculateByFormulaIntoTotal(formula, calculatedInnerFormulaValue, total);
         } 
       }
     }
+
+    //PRINTING OUT TOTAL AS STRING!!! 
+    //this is what you'll put into the Expenses value field
+    NumberInputHandler inputHandler = new NumberInputHandler(total.toPlainString());
+    System.out.println(inputHandler.getCalculatedSumAsString());
+
+
     return total; 
 
   } 
@@ -210,7 +217,7 @@ public class Formula {
   // System.out.println("TIS THE PROBLEM STRING " + indivContent);
   // System.out.println("NEW STRING " + indivContent);//!!!!!!!!!!!!!!!!!!
   // System.out.println("LOOKING AT: " + indivContent);//!!!!!!!!!!!!!!!!!!
-  private int calculateByFormulaIntoTotal(String formula, int value, int total){
+  private BigDecimal calculateByFormulaIntoTotal(String formula, BigDecimal value, BigDecimal total){
     switch(formula){
       case FORMULA_SUM:
         return SUM(value, total);
@@ -218,18 +225,18 @@ public class Formula {
         return MULTIPLY(value, total);
       default: 
         //change this to bigDecimal 
-        return 0;
+        return new BigDecimal("0");
     }
   } 
 
   //change these into BigDecimals too. 
-  private int SUM(int value, int total){
-    total += value;
+  private BigDecimal SUM(BigDecimal value, BigDecimal total){
+    total = total.add(value);
     return total;
   }
 
-  private int MULTIPLY(int value, int total){
-    total *= value;
+  private BigDecimal MULTIPLY(BigDecimal value, BigDecimal total){
+    total = total.multiply(value);
     return total;
   }
 
