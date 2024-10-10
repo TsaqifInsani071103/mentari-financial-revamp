@@ -142,8 +142,8 @@ public class FormulaTest {
     String dummyFormula2 = "MULTIPLY()";
     assertEquals(0, frmlObject.getValueIfFormulaValid(dummyFormula2));
 
-    String dummyFormula3 = "3";
-   assertEquals(3, frmlObject.getValueIfFormulaValid(dummyFormula3));
+    String dummyFormula3 = "3000";
+   assertEquals(3000, frmlObject.getValueIfFormulaValid(dummyFormula3));
 
     String dummyFormula4 = "SUM(1,2,3)";
    assertEquals(6, frmlObject.getValueIfFormulaValid(dummyFormula4));

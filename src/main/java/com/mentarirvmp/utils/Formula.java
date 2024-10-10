@@ -104,7 +104,7 @@ public class Formula {
       // validFormulaRootNode.printAllFormulas(0);
       //if its only a sole integer, just return the number 
       //AINT THIS OBSOLETE 
-      if(NumberInputHandler.validNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
+      if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
 
       return getValueOfNodesRecursively(this.validFormulaRootNode);
     }
@@ -117,10 +117,10 @@ public class Formula {
     int total = 0;
     String formula = rootNode.getValue();
     //if its a formula
-    if(!NumberInputHandler.validNumberFormat(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
+    if(!isIntegerOrProperNumberFormat(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
       if(formula.equals(FORMULA_MULTIPLY)) total = 1; 
       for(FormulaNode child: rootNode.getChildNodes()){
-        if(NumberInputHandler.validNumberFormat(child.getValue())){
+        if(isIntegerOrProperNumberFormat(child.getValue())){
           total = calculateByFormulaIntoTotal(formula, Integer.parseInt(child.getValue()), total);
         }else{
           int calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
@@ -181,7 +181,7 @@ public class Formula {
       return true; 
     }
 
-    if(isInteger(formulaSubstring) || NumberInputHandler.validNumberFormat(formulaSubstring)){
+    if(isIntegerOrProperNumberFormat(formulaSubstring)){
       if(rootNode == null){
         this.validFormulaRootNode = new FormulaNode(formulaSubstring);
       }else{
@@ -241,6 +241,11 @@ public class Formula {
       return false; 
     }
     return true; 
+  } 
+
+  private boolean isIntegerOrProperNumberFormat(String formula){
+    if(isInteger(formula) || NumberInputHandler.validNumberFormat(formula)) return true; 
+    return false; 
   } 
 
 
