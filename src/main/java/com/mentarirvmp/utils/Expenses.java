@@ -21,7 +21,9 @@ public class Expenses {
   private String formulaString =""; 
   private String id = ""; 
   private LinkedHashMap<String, Expenses> childMap = new LinkedHashMap<>();
-  private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); //maybe make this into a set of arrays in Statement.java? 
+
+  //I dont really need this. I could just, for optimization sake, look through each formulas in each expenses and check if this expense's id exists within their formulas and only refresh their values if it is. (If the formula for this expense is changed.)
+  private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); 
 
   
   public ArrayList<Expenses> getRelatedExpensesArray(){

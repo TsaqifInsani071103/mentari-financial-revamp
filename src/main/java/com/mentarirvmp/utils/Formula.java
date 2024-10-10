@@ -8,7 +8,6 @@ import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.NumberInputHandler;
 
 import java.lang.reflect.Method;

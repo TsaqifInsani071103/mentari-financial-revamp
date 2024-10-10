@@ -29,14 +29,7 @@ public class NumberInputHandler {
     return false; 
   } 
 
-  public String getCalculatedSumAsString(){ //at this point sum as string is in a scientific notation 
-    if(checkIfScientificNotation(this.userInput)) {
-      String bigDecimalNumber = new BigDecimal(this.userInput).toPlainString();
-      this.userInput = bigDecimalNumber;
-      parseUserInput(); 
-    }
-    return this.userInput;
-  } 
+
 
   //constructor method 
   //This actually takes in a bigDecimal String instead of the original userInput String 
@@ -106,9 +99,19 @@ public class NumberInputHandler {
     this.userInput = new StringBuilder(resultingString).reverse().toString(); 
   } 
 
+  public String getCalculatedSumAsString(){ //at this point sum as string is in a scientific notation 
+    if(checkIfScientificNotation(this.userInput)) {
+      String bigDecimalNumber = new BigDecimal(this.userInput).toPlainString();
+      this.userInput = bigDecimalNumber;
+      parseUserInput(); 
+    }
+    return this.userInput;
+  } 
+
+
   //because BigDecimal's string representation is with the ScientificNotation. 
   private boolean checkIfScientificNotation(String str) {
     return str.matches("-?\\d\\.\\d+E[+-]?\\d+");
-}
+  }
   
 }
