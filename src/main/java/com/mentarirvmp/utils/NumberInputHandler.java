@@ -12,7 +12,7 @@ public class NumberInputHandler {
   private static String validUserInputRegex = "^-?\\d{1,3}(,\\d{3})*(\\.\\d+)?$";
 
   //to be used as a standalone 
-  public static String getCleanedCommas(String number){
+  private String getCleanedCommas(String number){
     if(number.contains(",")){
       return number.replaceAll(",", ""); 
     }
@@ -34,6 +34,7 @@ public class NumberInputHandler {
   } 
 
   //constructor method 
+  //This actually takes in a bigDecimal String instead of the original userInput String 
   public NumberInputHandler(String userInput){
     this.userInput = userInput; 
     if(this.userInput.contains("-")){
@@ -54,10 +55,10 @@ public class NumberInputHandler {
   private void extractDecimalPoints(){
     if(this.userInput.contains(".")){
       this.indexOfDecimal = this.userInput.indexOf(".");
-      decimalPoints = this.userInput.substring(indexOfDecimal); 
+      this.decimalPoints = this.userInput.substring(indexOfDecimal); 
       this.userInput = this.userInput.substring(0, indexOfDecimal); 
     }else{
-      decimalPoints = ".0"; 
+      this.decimalPoints = ".0"; 
     }
   } 
 

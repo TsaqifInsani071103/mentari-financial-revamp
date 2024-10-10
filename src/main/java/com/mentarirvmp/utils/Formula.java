@@ -171,6 +171,7 @@ public class Formula {
     return true; 
   }
 
+  //can Either be purely an integer, or in a proper Number format. 
   private boolean edgeCasesTrue_AddAsNode(String formulaSubstring, FormulaNode rootNode){
     //edge cases 
     if(rootNode == null){
