@@ -11,6 +11,11 @@ public class NumberInputHandler {
 
   private static String validUserInputRegex = "^-?\\d{1,3}(,\\d{3})*(\\.\\d+)?$";
 
+  public BigDecimal parseInputToBigDecimal(String number){
+    String strippedNumber = getCleanedCommas(number);
+    return new BigDecimal("0.0");
+  } 
+  
   //to be used as a standalone 
   private String getCleanedCommas(String number){
     if(number.contains(",")){
@@ -24,7 +29,7 @@ public class NumberInputHandler {
     return false; 
   } 
 
-  public String getFinalSum(){ //at this point sum as string is in a scientific notation 
+  public String getCalculatedSumAsString(){ //at this point sum as string is in a scientific notation 
     if(checkIfScientificNotation(this.userInput)) {
       String bigDecimalNumber = new BigDecimal(this.userInput).toPlainString();
       this.userInput = bigDecimalNumber;
