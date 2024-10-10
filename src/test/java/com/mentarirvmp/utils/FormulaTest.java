@@ -174,6 +174,9 @@ public class FormulaTest {
    String dummyFormula12 = "SUM(100, -10)";
    assertEquals(new BigDecimal("90"), frmlObject.getValueIfFormulaValid(dummyFormula12));
 
+   String dummyFormula13 ="12,000,329.123";
+   assertEquals(new BigDecimal("12000329.123"), frmlObject.getValueIfFormulaValid(dummyFormula13));
+
   } 
   
 

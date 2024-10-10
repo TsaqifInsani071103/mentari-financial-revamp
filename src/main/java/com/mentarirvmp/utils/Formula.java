@@ -104,7 +104,9 @@ public class Formula {
       // validFormulaRootNode.printAllFormulas(0);
       //if its only a sole integer, just return the number 
       //AINT THIS OBSOLETE 
-      if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return new BigDecimal(validFormulaRootNode.getValue());
+      if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
+        return NumberInputHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
+      }
 
       return getValueOfNodesRecursively(this.validFormulaRootNode);
     }
