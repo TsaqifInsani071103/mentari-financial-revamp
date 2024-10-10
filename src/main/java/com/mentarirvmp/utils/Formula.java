@@ -9,6 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.mentarirvmp.statements.Statement;
+import com.mentarirvmp.utils.NumberInputHandler;
 
 import java.lang.reflect.Method;
 // import com.mentari.statements.Statement;
@@ -102,7 +103,7 @@ public class Formula {
       //this is just to check 
       // validFormulaRootNode.printAllFormulas(0);
       //if its only a sole integer, just return the number 
-      if(isInteger(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
+      if(NumberInputHandler.validNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
 
       return getValueOfNodesRecursively(this.validFormulaRootNode);
     }
@@ -110,14 +111,15 @@ public class Formula {
     return 0; 
   } 
 
+  //CLEAN THIS UP 
   public int getValueOfNodesRecursively(FormulaNode rootNode){
     int total = 0;
     String formula = rootNode.getValue();
     //if its a formula
-    if(!isInteger(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
+    if(!NumberInputHandler.validNumberFormat(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
       if(formula.equals(FORMULA_MULTIPLY)) total = 1; 
       for(FormulaNode child: rootNode.getChildNodes()){
-        if(isInteger(child.getValue())){
+        if(NumberInputHandler.validNumberFormat(child.getValue())){
           total = calculateByFormulaIntoTotal(formula, Integer.parseInt(child.getValue()), total);
         }else{
           int calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
@@ -178,7 +180,7 @@ public class Formula {
         return true;
       }; 
       //if the user input is just an integer that is also valid. 
-      if(isInteger(formulaSubstring)){
+      if(NumberInputHandler.validNumberFormat(formulaSubstring)){
         this.validFormulaRootNode = new FormulaNode(formulaSubstring);
         return true; 
       }
@@ -186,7 +188,7 @@ public class Formula {
       //if the child node is empty, its true defaults to 0 
       if(formulaSubstring.equals("")) return true; 
       //if the child node is an integer, thts true 
-      if(isInteger(formulaSubstring) && rootNode != null){
+      if(NumberInputHandler.validNumberFormat(formulaSubstring) && rootNode != null){
         rootNode.addChild(new FormulaNode(formulaSubstring));
         return true;
       }
@@ -218,10 +220,12 @@ public class Formula {
       case FORMULA_MULTIPLY:
         return MULTIPLY(value, total);
       default: 
+        //change this to bigDecimal 
         return 0;
     }
   } 
 
+  //change these into BigDecimals too. 
   private int SUM(int value, int total){
     total += value;
     return total;
@@ -232,14 +236,8 @@ public class Formula {
     return total;
   }
 
-  private boolean isInteger(String str){
-    try{
-      Integer.parseInt(str);
-    }catch(NumberFormatException e){
-      return false; 
-    }
-    return true; 
-  } 
+  //change isInteger to isValidDecimalFormat
+
 
 
 
