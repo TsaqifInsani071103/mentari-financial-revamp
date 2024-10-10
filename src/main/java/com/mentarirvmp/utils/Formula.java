@@ -103,6 +103,7 @@ public class Formula {
       //this is just to check 
       // validFormulaRootNode.printAllFormulas(0);
       //if its only a sole integer, just return the number 
+      //AINT THIS OBSOLETE 
       if(NumberInputHandler.validNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()) return Integer.parseInt(validFormulaRootNode.getValue());
 
       return getValueOfNodesRecursively(this.validFormulaRootNode);
@@ -173,27 +174,22 @@ public class Formula {
 
   //can Either be purely an integer, or in a proper Number format. 
   private boolean edgeCasesTrue_AddAsNode(String formulaSubstring, FormulaNode rootNode){
-    //edge cases 
-    if(rootNode == null){
-      //empty user inputs are still valid and defaults to 0 
-      if(formulaSubstring.equals("")){
+    if(formulaSubstring.equals("")){
+      if(rootNode == null){
         this.validFormulaRootNode = new FormulaNode("0");
-        return true;
-      }; 
-      //if the user input is just an integer that is also valid. 
-      if(NumberInputHandler.validNumberFormat(formulaSubstring)){
-        this.validFormulaRootNode = new FormulaNode(formulaSubstring);
-        return true; 
       }
-    }else{
-      //if the child node is empty, its true defaults to 0 
-      if(formulaSubstring.equals("")) return true; 
-      //if the child node is an integer, thts true 
-      if(NumberInputHandler.validNumberFormat(formulaSubstring) && rootNode != null){
-        rootNode.addChild(new FormulaNode(formulaSubstring));
-        return true;
-      }
+      return true; 
     }
+
+    if(isInteger(formulaSubstring) || NumberInputHandler.validNumberFormat(formulaSubstring)){
+      if(rootNode == null){
+        this.validFormulaRootNode = new FormulaNode(formulaSubstring);
+      }else{
+        rootNode.addChild(new FormulaNode(formulaSubstring));
+      }
+      return true; 
+    }
+ 
     return false; 
   }
 
@@ -238,8 +234,14 @@ public class Formula {
   }
 
   //change isInteger to isValidDecimalFormat
-
-
+  private boolean isInteger(String str){
+    try{
+      Integer.parseInt(str);
+    }catch(NumberFormatException e){
+      return false; 
+    }
+    return true; 
+  } 
 
 
  
