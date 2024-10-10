@@ -20,7 +20,7 @@ import java.util.HashMap;
 //formula is basically just a tool for StatementsAndExpensehandler to use to basically calculate the valus of the formula strings in the expenses 
 public class Formula {
   private FormulaNode validFormulaRootNode = null;
-  private DataHandler dataHandler = null;
+  private DataHandler dataHandler;
   //valid Formulas 
   private final String FORMULA_SUM = "SUM()";
   private final String FORMULA_MULTIPLY = "MULTIPLY()";
@@ -97,13 +97,9 @@ public class Formula {
     }
   }
 
-  //HARD CODED RIGHT NOW 
   public BigDecimal getValueIfFormulaValid(String formula){
     if(isFormulaValid(formula)){
-      //this is just to check 
-      // validFormulaRootNode.printAllFormulas(0);
-      //if its only a sole integer, just return the number 
-      //AINT THIS OBSOLETE 
+      //check IS THIS REDUNDANT?? 
       if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
         return NumberInputHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
       }
