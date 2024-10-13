@@ -3,11 +3,13 @@ import java.math.BigDecimal;
 import java.lang.StringBuilder;
 
 //this class just adds commas and decimal points to the final sum calculated in Formula 
-public class NumberInputHandler {
+public class BigDecimalHandler {
   private String sign = "";
   private int indexOfDecimal; 
   private String userInput; 
   private String decimalPoints; 
+
+  //I kind of don't like how there are so many side effects here, kind of makes it hard to read. But it's not a huge problem right now.
 
   private static String validUserInputRegex = "^-?\\d{1,3}(,\\d{3})*(\\.\\d+)?$";
 
@@ -33,7 +35,7 @@ public class NumberInputHandler {
 
   //constructor method 
   //This actually takes in a bigDecimal String instead of the original userInput String 
-  public NumberInputHandler(String userInput){
+  public BigDecimalHandler(String userInput){
     this.userInput = userInput; 
     if(this.userInput.contains("-")){
       this.sign = "-"; 

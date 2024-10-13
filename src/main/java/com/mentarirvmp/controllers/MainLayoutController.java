@@ -2,7 +2,7 @@ package com.mentarirvmp.controllers;
 
 
 import javafx.fxml.FXML;
-import com.mentarirvmp.utils.ChildControllers;
+
 import com.mentarirvmp.utils.LoaderHelper;
 
 
@@ -14,6 +14,7 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 import java.util.ArrayList; 
+import com.mentarirvmp.controllers.ChildControllers;
 
 
 public class MainLayoutController {

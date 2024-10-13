@@ -8,7 +8,7 @@ import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.mentarirvmp.utils.NumberInputHandler;
+import com.mentarirvmp.utils.BigDecimalHandler;
 
 import java.lang.reflect.Method;
 // import com.mentari.statements.Statement;
@@ -100,7 +100,7 @@ public class Formula {
     if(isFormulaValid(formula)){
       //This checks if the rootNode is just an integer or a proper decimal 
       if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
-        return NumberInputHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
+        return BigDecimalHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
         //This checks if its a FORMULA and not an empty FORMULA at that. unlike SUM() 
       }else if(!isIntegerOrProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
         return getValueOfNodesRecursively(this.validFormulaRootNode);
@@ -119,7 +119,7 @@ public class Formula {
     if(formula.equals(FORMULA_MULTIPLY)) total = new BigDecimal("1"); 
     for(FormulaNode child: rootNode.getChildNodes()){
       if(isIntegerOrProperNumberFormat(child.getValue())){
-        total = calculateByFormulaIntoTotal(formula, NumberInputHandler.parseInputToBigDecimal(child.getValue()), total);
+        total = calculateByFormulaIntoTotal(formula, BigDecimalHandler.parseInputToBigDecimal(child.getValue()), total);
       }else{
         BigDecimal calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
         total = calculateByFormulaIntoTotal(formula, calculatedInnerFormulaValue, total);
@@ -127,7 +127,7 @@ public class Formula {
     }
     //PRINTING OUT TOTAL AS STRING!!! 
     //this is what you'll put into the Expenses value field
-    NumberInputHandler inputHandler = new NumberInputHandler(total.toPlainString());
+    BigDecimalHandler inputHandler = new BigDecimalHandler(total.toPlainString());
     System.out.println(inputHandler.getCalculatedSumAsString());
 
 
@@ -247,7 +247,7 @@ public class Formula {
   } 
 
   private boolean isIntegerOrProperNumberFormat(String formula){
-    if(isInteger(formula) || NumberInputHandler.validNumberFormat(formula)) return true; 
+    if(isInteger(formula) || BigDecimalHandler.validNumberFormat(formula)) return true; 
     return false; 
   } 
 

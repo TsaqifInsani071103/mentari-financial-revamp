@@ -4,19 +4,13 @@ package com.mentarirvmp.controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// import com.mentari.statements.Statement;
-import com.mentarirvmp.utils.ChildControllers;
-// import com.mentari.utils.Project;
-// import com.mentari.utils.fileoperations.TreeNode;
-// import com.mentari.utils.viewcreators.HomeStatementCreator;
-
 import javafx.fxml.FXML;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.Parent;
-
+import com.mentarirvmp.controllers.ChildControllers;
 
 public class HomeViewController extends ChildControllers {
 
