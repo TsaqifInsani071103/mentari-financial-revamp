@@ -98,12 +98,14 @@ public class Formula {
 
   public BigDecimal getValueIfFormulaValid(String formula){
     if(isFormulaValid(formula)){
-      //check IS THIS REDUNDANT?? 
+      //This checks if the rootNode is just an integer or a proper decimal 
       if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
         return NumberInputHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
+        //This checks if its a FORMULA and not an empty FORMULA at that. unlike SUM() 
+      }else if(!isIntegerOrProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
+        return getValueOfNodesRecursively(this.validFormulaRootNode);
       }
 
-      return getValueOfNodesRecursively(this.validFormulaRootNode);
     }
 
     return new BigDecimal("0"); 
@@ -113,19 +115,16 @@ public class Formula {
   public BigDecimal getValueOfNodesRecursively(FormulaNode rootNode){
     BigDecimal total = new BigDecimal("0");
     String formula = rootNode.getValue();
-    //if its a formula
-    if(!isIntegerOrProperNumberFormat(rootNode.getValue()) && !rootNode.getChildNodes().isEmpty()){
-      if(formula.equals(FORMULA_MULTIPLY)) total = new BigDecimal("1"); 
-      for(FormulaNode child: rootNode.getChildNodes()){
-        if(isIntegerOrProperNumberFormat(child.getValue())){
-          total = calculateByFormulaIntoTotal(formula, NumberInputHandler.parseInputToBigDecimal(child.getValue()), total);
-        }else{
-          BigDecimal calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
-          total = calculateByFormulaIntoTotal(formula, calculatedInnerFormulaValue, total);
-        } 
-      }
-    }
 
+    if(formula.equals(FORMULA_MULTIPLY)) total = new BigDecimal("1"); 
+    for(FormulaNode child: rootNode.getChildNodes()){
+      if(isIntegerOrProperNumberFormat(child.getValue())){
+        total = calculateByFormulaIntoTotal(formula, NumberInputHandler.parseInputToBigDecimal(child.getValue()), total);
+      }else{
+        BigDecimal calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
+        total = calculateByFormulaIntoTotal(formula, calculatedInnerFormulaValue, total);
+      } 
+    }
     //PRINTING OUT TOTAL AS STRING!!! 
     //this is what you'll put into the Expenses value field
     NumberInputHandler inputHandler = new NumberInputHandler(total.toPlainString());
