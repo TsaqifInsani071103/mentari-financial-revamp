@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Control;
 import javafx.scene.layout.HBox;
 
-public abstract class TreeNode {
+public class TreeNode {
   private String name; 
   protected String iconPath; //make this a static property in the child nodes 
   private TreeNode parent; 
@@ -119,9 +119,7 @@ public abstract class TreeNode {
     return duplicateNode[0]; 
   }
 
-  public abstract Parent generateView();
-  public abstract void addClickListener(Control element); 
-  public abstract void handleNodeClick(); 
+
 
 }
 

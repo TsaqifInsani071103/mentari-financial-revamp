@@ -8,7 +8,7 @@ public class FilesTree {
 
   public FilesTree(){
     // root = new TreeNode("Root", null); 
-    root = new FolderNode("Statements Folder", null); 
+    root = new TreeNode("Statements Folder", null); 
     root.setTreeReference(this);
   }
 

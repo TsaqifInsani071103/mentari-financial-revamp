@@ -12,5 +12,3 @@ public class Project {
   } 
 }
 
-//maybe i'll just make statements first for the sake of testing? 
-//I'll just make and test expenses first to decouple them. 
