@@ -15,12 +15,14 @@ public class FilesTree {
   public TreeNode getRoot(){
     return this.root; 
   } 
- 
+  
+  //might have to change this down the line 
   // Method to add a node
   public void addNode(TreeNode parent, TreeNode child) {
     parent.addChild(child);
   }
-
+  
+  //might have to change this down the line 
   // Method to remove a node
   public void removeNode(TreeNode parent, TreeNode child) {
       parent.removeChild(child);

@@ -16,6 +16,8 @@ public class TreeNode {
   private ArrayList<TreeNode> children; 
   private Statement attachedStatement; 
   private FilesTree treeReference;
+  //to be used later 
+  private NodeType nodeType; 
 
   public TreeNode(String name){
     this.name = name; 
@@ -113,14 +115,11 @@ public class TreeNode {
     return this.treeReference;
   }
 
-  //there is an opportunity to make this quicker. instead of traversing through all of the nodes without breaking regardless of a found duplicate node 
+  //I dont think I want the isNameDuplicate to be here and instead be handled by the handler between the user input and whatever will handle FilesTree.java and duplicate names. Much like the loadHelper modal poppwer will be handled by that guy too. 
   private boolean isNameDuplicate(String newName){
-    boolean[] duplicateNode = new boolean[1]; 
     FilesTree tree = getTreeReference();
-    tree.traverseTree((node) -> {
-      if(node.getName().equals(newName)) duplicateNode[0] = true;
-    });
-    return duplicateNode[0]; 
+    if(tree.findNodeByName(newName) != null) return true; 
+    return false; 
   }
 
 
