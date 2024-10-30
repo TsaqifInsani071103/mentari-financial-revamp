@@ -5,7 +5,7 @@ import com.mentarirvmp.statements.Statement;
 
 
 public class TreeNode {
-  enum NodeType{
+  public enum NodeType{
     STATEMENT,
     FOLDER 
 
@@ -19,18 +19,20 @@ public class TreeNode {
   //to be used later 
   private NodeType nodeType; 
 
-  public TreeNode(String name){
+  public TreeNode(String name, NodeType nodeType){
     this.name = name; 
     this.parent = null; 
+    this.nodeType = nodeType;
     this.children = new ArrayList<TreeNode>(); 
   } 
 
-  public TreeNode(String name, TreeNode parent){
+  public TreeNode(String name, NodeType nodeType, TreeNode parent){
     if(parent != null){
       parent.addChild(this);
     }
     this.name = name; 
     this.parent = parent; 
+    this.nodeType = nodeType;
     this.children = new ArrayList<TreeNode>(); 
 
   } 
@@ -87,6 +89,15 @@ public class TreeNode {
   public ArrayList<TreeNode> getChildren(){
     return this.children; 
   }
+
+  public boolean isTypeStatement(){
+    if(this.nodeType == NodeType.STATEMENT) return true; 
+    return false; 
+  } 
+  public boolean isTypeFolder(){
+    if(this.nodeType == NodeType.FOLDER) return true; 
+    return false; 
+  } 
 
   public void setName(String newName){
     if(!isNameDuplicate(newName)){
