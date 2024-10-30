@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import com.mentarirvmp.utils.Project;
 
 import java.util.ArrayList; 
 import com.mentarirvmp.controllers.ChildControllers;
@@ -116,9 +117,17 @@ public class MainLayoutController {
 
 
   // //METHODS TO ACCESS THE MODEL METHODS AND PASS THEM INTO CHILDREN CONTROLLERS 
-  // public ArrayList<Project> getProjectArrayFromModel(){
-  //   return this.database.getProjectsArray(); 
-  // } 
+  public ArrayList<Project> getProjectArrayFromModel(){
+    // return this.database.getProjectsArray(); 
+
+    //DUMMY TEMPORARY ARRAY 
+    ArrayList<Project> temporaryArrayList = new ArrayList<>();
+    temporaryArrayList.add(new Project("dummyProject1"));
+    return temporaryArrayList; 
+
+    
+  } 
+  
 
   //ADD HOW TO ACCESS THE TREE STRUCTURE HERE!! 
   

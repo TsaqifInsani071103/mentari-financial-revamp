@@ -11,6 +11,12 @@ public class MockObjects {
   // public static final String "Expense" = "Expense";
   // public static final String DUMMY_FORMULA = "SUM()"; 
 
+  public static Project getDummyProjectObject(){
+    Project project = new Project("dummyProject"); 
+
+    return project; 
+  } 
+
   public static Statement getDummyStatementObject(){
     Statement dummyStatement = new Statement("Dummy Statement");
     //use Random to make different random values 

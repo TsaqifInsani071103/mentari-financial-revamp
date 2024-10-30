@@ -17,7 +17,7 @@ public class Project {
 
   } 
 
-  public void addDummyFilesTree(){
+  private void addDummyFilesTree(){
     for(int i = 1; i <= 1; i++){
       makeInitialFolder(i);
     }
