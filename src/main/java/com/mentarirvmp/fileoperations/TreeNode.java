@@ -2,13 +2,14 @@ package com.mentarirvmp.fileoperations;
 import java.util.ArrayList;
 
 import com.mentarirvmp.statements.Statement;
-import com.mentarirvmp.utils.LoaderHelper;
 
-import javafx.scene.Parent;
-import javafx.scene.control.Control;
-import javafx.scene.layout.HBox;
 
 public class TreeNode {
+  enum NodeType{
+    STATEMENT,
+    FOLDER 
+
+  }
   private String name; 
   protected String iconPath; //make this a static property in the child nodes 
   private TreeNode parent; 
@@ -89,6 +90,7 @@ public class TreeNode {
     if(!isNameDuplicate(newName)){
       this.name = newName; 
     }else{
+      //this shall be handled by the view handlers 
       // LoaderHelper.showPopupModal("a folder/file with this name already exists", 500, 150);
     }
   }
@@ -101,6 +103,8 @@ public class TreeNode {
     return this.attachedStatement;
   } 
 
+  //tree reference dependency injection 
+  //good for separation of concerns and whatnot 
   public void setTreeReference(FilesTree tree){
     this.treeReference = tree; 
   };
