@@ -3,6 +3,7 @@ package com.mentarirvmp.utils;
 // import com.mentarirvmp.statements.*;
 import com.mentarirvmp.fileoperations.FilesTree;
 import com.mentarirvmp.fileoperations.TreeNode;
+import com.mentarirvmp.statements.Statement;
 
 
 public class Project {
@@ -23,13 +24,22 @@ public class Project {
     }
   } 
 
+  //TEMPORARY DUMMY STATEMENT!!! UNTIL WE FIGURE OUT THE UI IMPLEMENTATION 
+  private Statement getDummyStatement(){
+    Statement defaultStatement = new Statement("Default");
+    defaultStatement.addExpense(new Expenses("Expenses"));
+    return defaultStatement;
+  } 
+
   private void makeInitialFolder(int index){
     //folderNode 
     TreeNode qFolder = new TreeNode("Q" + String.valueOf(index), TreeNode.NodeType.FOLDER);
 
     //statementNode 
     TreeNode node1 = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT);
-    // node1.setAttachedStatement(TemplateStatement.getStatementFromTemplate("Default"));
+    
+    //CHANGE THIS LATER ON 
+    node1.setAttachedStatement(getDummyStatement());
     
     this.fileTree.addNode(this.fileTree.getRoot(), qFolder);
     this.fileTree.addNode(qFolder, node1); 

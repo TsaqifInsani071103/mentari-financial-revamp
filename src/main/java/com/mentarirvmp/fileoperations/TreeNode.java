@@ -10,6 +10,7 @@ public class TreeNode {
     FOLDER 
 
   }
+  
   private String name; 
   protected String iconPath; //make this a static property in the child nodes 
   private TreeNode parent; 
