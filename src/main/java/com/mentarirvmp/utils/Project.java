@@ -27,7 +27,6 @@ public class Project {
   //TEMPORARY DUMMY STATEMENT!!! UNTIL WE FIGURE OUT THE UI IMPLEMENTATION 
   private Statement getDummyStatement(){
     Statement defaultStatement = new Statement("Default");
-    defaultStatement.addExpense(new Expenses("Expenses"));
     return defaultStatement;
   } 
 

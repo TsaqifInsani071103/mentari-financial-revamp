@@ -5,9 +5,11 @@ package com.mentarirvmp.viewcreators;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mentarirvmp.utils.DataHandler;
 import com.mentarirvmp.controllers.IndivProjectViewController;
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Expenses;
+import com.mentarirvmp.utils.ExpenseStatementHandler;
 // import com.mentarirvmp.utils.fileoperations.ModalMenu;
 
 
@@ -25,6 +27,7 @@ public class StatementViewCreator {
   //always creating a new treeView upon constructing this class 
   private TreeView<Expenses> treeView = new TreeView<>();
   private IndivProjectViewController controller; 
+  private DataHandler dataHandler = new ExpenseStatementHandler(currentStatement); 
 
   public StatementViewCreator(Statement currentStatement, IndivProjectViewController controller){
     this.currentStatement = currentStatement;
@@ -32,19 +35,19 @@ public class StatementViewCreator {
   }
 
   //we get the statement view here in tree structure 
-  // public TreeView<Expenses> getTreeView(){
-  //   populateTreeView();
-  //   restoreExpandedState(treeView.getRoot(), currentStatement.expandedState);
-  //   return this.treeView; 
-  // }
+  public TreeView<Expenses> getTreeView(){
+    populateTreeView();
+    // restoreExpandedState(treeView.getRoot(), currentStatement.expandedState);
+    return this.treeView; 
+  }
 
-  // public void populateTreeView(){
-  //   initializeStatementExpandedState();
-  //   Expenses rootExpense = currentStatement.getRoot(); 
-  //   TreeItem<Expenses> rootItem = createTreeItem(rootExpense);
-  //   this.treeView.setRoot(rootItem);
-  //   initializeTreeView();
-  // } 
+  public void populateTreeView(){
+    initializeStatementExpandedState();
+    Expenses rootExpense = currentStatement.getRoot(); 
+    TreeItem<Expenses> rootItem = createTreeItem(rootExpense);
+    this.treeView.setRoot(rootItem);
+    initializeTreeView();
+  } 
 
 
   private void initializeStatementExpandedState(){
@@ -76,13 +79,19 @@ public class StatementViewCreator {
   public TreeItem<Expenses> createTreeItem(Expenses expense) {
     checkForUpdatedExpenses(expense);
     TreeItem<Expenses> treeItem = new TreeItem<Expenses>(expense);
-    // treeItem.setGraphic(expense.getView());
+    treeItem.setGraphic(expense.getViewCreator().getView());
     treeItem.setExpanded(true);
     // for (Expenses child : expense.getChildren()) {
     //     processChildNodes(treeItem, child);
-    // }
+    // } 
     return treeItem;
   }
+
+  private void processChildNodes(TreeItem<Expenses> parentNodeView, Expenses childNode){
+    TreeItem<Expenses> childTreeItem = createTreeItem(childNode); 
+    // childTreeItem.setGraphic(childNode.getView());
+    parentNodeView.getChildren().add(childTreeItem); 
+  } 
 
   //if there are new expenses basically. 
   private void checkForUpdatedExpenses(Expenses expense){
@@ -91,11 +100,11 @@ public class StatementViewCreator {
     // }
   } 
 
-  private void processChildNodes(TreeItem<Expenses> parentNodeView, Expenses childNode){
-    TreeItem<Expenses> childTreeItem = createTreeItem(childNode); 
-    // childTreeItem.setGraphic(childNode.getView());
-    parentNodeView.getChildren().add(childTreeItem); 
-  } 
+  // private void processChildNodes(TreeItem<Expenses> parentNodeView, Expenses childNode){
+  //   TreeItem<Expenses> childTreeItem = createTreeItem(childNode); 
+  //   // childTreeItem.setGraphic(childNode.getView());
+  //   parentNodeView.getChildren().add(childTreeItem); 
+  // } 
 
   private void initializeTreeView(){
     addExpandCollapseListeners(treeView.getRoot());
@@ -115,14 +124,14 @@ public class StatementViewCreator {
     }
   }
 
-  private void restoreExpandedState(TreeItem<Expenses> item, Map<Expenses, Boolean> stateMap) {
-    if (item != null && stateMap.containsKey(item.getValue())) {
-      item.setExpanded(stateMap.get(item.getValue()));
-      for (TreeItem<Expenses> child : item.getChildren()) {
-          restoreExpandedState(child, stateMap);
-      }
-    }
-  }
+  // private void restoreExpandedState(TreeItem<Expenses> item, Map<Expenses, Boolean> stateMap) {
+  //   if (item != null && stateMap.containsKey(item.getValue())) {
+  //     item.setExpanded(stateMap.get(item.getValue()));
+  //     for (TreeItem<Expenses> child : item.getChildren()) {
+  //         restoreExpandedState(child, stateMap);
+  //     }
+  //   }
+  // }
 
 
   private TreeCell<Expenses> createTreeCell(){

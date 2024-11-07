@@ -16,10 +16,17 @@ public class Statement {
 
   public Statement(String statementName){
     this.statementName = statementName; 
+    //automatically makes a root expense 
+    addExpense(new Expenses("Root Expense"));
   } 
 
   public String getName(){
     return this.statementName; 
+  } 
+
+  public Expenses getRoot(){
+    String firstKey = this.expenseMap.keySet().iterator().next(); 
+    return this.expenseMap.get(firstKey);
   } 
 
   public void setName(String newName){
@@ -36,9 +43,10 @@ public class Statement {
   }
 
   //do I need to check for duplicate entries? 
+  //whwen Adding a new expense, always put it in the root Expense. 
   public void addExpense(Expenses newExpense, LinkedHashMap<String, Expenses> childMap){
     if(newExpense.getId().equals("")) setIdFor(newExpense);
-    childMap.put(newExpense.getId(), newExpense);
+    getRoot().getChildMap().put(newExpense.getId(), newExpense);
   } 
   
   public void setExpenseMap(LinkedHashMap<String, Expenses> expenseMap){
