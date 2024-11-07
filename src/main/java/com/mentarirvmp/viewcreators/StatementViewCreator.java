@@ -17,7 +17,7 @@ import com.mentarirvmp.utils.ExpenseStatementHandler;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TreeItem;
-
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 
 import javafx.scene.control.MenuItem;
@@ -51,6 +51,33 @@ public class StatementViewCreator {
     this.treeView.setRoot(rootItem);
     initializeTreeView();
   } 
+  public TreeItem<Expenses> createTreeItem(Expenses expense) {
+    checkForUpdatedExpenses(expense);
+    TreeItem<Expenses> treeItem = new TreeItem<>(expense);
+    treeItem.setGraphic(expense.getViewCreator().getView());
+    System.out.println("THIS THE VIEW: " + expense.getViewCreator().getView());
+    
+    //testing treeItemGraphic 
+    Node graphic = treeItem.getGraphic();
+    if (graphic != null) {
+        System.out.println("TreeItem " + treeItem.getValue() + " has a graphic: " + graphic);
+    } else {
+        System.out.println("TreeItem " + treeItem.getValue() + " does NOT have a graphic.");
+    }
+
+
+    treeItem.setExpanded(true);
+    return treeItem;
+  } 
+  
+  public Consumer<Expenses> getTreeItemCreator(TreeItem<Expenses> parentNode) {
+    return expense -> {
+        TreeItem<Expenses> treeItem = createTreeItem(expense);
+        parentNode.getChildren().add(treeItem);
+    };
+  }
+
+
 
 
   private void initializeStatementExpandedState(){
@@ -79,20 +106,7 @@ public class StatementViewCreator {
     nth[0]++; 
   } 
 
-  public Consumer<Expenses> getTreeItemCreator(TreeItem<Expenses> parentNode) {
-      return expense -> {
-          TreeItem<Expenses> treeItem = createTreeItem(expense);
-          parentNode.getChildren().add(treeItem);
-      };
-  }
 
-  public TreeItem<Expenses> createTreeItem(Expenses expense) {
-      checkForUpdatedExpenses(expense);
-      TreeItem<Expenses> treeItem = new TreeItem<>(expense);
-      treeItem.setGraphic(expense.getViewCreator().getView());
-      treeItem.setExpanded(true);
-      return treeItem;
-  }
 
 
   //if there are new expenses basically. 
@@ -102,11 +116,7 @@ public class StatementViewCreator {
     // }
   } 
 
-  // private void processChildNodes(TreeItem<Expenses> parentNodeView, Expenses childNode){
-  //   TreeItem<Expenses> childTreeItem = createTreeItem(childNode); 
-  //   // childTreeItem.setGraphic(childNode.getView());
-  //   parentNodeView.getChildren().add(childTreeItem); 
-  // } 
+
 
   private void initializeTreeView(){
     addExpandCollapseListeners(treeView.getRoot());
@@ -169,7 +179,7 @@ public class StatementViewCreator {
 
   private void updateCell(TreeCell<Expenses> cell, Expenses item) {
     if (item != null) {
-        // cell.setGraphic(item.getView()); // Setting custom view
+        cell.setGraphic(item.getViewCreator().getView()); // Setting custom view
         // cell.setContextMenu(getContextMenuItems(item));
     }
   }

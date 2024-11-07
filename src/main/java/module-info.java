@@ -1,6 +1,7 @@
 module com.mentarirvmp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
     // requires com.google.gson;
     // requires java.prefs;
 
