@@ -26,7 +26,7 @@ public class Project {
 
   //TEMPORARY DUMMY STATEMENT!!! UNTIL WE FIGURE OUT THE UI IMPLEMENTATION 
   private Statement getDummyStatement(){
-    Statement defaultStatement = new Statement("Default");
+    Statement defaultStatement = new Statement("DefaultSHATET");
     defaultStatement.addExpense(new Expenses("dummyExpense1"));
     defaultStatement.addExpense(new Expenses("dummyExpense2"));
     return defaultStatement;
@@ -76,6 +76,7 @@ public class Project {
 
   public void addDefaultStatement(){
     TreeNode newNode = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT, this.fileTree.getRoot());
+    newNode.setAttachedStatement(getDummyStatement());
     // newNode.setAttachedStatement(TemplateStatement.getStatementFromTemplate("Default"));
   }
 

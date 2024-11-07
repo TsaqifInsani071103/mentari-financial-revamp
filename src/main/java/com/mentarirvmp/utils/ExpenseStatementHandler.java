@@ -26,10 +26,12 @@ public class ExpenseStatementHandler implements DataHandler{
   }
 
 public void traverseThroughAllData(Consumer<Expenses> expenseConsumer) {
+    System.out.println("Statement Name " + handledStatement.getName());  
     traverse(handledStatement.getRoot(), expenseConsumer); 
 }
 
 private void traverse(Expenses expense, Consumer<Expenses> expenseConsumer) {
+  System.out.println("EXPENSE NAME " + expense.getName());
     expenseConsumer.accept(expense); // Process the current expense
     
     for(Map.Entry<String, Expenses> mapElement : expense.getChildMap().entrySet()){

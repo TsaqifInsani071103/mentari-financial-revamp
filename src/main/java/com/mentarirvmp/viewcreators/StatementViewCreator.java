@@ -52,20 +52,10 @@ public class StatementViewCreator {
     initializeTreeView();
   } 
   public TreeItem<Expenses> createTreeItem(Expenses expense) {
+    System.out.println("EXPENSE NAME: " + expense.getName());
     checkForUpdatedExpenses(expense);
     TreeItem<Expenses> treeItem = new TreeItem<>(expense);
     treeItem.setGraphic(expense.getViewCreator().getView());
-    System.out.println("THIS THE VIEW: " + expense.getViewCreator().getView());
-    
-    //testing treeItemGraphic 
-    Node graphic = treeItem.getGraphic();
-    if (graphic != null) {
-        System.out.println("TreeItem " + treeItem.getValue() + " has a graphic: " + graphic);
-    } else {
-        System.out.println("TreeItem " + treeItem.getValue() + " does NOT have a graphic.");
-    }
-
-
     treeItem.setExpanded(true);
     return treeItem;
   } 
