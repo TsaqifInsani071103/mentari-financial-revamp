@@ -4,6 +4,7 @@ package com.mentarirvmp.viewcreators;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import com.mentarirvmp.utils.DataHandler;
 import com.mentarirvmp.controllers.IndivProjectViewController;
@@ -27,11 +28,12 @@ public class StatementViewCreator {
   //always creating a new treeView upon constructing this class 
   private TreeView<Expenses> treeView = new TreeView<>();
   private IndivProjectViewController controller; 
-  private DataHandler dataHandler = new ExpenseStatementHandler(currentStatement); 
+  private ExpenseStatementHandler dataHandler;
 
   public StatementViewCreator(Statement currentStatement, IndivProjectViewController controller){
     this.currentStatement = currentStatement;
     this.controller = controller; 
+    this.dataHandler = new ExpenseStatementHandler(currentStatement);
   }
 
   //we get the statement view here in tree structure 
@@ -45,6 +47,7 @@ public class StatementViewCreator {
     initializeStatementExpandedState();
     Expenses rootExpense = currentStatement.getRoot(); 
     TreeItem<Expenses> rootItem = createTreeItem(rootExpense);
+    dataHandler.traverseThroughAllData(getTreeItemCreator(rootItem));
     this.treeView.setRoot(rootItem);
     initializeTreeView();
   } 
@@ -76,22 +79,21 @@ public class StatementViewCreator {
     nth[0]++; 
   } 
 
-  public TreeItem<Expenses> createTreeItem(Expenses expense) {
-    checkForUpdatedExpenses(expense);
-    TreeItem<Expenses> treeItem = new TreeItem<Expenses>(expense);
-    treeItem.setGraphic(expense.getViewCreator().getView());
-    treeItem.setExpanded(true);
-    // for (Expenses child : expense.getChildren()) {
-    //     processChildNodes(treeItem, child);
-    // } 
-    return treeItem;
+  public Consumer<Expenses> getTreeItemCreator(TreeItem<Expenses> parentNode) {
+      return expense -> {
+          TreeItem<Expenses> treeItem = createTreeItem(expense);
+          parentNode.getChildren().add(treeItem);
+      };
   }
 
-  private void processChildNodes(TreeItem<Expenses> parentNodeView, Expenses childNode){
-    TreeItem<Expenses> childTreeItem = createTreeItem(childNode); 
-    // childTreeItem.setGraphic(childNode.getView());
-    parentNodeView.getChildren().add(childTreeItem); 
-  } 
+  public TreeItem<Expenses> createTreeItem(Expenses expense) {
+      checkForUpdatedExpenses(expense);
+      TreeItem<Expenses> treeItem = new TreeItem<>(expense);
+      treeItem.setGraphic(expense.getViewCreator().getView());
+      treeItem.setExpanded(true);
+      return treeItem;
+  }
+
 
   //if there are new expenses basically. 
   private void checkForUpdatedExpenses(Expenses expense){
