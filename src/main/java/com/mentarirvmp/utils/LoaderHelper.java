@@ -11,8 +11,8 @@ import com.mentarirvmp.controllers.ChildControllers;
 
 
 public class LoaderHelper {
-  public static String WARNING_MODAL_PATH = "/com/mentari/modals/warningModal.fxml";
-  public static String CLOSE_MODAL_PATH = "/com/mentari/modals/confirmClose.fxml";
+  // public static String WARNING_MODAL_PATH = "/com/mentari/modals/warningModal.fxml";
+  // public static String CLOSE_MODAL_PATH = "/com/mentari/modals/confirmClose.fxml";
   
   private FXMLLoader loader; 
   private Parent nextView; 

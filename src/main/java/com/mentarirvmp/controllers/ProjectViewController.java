@@ -45,7 +45,7 @@ public class ProjectViewController extends ChildControllers{
   @FXML
   public void initialize(){
     //CLEAR THE GRID PANE BEFORE DYNAMICALLY ADDING MORE BUTTONS 
-    //gridPaneContainer.getChildren().clear(); 
+    gridPaneContainer.getChildren().clear(); 
   } 
 
   public MainLayoutController getMainController(){
@@ -106,7 +106,7 @@ public class ProjectViewController extends ChildControllers{
 
   // //get view according to projects. also dont forget to add the statements for EVERY PROJECT. 
   private void handleProjectButtonAction(Project project) throws IOException{
-      LoaderHelper hub = new LoaderHelper("/com/mentari/indivProject.fxml"); 
+      LoaderHelper hub = new LoaderHelper("/com/mentarirvmp/indivProject.fxml"); 
       IndivProjectViewController projectController = (IndivProjectViewController) hub.getController(); 
 
       projectController.setProjectObject(project);

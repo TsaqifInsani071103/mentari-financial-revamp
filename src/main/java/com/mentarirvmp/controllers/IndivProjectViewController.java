@@ -42,7 +42,7 @@ public class IndivProjectViewController extends ChildControllers {
   public void postInitialization(){
     setDefaultStatement();
     refreshStatementView();
-    generateFileView();
+    // generateFileView();
   } 
 
   public void setDefaultStatement(){
