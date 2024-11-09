@@ -55,7 +55,7 @@ public class Project {
   public TreeNode getFirstStatementNode(){
     TreeNode firstNode = getFirstNode(this.fileTree.getRoot()); 
     if(firstNode == this.fileTree.getRoot()){
-      addDefaultStatement(); //add a default statement if there exists no one else
+      // addDefaultStatement(); //add a default statement if there exists no one else
     }
     return getFirstNode(this.fileTree.getRoot());
   } 
@@ -76,11 +76,11 @@ public class Project {
       
   } 
 
-  public void addDefaultStatement(){
-    TreeNode newNode = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT, this.fileTree.getRoot());
-    newNode.setAttachedStatement(getDummyStatement());
-    // newNode.setAttachedStatement(TemplateStatement.getStatementFromTemplate("Default"));
-  }
+  // public void addDefaultStatement(){
+  //   TreeNode newNode = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT, this.fileTree.getRoot());
+  //   newNode.setAttachedStatement(getDummyStatement());
+  //   // newNode.setAttachedStatement(TemplateStatement.getStatementFromTemplate("Default"));
+  // }
 
   public String getProjectName(){
     return this.projectName; 
