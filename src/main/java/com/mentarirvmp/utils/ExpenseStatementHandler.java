@@ -25,20 +25,19 @@ public class ExpenseStatementHandler implements DataHandler{
     }
   }
 
-public void traverseThroughAllData(Consumer<Expenses> expenseConsumer) {
-    System.out.println("Statement Name " + handledStatement.getName());  
-    traverse(handledStatement.getRoot(), expenseConsumer); 
-}
+// public void traverseThroughAllData(Consumer<Expenses> expenseConsumer) {
+//     traverse(handledStatement.getRoot(), expenseConsumer); 
+// }
 
-private void traverse(Expenses expense, Consumer<Expenses> expenseConsumer) {
-  System.out.println("EXPENSE NAME " + expense.getName());
-    expenseConsumer.accept(expense); // Process the current expense
+// private void traverse(Expenses expense, Consumer<Expenses> expenseConsumer) {
+//   System.out.println("EXPENSE NAME " + expense.getName());
+//     expenseConsumer.accept(expense); // Process the current expense
     
-    for(Map.Entry<String, Expenses> mapElement : expense.getChildMap().entrySet()){
-      Expenses childExpense = mapElement.getValue(); 
-      traverse(childExpense, expenseConsumer); 
-    }
-}
+//     for(Map.Entry<String, Expenses> mapElement : expense.getChildMap().entrySet()){
+//       Expenses childExpense = mapElement.getValue(); 
+//       traverse(childExpense, expenseConsumer); 
+//     }
+// }
 
 
   //SHOULD BE RESPONSIBLE FOR MAKING A NEW EXPENSE AND ADDING IT TO THE STATEMENT 

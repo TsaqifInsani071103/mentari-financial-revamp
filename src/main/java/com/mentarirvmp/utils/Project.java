@@ -26,8 +26,10 @@ public class Project {
 
   //TEMPORARY DUMMY STATEMENT!!! UNTIL WE FIGURE OUT THE UI IMPLEMENTATION 
   private Statement getDummyStatement(){
-    Statement defaultStatement = new Statement("DefaultSHATET");
-    defaultStatement.addExpense(new Expenses("dummyExpense1"));
+    Statement defaultStatement = new Statement("DefaultSheet");
+    Expenses expense1 = new Expenses("dummyExpense1"); 
+    defaultStatement.addExpense(expense1);
+    defaultStatement.addExpenseToParent(new Expenses("child"), expense1);
     defaultStatement.addExpense(new Expenses("dummyExpense2"));
     return defaultStatement;
   } 

@@ -47,12 +47,12 @@ public class StatementViewCreator {
     initializeStatementExpandedState();
     Expenses rootExpense = currentStatement.getRoot(); 
     TreeItem<Expenses> rootItem = createTreeItem(rootExpense);
-    dataHandler.traverseThroughAllData(getTreeItemCreator(rootItem));
+    createTree(rootItem);
     this.treeView.setRoot(rootItem);
     initializeTreeView();
   } 
+
   public TreeItem<Expenses> createTreeItem(Expenses expense) {
-    System.out.println("EXPENSE NAME: " + expense.getName());
     checkForUpdatedExpenses(expense);
     TreeItem<Expenses> treeItem = new TreeItem<>(expense);
     treeItem.setGraphic(expense.getViewCreator().getView());
@@ -60,12 +60,17 @@ public class StatementViewCreator {
     return treeItem;
   } 
   
-  public Consumer<Expenses> getTreeItemCreator(TreeItem<Expenses> parentNode) {
-    return expense -> {
-        TreeItem<Expenses> treeItem = createTreeItem(expense);
-        parentNode.getChildren().add(treeItem);
-    };
-  }
+  public void createTree(TreeItem<Expenses> parentNode){
+    Expenses expense = parentNode.getValue(); 
+    for (Map.Entry<String, Expenses> entry : expense.getChildMap().entrySet()) {
+      TreeItem<Expenses> childNode =  createTreeItem(entry.getValue());
+      parentNode.getChildren().add(childNode); 
+      if(entry.getValue().hasChildren()){
+        createTree(childNode);
+      }
+   
+    }
+  } 
 
 
 
