@@ -1,4 +1,4 @@
-package com.mentarirvmp.utils;
+package com.mentarirvmp.viewcreators;
 
 // import com.mentari.statements.Statement;
 
@@ -22,6 +22,10 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import java.util.ArrayList;
+
+import com.mentarirvmp.utils.Expenses;
+import com.mentarirvmp.utils.ViewCreator;
+
 import javafx.scene.control.Control;
 
 
