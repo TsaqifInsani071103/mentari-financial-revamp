@@ -29,6 +29,7 @@ public class StatementViewCreator implements ViewCreator {
   private Statement currentStatement; 
   //always creating a new treeView upon constructing this class 
   private TreeView<Expenses> treeView = new TreeView<>();
+  private IndivProjectViewController controller; 
 
   public StatementViewCreator(Statement currentStatement){
     this.currentStatement = currentStatement;
@@ -39,6 +40,11 @@ public class StatementViewCreator implements ViewCreator {
   public Parent getView() {
     return getTreeView();
   }
+
+  //BEWARE OF COUPLING HERE!!! 
+  public void setParentController(IndivProjectViewController controller){
+    this.controller = controller; 
+  } 
 
   //we get the statement view here in tree structure 
   public TreeView<Expenses> getTreeView(){
@@ -158,15 +164,9 @@ public class StatementViewCreator implements ViewCreator {
       }
     };
 
-    // setDraggedListener(newCell);
     return newCell; 
   } 
 
-  // private void setDraggedListener(TreeCell<Expenses> cell){
-  //   DragExpenseHandler dragHandler = new DragExpenseHandler(cell, treeView);
-  //   dragHandler.setProjectControllerAndStatement(controller, currentStatement);
-  //   dragHandler.setDragListener(cell);
-  // } 
 
   private void clearCell(TreeCell<Expenses> cell) {
     cell.setText(null);
