@@ -56,6 +56,7 @@ public class IndivProjectViewController extends ChildControllers {
 
   public void refreshStatementView(){
     // this.currentStatement.setController(this);
+    this.currentStatement.getViewCreator().setParentController(this);
     numbersContainer.setContent(this.currentStatement.getViewCreator().getView());
     setProjectName(); 
   } 

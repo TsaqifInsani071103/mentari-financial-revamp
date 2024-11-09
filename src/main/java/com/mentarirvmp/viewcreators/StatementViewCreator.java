@@ -4,6 +4,7 @@ package com.mentarirvmp.viewcreators;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.mentarirvmp.utils.DataHandler;
@@ -26,14 +27,51 @@ import javafx.scene.control.MenuItem;
 
 
 public class StatementViewCreator implements ViewCreator {
+
   private Statement currentStatement; 
   //always creating a new treeView upon constructing this class 
   private TreeView<Expenses> treeView = new TreeView<>();
   private IndivProjectViewController controller; 
+  private ExpenseStatementHandler dataHandler;
+
+  public class TreeCreator{
+    private TreeItem<Expenses> rootTreeItem;
+    private TreeItem<Expenses> currentParent; // Tracks the current parent node
+
+    public TreeCreator(Expenses rootExpense) {
+      // Initialize the root TreeItem and set it as the initial parent
+      this.rootTreeItem = new TreeItem<>(rootExpense);
+      this.rootTreeItem.setExpanded(true);
+      this.currentParent = rootTreeItem; // Start with the root as the parent
+    }
+
+    // Get the root TreeItem for the view
+    public TreeItem<Expenses> getRootTreeItem() {
+        return rootTreeItem;
+    }
+    
+    public Consumer<Expenses> getDynamicTreeItemConsumer(){
+      return expense -> {
+        TreeItem<Expenses> treeItem = new TreeItem<>(expense); 
+        treeItem.setGraphic(expense.getViewCreator().getView());
+        // treeItem.setExpanded(true); 
+  
+        currentParent.getChildren().add(treeItem); 
+
+        TreeItem<Expenses> previousParent = currentParent; 
+        currentParent = treeItem; 
+
+        Consumer<Expenses> resetParent = childExpense -> currentParent = previousParent;
+        resetParent.accept(expense); 
+      };
+    } 
+
+  } 
+
 
   public StatementViewCreator(Statement currentStatement){
     this.currentStatement = currentStatement;
-    // this.dataHandler = new ExpenseStatementHandler(currentStatement);
+    this.dataHandler = new ExpenseStatementHandler(currentStatement);
   }
 
   @Override
@@ -56,8 +94,10 @@ public class StatementViewCreator implements ViewCreator {
   public void populateTreeView(){
     initializeStatementExpandedState();
     Expenses rootExpense = currentStatement.getRoot(); 
-    TreeItem<Expenses> rootItem = createTreeItem(rootExpense);
-    createTree(rootItem);
+    TreeCreator treeCreator = new TreeCreator(rootExpense);
+    dataHandler.traverseThroughAllData(treeCreator.getDynamicTreeItemConsumer());
+    TreeItem<Expenses> rootItem = treeCreator.getRootTreeItem();
+    // createTree(rootItem);
     this.treeView.setRoot(rootItem);
     initializeTreeView();
   } 
@@ -78,9 +118,11 @@ public class StatementViewCreator implements ViewCreator {
       if(entry.getValue().hasChildren()){
         createTree(childNode);
       }
-   
     }
   } 
+
+ 
+
 
 
 

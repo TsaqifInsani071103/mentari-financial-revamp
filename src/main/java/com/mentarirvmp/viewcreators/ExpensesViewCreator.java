@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import java.util.ArrayList;
 
+import com.mentarirvmp.controllers.IndivProjectViewController;
 import com.mentarirvmp.utils.Expenses;
 import com.mentarirvmp.utils.ViewCreator;
 
@@ -196,6 +197,12 @@ public class ExpensesViewCreator implements ViewCreator {
     textArea.setVisible(!textArea.isVisible());
     textArea.setManaged(!textArea.isManaged());
     icon.setRotate(!textArea.isVisible() ? 0 : 90);
+  }
+
+  @Override
+  public void setParentController(IndivProjectViewController indivProjectViewController) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'setParentController'");
   }
 
   
