@@ -1,6 +1,9 @@
 package com.mentarirvmp.statements;
 import java.util.ArrayList;
 import com.mentarirvmp.utils.Expenses;
+import com.mentarirvmp.utils.ViewCreator;
+import com.mentarirvmp.viewcreators.StatementViewCreator;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,6 +14,7 @@ public class Statement {
   private String statementName; 
   private int uniqueCounter = 0; 
   private LinkedHashMap<String, Expenses> expenseMap = new LinkedHashMap<>();
+  private ViewCreator viewCreator = new StatementViewCreator(this); 
   //make like an array of hashmaps basically. 
   // private ArrayList<Expenses> expenseArrayList = new ArrayList<Expenses>(); 
 
@@ -20,6 +24,10 @@ public class Statement {
     Expenses rootExpense = new Expenses("root");
     setIdFor(rootExpense);
     this.expenseMap.put(rootExpense.getId(), rootExpense);
+  } 
+
+  public ViewCreator getViewCreator(){
+    return this.viewCreator;
   } 
 
   public String getName(){

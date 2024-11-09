@@ -10,6 +10,7 @@ import com.mentarirvmp.utils.DataHandler;
 import com.mentarirvmp.controllers.IndivProjectViewController;
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Expenses;
+import com.mentarirvmp.utils.ViewCreator;
 import com.mentarirvmp.utils.ExpenseStatementHandler;
 // import com.mentarirvmp.utils.fileoperations.ModalMenu;
 
@@ -18,22 +19,25 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
 
 import javafx.scene.control.MenuItem;
 
 
-public class StatementViewCreator {
+public class StatementViewCreator implements ViewCreator {
   private Statement currentStatement; 
   //always creating a new treeView upon constructing this class 
   private TreeView<Expenses> treeView = new TreeView<>();
-  private IndivProjectViewController controller; 
-  private ExpenseStatementHandler dataHandler;
 
-  public StatementViewCreator(Statement currentStatement, IndivProjectViewController controller){
+  public StatementViewCreator(Statement currentStatement){
     this.currentStatement = currentStatement;
-    this.controller = controller; 
-    this.dataHandler = new ExpenseStatementHandler(currentStatement);
+    // this.dataHandler = new ExpenseStatementHandler(currentStatement);
+  }
+
+  @Override
+  public Parent getView() {
+    return getTreeView();
   }
 
   //we get the statement view here in tree structure 
@@ -178,6 +182,7 @@ public class StatementViewCreator {
         // cell.setContextMenu(getContextMenuItems(item));
     }
   }
+
 
   // public ContextMenu getContextMenuItems(Expenses expense){
   //   ContextMenu menu = new ContextMenu(); 

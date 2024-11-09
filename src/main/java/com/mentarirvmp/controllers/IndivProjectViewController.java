@@ -56,8 +56,7 @@ public class IndivProjectViewController extends ChildControllers {
 
   public void refreshStatementView(){
     // this.currentStatement.setController(this);
-    StatementViewCreator creator = new StatementViewCreator(currentStatement, this);
-    numbersContainer.setContent(creator.getTreeView());
+    numbersContainer.setContent(this.currentStatement.getViewCreator().getView());
     setProjectName(); 
   } 
 
