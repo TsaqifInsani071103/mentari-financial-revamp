@@ -37,35 +37,39 @@ public class StatementViewCreator implements ViewCreator {
   public class TreeCreator{
     private TreeItem<Expenses> rootTreeItem;
     private TreeItem<Expenses> currentParent; // Tracks the current parent node
+    private TreeItem<Expenses> previousParent; 
 
     public TreeCreator(Expenses rootExpense) {
       // Initialize the root TreeItem and set it as the initial parent
       this.rootTreeItem = new TreeItem<>(rootExpense);
       this.rootTreeItem.setExpanded(true);
       this.currentParent = rootTreeItem; // Start with the root as the parent
-    }
-
-    // Get the root TreeItem for the view
-    public TreeItem<Expenses> getRootTreeItem() {
-        return rootTreeItem;
+      this.previousParent = null; 
     }
     
     public Consumer<Expenses> getDynamicTreeItemConsumer(){
       return expense -> {
         TreeItem<Expenses> treeItem = new TreeItem<>(expense); 
         treeItem.setGraphic(expense.getViewCreator().getView());
-        // treeItem.setExpanded(true); 
+        treeItem.setExpanded(true); 
   
         currentParent.getChildren().add(treeItem); 
 
-        TreeItem<Expenses> previousParent = currentParent; 
+        // TreeItem<Expenses> previousParent = currentParent; 
         currentParent = treeItem; 
 
-        Consumer<Expenses> resetParent = childExpense -> currentParent = previousParent;
-        resetParent.accept(expense); 
+
+        // Consumer<Expenses> resetParent = childExpense -> currentParent = previousParent;
+        // resetParent.accept(expense); 
       };
     } 
 
+    // Get the root TreeItem for the view
+    public TreeItem<Expenses> getRootTreeItem() {
+        return rootTreeItem;
+    }
+    
+  
   } 
 
 
