@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import java.util.ArrayList;
 
+import com.mentarirvmp.controllers.ChildControllers;
 import com.mentarirvmp.controllers.IndivProjectViewController;
 import com.mentarirvmp.utils.Expenses;
 import com.mentarirvmp.utils.ViewCreator;
@@ -33,6 +34,7 @@ import javafx.scene.control.Control;
 public class ExpensesViewCreator implements ViewCreator {
   private Expenses currentExpense; 
   private transient TextField entryFieldReference; 
+  private ChildControllers controller; 
 
   public ExpensesViewCreator(Expenses expense){
     this.currentExpense = expense; 
@@ -200,9 +202,8 @@ public class ExpensesViewCreator implements ViewCreator {
   }
 
   @Override
-  public void setParentController(IndivProjectViewController indivProjectViewController) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'setParentController'");
+  public void setParentController(ChildControllers moduleController) {
+    this.controller = (IndivProjectViewController) moduleController; 
   }
 
   

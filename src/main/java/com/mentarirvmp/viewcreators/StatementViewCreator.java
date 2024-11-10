@@ -8,6 +8,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.mentarirvmp.utils.DataHandler;
+import com.mentarirvmp.controllers.ChildControllers;
 import com.mentarirvmp.controllers.IndivProjectViewController;
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Expenses;
@@ -31,7 +32,7 @@ public class StatementViewCreator implements ViewCreator {
   private Statement currentStatement; 
   //always creating a new treeView upon constructing this class 
   private TreeView<Expenses> treeView = new TreeView<>();
-  private IndivProjectViewController controller; 
+  private ChildControllers controller; 
 
 
   public StatementViewCreator(Statement currentStatement){
@@ -44,8 +45,9 @@ public class StatementViewCreator implements ViewCreator {
   }
 
   //BEWARE OF COUPLING HERE!!! 
-  public void setParentController(IndivProjectViewController controller){
-    this.controller = controller; 
+  @Override
+  public void setParentController(ChildControllers viewController){
+    this.controller = (IndivProjectViewController) viewController; 
   } 
 
   //we get the statement view here in tree structure 
