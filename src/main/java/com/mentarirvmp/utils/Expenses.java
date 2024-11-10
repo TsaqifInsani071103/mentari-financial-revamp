@@ -3,7 +3,6 @@ package com.mentarirvmp.utils;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import com.mentarirvmp.viewcreators.ExpensesViewCreator;
 
 //since expenses is just one line of data entry, I think its fine to inject associated statement into this? 
 
@@ -23,7 +22,6 @@ public class Expenses {
   private String formulaString =""; 
   private String id = ""; 
   private LinkedHashMap<String, Expenses> childMap = new LinkedHashMap<>();
-  private ViewCreator viewCreator = new ExpensesViewCreator(this);
 
   //I dont really need this. I could just, for optimization sake, look through each formulas in each expenses and check if this expense's id exists within their formulas and only refresh their values if it is. (If the formula for this expense is changed.)
   private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); 
@@ -48,10 +46,6 @@ public class Expenses {
   public String getValue(){
     return this.value; 
   }
-
-  public ViewCreator getViewCreator(){
-    return this.viewCreator;
-  } 
 
   //set default value to be 0.0 aja 
   public void setValue(String newValue){

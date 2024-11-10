@@ -2,6 +2,7 @@ package com.mentarirvmp.controllers;
 
 import com.mentarirvmp.controllers.ChildControllers;
 import com.mentarirvmp.utils.Project;
+import com.mentarirvmp.utils.ViewCreator;
 import com.mentarirvmp.viewcreators.StatementViewCreator;
 
 import javafx.scene.control.Label;
@@ -56,8 +57,9 @@ public class IndivProjectViewController extends ChildControllers {
 
   public void refreshStatementView(){
     // this.currentStatement.setController(this);
-    this.currentStatement.getViewCreator().setParentController(this);
-    numbersContainer.setContent(this.currentStatement.getViewCreator().getView());
+    StatementViewCreator viewCreator = new StatementViewCreator(this.currentStatement);
+    viewCreator.setParentController(this);
+    numbersContainer.setContent(viewCreator.getView());
     setProjectName(); 
   } 
 
