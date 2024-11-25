@@ -9,6 +9,7 @@ import com.mentarirvmp.statements.Statement;
 public class Project {
   private String projectName; 
   //private array of funds 
+  //We can definitely abtract FilesTree and Statements to be Data instead, and use polymorphism, 
   private FilesTree fileTree; 
 
   public Project(String projectName){

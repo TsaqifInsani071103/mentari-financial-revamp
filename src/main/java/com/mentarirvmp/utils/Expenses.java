@@ -70,15 +70,6 @@ public class Expenses {
     this.id = newId;
   } 
 
-  //since this is a POJO and not a like a singular data type we can still include things like addChild and removeChild that is tightly related to this here. 
-  public void addChild(Expenses newChild){
-    this.childMap.put(newChild.getId(), newChild); 
-  } 
-
-  public void deleteChild(Expenses childToDelete){
-    this.childMap.remove(childToDelete.getId()); 
-  } 
-
   public LinkedHashMap<String, Expenses> getChildMap(){
     return this.childMap; 
   } 

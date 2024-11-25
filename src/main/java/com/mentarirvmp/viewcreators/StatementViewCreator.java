@@ -76,6 +76,7 @@ public class StatementViewCreator implements ViewCreator {
   } 
   
   public void createTree(TreeItem<Expenses> parentNode){
+    //you can add a traverse through expense methods in Statement if this is too much meddling in the internals of the Expenses.java directly. 
     Expenses expense = parentNode.getValue(); 
     for (Map.Entry<String, Expenses> entry : expense.getChildMap().entrySet()) {
       TreeItem<Expenses> childNode =  createTreeItem(entry.getValue());
