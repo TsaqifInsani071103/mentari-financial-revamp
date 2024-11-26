@@ -5,12 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProjectTest {
 
-    // @Test
-    // public void testProjectName() {
-    //     String name = "newName";
-    //     Project newProject = new Project(name);
-    //     assertEquals(name, newProject.getProjectName());
-    // }
+    @Test
+    public void testGetFirstStatementNode() {
+        Project dummyProject = new Project("dummyProj"); 
+        
+    }
 }
 
 //so the project holds a FilesTree Object which holds a linkedlist of Statement objects 

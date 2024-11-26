@@ -42,7 +42,7 @@ public class Project {
     //statementNode 
     TreeNode node1 = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT);
     
-    //CHANGE THIS LATER ON 
+    //CHANGE THIS LATER ON to getStatementFromTemplate; 
     node1.setAttachedStatement(getDummyStatement());
     
     this.fileTree.addNode(this.fileTree.getRoot(), qFolder);
@@ -54,17 +54,17 @@ public class Project {
   } 
 
   public TreeNode getFirstStatementNode(){
-    TreeNode firstNode = getFirstNode(this.fileTree.getRoot()); 
+    TreeNode firstNode = getFirstNodeByRoot(this.fileTree.getRoot()); 
     if(firstNode == this.fileTree.getRoot()){
       // addDefaultStatement(); //add a default statement if there exists no one else
     }
-    return getFirstNode(this.fileTree.getRoot());
+    return getFirstNodeByRoot(this.fileTree.getRoot());
   } 
 
-  public TreeNode getFirstNode(TreeNode currentNode){
+  public TreeNode getFirstNodeByRoot(TreeNode currentNode){
     if(currentNode.isTypeStatement()) return currentNode; 
     for(TreeNode node: currentNode.getChildren()){
-      TreeNode foundNode = getFirstNode(node);
+      TreeNode foundNode = getFirstNodeByRoot(node);
       if(foundNode == null || foundNode.isTypeFolder()){
         continue;
       }else{
