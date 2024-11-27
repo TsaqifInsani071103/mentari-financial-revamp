@@ -129,8 +129,7 @@ public class TreeNode {
 
   //I dont think I want the isNameDuplicate to be here and instead be handled by the handler between the user input and whatever will handle FilesTree.java and duplicate names. Much like the loadHelper modal poppwer will be handled by that guy too. 
   private boolean isNameDuplicate(String newName){
-    FilesTree tree = getTreeReference();
-    if(tree.findNodeByName(newName) != null) return true; 
+    if(this.treeReference.findNodeByName(newName) != null) return true; 
     return false; 
   }
 

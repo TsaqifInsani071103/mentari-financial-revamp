@@ -7,6 +7,7 @@ module com.mentarirvmp {
 
     opens com.mentarirvmp.controllers to javafx.fxml;
     opens com.mentarirvmp.utils to javafx.fxml;
+    opens com.mentarirvmp.fileoperations to javafx.fxml;
 
     opens com.mentarirvmp to javafx.fxml;
     exports com.mentarirvmp;
