@@ -47,6 +47,7 @@ public class FilesTreeAndNodeTest {
 
     //Testing duplicate name add 
     this.dummyFilesTree.addNode(this.dummyFilesTree.getRoot(), new TreeNode("2", TreeNode.NodeType.STATEMENT)); 
+    populateFilesTreeSet();
 
     assertEquals(originalLength, this.filesTreeAsSet.size());
 
@@ -54,7 +55,6 @@ public class FilesTreeAndNodeTest {
     populateFilesTreeSet();
 
     assertEquals(originalLength + 1, filesTreeAsSet.size()); 
-
 
   } 
 
