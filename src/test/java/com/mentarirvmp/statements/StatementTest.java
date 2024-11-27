@@ -13,6 +13,19 @@ import java.util.Map;
 
 public class StatementTest {
 
+  @Test
+  public void addNestedExpensesTest() {
+    Statement dummyStatement = MockObjects.getDummyStatementObject();
+
+    Expenses parent = new Expenses("Parent");
+    Expenses child = new Expenses("Child");
+    dummyStatement.addExpenseToParent(parent, dummyStatement.getRoot());
+    dummyStatement.addExpenseToParent(child, parent);
+
+    assertEquals(parent, dummyStatement.getExpenseById(parent.getId()));
+    assertEquals(child, dummyStatement.getExpenseById(child.getId()));
+  }
+
   // // Now I need a recursion test that would test if I can query ALL the children for ALL the expenses in the mock statement. 
   @Test
   public void getExpenseByIDTest(){

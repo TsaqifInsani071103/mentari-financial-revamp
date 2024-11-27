@@ -66,6 +66,7 @@ public class Statement {
   public LinkedHashMap<String, Expenses> getExpensesMap(){
     return this.expenseMap;
   } 
+
   
 
   public Expenses getExpenseById(String ID){
@@ -87,3 +88,7 @@ public class Statement {
   } 
 
 }
+
+//Might want to check how uniqueCounter might revert back to zero everytime you load the Statement from the database. This will crash the uniqueId Process
+
+//

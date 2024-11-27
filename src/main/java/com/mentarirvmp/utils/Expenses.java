@@ -78,6 +78,10 @@ public class Expenses {
     return this.childMap.size() > 0? true: false; 
   }
 
+  public String toString(){
+    return getName(); 
+  } 
+
 
 }
 
