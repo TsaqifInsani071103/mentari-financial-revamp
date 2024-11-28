@@ -33,7 +33,8 @@ public class MockObjects {
 
     //adding one child to each expenses to try and see if we can check nested children's ID. 
     int counter = 101; 
-    for(Map.Entry<String, Expenses> mapElement : dummyStatement.getExpensesMap().entrySet()){
+    //this one just adds more to the root not to the children 
+    for(Map.Entry<String, Expenses> mapElement : dummyStatement.getRoot().getChildMap().entrySet()){
       //we're gonna add children 
       Expenses expenseDummy = new Expenses("Expense" + counter);
       Random randObj = new Random(); 

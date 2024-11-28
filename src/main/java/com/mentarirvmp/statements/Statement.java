@@ -38,6 +38,7 @@ public class Statement {
   } 
 
   public void addExpenseToParent(Expenses newExpense, Expenses parentExpense){
+    // System.out.println("ADDING: " + newExpense + " To " + parentExpense);
     addExpense(newExpense, parentExpense.getChildMap());
   } 
 
@@ -75,11 +76,13 @@ public class Statement {
 
   private Expenses recursiveGetExpenseById(LinkedHashMap<String,Expenses> childMap, String ID){
     if(childMap.containsKey(ID)) return childMap.get(ID);
-
+  
     for(Map.Entry<String, Expenses> mapElement : childMap.entrySet()){
       Expenses expense = mapElement.getValue(); 
+      System.out.println(expense);
       if(expense.hasChildren()){
         if(expense.getChildMap().containsKey(ID)) return expense.getChildMap().get(ID);
+
         recursiveGetExpenseById(expense.getChildMap(), ID);
       }
     }
