@@ -29,6 +29,7 @@ public class Statement {
   } 
 
   public Expenses getRoot(){
+    //does this mutate the iterator? 
     String firstKey = this.expenseMap.keySet().iterator().next(); 
     return this.expenseMap.get(firstKey);
   } 
@@ -79,11 +80,10 @@ public class Statement {
   
     for(Map.Entry<String, Expenses> mapElement : childMap.entrySet()){
       Expenses expense = mapElement.getValue(); 
-      System.out.println(expense);
       if(expense.hasChildren()){
         if(expense.getChildMap().containsKey(ID)) return expense.getChildMap().get(ID);
 
-        recursiveGetExpenseById(expense.getChildMap(), ID);
+        return recursiveGetExpenseById(expense.getChildMap(), ID);
       }
     }
 

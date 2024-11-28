@@ -11,6 +11,7 @@ public class MockObjects {
   // public static final String "Expense" = "Expense";
   // public static final String DUMMY_FORMULA = "SUM()"; 
 
+  //no justification for this code here 
   public static Project getDummyProjectObject(){
     Project project = new Project("dummyProject"); 
 
@@ -46,6 +47,26 @@ public class MockObjects {
     }
 
     return dummyStatement; 
+    
+  } 
+
+  public static ArrayList<Expenses> getAllContentIntoArray(Statement dummyStatement){
+    ArrayList<Expenses> allParentAndChildExpenses = new ArrayList<Expenses>();
+    for(Map.Entry<String, Expenses> mapElement: dummyStatement.getExpensesMap().entrySet()){
+      recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
+    }
+    return allParentAndChildExpenses;
+  } 
+
+  private static ArrayList<Expenses> recursiveAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildExpenses, Expenses expense){
+    allParentAndChildExpenses.add(expense);
+    if(expense.hasChildren()){
+      for(Map.Entry<String, Expenses> mapElement:expense.getChildMap().entrySet()){
+        recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
+      }
+    } 
+
+    return allParentAndChildExpenses;
     
   } 
 

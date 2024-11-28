@@ -14,64 +14,44 @@ import java.util.Map;
 
 public class StatementTest {
 
-  @Test
-  public void addNestedExpensesTest() {
-    Statement dummyStatement = MockObjects.getDummyStatementObject();
+  @Test 
+  public void testGetRoot(){
+    //getting root by calling next() on iterator 
+    Statement dummyStatement = new Statement("dummyStatement"); 
+    Expenses rootExpense = dummyStatement.getRoot(); 
+    assertEquals(rootExpense, dummyStatement.getRoot());
+  } 
 
-    Expenses parent = new Expenses("Parent");
-    Expenses child = new Expenses("Child");
-    dummyStatement.addExpense(parent);
-    dummyStatement.addExpenseToParent(child, parent);
+  @Test 
+  public void testRecursion(){
+    Statement dummyStatement = new Statement("dummyStatement"); 
+    Expenses newExpense1 = new Expenses("1");
+    Expenses newExpense2 = new Expenses("2");
+    Expenses newExpense3 = new Expenses("3");
 
-    // assertEquals(parent, dummyStatement.getExpenseById(parent.getId()));
-    // assertEquals(child, dummyStatement.getExpenseById(child.getId()));
+    dummyStatement.addExpenseToParent(newExpense2, newExpense3);
+    dummyStatement.addExpense(newExpense1);
+    dummyStatement.addExpense(newExpense3);
 
-    ExpenseStatementHandler handler = new ExpenseStatementHandler(dummyStatement);
-    handler.traverseThroughAllData(node -> {
-      System.out.println(node);
-    });
+    assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
+
   }
 
-  // // Now I need a recursion test that would test if I can query ALL the children for ALL the expenses in the mock statement. 
-  @Test
-  public void getExpenseByIDTest(){
-    Statement dummyStatement = MockObjects.getDummyStatementObject(); 
+  @Test 
+  public void addExpense(){
+    //this is a statement with only root expense 
+    Statement dummyStatement = new Statement("dummyStatement");
+    Expenses newExpense1 = new Expenses("newExpense1");
+    Expenses newExpense2 = new Expenses("newExpense2"); 
+    dummyStatement.addExpense(newExpense1);
+    assertEquals(dummyStatement.getRoot().getChildMap().get(newExpense1.getId()), newExpense1);
 
-    // //we flatten the nested arrays, so we can check on them easier. 
-    ArrayList<Expenses> allParentAndChildExpenses = populateAllNestedExpensesIntoArray(dummyStatement); 
+    dummyStatement.addExpenseToParent(newExpense2, newExpense1); 
+    //we dont want to test according to the inner data structure of Statement.java we'll change this to the externally visible methods later. 
+    assertEquals(dummyStatement.getRoot().getChildMap().get(newExpense1.getId()).getChildMap().get(newExpense2.getId()), newExpense2);
 
-    // //were testing for successful querying 
-    for(Expenses expense: allParentAndChildExpenses){
-      assertEquals(expense, dummyStatement.getExpenseById(expense.getId()));
-      // System.out.println("=============");
-      // System.out.println(expense.getName()); 
-      // System.out.println(dummyStatement.getExpenseById(expense.getId()).getName()); 
-      // System.out.println("=============");
-    }
-
-    //were testing for invalid ID 
-    assertEquals(Expenses.INVALID_EXPENSE, dummyStatement.getExpenseById("120301"));
-  } 
-
-  private ArrayList<Expenses> populateAllNestedExpensesIntoArray(Statement dummyStatement){
-    ArrayList<Expenses> allParentAndChildExpenses = new ArrayList<Expenses>();
-    for(Map.Entry<String, Expenses> mapElement: dummyStatement.getExpensesMap().entrySet()){
-      recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
-    }
-    return allParentAndChildExpenses;
 
   } 
 
-  private ArrayList<Expenses> recursiveAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildExpenses, Expenses expense){
-    allParentAndChildExpenses.add(expense);
-    if(expense.hasChildren()){
-      for(Map.Entry<String, Expenses> mapElement:expense.getChildMap().entrySet()){
-        recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
-      }
-    } 
-
-    return allParentAndChildExpenses;
-    
-  } 
   
 }
