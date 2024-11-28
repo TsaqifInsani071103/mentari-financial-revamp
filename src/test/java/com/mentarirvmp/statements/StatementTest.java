@@ -32,8 +32,16 @@ public class StatementTest {
     dummyStatement.addExpenseToParent(newExpense2, newExpense3);
     dummyStatement.addExpense(newExpense1);
     dummyStatement.addExpense(newExpense3);
+    dummyStatement.addExpenseToParent(new Expenses("a"), newExpense1);
 
     assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
+
+    Statement dummyStatement2 = MockObjects.getDummyStatementObject();
+    ArrayList<Expenses> dummyStatement2AsArray = MockObjects.getAllContentIntoArray(dummyStatement2);
+
+    for(Expenses expense : dummyStatement2AsArray){
+      assertEquals(expense, dummyStatement2.getExpenseById(expense.getId())); 
+    }
 
   }
 
@@ -43,12 +51,14 @@ public class StatementTest {
     Statement dummyStatement = new Statement("dummyStatement");
     Expenses newExpense1 = new Expenses("newExpense1");
     Expenses newExpense2 = new Expenses("newExpense2"); 
-    dummyStatement.addExpense(newExpense1);
-    assertEquals(dummyStatement.getRoot().getChildMap().get(newExpense1.getId()), newExpense1);
 
+    //addExpense method works and gives Id 
+    dummyStatement.addExpense(newExpense1);
+    assertEquals(dummyStatement.getExpenseById(newExpense1.getId()), newExpense1);
+
+    //addExpenseToParent method works and gives ID 
     dummyStatement.addExpenseToParent(newExpense2, newExpense1); 
-    //we dont want to test according to the inner data structure of Statement.java we'll change this to the externally visible methods later. 
-    assertEquals(dummyStatement.getRoot().getChildMap().get(newExpense1.getId()).getChildMap().get(newExpense2.getId()), newExpense2);
+    assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
 
 
   } 

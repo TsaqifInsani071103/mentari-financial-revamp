@@ -81,9 +81,12 @@ public class Statement {
     for(Map.Entry<String, Expenses> mapElement : childMap.entrySet()){
       Expenses expense = mapElement.getValue(); 
       if(expense.hasChildren()){
-        if(expense.getChildMap().containsKey(ID)) return expense.getChildMap().get(ID);
+        if(expense.getChildMap().containsKey(ID)) return expense.getChildMap().get(ID); 
 
-        return recursiveGetExpenseById(expense.getChildMap(), ID);
+        Expenses foundExpense = recursiveGetExpenseById(expense.getChildMap(), ID);
+        if(foundExpense != Expenses.INVALID_EXPENSE){
+          return foundExpense; 
+        }
       }
     }
 
