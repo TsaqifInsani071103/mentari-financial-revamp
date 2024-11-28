@@ -39,6 +39,7 @@ public class FilesTreeAndNodeTest {
     });
   }
 
+  //duplicate uses findNodeByName() method too 
   @Test 
   public void FilesTreeNameDuplicate(){
     //if I add a node to filesTree, I want the code to give me a warning that I can't add duplicate names and tell me to do it again 
@@ -55,7 +56,6 @@ public class FilesTreeAndNodeTest {
     populateFilesTreeSet();
 
     assertEquals(originalLength + 1, filesTreeAsSet.size()); 
-
   } 
 
 
