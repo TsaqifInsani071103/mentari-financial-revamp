@@ -8,6 +8,7 @@ import com.mentarirvmp.utils.ExpenseStatementHandler;
 import java.util.HashMap;
 import java.util.Map;
 
+//Its fine that this is closely coupled with the inner working of Statement.java since it deals with templating Statement.java
 public class TemplateStatement {
   //I might just use DataHandler for this? 
 
@@ -18,12 +19,13 @@ public class TemplateStatement {
 
   //makeTemplateExpenses: duplicate the expenses and ensures they have the right children 
 
+  //statements cannot have the same name either then 
   public static Statement duplicateIntoStatementTemplate(Statement original){
     Statement duplicateStatement = new Statement(original.getName() + "Copy"); 
-    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(original);
+    ExpenseStatementHandler expenseStatementHandler = new ExpenseStatementHandler(original);
     Map<String, Expenses> expenseCopiesMap = new HashMap<String, Expenses>(); 
 
-    dataHandler.traverseThroughAllData((expense, parentExpense) -> {
+    expenseStatementHandler.traverseThroughAllData((expense, parentExpense) -> {
       Expenses expenseCopy = new Expenses(expense.getName()); 
       if(parentExpense == original.getRoot()){
         duplicateStatement.addExpense(expenseCopy);
