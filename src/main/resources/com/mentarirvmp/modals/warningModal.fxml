@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mentarirvmp.controllers.modalcontrollers.WarningModalController"
+      alignment="CENTER" spacing="20">
+    <Label fx:id="messageLabel" text="Warning message goes here"/>
+    <!-- <Button text="Close" onAction="#closeModal"/> -->
+</VBox>
+
