@@ -19,7 +19,7 @@ public class TemplateStatement {
   //makeTemplateExpenses: duplicate the expenses and ensures they have the right children 
 
   public static Statement duplicateIntoStatementTemplate(Statement original){
-    Statement duplicateStatement = new Statement(original.getName()); 
+    Statement duplicateStatement = new Statement(original.getName() + "Copy"); 
     ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(original);
     Map<String, Expenses> expenseCopiesMap = new HashMap<String, Expenses>(); 
 
