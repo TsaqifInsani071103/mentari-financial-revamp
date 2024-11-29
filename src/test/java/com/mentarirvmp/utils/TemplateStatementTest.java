@@ -32,5 +32,17 @@ public class TemplateStatementTest {
 
   } 
 
-  //my concern is, how duplicate statement names would affect templating? 
+  @Test 
+  public void getStatementTemplateTest(){
+    //Checks if invalid statement query will just return the default statement. 
+    Statement invalidStatement = TemplateStatement.getStatementTemplate("12039123ij1i2ub3i1khb23kjb");
+    assertEquals("DefaultTemplate", invalidStatement.getName());
+
+    //Checks if 
+    Statement dummyStatement = MockObjects.getDummyStatementObject();
+    ArrayList<Expenses> dummyStatementFlattened = MockObjects.getAllContentIntoArray(dummyStatement);
+    Statement templateStatement = TemplateStatement.duplicateIntoStatementTemplate(dummyStatement); 
+  }
+
+
 }

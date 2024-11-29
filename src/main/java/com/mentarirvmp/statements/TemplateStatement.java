@@ -20,6 +20,16 @@ public class TemplateStatement {
 
   //makeTemplateExpenses: duplicate the expenses and ensures they have the right children 
 
+  public static void addStatementTemplate(Statement statement){
+    //checks for statement unique name 
+    if(getStatementTemplate(statement.getName()) == null){
+      statementTemplatesArray.add(duplicateIntoStatementTemplate(statement)); 
+    }else{
+      // String warning = "The name you entered for the custom template already exists";
+      // LoaderHelper.showPopupModal(warning, 500, 150);
+    }
+  }
+
   //statements cannot have the same name either then 
   public static Statement duplicateIntoStatementTemplate(Statement original){
     Statement duplicateStatement = new Statement(original.getName() + "Template"); 
@@ -42,16 +52,7 @@ public class TemplateStatement {
 
   } 
 
-
-
   public static Statement getStatementTemplate(String name){
-    Statement template = getTemplateByName(name); 
-    if(template == null) template = statementTemplatesArray.get(0); // give default template if statement name not found 
-    Statement newStatement = duplicateIntoStatementTemplate(template); 
-    return newStatement; 
-  }
-
-  private static Statement getTemplateByName(String name){
     if(statementTemplatesArray.isEmpty()) addDefaultStatement();
     for(Statement template:statementTemplatesArray){
       if(template.getName().equals(name)){
@@ -59,7 +60,8 @@ public class TemplateStatement {
       }
     }
 
-    return null; //default template 
+    Statement defaultStatementTemplate = statementTemplatesArray.get(0);
+    return duplicateIntoStatementTemplate(defaultStatementTemplate); //default template 
   } 
 
   private static void addDefaultStatement(){
