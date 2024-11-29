@@ -1,5 +1,6 @@
 package com.mentarirvmp.utils;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.mentarirvmp.statements.Statement;
@@ -25,17 +26,17 @@ public class ExpenseStatementHandler implements DataHandler{
     }
   }
 
-  public void traverseThroughAllData(Consumer<Expenses> expenseConsumer) {
-      traverse(handledStatement.getRoot(), expenseConsumer); 
+  public void traverseThroughAllData(BiConsumer<Expenses, Expenses> expenseConsumer) {
+      traverse(handledStatement.getRoot(), null, expenseConsumer); 
   }
 
-  private void traverse(Expenses expense, Consumer<Expenses> expenseConsumer) {
+  private void traverse(Expenses expense, Expenses parentExpense, BiConsumer<Expenses, Expenses> expenseConsumer) {
 
-      expenseConsumer.accept(expense); // Process the current expense
+      expenseConsumer.accept(expense, parentExpense); // Process the current expense
       
       for(Map.Entry<String, Expenses> mapElement : expense.getChildMap().entrySet()){
         Expenses childExpense = mapElement.getValue(); 
-        traverse(childExpense, expenseConsumer); 
+        traverse(childExpense, expense, expenseConsumer); 
       }
   }
 

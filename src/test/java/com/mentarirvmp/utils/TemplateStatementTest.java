@@ -14,7 +14,8 @@ public class TemplateStatementTest {
     int dummyStatementSize = MockObjects.getAllContentIntoArray(dummyStatement).size();
 
     Statement statementTemplate = TemplateStatement.duplicateIntoStatementTemplate(dummyStatement); 
-    int templateStatementSize = MockObjects.getAllContentIntoArray(statementTemplate).size();
+    
+    int templateStatementSize = MockObjects.getAllContentIntoArray(statementTemplate).size(); 
 
     assertEquals(dummyStatementSize, templateStatementSize); 
 
