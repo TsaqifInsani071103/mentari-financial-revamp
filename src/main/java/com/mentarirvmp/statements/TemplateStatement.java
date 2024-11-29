@@ -21,7 +21,6 @@ public class TemplateStatement {
   public static Statement duplicateIntoStatementTemplate(Statement original){
     Statement duplicateStatement = new Statement(original.getName()); 
     ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(original);
-    //there shall be no duplicate expense name 
     Map<String, Expenses> expenseCopiesMap = new HashMap<String, Expenses>(); 
 
     dataHandler.traverseThroughAllData((expense, parentExpense) -> {
