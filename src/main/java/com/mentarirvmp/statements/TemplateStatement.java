@@ -22,7 +22,7 @@ public class TemplateStatement {
 
   //statements cannot have the same name either then 
   public static Statement duplicateIntoStatementTemplate(Statement original){
-    Statement duplicateStatement = new Statement(original.getName() + "Copy"); 
+    Statement duplicateStatement = new Statement(original.getName() + "Template"); 
     ExpenseStatementHandler expenseStatementHandler = new ExpenseStatementHandler(original);
     Map<String, Expenses> expenseCopiesMap = new HashMap<String, Expenses>(); 
 
@@ -44,15 +44,15 @@ public class TemplateStatement {
 
 
 
-  public static Statement getStatementFromTemplate(String name){
+  public static Statement getStatementTemplate(String name){
     Statement template = getTemplateByName(name); 
-    if(template == null) template = statementTemplatesArray.get(0);
+    if(template == null) template = statementTemplatesArray.get(0); // give default template if statement name not found 
     Statement newStatement = duplicateIntoStatementTemplate(template); 
     return newStatement; 
   }
 
-  public static Statement getTemplateByName(String name){
-    addDefaultStatement();
+  private static Statement getTemplateByName(String name){
+    if(statementTemplatesArray.isEmpty()) addDefaultStatement();
     for(Statement template:statementTemplatesArray){
       if(template.getName().equals(name)){
         return template;
@@ -63,14 +63,12 @@ public class TemplateStatement {
   } 
 
   private static void addDefaultStatement(){
-    if(statementTemplatesArray.isEmpty()){
-      Statement defaultStatement = new Statement("Default");
-      Expenses expense1 = new Expenses("dummyExpense1"); 
-      defaultStatement.addExpense(expense1);
-      defaultStatement.addExpenseToParent(new Expenses("child"), expense1);
-      defaultStatement.addExpense(new Expenses("dummyExpense2"));
-      statementTemplatesArray.add(defaultStatement);
-    }
+    Statement defaultStatement = new Statement("Default");
+    Expenses expense1 = new Expenses("dummyExpense1"); 
+    defaultStatement.addExpense(expense1);
+    defaultStatement.addExpenseToParent(new Expenses("child"), expense1);
+    defaultStatement.addExpense(new Expenses("dummyExpense2"));
+    statementTemplatesArray.add(defaultStatement);
   } 
 
   public static ArrayList<Statement> getStatementTemplateArray(){

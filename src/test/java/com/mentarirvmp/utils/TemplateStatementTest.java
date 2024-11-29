@@ -31,4 +31,6 @@ public class TemplateStatementTest {
 
 
   } 
+
+  //my concern is, how duplicate statement names would affect templating? 
 }
