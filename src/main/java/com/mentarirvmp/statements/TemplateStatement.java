@@ -10,7 +10,8 @@ import java.util.Map;
 
 //Its fine that this is closely coupled with the inner working of Statement.java since it deals with templating Statement.java
 public class TemplateStatement {
-  //I might just use DataHandler for this? 
+  private static ArrayList<Statement> statementTemplatesArray = new ArrayList<>();
+
 
   //purpose of template Statement 
   //turnIntoTemplate: Make a copy of the template statement object so as to not pass a reference to the Objects existing in the static arrayList. 
@@ -40,6 +41,46 @@ public class TemplateStatement {
     return duplicateStatement;  
 
   } 
+
+
+
+  public static Statement getStatementFromTemplate(String name){
+    Statement template = getTemplateByName(name); 
+    if(template == null) template = statementTemplatesArray.get(0);
+    Statement newStatement = duplicateIntoStatementTemplate(template); 
+    return newStatement; 
+  }
+
+  public static Statement getTemplateByName(String name){
+    addDefaultStatement();
+    for(Statement template:statementTemplatesArray){
+      if(template.getName().equals(name)){
+        return template;
+      }
+    }
+
+    return null; //default template 
+  } 
+
+  private static void addDefaultStatement(){
+    if(statementTemplatesArray.isEmpty()){
+      Statement defaultStatement = new Statement("Default");
+      Expenses expense1 = new Expenses("dummyExpense1"); 
+      defaultStatement.addExpense(expense1);
+      defaultStatement.addExpenseToParent(new Expenses("child"), expense1);
+      defaultStatement.addExpense(new Expenses("dummyExpense2"));
+      statementTemplatesArray.add(defaultStatement);
+    }
+  } 
+
+  public static ArrayList<Statement> getStatementTemplateArray(){
+    return statementTemplatesArray; 
+  } 
+
+  public static void setTemplateArray(ArrayList<Statement> modelArray){
+    statementTemplatesArray = modelArray; 
+  }
+
 
 
   

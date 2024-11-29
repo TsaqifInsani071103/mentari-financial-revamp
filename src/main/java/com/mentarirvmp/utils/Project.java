@@ -1,9 +1,11 @@
 package com.mentarirvmp.utils;
 
+
 // import com.mentarirvmp.statements.*;
 import com.mentarirvmp.fileoperations.FilesTree;
 import com.mentarirvmp.fileoperations.TreeNode;
 import com.mentarirvmp.statements.Statement;
+import com.mentarirvmp.statements.TemplateStatement;
 
 
 public class Project {
@@ -25,16 +27,6 @@ public class Project {
     }
   } 
 
-  //TEMPORARY DUMMY STATEMENT!!! UNTIL WE FIGURE OUT THE UI IMPLEMENTATION 
-  private Statement getDummyStatement(){
-    Statement defaultStatement = new Statement("DefaultSheet");
-    Expenses expense1 = new Expenses("dummyExpense1"); 
-    defaultStatement.addExpense(expense1);
-    defaultStatement.addExpenseToParent(new Expenses("child"), expense1);
-    defaultStatement.addExpense(new Expenses("dummyExpense2"));
-    return defaultStatement;
-  } 
-
   private void makeInitialFolder(int index){
     //folderNode 
     TreeNode qFolder = new TreeNode("Q" + String.valueOf(index), TreeNode.NodeType.FOLDER);
@@ -43,7 +35,7 @@ public class Project {
     TreeNode node1 = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT);
     
     //CHANGE THIS LATER ON to getStatementFromTemplate; 
-    node1.setAttachedStatement(getDummyStatement());
+    node1.setAttachedStatement(TemplateStatement.getTemplateByName("Default"));
     
     this.fileTree.addNode(this.fileTree.getRoot(), qFolder);
     this.fileTree.addNode(qFolder, node1); 
@@ -56,7 +48,7 @@ public class Project {
   public TreeNode getFirstStatementNode(){
     TreeNode firstNode = getFirstNodeByRoot(this.fileTree.getRoot()); 
     if(firstNode == this.fileTree.getRoot()){
-      // addDefaultStatement(); //add a default statement if there exists no one else
+      addDefaultStatement(); //add a default statement if there exists no one else
     }
     return getFirstNodeByRoot(this.fileTree.getRoot());
   } 
@@ -77,11 +69,10 @@ public class Project {
       
   } 
 
-  // public void addDefaultStatement(){
-  //   TreeNode newNode = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT, this.fileTree.getRoot());
-  //   newNode.setAttachedStatement(getDummyStatement());
-  //   // newNode.setAttachedStatement(TemplateStatement.getStatementFromTemplate("Default"));
-  // }
+  public void addDefaultStatement(){
+    TreeNode newNode = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT, this.fileTree.getRoot());
+    newNode.setAttachedStatement(TemplateStatement.getStatementFromTemplate("Default"));
+  }
 
   public String getProjectName(){
     return this.projectName; 
