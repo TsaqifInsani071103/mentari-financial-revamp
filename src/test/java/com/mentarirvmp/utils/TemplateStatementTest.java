@@ -22,6 +22,8 @@ public class TemplateStatementTest {
     //make a better test to ensure that each child has the same parent and same child names 
     for(int i =0; i < dummyStatementFlattened.size(); i++){
       assertEquals(dummyStatementFlattened.get(i).getName(), templateStatementFlattened.get(i).getName());
+
+      assertNotEquals(dummyStatementFlattened.get(i).getId(), templateStatementFlattened.get(i).getId()); 
     }
 
 
