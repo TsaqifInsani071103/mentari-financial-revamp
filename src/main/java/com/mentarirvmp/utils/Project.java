@@ -34,8 +34,7 @@ public class Project {
     //statementNode 
     TreeNode node1 = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT);
     
-    //CHANGE THIS LATER ON to getStatementFromTemplate; 
-    node1.setAttachedStatement(TemplateStatement.getTemplateByName("Default"));
+    node1.setAttachedStatement(TemplateStatement.getStatementTemplate("Default"));
     
     this.fileTree.addNode(this.fileTree.getRoot(), qFolder);
     this.fileTree.addNode(qFolder, node1); 
@@ -48,7 +47,7 @@ public class Project {
   public TreeNode getFirstStatementNode(){
     TreeNode firstNode = getFirstNodeByRoot(this.fileTree.getRoot()); 
     if(firstNode == this.fileTree.getRoot()){
-      addDefaultStatement(); //add a default statement if there exists no one else
+      addDefaultStatementNode(); //add a default statement Node if there exists no other node 
     }
     return getFirstNodeByRoot(this.fileTree.getRoot());
   } 
@@ -69,9 +68,9 @@ public class Project {
       
   } 
 
-  public void addDefaultStatement(){
+  public void addDefaultStatementNode(){
     TreeNode newNode = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT, this.fileTree.getRoot());
-    newNode.setAttachedStatement(TemplateStatement.getStatementFromTemplate("Default"));
+    newNode.setAttachedStatement(TemplateStatement.getStatementTemplate("Default"));
   }
 
   public String getProjectName(){
