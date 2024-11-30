@@ -23,6 +23,7 @@ public class TemplateStatementTest {
     for(int i =0; i < dummyStatementFlattened.size(); i++){
       assertEquals(dummyStatementFlattened.get(i).getName(), templateStatementFlattened.get(i).getName());
 
+      //
       // assertNotEquals(dummyStatementFlattened.get(i).getId(), templateStatementFlattened.get(i).getId()); 
     }
 
@@ -33,7 +34,7 @@ public class TemplateStatementTest {
   } 
 
   @Test 
-  public void getStatementTemplateTest(){
+  public void getAndAddStatementTemplateTest(){
     //Checks if invalid statement query will just return the default statement. 
     Statement invalidStatement = TemplateStatement.getTemplateByName("12039123ij1i2ub3i1khb23kjb");
     assertEquals("Default", invalidStatement.getName());
@@ -51,8 +52,6 @@ public class TemplateStatementTest {
     int originalTemplateArraySize = TemplateStatement.getStatementTemplateArray().size(); 
     TemplateStatement.addAsStatementTemplate(dummyStatement2);
     assertEquals(originalTemplateArraySize, TemplateStatement.getStatementTemplateArray().size());
-    
-
     
   }
 
