@@ -5,6 +5,7 @@ import com.mentarirvmp.viewcreators.StatementViewCreator;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Statement {
   //I COULD HAVE A FLATTENED ARRAY OF ALL THE CHILDREN EXPENSES UPON SETUP FOR OPTIMIZATION AND EASE OF ADDING AND DELETING MAYBE 
@@ -13,11 +14,13 @@ public class Statement {
   private String statementName; 
   private int uniqueCounter = 0; 
   private LinkedHashMap<String, Expenses> expenseMap = new LinkedHashMap<>(); 
+  private String id = ""; 
   //make like an array of hashmaps basically. 
   // private ArrayList<Expenses> expenseArrayList = new ArrayList<Expenses>(); 
 
   public Statement(String statementName){
     this.statementName = statementName; 
+    setId(UUID.randomUUID().toString());
     //automatically makes a root expense 
     Expenses rootExpense = new Expenses("root");
     setIdFor(rootExpense);
@@ -36,6 +39,14 @@ public class Statement {
 
   public void setName(String newName){
     this.statementName = newName; 
+  } 
+
+  public void setId(String id){
+    this.id = id; 
+  } 
+
+  public String getId(){
+    return this.id; 
   } 
 
   public void addExpenseToParent(Expenses newExpense, Expenses parentExpense){
@@ -60,7 +71,7 @@ public class Statement {
   }
 
   private void setIdFor(Expenses expense){
-    String newId = "E" + this.uniqueCounter + "_" + this.statementName;
+    String newId = "E" + this.uniqueCounter + "_" + this.id;
     expense.setId(newId);
     this.uniqueCounter++; 
   }

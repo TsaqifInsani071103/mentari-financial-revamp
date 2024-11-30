@@ -24,7 +24,7 @@ public class TemplateStatementTest {
       assertEquals(dummyStatementFlattened.get(i).getName(), templateStatementFlattened.get(i).getName());
 
       //
-      // assertNotEquals(dummyStatementFlattened.get(i).getId(), templateStatementFlattened.get(i).getId()); 
+      assertNotEquals(dummyStatementFlattened.get(i).getId(), templateStatementFlattened.get(i).getId()); 
     }
 
 
