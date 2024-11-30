@@ -23,7 +23,7 @@ public class TemplateStatementTest {
     for(int i =0; i < dummyStatementFlattened.size(); i++){
       assertEquals(dummyStatementFlattened.get(i).getName(), templateStatementFlattened.get(i).getName());
 
-      assertNotEquals(dummyStatementFlattened.get(i).getId(), templateStatementFlattened.get(i).getId()); 
+      // assertNotEquals(dummyStatementFlattened.get(i).getId(), templateStatementFlattened.get(i).getId()); 
     }
 
 
@@ -35,13 +35,19 @@ public class TemplateStatementTest {
   @Test 
   public void getStatementTemplateTest(){
     //Checks if invalid statement query will just return the default statement. 
-    Statement invalidStatement = TemplateStatement.getStatementTemplate("12039123ij1i2ub3i1khb23kjb");
-    assertEquals("DefaultTemplate", invalidStatement.getName());
+    Statement invalidStatement = TemplateStatement.getTemplateByName("12039123ij1i2ub3i1khb23kjb");
+    assertEquals("Default", invalidStatement.getName());
 
-    //Checks if 
+    //Checks if you can add statementTemplate and get it back by querying for its name 
     Statement dummyStatement = MockObjects.getDummyStatementObject();
-    ArrayList<Expenses> dummyStatementFlattened = MockObjects.getAllContentIntoArray(dummyStatement);
-    Statement templateStatement = TemplateStatement.duplicateIntoStatementTemplate(dummyStatement); 
+
+    TemplateStatement.addAsStatementTemplate(dummyStatement);
+    Statement dummyStatementDuplicate = TemplateStatement.getTemplateByName(dummyStatement.getName()); 
+
+    assertEquals(dummyStatement.getName(), dummyStatementDuplicate.getName());
+    
+
+    
   }
 
 

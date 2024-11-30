@@ -34,7 +34,7 @@ public class Project {
     //statementNode 
     TreeNode node1 = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT);
     
-    node1.setAttachedStatement(TemplateStatement.getStatementTemplate("Default"));
+    node1.setAttachedStatement(TemplateStatement.getTemplateByName("Default"));
     
     this.fileTree.addNode(this.fileTree.getRoot(), qFolder);
     this.fileTree.addNode(qFolder, node1); 
@@ -70,7 +70,7 @@ public class Project {
 
   public void addDefaultStatementNode(){
     TreeNode newNode = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT, this.fileTree.getRoot());
-    newNode.setAttachedStatement(TemplateStatement.getStatementTemplate("Default"));
+    newNode.setAttachedStatement(TemplateStatement.getTemplateByName("Default"));
   }
 
   public String getProjectName(){

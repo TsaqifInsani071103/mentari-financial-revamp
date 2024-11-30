@@ -20,9 +20,9 @@ public class TemplateStatement {
 
   //makeTemplateExpenses: duplicate the expenses and ensures they have the right children 
 
-  public static void addStatementTemplate(Statement statement){
+  public static void addAsStatementTemplate(Statement statement){
     //checks for statement unique name 
-    if(getStatementTemplate(statement.getName()) == null){
+    if(getTemplateByName(statement.getName()).getName() == "Default"){
       statementTemplatesArray.add(duplicateIntoStatementTemplate(statement)); 
     }else{
       // String warning = "The name you entered for the custom template already exists";
@@ -32,7 +32,7 @@ public class TemplateStatement {
 
   //statements cannot have the same name either then 
   public static Statement duplicateIntoStatementTemplate(Statement original){
-    Statement duplicateStatement = new Statement(original.getName() + "Template"); 
+    Statement duplicateStatement = new Statement(original.getName()); 
     ExpenseStatementHandler expenseStatementHandler = new ExpenseStatementHandler(original);
     Map<String, Expenses> expenseCopiesMap = new HashMap<String, Expenses>(); 
 
@@ -52,7 +52,7 @@ public class TemplateStatement {
 
   } 
 
-  public static Statement getStatementTemplate(String name){
+  public static Statement getTemplateByName(String name){
     if(statementTemplatesArray.isEmpty()) addDefaultStatement();
     for(Statement template:statementTemplatesArray){
       if(template.getName().equals(name)){
