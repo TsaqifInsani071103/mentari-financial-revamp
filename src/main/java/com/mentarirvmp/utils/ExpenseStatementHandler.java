@@ -1,10 +1,12 @@
 package com.mentarirvmp.utils;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Expenses;
+import com.mentarirvmp.utils.Formula;
 
 public class ExpenseStatementHandler implements DataHandler{
   Statement handledStatement; 
@@ -25,6 +27,14 @@ public class ExpenseStatementHandler implements DataHandler{
       return null;
     }
   }
+
+  public BigDecimal getDecimalValueFromEquation(String formula){
+    Formula formulaObject = new Formula(this);
+    return formulaObject.getValueIfFormulaValid(formula);
+
+  } 
+
+
 
   public void traverseThroughAllData(BiConsumer<Expenses, Expenses> expenseConsumer) {
       traverse(handledStatement.getRoot(), null, expenseConsumer); 

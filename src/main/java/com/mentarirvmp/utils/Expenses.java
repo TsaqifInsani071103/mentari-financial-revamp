@@ -17,7 +17,7 @@ public class Expenses {
   
   private String name; 
   private String description = ""; 
-  private String value = "0"; 
+  private String value = "0.0"; 
   //added a formulaString in Expenses so they can switch between formula and actual value in the UI. 
   private String formulaString =""; 
   private String id = ""; 
@@ -37,6 +37,14 @@ public class Expenses {
 
   public String getName(){
     return this.name; 
+  } 
+
+  public String getEquation(){
+    return this.formulaString; 
+  } 
+
+  public void setEquation(String equation){
+    this.formulaString = equation; 
   } 
 
   public void setName(String newName){

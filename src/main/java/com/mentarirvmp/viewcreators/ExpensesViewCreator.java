@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import com.mentarirvmp.controllers.ChildControllers;
 import com.mentarirvmp.controllers.IndivProjectViewController;
+import com.mentarirvmp.utils.ExpenseStatementHandler;
 import com.mentarirvmp.utils.Expenses;
 import com.mentarirvmp.utils.ViewCreator;
 import com.mentarirvmp.statements.Statement;
@@ -37,11 +38,13 @@ public class ExpensesViewCreator implements ViewCreator {
   private transient TextField entryFieldReference; 
   private ChildControllers controller; 
   //either use statement or statementExpenseHandler, we dont know yet. 
-  private Statement associatedStatement; 
+  private ExpenseStatementHandler dataHandler; 
 
-  public ExpensesViewCreator(Expenses expense, Statement statement){
+  protected static boolean changedByListener = false; 
+
+  public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
     this.currentExpense = expense; 
-    this.associatedStatement = statement; 
+    this.dataHandler = dataHandler; 
 
   } 
 
@@ -80,19 +83,23 @@ public class ExpensesViewCreator implements ViewCreator {
     });
   }
 
-  // private void addFocusListener(TextField textField) {
-  //   textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-  //     toggleChangedByListener();
-  //     if (newValue) { // Gains focus
-  //       textField.setText(getEquation());
-  //     } else { // Loses focus
-  //       getAssociatedStatement().updateFormulas();
-  //       textField.setText(getValue());
+  private void addFocusListener(TextField textField) {
+    textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+      toggleChangedByListener();
+      if (newValue) { // Gains focus
+        textField.setText(this.currentExpense.getEquation());
+      } else { // Loses focus
+        // getAssociatedStatement().updateFormulas();
+        // textField.setText(this.dataHandler);
         
-  //     }
-  //     toggleChangedByListener();
-  //   });
-  // }
+      }
+      toggleChangedByListener();
+    });
+  }
+
+  public void toggleChangedByListener(){
+    changedByListener = !changedByListener;
+  } 
 
   private HBox getInnerContainer(VBox overallContainer){
     Control[] descriptionFieldArray = getDescriptionAndButtonArray();
