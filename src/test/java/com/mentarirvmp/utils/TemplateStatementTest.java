@@ -38,13 +38,19 @@ public class TemplateStatementTest {
     Statement invalidStatement = TemplateStatement.getTemplateByName("12039123ij1i2ub3i1khb23kjb");
     assertEquals("Default", invalidStatement.getName());
 
-    //Checks if you can add statementTemplate and get it back by querying for its name 
+    //Checks if you can add to statementTemplate and get it back by querying for its name 
     Statement dummyStatement = MockObjects.getDummyStatementObject();
 
     TemplateStatement.addAsStatementTemplate(dummyStatement);
     Statement dummyStatementDuplicate = TemplateStatement.getTemplateByName(dummyStatement.getName()); 
 
     assertEquals(dummyStatement.getName(), dummyStatementDuplicate.getName());
+
+    //checks if you try to add a statement with a duplicate name that it won't add it to the array 
+    Statement dummyStatement2 = MockObjects.getDummyStatementObject();
+    int originalTemplateArraySize = TemplateStatement.getStatementTemplateArray().size(); 
+    TemplateStatement.addAsStatementTemplate(dummyStatement2);
+    assertEquals(originalTemplateArraySize, TemplateStatement.getStatementTemplateArray().size());
     
 
     
