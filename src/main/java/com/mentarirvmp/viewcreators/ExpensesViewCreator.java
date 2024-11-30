@@ -50,7 +50,7 @@ public class ExpensesViewCreator implements ViewCreator {
 
   public HBox getBox(){
     HBox box = new HBox(5);
-    Label idLabel = new Label("E"+String.valueOf(currentExpense.getId()) + ")"); 
+    Label idLabel = new Label(String.valueOf(currentExpense.getParsedId()) + ")"); 
     Control nameTextField = getNameTextField(); 
     Region spacer = new Region();
     HBox.setHgrow(spacer, Priority.ALWAYS);

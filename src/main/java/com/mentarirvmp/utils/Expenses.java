@@ -66,6 +66,11 @@ public class Expenses {
     return this.id; 
   } 
 
+  public String getParsedId(){
+    int index = this.id.indexOf("_");
+    return this.id.substring(0, index); 
+  } 
+
   public void setId(String newId){
     this.id = newId;
   } 
