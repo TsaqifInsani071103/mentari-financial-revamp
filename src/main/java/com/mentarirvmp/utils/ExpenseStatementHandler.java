@@ -28,6 +28,11 @@ public class ExpenseStatementHandler implements DataHandler{
     }
   }
 
+  public void setExpenseValueByNewEquation(Expenses expense, String equation){
+    expense.setEquation(equation); 
+    expense.setValue(getDecimalValueFromEquation(equation).toString()); 
+  } 
+
   public BigDecimal getDecimalValueFromEquation(String formula){
     Formula formulaObject = new Formula(this);
     return formulaObject.getValueIfFormulaValid(formula);
