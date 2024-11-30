@@ -125,10 +125,6 @@ public class Formula {
         total = calculateByFormulaIntoTotal(formula, calculatedInnerFormulaValue, total);
       } 
     }
-    //PRINTING OUT TOTAL AS STRING!!! 
-    //this is what you'll put into the Expenses value field
-    BigDecimalHandler inputHandler = new BigDecimalHandler(total.toPlainString());
-    // System.out.println(inputHandler.getCalculatedSumAsString());
 
 
     return total; 

@@ -69,7 +69,7 @@ public class ExpensesViewCreator implements ViewCreator {
     TextField textField = new TextField(this.currentExpense.getValue()); 
     textField.getStyleClass().addAll("text-field", "black-underline"); 
     textField.setId(this.currentExpense.getId());
-    textField.setStyle("-fx-font-weight: bold");
+    // textField.setStyle("-fx-font-weight: bold");
     addListener(textField);
     addFocusListener(textField);
     entryFieldReference = textField;
@@ -81,6 +81,11 @@ public class ExpensesViewCreator implements ViewCreator {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
 
+        //We don't really want to do this here, we'll just make a method in expenseStatementHandler to set equation and set value from new equation string. 
+        if(!changedByListener){
+          currentExpense.setEquation(newValue);
+          currentExpense.setValue(dataHandler.getDecimalValueFromEquation(newValue).toString());
+        }
       }
     });
   }
