@@ -71,6 +71,11 @@ public class Expenses {
 
   //this needs to be completely unique 
   public String getId(){
+    if(this.id.length() == 0) return id;
+    return getParsedId(); 
+  } 
+
+  public String getFullId(){
     return this.id; 
   } 
 
