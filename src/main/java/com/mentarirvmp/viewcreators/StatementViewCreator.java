@@ -33,10 +33,12 @@ public class StatementViewCreator implements ViewCreator {
   //always creating a new treeView upon constructing this class 
   private TreeView<Expenses> treeView = new TreeView<>();
   private ChildControllers controller; 
+  private ExpenseStatementHandler dataHandler; 
 
 
   public StatementViewCreator(Statement currentStatement){
     this.currentStatement = currentStatement;
+    this.dataHandler = new ExpenseStatementHandler(currentStatement);
   }
 
   @Override
@@ -58,11 +60,18 @@ public class StatementViewCreator implements ViewCreator {
   }
 
   public void populateTreeView(){
+    Map<Expenses, TreeItem<Expenses>> treeItemMap = new HashMap<Expenses,  TreeItem<Expenses>>(); 
     initializeStatementExpandedState();
-    Expenses rootExpense = currentStatement.getRoot(); 
-    TreeItem<Expenses> rootItem = createTreeItem(rootExpense);
-    createTree(rootItem);
-    this.treeView.setRoot(rootItem);
+    this.dataHandler.traverseThroughAllData((expense, parentExpense) -> {
+      TreeItem<Expenses> expenseItem = createTreeItem(expense); 
+      treeItemMap.put(expense, expenseItem); 
+      if(expense == this.currentStatement.getRoot()){
+        this.treeView.setRoot(expenseItem);
+      }else if(parentExpense != null){
+        TreeItem<Expenses> parentExpenseNode = treeItemMap.get(parentExpense);
+        parentExpenseNode.getChildren().add(expenseItem);
+      }
+    });
     initializeTreeView();
   } 
 
@@ -75,17 +84,7 @@ public class StatementViewCreator implements ViewCreator {
     return treeItem;
   } 
   
-  public void createTree(TreeItem<Expenses> parentNode){
-    //you can add a traverse through expense methods in Statement if this is too much meddling in the internals of the Expenses.java directly. 
-    Expenses expense = parentNode.getValue(); 
-    for (Map.Entry<String, Expenses> entry : expense.getChildMap().entrySet()) {
-      TreeItem<Expenses> childNode =  createTreeItem(entry.getValue());
-      parentNode.getChildren().add(childNode); 
-      if(entry.getValue().hasChildren()){
-        createTree(childNode);
-      }
-    }
-  } 
+
 
  
 

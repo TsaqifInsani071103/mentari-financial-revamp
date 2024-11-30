@@ -38,13 +38,12 @@ public class TemplateStatement {
 
     expenseStatementHandler.traverseThroughAllData((expense, parentExpense) -> {
       Expenses expenseCopy = new Expenses(expense.getName()); 
+      expenseCopiesMap.put(expenseCopy.getName(), expenseCopy); 
       if(parentExpense == original.getRoot()){
         duplicateStatement.addExpense(expenseCopy);
-        expenseCopiesMap.put(expenseCopy.getName(), expenseCopy); 
       }else if(parentExpense != null){
         Expenses parentExpenseCopy = expenseCopiesMap.get(parentExpense.getName());
         duplicateStatement.addExpenseToParent(expenseCopy, parentExpenseCopy);
-        expenseCopiesMap.put(expenseCopy.getName(), expenseCopy); 
       }
     });
 
