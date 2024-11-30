@@ -69,7 +69,9 @@ public class ExpensesViewCreator implements ViewCreator {
     TextField textField = new TextField(this.currentExpense.getValue()); 
     textField.getStyleClass().addAll("text-field", "black-underline"); 
     textField.setId(this.currentExpense.getId());
+    textField.setStyle("-fx-font-weight: bold");
     addListener(textField);
+    addFocusListener(textField);
     entryFieldReference = textField;
     return textField; 
   }
@@ -90,7 +92,7 @@ public class ExpensesViewCreator implements ViewCreator {
         textField.setText(this.currentExpense.getEquation());
       } else { // Loses focus
         // getAssociatedStatement().updateFormulas();
-        // textField.setText(this.dataHandler);
+        textField.setText(this.dataHandler.getDecimalValueFromEquation(this.currentExpense.getEquation()).toString());
         
       }
       toggleChangedByListener();
