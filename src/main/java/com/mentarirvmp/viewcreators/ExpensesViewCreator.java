@@ -145,7 +145,11 @@ public class ExpensesViewCreator implements ViewCreator {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
         textField.getStyleClass().removeAll("red-underline");
-        changeTextOnValue(textField, newValue);
+        if(dataHandler.expenseNameUnique(newValue)){
+          changeTextOnValue(textField, newValue);
+        }else{
+          textField.getStyleClass().add("red-underline");
+        }
       }
     });
   } 
