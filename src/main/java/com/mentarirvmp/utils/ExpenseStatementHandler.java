@@ -29,7 +29,7 @@ public class ExpenseStatementHandler implements DataHandler{
     }
   }
 
-  public void setExpenseValueByNewEquation(Expenses expense, String equation){
+  public void setExpenseValueByValidEquation(Expenses expense, String equation){
     expense.setEquation(equation); 
     expense.setValue(this.formulaObject.getValueWhenFormulaValid().toString()); 
   } 

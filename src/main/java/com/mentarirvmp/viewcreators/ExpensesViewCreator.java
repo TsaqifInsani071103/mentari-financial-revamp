@@ -83,12 +83,10 @@ public class ExpensesViewCreator implements ViewCreator {
     textField.textProperty().addListener(new ChangeListener<String>(){
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-
-        //We don't really want to do this here, we'll just make a method in expenseStatementHandler to set equation and set value from new equation string. 
         if(!changedByListener){
           textFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
           if(dataHandler.equationIsValid(newValue)){
-            dataHandler.setExpenseValueByNewEquation(currentExpense, newValue);
+            dataHandler.setExpenseValueByValidEquation(currentExpense, newValue);
             textFieldReference.getStyleClass().add("black-underline");
           }else{
             dataHandler.setExpenseValueByFalseEquation(currentExpense, newValue);
@@ -98,36 +96,6 @@ public class ExpensesViewCreator implements ViewCreator {
       }
     });
   }
-
-  //   public void refreshValue(String newValue){
-  //   this.entryFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
-  //   if(newValue.matches(Formula.regex)){ // Check if newValue matches the regex pattern
-  //       this.value = newValue;
-  //       this.entryFieldReference.getStyleClass().add("black-underline");
-  //   } else { //this is the invalid input thing 
-  //       this.value = ""; 
-  //       this.entryFieldReference.getStyleClass().add("red-underline");
-  //   }
-  // }
-
-  // public void addListener(TextField textField) {
-  //   textField.textProperty().addListener(new ChangeListener<String>(){
-  //     @Override
-  //     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-  //       if(!changedByListener && !isUpdating){
-  //         changeEntryAndFormula(newValue); 
-  //       }
-  //     }
-  //   });
-  // }
-
-  // private void changeEntryAndFormula(String newValue){
-  //   refreshValue(newValue);  
-  //   getAssociatedStatement().updateFormulas();
-  //   Platform.runLater(() -> {
-  //     getAssociatedStatement().updateFormulaTextFields();
-  //   });
-  // }
 
   private void addFocusListener(TextField textField) {
     textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
