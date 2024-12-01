@@ -24,6 +24,7 @@ public class Formula {
   //valid Formulas 
   private final String FORMULA_SUM = "SUM()";
   private final String FORMULA_MULTIPLY = "MULTIPLY()";
+  public final BigDecimal DEFAULT_VALUE = new BigDecimal("0"); 
 
 
   public Formula(DataHandler dataHandler){
@@ -100,8 +101,9 @@ public class Formula {
     if(isFormulaValid(formula)){
       //This checks if the rootNode is just an integer or a proper decimal 
       return getValueWhenFormulaValid();
+    }else{
+      return DEFAULT_VALUE; 
     }
-    return new BigDecimal("0"); 
   } 
 
   public BigDecimal getValueWhenFormulaValid(){
@@ -110,9 +112,10 @@ public class Formula {
       //This checks if its a FORMULA and not an empty FORMULA at that. unlike SUM() 
     }else if(!isIntegerOrProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
       return getValueOfNodesRecursively(this.validFormulaRootNode);
+    }else{
+      return DEFAULT_VALUE; 
     }
 
-    return new BigDecimal("0"); 
 
   }
 
@@ -180,7 +183,7 @@ public class Formula {
   private boolean edgeCasesTrue_AddAsNode(String formulaSubstring, FormulaNode rootNode){
     if(isEmptyString(formulaSubstring)){
       if(rootNode == null){
-        this.validFormulaRootNode = new FormulaNode("0");
+        this.validFormulaRootNode = new FormulaNode(DEFAULT_VALUE.toString());
       }
       return true; 
     }
@@ -222,7 +225,7 @@ public class Formula {
         return MULTIPLY(value, total);
       default: 
         //change this to bigDecimal 
-        return new BigDecimal("0");
+        return DEFAULT_VALUE; 
     }
   } 
 
