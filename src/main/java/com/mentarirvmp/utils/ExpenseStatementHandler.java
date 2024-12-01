@@ -34,6 +34,11 @@ public class ExpenseStatementHandler implements DataHandler{
     expense.setValue(this.formulaObject.getValueWhenFormulaValid().toString()); 
   } 
 
+  public void setExpenseValueByFalseEquation(Expenses expense, String equation){
+    expense.setEquation(equation);
+    expense.setValue(this.formulaObject.DEFAULT_VALUE.toString()); 
+  } 
+
   public boolean equationIsValid(String equation){
     return this.formulaObject.isFormulaValid(equation);
   } 

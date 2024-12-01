@@ -91,6 +91,7 @@ public class ExpensesViewCreator implements ViewCreator {
             dataHandler.setExpenseValueByNewEquation(currentExpense, newValue);
             textFieldReference.getStyleClass().add("black-underline");
           }else{
+            dataHandler.setExpenseValueByFalseEquation(currentExpense, newValue);
             textFieldReference.getStyleClass().add("red-underline");
           }
         }
