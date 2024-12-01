@@ -86,7 +86,11 @@ public class ExpensesViewCreator implements ViewCreator {
 
         //We don't really want to do this here, we'll just make a method in expenseStatementHandler to set equation and set value from new equation string. 
         if(!changedByListener){
-          dataHandler.setExpenseValueByNewEquation(currentExpense, newValue);
+          if(dataHandler.equationIsValid(newValue)){
+            dataHandler.setExpenseValueByNewEquation(currentExpense, newValue);
+          }else{
+            
+          }
         }
       }
     });

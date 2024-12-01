@@ -10,6 +10,7 @@ import com.mentarirvmp.utils.Formula;
 
 public class ExpenseStatementHandler implements DataHandler{
   Statement handledStatement; 
+ Formula formulaObject = new Formula(this); 
 
   public ExpenseStatementHandler(Statement statement){
     this.handledStatement = statement;
@@ -30,15 +31,15 @@ public class ExpenseStatementHandler implements DataHandler{
 
   public void setExpenseValueByNewEquation(Expenses expense, String equation){
     expense.setEquation(equation); 
-    expense.setValue(getDecimalValueFromEquation(equation).toString()); 
+    expense.setValue(this.formulaObject.getValueWhenFormulaValid().toString()); 
+  } 
 
-
-    
+  public boolean equationIsValid(String equation){
+    return this.formulaObject.isFormulaValid(equation);
   } 
 
   public BigDecimal getDecimalValueFromEquation(String formula){
-    Formula formulaObject = new Formula(this);
-    return formulaObject.getValueIfFormulaValid(formula);
+    return this.formulaObject.getValueIfFormulaValid(formula);
 
   } 
 
