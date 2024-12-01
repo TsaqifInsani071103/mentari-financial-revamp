@@ -145,10 +145,15 @@ public class ExpensesViewCreator implements ViewCreator {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
         textField.getStyleClass().removeAll("red-underline");
-        // checkForUniqueName(textField, newValue, oldValue);
+        changeTextOnValue(textField, newValue);
       }
     });
   } 
+
+  private void changeTextOnValue(TextField textField, String value){
+    this.currentExpense.setName(value); 
+    textField.setPrefWidth(getTextWidth(value,textField)); // Set TextField width (add some padding)
+  }
 
   // private void checkForUniqueName(TextField textField, String newValue, String oldValue){
   //   if(nameIsUnique(newValue)){
@@ -160,10 +165,7 @@ public class ExpensesViewCreator implements ViewCreator {
   //   }
   // }
 
-  private void changeTextOnValue(TextField textField, String value){
-    this.currentExpense.setName(value); 
-    textField.setPrefWidth(getTextWidth(value,textField)); // Set TextField width (add some padding)
-  }
+
 
   private void addKeyListener(TextField textField){
     textField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
