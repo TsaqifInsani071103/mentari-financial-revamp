@@ -43,6 +43,7 @@ public class ExpenseStatementHandler implements DataHandler{
     return this.formulaObject.isFormulaValid(equation);
   } 
 
+  //this one resets the Formula Field's equation node, so it shouldn't clash with formulaObject.getValueWhenFormulaValid(). 
   public BigDecimal getDecimalValueFromEquation(String formula){
     return this.formulaObject.getValueIfFormulaValid(formula);
 
