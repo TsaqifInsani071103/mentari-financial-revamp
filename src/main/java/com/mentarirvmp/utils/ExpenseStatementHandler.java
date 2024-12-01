@@ -53,8 +53,19 @@ public class ExpenseStatementHandler implements DataHandler{
 
   } 
 
+  public boolean expenseNameUnique(String name){
+    boolean[] flag = new boolean[1]; 
+    flag[0] = true; 
+    traverseThroughAllData((expense, expenseParent) -> {
+      if(name.equals(expense.getName())){
+        flag[0] = false;
+      }
+    });
+    return flag[0]; 
+  } 
 
 
+  //maybe you can return a true or a false from here to stop traversing through all the data 
   public void traverseThroughAllData(BiConsumer<Expenses, Expenses> expenseConsumer) {
       traverse(handledStatement.getRoot(), null, expenseConsumer); 
   }

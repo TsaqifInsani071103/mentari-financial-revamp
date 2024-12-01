@@ -80,7 +80,14 @@ public class Statement {
     return this.expenseMap;
   } 
 
-  
+
+  // public Expenses getExpenseByName(String name){
+  //   return recursiveGetExpenseByName(this.expenseMap, name);
+  // }
+
+  // private Expenses recursiveGetExpenseByName(){
+
+  // }
 
   public Expenses getExpenseById(String ID){
     return recursiveGetExpenseById(this.expenseMap, ID);

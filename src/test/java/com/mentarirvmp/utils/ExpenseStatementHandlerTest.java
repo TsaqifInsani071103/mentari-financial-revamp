@@ -31,6 +31,17 @@ public class ExpenseStatementHandlerTest {
 
   } 
 
+  @Test
+  public void checkUniqueExpenseName(){
+    Statement dummyStatement = MockObjects.getDummyStatementObject();
+    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+    dummyStatement.addExpense(new Expenses("duplicateName"));
+
+    assertFalse(dataHandler.expenseNameUnique("duplicateName"));
+    assertTrue(dataHandler.expenseNameUnique("nonDulpicateName"));
+
+  } 
+
   // @Test 
   // public void checkFormulaSideEffectsTest(){
   //   //there are two main side effect operations in ExpenseStatementHandler.java 
