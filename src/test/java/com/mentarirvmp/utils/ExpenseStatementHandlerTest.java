@@ -31,4 +31,13 @@ public class ExpenseStatementHandlerTest {
 
   } 
 
+  @Test 
+  public void checkFormulaSideEffectsTest(){
+    //there are two main side effect operations in ExpenseStatementHandler.java 
+    //verifyEquationMakeFormulaNode, verifies the validity of the equation and makes a formula Node as a field in ExpenseStatementHandler to be used as a class instance by all the Formula related methods in ExpenseStatementHandler.java 
+    //the concern here is if I call for getDecimalValueFromEquation() and then call setExpenseValueByValidEquation in another place, the formula node will be the one left over by getDecimalValueFromEquation(). 
+
+    //So, the use case here is, We always need to pair up checking for the equation, and making the valid formula node. 
+  } 
+
 }

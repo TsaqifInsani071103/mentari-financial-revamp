@@ -85,8 +85,7 @@ public class ExpensesViewCreator implements ViewCreator {
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
         if(!changedByListener){
           textFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
-          if(dataHandler.equationIsValid(newValue)){
-            dataHandler.setExpenseValueByValidEquation(currentExpense, newValue);
+          if(dataHandler.ifEquationValidSetExpenseValue(currentExpense, newValue)){
             textFieldReference.getStyleClass().add("black-underline");
           }else{
             dataHandler.setExpenseValueByFalseEquation(currentExpense, newValue);

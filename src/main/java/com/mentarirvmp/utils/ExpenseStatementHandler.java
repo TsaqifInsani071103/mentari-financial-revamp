@@ -29,9 +29,13 @@ public class ExpenseStatementHandler implements DataHandler{
     }
   }
 
-  public void setExpenseValueByValidEquation(Expenses expense, String equation){
-    expense.setEquation(equation); 
-    expense.setValue(this.formulaObject.getValueWhenFormulaValid().toString()); 
+  public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
+    if(this.formulaObject.isFormulaValid(equation)){
+      expense.setEquation(equation); 
+      expense.setValue(this.formulaObject.getValueWhenFormulaValid().toString()); 
+      return true; 
+    }
+    return false; 
   } 
 
   public void setExpenseValueByFalseEquation(Expenses expense, String equation){
@@ -39,9 +43,9 @@ public class ExpenseStatementHandler implements DataHandler{
     expense.setValue(this.formulaObject.DEFAULT_VALUE.toString()); 
   } 
 
-  public boolean equationIsValid(String equation){
-    return this.formulaObject.isFormulaValid(equation);
-  } 
+  // public boolean verifyEquationIntoFormulaNode(String equation){
+  //   return this.formulaObject.isFormulaValid(equation);
+  // } 
 
   //this one resets the Formula Field's equation node, so it shouldn't clash with formulaObject.getValueWhenFormulaValid(). 
   public BigDecimal getDecimalValueFromEquation(String formula){
