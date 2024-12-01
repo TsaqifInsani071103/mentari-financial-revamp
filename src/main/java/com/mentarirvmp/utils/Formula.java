@@ -99,17 +99,22 @@ public class Formula {
   public BigDecimal getValueIfFormulaValid(String formula){
     if(isFormulaValid(formula)){
       //This checks if the rootNode is just an integer or a proper decimal 
-      if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
-        return BigDecimalHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
-        //This checks if its a FORMULA and not an empty FORMULA at that. unlike SUM() 
-      }else if(!isIntegerOrProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
-        return getValueOfNodesRecursively(this.validFormulaRootNode);
-      }
+      return getValueWhenFormulaValid();
+    }
+    return new BigDecimal("0"); 
+  } 
 
+  public BigDecimal getValueWhenFormulaValid(){
+    if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
+      return BigDecimalHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
+      //This checks if its a FORMULA and not an empty FORMULA at that. unlike SUM() 
+    }else if(!isIntegerOrProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
+      return getValueOfNodesRecursively(this.validFormulaRootNode);
     }
 
     return new BigDecimal("0"); 
-  } 
+
+  }
 
   //CLEAN THIS UP 
   public BigDecimal getValueOfNodesRecursively(FormulaNode rootNode){
@@ -133,11 +138,11 @@ public class Formula {
   
   //isFormulaValid creates a formulaNode that has sort of this chronology of what formulas need to be fired? 
   public boolean isFormulaValid(String formula){
-    return makeValidFormulaNode(formula, null);
+    return isFormulaNodeValid(formula, null);
   } 
 
 
-  public boolean makeValidFormulaNode(String formulaSubstring, FormulaNode rootNode){
+  private boolean isFormulaNodeValid(String formulaSubstring, FormulaNode rootNode){
     //edge cases 
     if(edgeCasesTrue_AddAsNode(formulaSubstring, rootNode)) return true; 
 
@@ -165,7 +170,7 @@ public class Formula {
         indivContent = indivContent + "," + formulaContentArray[i+1];
         i++;
       }
-      if(!makeValidFormulaNode(indivContent, emptyFormulaNode)) return false; 
+      if(!isFormulaNodeValid(indivContent, emptyFormulaNode)) return false; 
     }
 
     return true; 

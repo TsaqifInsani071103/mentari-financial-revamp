@@ -178,6 +178,22 @@ public class FormulaTest {
    assertEquals(new BigDecimal("12000329.123"), frmlObject.getValueIfFormulaValid(dummyFormula13));
 
   } 
+
+  @Test
+  public void separateValidateAndGetValueTest(){
+    Formula frmlObject = new Formula(dataHandler);
+
+    String dummyFormula2 = "MULTIPLY()";
+    if(frmlObject.isFormulaValid(dummyFormula2)){
+      assertEquals(new BigDecimal("0"), frmlObject.getValueWhenFormulaValid());
+    };
+
+    String dummyFormula9 = "SUM(MULTIPLY(SUM(1,2,3), 10), SUM())";
+    if(frmlObject.isFormulaValid(dummyFormula9)){
+      assertEquals(new BigDecimal("60"), frmlObject.getValueWhenFormulaValid());
+    };
+
+  } 
   
 
   @Test
