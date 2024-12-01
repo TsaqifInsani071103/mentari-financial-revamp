@@ -6,6 +6,7 @@ import java.util.EmptyStackException;
 import java.util.Set;
 import java.util.Stack;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.mentarirvmp.utils.BigDecimalHandler;
@@ -23,7 +24,6 @@ public class Formula {
   //valid Formulas 
   private final String FORMULA_SUM = "SUM()";
   private final String FORMULA_MULTIPLY = "MULTIPLY()";
-
 
 
   public Formula(DataHandler dataHandler){
@@ -173,7 +173,7 @@ public class Formula {
 
   //can Either be purely an integer, or in a proper Number format. 
   private boolean edgeCasesTrue_AddAsNode(String formulaSubstring, FormulaNode rootNode){
-    if(formulaSubstring.equals("")){
+    if(isEmptyString(formulaSubstring)){
       if(rootNode == null){
         this.validFormulaRootNode = new FormulaNode("0");
       }
@@ -242,8 +242,21 @@ public class Formula {
     return true; 
   } 
 
+  public boolean checkAllEdgeCases(String formula){
+    if(isIntegerOrProperNumberFormat(formula) && isEmptyString(formula)){
+      return true; 
+    }
+    return false; 
+
+  } 
+
   private boolean isIntegerOrProperNumberFormat(String formula){
     if(isInteger(formula) || BigDecimalHandler.validNumberFormat(formula)) return true; 
+    return false; 
+  } 
+
+  private boolean isEmptyString(String formula){
+    if(formula.equals(""))return true;
     return false; 
   } 
 

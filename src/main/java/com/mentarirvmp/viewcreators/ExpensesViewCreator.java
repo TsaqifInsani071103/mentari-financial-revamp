@@ -1,5 +1,7 @@
 package com.mentarirvmp.viewcreators;
 
+import javafx.application.Platform;
+
 // import com.mentari.statements.Statement;
 
 import javafx.beans.value.ChangeListener;
@@ -27,6 +29,7 @@ import com.mentarirvmp.controllers.ChildControllers;
 import com.mentarirvmp.controllers.IndivProjectViewController;
 import com.mentarirvmp.utils.ExpenseStatementHandler;
 import com.mentarirvmp.utils.Expenses;
+import com.mentarirvmp.utils.Formula;
 import com.mentarirvmp.utils.ViewCreator;
 import com.mentarirvmp.statements.Statement;
 
@@ -35,7 +38,7 @@ import javafx.scene.control.Control;
 
 public class ExpensesViewCreator implements ViewCreator {
   private Expenses currentExpense; 
-  private transient TextField entryFieldReference; 
+  private transient TextField textFieldReference; 
   private ChildControllers controller; 
   //either use statement or statementExpenseHandler, we dont know yet. 
   private ExpenseStatementHandler dataHandler; 
@@ -72,7 +75,7 @@ public class ExpensesViewCreator implements ViewCreator {
     // textField.setStyle("-fx-font-weight: bold");
     addListener(textField);
     addFocusListener(textField);
-    entryFieldReference = textField;
+    textFieldReference = textField;
     return textField; 
   }
 
@@ -88,6 +91,36 @@ public class ExpensesViewCreator implements ViewCreator {
       }
     });
   }
+
+  //   public void refreshValue(String newValue){
+  //   this.entryFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
+  //   if(newValue.matches(Formula.regex)){ // Check if newValue matches the regex pattern
+  //       this.value = newValue;
+  //       this.entryFieldReference.getStyleClass().add("black-underline");
+  //   } else { //this is the invalid input thing 
+  //       this.value = ""; 
+  //       this.entryFieldReference.getStyleClass().add("red-underline");
+  //   }
+  // }
+
+  // public void addListener(TextField textField) {
+  //   textField.textProperty().addListener(new ChangeListener<String>(){
+  //     @Override
+  //     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
+  //       if(!changedByListener && !isUpdating){
+  //         changeEntryAndFormula(newValue); 
+  //       }
+  //     }
+  //   });
+  // }
+
+  // private void changeEntryAndFormula(String newValue){
+  //   refreshValue(newValue);  
+  //   getAssociatedStatement().updateFormulas();
+  //   Platform.runLater(() -> {
+  //     getAssociatedStatement().updateFormulaTextFields();
+  //   });
+  // }
 
   private void addFocusListener(TextField textField) {
     textField.focusedProperty().addListener((observable, oldValue, newValue) -> {

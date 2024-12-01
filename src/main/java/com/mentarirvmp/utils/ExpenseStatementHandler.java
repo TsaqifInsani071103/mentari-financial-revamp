@@ -29,8 +29,10 @@ public class ExpenseStatementHandler implements DataHandler{
   }
 
   public void setExpenseValueByNewEquation(Expenses expense, String equation){
-    expense.setEquation(equation); 
-    expense.setValue(getDecimalValueFromEquation(equation).toString()); 
+    // expense.setEquation(equation); 
+    // expense.setValue(getDecimalValueFromEquation(equation).toString()); 
+    String newValue = getDecimalValueFromEquation(equation).toString(); 
+    // if(equation != "")
   } 
 
   public BigDecimal getDecimalValueFromEquation(String formula){
