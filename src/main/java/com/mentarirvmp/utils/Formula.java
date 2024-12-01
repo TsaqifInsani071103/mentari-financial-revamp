@@ -24,7 +24,7 @@ public class Formula {
   //valid Formulas 
   private final String FORMULA_SUM = "SUM()";
   private final String FORMULA_MULTIPLY = "MULTIPLY()";
-  public final BigDecimal DEFAULT_VALUE = new BigDecimal("0"); 
+  public final BigDecimal DEFAULT_VALUE = new BigDecimal("0.0"); 
 
 
   public Formula(DataHandler dataHandler){
