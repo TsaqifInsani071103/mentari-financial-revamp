@@ -86,10 +86,12 @@ public class ExpensesViewCreator implements ViewCreator {
 
         //We don't really want to do this here, we'll just make a method in expenseStatementHandler to set equation and set value from new equation string. 
         if(!changedByListener){
+          textFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
           if(dataHandler.equationIsValid(newValue)){
             dataHandler.setExpenseValueByNewEquation(currentExpense, newValue);
+            textFieldReference.getStyleClass().add("black-underline");
           }else{
-            
+            textFieldReference.getStyleClass().add("red-underline");
           }
         }
       }
