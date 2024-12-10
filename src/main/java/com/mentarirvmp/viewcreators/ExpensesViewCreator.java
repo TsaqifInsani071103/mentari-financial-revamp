@@ -104,6 +104,7 @@ public class ExpensesViewCreator implements ViewCreator {
       } else { // Loses focus
         // getAssociatedStatement().updateFormulas();
         textField.setText(this.dataHandler.getDecimalValueFromEquation(this.currentExpense.getEquation()).toString());
+       
         
       }
       toggleChangedByListener();

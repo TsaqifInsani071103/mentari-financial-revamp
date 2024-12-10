@@ -33,7 +33,7 @@ public class ExpenseStatementHandlerTest {
     //valid equation but no Expense Id's
     ArrayList<Expenses> actualArray2 = dataHandler.getExpenseArrayFromEquation("SUM(1,2,3)");
     assertEquals(0, actualArray2.size()); 
-
+    
 
   }
 

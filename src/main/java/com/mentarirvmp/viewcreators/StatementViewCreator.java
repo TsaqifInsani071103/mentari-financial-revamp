@@ -49,7 +49,7 @@ public class StatementViewCreator implements ViewCreator {
   //BEWARE OF COUPLING HERE!!! 
   @Override
   public void setParentController(ChildControllers viewController){
-    this.controller = (IndivProjectViewController) viewController; 
+    controller = (IndivProjectViewController) viewController; 
   } 
 
   //we get the statement view here in tree structure 
