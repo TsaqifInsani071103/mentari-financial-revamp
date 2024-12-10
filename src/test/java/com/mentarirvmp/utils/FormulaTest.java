@@ -142,7 +142,7 @@ public class FormulaTest {
     Formula frmlObject = new Formula(dataHandler);
 
     String dummyFormula2 = "MULTIPLY()";
-    assertEquals(new BigDecimal("0"), frmlObject.getValueIfFormulaValid(dummyFormula2));
+    assertEquals(frmlObject.DEFAULT_VALUE, frmlObject.getValueIfFormulaValid(dummyFormula2));
 
     String dummyFormula3 = "3000";
    assertEquals(new BigDecimal("3000"), frmlObject.getValueIfFormulaValid(dummyFormula3));
@@ -157,7 +157,7 @@ public class FormulaTest {
    assertEquals(new BigDecimal("9"), frmlObject.getValueIfFormulaValid(dummyFormula6));
 
     String dummyFormula7 = "MULTIPLY(MULTIPLY(3,0), 2,1)";
-   assertEquals(new BigDecimal("0"), frmlObject.getValueIfFormulaValid(dummyFormula7));
+   assertEquals(new BigDecimal(0), frmlObject.getValueIfFormulaValid(dummyFormula7));
    
     //SUM(6, 34,7) => 47
    String dummyFormula8 = "SUM(MULTIPLY(1,2,SUM(3)),SUM(4,MULTIPLY(5,6)),7)";
@@ -169,7 +169,7 @@ public class FormulaTest {
    assertEquals(new BigDecimal("-12"), frmlObject.getValueIfFormulaValid(dummyFormula10));
 
    String dummyFormula11 = "";
-   assertEquals(new BigDecimal("0"), frmlObject.getValueIfFormulaValid(dummyFormula11));
+   assertEquals(frmlObject.DEFAULT_VALUE, frmlObject.getValueIfFormulaValid(dummyFormula11));
 
    String dummyFormula12 = "SUM(100, -10)";
    assertEquals(new BigDecimal("90"), frmlObject.getValueIfFormulaValid(dummyFormula12));
@@ -185,7 +185,7 @@ public class FormulaTest {
 
     String dummyFormula2 = "MULTIPLY()";
     if(frmlObject.isFormulaValid(dummyFormula2)){
-      assertEquals(new BigDecimal("0"), frmlObject.getValueWhenFormulaValid());
+      assertEquals(frmlObject.DEFAULT_VALUE, frmlObject.getValueWhenFormulaValid());
     };
 
     String dummyFormula9 = "SUM(MULTIPLY(SUM(1,2,3), 10), SUM())";
@@ -222,7 +222,7 @@ public class FormulaTest {
 
     String dummyFormula4 = "SUM("+id1+ "," + id2 +","+"bogusId"+")";
     assertEquals(false, frmlObject.isFormulaValid(dummyFormula4));
-    assertEquals(new BigDecimal("0"), frmlObject.getValueIfFormulaValid(dummyFormula4));
+    assertEquals(frmlObject.DEFAULT_VALUE, frmlObject.getValueIfFormulaValid(dummyFormula4));
 
     String dummyFormula5 = "MULTIPLY(SUM("+id1+ "," + id2 + ",MULTIPLY(10, "+ id3 +")))";
     assertEquals(true, frmlObject.isFormulaValid(dummyFormula5));
