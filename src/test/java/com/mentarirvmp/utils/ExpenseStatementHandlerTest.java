@@ -4,11 +4,39 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import com.mentarirvmp.statements.Statement;
 
 public class ExpenseStatementHandlerTest {
   
+  @Test 
+  public void getExpenseArrayFromEquationTest(){
+    Statement dummyStatement = new Statement("dummyStatement"); 
+    Expenses expense1 = new Expenses("expense1");
+    Expenses expense2 = new Expenses("expense2");
+    Expenses expense3 = new Expenses("expense3");
+    dummyStatement.addExpense(expense1);
+    dummyStatement.addExpense(expense2);
+    dummyStatement.addExpense(expense3);
+
+    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+    ArrayList<Expenses> actualArray = dataHandler.getExpenseArrayFromEquation("SUM(E1, MULTIPLY(E2, SUM(E3)))");
+    ArrayList<Expenses> expectedArray = new ArrayList<>();
+    expectedArray.add(expense1);
+    expectedArray.add(expense2);
+    expectedArray.add(expense3);
+    for(int i = 0; i < actualArray.size(); i++){
+      assertEquals(expectedArray.get(i), actualArray.get(i));
+    }
+
+    //valid equation but no Expense Id's
+    ArrayList<Expenses> actualArray2 = dataHandler.getExpenseArrayFromEquation("SUM(1,2,3)");
+    assertEquals(0, actualArray2.size()); 
+
+
+  }
+
   @Test
   public void getValueByIdTest(){
     Statement dummyStatement = MockObjects.getDummyStatementObject();

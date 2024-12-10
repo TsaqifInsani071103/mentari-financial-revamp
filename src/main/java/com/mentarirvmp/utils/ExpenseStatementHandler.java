@@ -1,8 +1,11 @@
 package com.mentarirvmp.utils;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Expenses;
@@ -34,6 +37,7 @@ public class ExpenseStatementHandler implements DataHandler{
       expense.setEquation(equation); 
       //set value by using the DAG algos here
       //only set value if the equation isn't cyclic 
+      //getExpenseArrayFromEquation 
       expense.setValue(this.formulaObject.getValueWhenFormulaValid().toString()); 
       return true; 
     }
@@ -43,6 +47,21 @@ public class ExpenseStatementHandler implements DataHandler{
   public void setExpenseValueByFalseEquation(Expenses expense, String equation){
     expense.setEquation(equation);
     expense.setValue(this.formulaObject.DEFAULT_VALUE.toString()); 
+  } 
+
+  //with the prerequisite that the equation is valid in the first place. 
+  protected ArrayList<Expenses> getExpenseArrayFromEquation(String equation){
+    ArrayList<Expenses> expenseArray = new ArrayList<>(); 
+    String regex = "\\bE\\d+\\b";
+    Pattern pattern = Pattern.compile(regex); 
+    Matcher matcher = pattern.matcher(equation); 
+    while(matcher.find()){
+      expenseArray.add(handledStatement.getExpenseById(matcher.group()));
+    }
+
+    return expenseArray;
+
+
   } 
 
   // public boolean verifyEquationIntoFormulaNode(String equation){
