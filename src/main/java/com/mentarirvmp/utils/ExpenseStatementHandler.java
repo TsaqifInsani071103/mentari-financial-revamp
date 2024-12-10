@@ -32,6 +32,8 @@ public class ExpenseStatementHandler implements DataHandler{
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
     if(this.formulaObject.isFormulaValid(equation)){
       expense.setEquation(equation); 
+      //set value by using the DAG algos here
+      //only set value if the equation isn't cyclic 
       expense.setValue(this.formulaObject.getValueWhenFormulaValid().toString()); 
       return true; 
     }

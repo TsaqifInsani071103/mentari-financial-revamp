@@ -186,6 +186,9 @@ public class StatementViewCreator implements ViewCreator {
   private void updateCell(TreeCell<Expenses> cell, Expenses item) {
     if (item != null) {
         ExpensesViewCreator viewCreator = new ExpensesViewCreator(item, this.dataHandler);
+        //do we make the DAG graph here? 
+        //INITIALIZE THE DAG graph here. 
+        //by looking at all the expense values. 
         cell.setGraphic(viewCreator.getView()); // Setting custom view
         // cell.setContextMenu(getContextMenuItems(item));
     }
