@@ -12,8 +12,8 @@ import com.mentarirvmp.utils.Expenses;
 import com.mentarirvmp.utils.Formula;
 
 public class ExpenseStatementHandler implements DataHandler{
-  Statement handledStatement; 
- Formula formulaObject = new Formula(this); 
+  private Statement handledStatement; 
+  private Formula formulaObject = new Formula(this); 
 
   public ExpenseStatementHandler(Statement statement){
     this.handledStatement = statement;
