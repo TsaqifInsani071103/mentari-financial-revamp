@@ -103,7 +103,11 @@ public class ExpensesViewCreator implements ViewCreator {
         textField.setText(this.currentExpense.getEquation());
       } else { // Loses focus
         // getAssociatedStatement().updateFormulas();
-        textField.setText(this.dataHandler.getDecimalValueFromEquation(this.currentExpense.getEquation()).toString());
+        String value = this.dataHandler.getDecimalValueFromEquation(this.currentExpense.getEquation()).toString();
+        textField.setText(value);
+
+        //This is a hardcoded thing right now, we'll have to do this with DAG later 
+        this.currentExpense.setValue(value);
        
         
       }
