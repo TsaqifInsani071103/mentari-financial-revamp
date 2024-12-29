@@ -57,6 +57,7 @@ public class Formula {
     public String getFormulaWithoutFormulaContent(){
       return this.parentFormula;
     } 
+
     public String getFormulaContent(){
       return this.formulaContent;
     } 
@@ -110,13 +111,14 @@ public class Formula {
     if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
       return BigDecimalHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
       //This checks if its a FORMULA and not an empty FORMULA at that. unlike SUM() 
+
+    //if not integer or properNumberFormat then its an expense ID 
     }else if(!isIntegerOrProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
       return getValueOfNodesRecursively(this.validFormulaRootNode);
     }else{
       return DEFAULT_VALUE; 
     }
-
-
+    
   }
 
   //CLEAN THIS UP 
