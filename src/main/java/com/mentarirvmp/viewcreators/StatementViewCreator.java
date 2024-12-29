@@ -190,6 +190,8 @@ public class StatementViewCreator implements ViewCreator {
         //INITIALIZE THE DAG graph here. 
         //by looking at all the expense values. 
         cell.setGraphic(viewCreator.getView()); // Setting custom view
+        System.out.println("CELL HAS BEEN UPDATED!!!");
+        System.out.println("The name of the expense: " + item.getName() + " The value is: " + item.getValue());
         // cell.setContextMenu(getContextMenuItems(item));
     }
   }

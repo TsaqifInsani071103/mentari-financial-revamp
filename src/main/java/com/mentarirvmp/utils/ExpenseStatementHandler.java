@@ -38,7 +38,10 @@ public class ExpenseStatementHandler implements DataHandler{
       //set value by using the DAG algos here
       //only set value if the equation isn't cyclic 
       //getExpenseArrayFromEquation 
-      expense.setValue(this.formulaObject.getValueWhenFormulaValid().toString()); 
+      System.out.println("The value of this expense: " + expense.getName() + " has changed");
+      String value = this.formulaObject.getValueWhenFormulaValid().toString();
+      expense.setValue(value); 
+      // System.out.println("This object's value is now: " + value);
       return true; 
     }
     return false; 
