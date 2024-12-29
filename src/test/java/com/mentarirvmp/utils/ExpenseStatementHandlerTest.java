@@ -70,6 +70,22 @@ public class ExpenseStatementHandlerTest {
 
   } 
 
+  @Test
+  public void setExpenseValueIfValidTest(){
+    Statement dummyStatement = MockObjects.getDummyStatementObject();
+    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+    //dummy Expense with default 0.0 value 
+    Expenses dummyExpense = new Expenses("Expense1");
+    assertEquals("0.0", dummyExpense.getValue()); 
+
+    String validEquation = "MULTIPLY(2,2)";
+    dataHandler.ifEquationValidSetExpenseValue(dummyExpense, validEquation);
+    assertEquals("4", dummyExpense.getValue());
+
+
+
+  } 
+
   // @Test 
   // public void checkFormulaSideEffectsTest(){
   //   //there are two main side effect operations in ExpenseStatementHandler.java 
