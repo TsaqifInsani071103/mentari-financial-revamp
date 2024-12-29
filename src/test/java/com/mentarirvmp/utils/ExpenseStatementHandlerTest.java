@@ -82,6 +82,9 @@ public class ExpenseStatementHandlerTest {
     dataHandler.ifEquationValidSetExpenseValue(dummyExpense, validEquation);
     assertEquals("4", dummyExpense.getValue());
 
+    String falseEquation = "awdasd";
+    dataHandler.setExpenseValueByFalseEquation(dummyExpense, falseEquation);
+    assertEquals("0.0", dummyExpense.getValue()); 
 
 
   } 
