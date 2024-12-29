@@ -14,6 +14,7 @@ import com.mentarirvmp.utils.Formula;
 public class ExpenseStatementHandler implements DataHandler{
   private Statement handledStatement; 
   private Formula formulaObject = new Formula(this); 
+  private ArrayList<Expenses> validExpensesArray = new ArrayList<>();
 
   public ExpenseStatementHandler(Statement statement){
     this.handledStatement = statement;
@@ -23,7 +24,12 @@ public class ExpenseStatementHandler implements DataHandler{
   public String getValueById(String ID) {
     String actualExpenseValue = "";
     Expenses checkedExpense; 
+
+    //SIDE EFFECT 
     checkedExpense=this.handledStatement.getExpenseById(ID);
+
+
+    this.validExpensesArray.add(checkedExpense); 
     if(checkedExpense != Expenses.INVALID_EXPENSE){
       actualExpenseValue = checkedExpense.getValue(); 
       return actualExpenseValue; 
@@ -33,11 +39,12 @@ public class ExpenseStatementHandler implements DataHandler{
   }
 
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
+    //RESETTING VALID EXPENSES ARRAY 
+    this.validExpensesArray = new ArrayList<>(); 
     if(this.formulaObject.isFormulaValid(equation)){
       expense.setEquation(equation); 
       //set value by using the DAG algos here
       //only set value if the equation isn't cyclic 
-      //getExpenseArrayFromEquation 
       System.out.println("The value of this expense: " + expense.getName() + " has changed");
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
       expense.setValue(value); 
@@ -53,19 +60,19 @@ public class ExpenseStatementHandler implements DataHandler{
   } 
 
   //with the prerequisite that the equation is valid in the first place. 
-  protected ArrayList<Expenses> getExpenseArrayFromEquation(String equation){
-    ArrayList<Expenses> expenseArray = new ArrayList<>(); 
-    String regex = "\\bE\\d+\\b";
-    Pattern pattern = Pattern.compile(regex); 
-    Matcher matcher = pattern.matcher(equation); 
-    while(matcher.find()){
-      expenseArray.add(handledStatement.getExpenseById(matcher.group()));
-    }
+  // protected ArrayList<Expenses> getExpenseArrayFromEquation(String equation){
+  //   ArrayList<Expenses> expenseArray = new ArrayList<>(); 
+  //   String regex = "\\bE\\d+\\b";
+  //   Pattern pattern = Pattern.compile(regex); 
+  //   Matcher matcher = pattern.matcher(equation); 
+  //   while(matcher.find()){
+  //     expenseArray.add(handledStatement.getExpenseById(matcher.group()));
+  //   }
 
-    return expenseArray;
+  //   return expenseArray;
 
 
-  } 
+  // } 
 
   // public boolean verifyEquationIntoFormulaNode(String equation){
   //   return this.formulaObject.isFormulaValid(equation);
