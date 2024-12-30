@@ -3,7 +3,6 @@ package com.mentarirvmp.utils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
-import com.mentarirvmp.utils.Vertex;
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.AcyclicGraphHandler;
 

@@ -90,7 +90,7 @@ public class ExpenseStatementHandlerTest {
   } 
 
   @Test 
-  public void testGettingValidExpensesIntoArray(){
+  public void testExpenseVertexAndAdjacencyList(){
     //this is an integration test between calling ifEquationValidSetExpenseValue and if we get the valid expenses into the validExpensesArray in ExpenseStatementHAndler.java 
     Statement dummyStatement = MockObjects.getDummyStatementObject();
     ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
@@ -106,18 +106,19 @@ public class ExpenseStatementHandlerTest {
 
     System.out.println(validFormula);
     dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula);
-    // for(int i = 0; i <dataHandler.getValidExpensesStack().size(); i++){
-    //   System.out.println(dataHandler.getValidExpensesStack().pop());
-    // }
-    assertEquals(3, dataHandler.getValidExpensesStack().size());
+    System.out.println(dataHandler.getExpenseVertexMap().get(expense5).toString());
+    assertEquals(3, dataHandler.getExpenseVertexMap().get(expense5).size());
 
     String validFormula2 = String.format("SUM(%s)", expense1.getId());
     dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula2);
-    assertEquals(1, dataHandler.getValidExpensesStack().size());
+    System.out.println(dataHandler.getExpenseVertexMap().get(expense5).toString());
+    assertEquals(1, dataHandler.getExpenseVertexMap().get(expense5).size());
     
-    String invalidFormula = "SUM(E09392091, je)";
+    String invalidFormula = "SUM(E19392091, je)";
     dataHandler.ifEquationValidSetExpenseValue(expense5, invalidFormula);
-    assertEquals(0, dataHandler.getValidExpensesStack().size());
+    System.out.println(dataHandler.getExpenseVertexMap().get(expense5).toString());
+    assertEquals(0, dataHandler.getExpenseVertexMap().get(expense5).size());
+
   }
 
   // @Test 

@@ -19,16 +19,16 @@ public class ExpenseStatementHandler implements DataHandler{
 
   // private ArrayList<Expenses> validExpensesArray = new ArrayList<>();
   private Stack<Expenses> validExpensesStack = new Stack<>();
-
-  private ArrayList<Vertex> expenseVertexArray = new ArrayList<>(); 
+  private Map<Expenses, ArrayList<Expenses>> expenseVertexMap = new HashMap<>();
 
 
   public ExpenseStatementHandler(Statement statement){
     this.handledStatement = statement;
   }
 
-  protected Stack<Expenses> getValidExpensesStack(){
-    return validExpensesStack; 
+  //this reveals our inner data which we don't really want? But its the ExpenseStatementHandler anyways so I shouldn't mind it. 
+  protected Map<Expenses, ArrayList<Expenses>>  getExpenseVertexMap(){
+    return expenseVertexMap;
   }
 
   @Override
@@ -53,7 +53,7 @@ public class ExpenseStatementHandler implements DataHandler{
     this.validExpensesStack = new Stack<>(); 
     if(this.formulaObject.isFormulaValid(equation)){
       //side effect 
-
+      makeVertexAndAdjacencyList(expense);
 
       expense.setEquation(equation); 
       //set value by using the DAG algos here
@@ -64,6 +64,15 @@ public class ExpenseStatementHandler implements DataHandler{
       return true; 
     }
     return false; 
+  } 
+
+  public void makeVertexAndAdjacencyList(Expenses expense){
+    ArrayList<Expenses> adjacencyList = new ArrayList<>();
+    while(!validExpensesStack.empty()){
+      Expenses validExpense = validExpensesStack.pop();
+      adjacencyList.add(validExpense);
+    }
+    this.expenseVertexMap.put(expense, adjacencyList); 
   } 
 
   public void setExpenseValueByFalseEquation(Expenses expense, String equation){
