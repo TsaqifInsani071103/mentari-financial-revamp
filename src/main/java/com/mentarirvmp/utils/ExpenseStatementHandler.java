@@ -17,8 +17,7 @@ public class ExpenseStatementHandler implements DataHandler{
   private Statement handledStatement; 
   private Formula formulaObject = new Formula(this); 
 
-  // private ArrayList<Expenses> validExpensesArray = new ArrayList<>();
-  private Stack<Expenses> validExpensesStack = new Stack<>();
+  private ArrayList<Expenses> validExpensesArray = new ArrayList<>();
   private Map<Expenses, ArrayList<Expenses>> expenseVertexMap = new HashMap<>();
 
 
@@ -39,7 +38,7 @@ public class ExpenseStatementHandler implements DataHandler{
     checkedExpense=this.handledStatement.getExpenseById(ID);
     if(checkedExpense != Expenses.INVALID_EXPENSE){
       //SIDE EFFECT 
-      this.validExpensesStack.add(checkedExpense); 
+      this.validExpensesArray.add(checkedExpense); 
 
       actualExpenseValue = checkedExpense.getValue(); 
       return actualExpenseValue; 
@@ -50,10 +49,12 @@ public class ExpenseStatementHandler implements DataHandler{
 
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
     //RESETTING VALID EXPENSES STACK
-    this.validExpensesStack = new Stack<>(); 
+    this.validExpensesArray = new ArrayList<>(); 
+    this.expenseVertexMap.put(expense, new ArrayList<Expenses>());
+
     if(this.formulaObject.isFormulaValid(equation)){
       //side effect 
-      makeVertexAndAdjacencyList(expense);
+      this.expenseVertexMap.put(expense, this.validExpensesArray); 
 
       expense.setEquation(equation); 
       //set value by using the DAG algos here
@@ -66,14 +67,6 @@ public class ExpenseStatementHandler implements DataHandler{
     return false; 
   } 
 
-  public void makeVertexAndAdjacencyList(Expenses expense){
-    ArrayList<Expenses> adjacencyList = new ArrayList<>();
-    while(!validExpensesStack.empty()){
-      Expenses validExpense = validExpensesStack.pop();
-      adjacencyList.add(validExpense);
-    }
-    this.expenseVertexMap.put(expense, adjacencyList); 
-  } 
 
   public void setExpenseValueByFalseEquation(Expenses expense, String equation){
     expense.setEquation(equation);

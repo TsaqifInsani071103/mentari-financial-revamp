@@ -104,19 +104,16 @@ public class ExpenseStatementHandlerTest {
 
     String validFormula = String.format("SUM(%s,%s,%s)", expense1.getId(), expense2.getId(), expense3.getId());
 
-    System.out.println(validFormula);
+    // System.out.println(validFormula);
     dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula);
-    System.out.println(dataHandler.getExpenseVertexMap().get(expense5).toString());
     assertEquals(3, dataHandler.getExpenseVertexMap().get(expense5).size());
 
     String validFormula2 = String.format("SUM(%s)", expense1.getId());
     dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula2);
-    System.out.println(dataHandler.getExpenseVertexMap().get(expense5).toString());
     assertEquals(1, dataHandler.getExpenseVertexMap().get(expense5).size());
     
     String invalidFormula = "SUM(E19392091, je)";
     dataHandler.ifEquationValidSetExpenseValue(expense5, invalidFormula);
-    System.out.println(dataHandler.getExpenseVertexMap().get(expense5).toString());
     assertEquals(0, dataHandler.getExpenseVertexMap().get(expense5).size());
 
   }
