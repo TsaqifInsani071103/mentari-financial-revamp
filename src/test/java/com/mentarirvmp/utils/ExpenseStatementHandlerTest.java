@@ -89,6 +89,37 @@ public class ExpenseStatementHandlerTest {
 
   } 
 
+  @Test 
+  public void testGettingValidExpensesIntoArray(){
+    //this is an integration test between calling ifEquationValidSetExpenseValue and if we get the valid expenses into the validExpensesArray in ExpenseStatementHAndler.java 
+    Statement dummyStatement = MockObjects.getDummyStatementObject();
+    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+    ArrayList<Expenses> flattenedArray = MockObjects.getAllContentIntoArray(dummyStatement);
+    Expenses expense1 = flattenedArray.get(0);
+    Expenses expense2 = flattenedArray.get(1);
+    Expenses expense3 = flattenedArray.get(2);
+    Expenses expense4 = flattenedArray.get(3);
+
+    Expenses expense5 = flattenedArray.get(4); 
+
+    String validFormula = String.format("SUM(%s,%s,%s)", expense1.getId(), expense2.getId(), expense3.getId());
+
+    System.out.println(validFormula);
+    dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula);
+    for(int i = 0; i <dataHandler.getValidExpensesArray().size(); i++){
+      System.out.println(dataHandler.getValidExpensesArray().get(i).getName());
+    }
+    assertEquals(3, dataHandler.getValidExpensesArray().size());
+
+    String validFormula2 = String.format("SUM(%s)", expense1.getId());
+    dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula2);
+    assertEquals(1, dataHandler.getValidExpensesArray().size());
+    
+    String invalidFormula = "SUM(E09392091, je)";
+    dataHandler.ifEquationValidSetExpenseValue(expense5, invalidFormula);
+    assertEquals(0, dataHandler.getValidExpensesArray().size());
+  }
+
   // @Test 
   // public void checkFormulaSideEffectsTest(){
   //   //there are two main side effect operations in ExpenseStatementHandler.java 

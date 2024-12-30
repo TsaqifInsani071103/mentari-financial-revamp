@@ -20,17 +20,20 @@ public class ExpenseStatementHandler implements DataHandler{
     this.handledStatement = statement;
   }
 
+  protected ArrayList<Expenses> getValidExpensesArray(){
+    return validExpensesArray; 
+  }
+
   @Override
   public String getValueById(String ID) {
     String actualExpenseValue = "";
     Expenses checkedExpense; 
 
-    //SIDE EFFECT 
     checkedExpense=this.handledStatement.getExpenseById(ID);
-
-
-    this.validExpensesArray.add(checkedExpense); 
     if(checkedExpense != Expenses.INVALID_EXPENSE){
+      //SIDE EFFECT 
+      this.validExpensesArray.add(checkedExpense); 
+
       actualExpenseValue = checkedExpense.getValue(); 
       return actualExpenseValue; 
     }else{
@@ -45,7 +48,6 @@ public class ExpenseStatementHandler implements DataHandler{
       expense.setEquation(equation); 
       //set value by using the DAG algos here
       //only set value if the equation isn't cyclic 
-      System.out.println("The value of this expense: " + expense.getName() + " has changed");
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
       expense.setValue(value); 
       // System.out.println("This object's value is now: " + value);
@@ -60,23 +62,23 @@ public class ExpenseStatementHandler implements DataHandler{
   } 
 
   //with the prerequisite that the equation is valid in the first place. 
-  // protected ArrayList<Expenses> getExpenseArrayFromEquation(String equation){
-  //   ArrayList<Expenses> expenseArray = new ArrayList<>(); 
-  //   String regex = "\\bE\\d+\\b";
-  //   Pattern pattern = Pattern.compile(regex); 
-  //   Matcher matcher = pattern.matcher(equation); 
-  //   while(matcher.find()){
-  //     expenseArray.add(handledStatement.getExpenseById(matcher.group()));
-  //   }
+  protected ArrayList<Expenses> getExpenseArrayFromEquation(String equation){
+    ArrayList<Expenses> expenseArray = new ArrayList<>(); 
+    String regex = "\\bE\\d+\\b";
+    Pattern pattern = Pattern.compile(regex); 
+    Matcher matcher = pattern.matcher(equation); 
+    while(matcher.find()){
+      expenseArray.add(handledStatement.getExpenseById(matcher.group()));
+    }
 
-  //   return expenseArray;
+    return expenseArray;
 
 
-  // } 
+  } 
 
-  // public boolean verifyEquationIntoFormulaNode(String equation){
-  //   return this.formulaObject.isFormulaValid(equation);
-  // } 
+  public boolean verifyEquationIntoFormulaNode(String equation){
+    return this.formulaObject.isFormulaValid(equation);
+  } 
 
   //this one resets the Formula Field's equation node, so it shouldn't clash with formulaObject.getValueWhenFormulaValid(). 
   public BigDecimal getDecimalValueFromEquation(String formula){
