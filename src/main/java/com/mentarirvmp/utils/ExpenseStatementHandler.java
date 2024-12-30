@@ -1,11 +1,13 @@
 package com.mentarirvmp.utils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Stack;
 
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Expenses;
@@ -14,14 +16,19 @@ import com.mentarirvmp.utils.Formula;
 public class ExpenseStatementHandler implements DataHandler{
   private Statement handledStatement; 
   private Formula formulaObject = new Formula(this); 
-  private ArrayList<Expenses> validExpensesArray = new ArrayList<>();
+
+  // private ArrayList<Expenses> validExpensesArray = new ArrayList<>();
+  private Stack<Expenses> validExpensesStack = new Stack<>();
+
+  private ArrayList<Vertex> expenseVertexArray = new ArrayList<>(); 
+
 
   public ExpenseStatementHandler(Statement statement){
     this.handledStatement = statement;
   }
 
-  protected ArrayList<Expenses> getValidExpensesArray(){
-    return validExpensesArray; 
+  protected Stack<Expenses> getValidExpensesStack(){
+    return validExpensesStack; 
   }
 
   @Override
@@ -32,7 +39,7 @@ public class ExpenseStatementHandler implements DataHandler{
     checkedExpense=this.handledStatement.getExpenseById(ID);
     if(checkedExpense != Expenses.INVALID_EXPENSE){
       //SIDE EFFECT 
-      this.validExpensesArray.add(checkedExpense); 
+      this.validExpensesStack.add(checkedExpense); 
 
       actualExpenseValue = checkedExpense.getValue(); 
       return actualExpenseValue; 
@@ -42,9 +49,12 @@ public class ExpenseStatementHandler implements DataHandler{
   }
 
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
-    //RESETTING VALID EXPENSES ARRAY 
-    this.validExpensesArray = new ArrayList<>(); 
+    //RESETTING VALID EXPENSES STACK
+    this.validExpensesStack = new Stack<>(); 
     if(this.formulaObject.isFormulaValid(equation)){
+      //side effect 
+
+
       expense.setEquation(equation); 
       //set value by using the DAG algos here
       //only set value if the equation isn't cyclic 

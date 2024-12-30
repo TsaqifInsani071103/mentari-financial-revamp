@@ -48,6 +48,7 @@ public class ExpensesViewCreator implements ViewCreator {
   public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
     this.currentExpense = expense; 
     this.dataHandler = dataHandler; 
+    //we'll initialize an expense dependency map here in dataHandler. 
 
   } 
 
