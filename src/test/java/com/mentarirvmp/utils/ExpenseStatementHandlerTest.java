@@ -116,6 +116,11 @@ public class ExpenseStatementHandlerTest {
     dataHandler.ifEquationValidSetExpenseValue(expense5, invalidFormula);
     assertEquals(0, dataHandler.getExpenseVertexMap().get(expense5).size());
 
+    for(int i = 0; i < flattenedArray.size() ; i++){
+      dataHandler.ifEquationValidSetExpenseValue(flattenedArray.get(i), flattenedArray.get(i).getEquation());
+    }
+    assertEquals(flattenedArray.size(), dataHandler.getExpenseVertexMap().size());
+
   }
 
   // @Test 
