@@ -29,7 +29,7 @@ public class AcyclicGraphHandler {
   //we'll loop through the map and find a node that has an empty adjacency list. 
   //if such a node does not exist, then the dependency is circular. 
 
-  public void topSort(){
+  public Expenses[] getTopSortedArray(){
     int counter = 0; 
     Queue<Vertex> queue = new ArrayDeque<>();
     for(Expenses expense: expenseToVertexMap.keySet()){
@@ -50,6 +50,13 @@ public class AcyclicGraphHandler {
         }
       }
     } 
+
+    //this means that the graph is cyclic. 
+    if(counter != this.NUMBER_OF_VERTICES){
+      return null; 
+    }
+
+    return this.topSortArray;
 
   } 
 
