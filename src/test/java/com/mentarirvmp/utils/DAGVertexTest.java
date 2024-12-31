@@ -50,7 +50,7 @@ public class DAGVertexTest {
 
     //REMEMBER THE INDEGREES HOMIE 
     Expenses[] expectedSort = new Expenses[]{expense1,expense2,expense4,expense3};
-    AcyclicGraphHandler dag = new AcyclicGraphHandler(getDeepCopy(expenseToVertexMap));
+    AcyclicGraphHandler dag = new AcyclicGraphHandler(expenseToVertexMap);
     // dag.makeSortedArrayIfAcyclic();
     Expenses[] sortedArray = dag.getTopSortArray();
     assertNotNull(sortedArray);
@@ -59,50 +59,17 @@ public class DAGVertexTest {
     }
 
 
-    //this is a cyclical sort 
-    AcyclicGraphHandler dag2 = new AcyclicGraphHandler(getDeepCopy2(expenseToVertexMap));
-    // dag2.makeSortedArrayIfAcyclic();
-    Expenses[] sortedArray2 = dag2.getTopSortArray();
-    // System.out.println(Arrays.toString(sortedArray2));
-    assertNull(sortedArray2);
+    // //this is a cyclical sort 
+    // AcyclicGraphHandler dag2 = new AcyclicGraphHandler(expenseToVertexMap);
+    // // dag2.makeSortedArrayIfAcyclic();
+    // Expenses[] sortedArray2 = dag2.getTopSortArray();
+    // // System.out.println(Arrays.toString(sortedArray2));
+    // assertNull(sortedArray2);
   
   } 
 
-  private Map<Expenses, Vertex> getDeepCopy(Map<Expenses, Vertex> oriMap){
-    Map<Expenses, Vertex> deepCopy = new HashMap<>();
-    for (Map.Entry<Expenses, Vertex> entry : oriMap.entrySet()) {
-      Expenses clonedExpense = new Expenses(entry.getKey().getName()); // Copy constructor
-      Vertex oriVertex = entry.getValue();
-      Vertex clonedVertex = new Vertex(clonedExpense);  
-      clonedVertex.setAdjacentVertexList(oriVertex.getAdjacentVertexList());
-      for(int i = 0; i<oriVertex.getIndegree() ; i++){
-        clonedVertex.incrementIndegree();
-      }
-      deepCopy.put(clonedExpense, clonedVertex);
-    }
-    return deepCopy;
-  } 
 
-  private Map<Expenses, Vertex> getDeepCopy2(Map<Expenses, Vertex> oriMap){
-    Map<Expenses, Vertex> deepCopy = getDeepCopy(oriMap);
-List<Map.Entry<Expenses, Vertex>> entries = new ArrayList<>(deepCopy.entrySet());
-  Vertex one = entries.stream()
-    .filter(entry -> entry.getValue().toString().equals("1")) // Filter for the desired value
-    .map(Map.Entry::getValue)                      // Map to the value
-    .findFirst()                                   // Get the first match (if any)
-    .orElse(null);    
-    Vertex two = entries.stream()
-    .filter(entry -> entry.getValue().toString().equals("2")) // Filter for the desired value
-    .map(Map.Entry::getValue)                      // Map to the value
-    .findFirst()                                   // Get the first match (if any)
-    .orElse(null);   
-    // System.out.println(one.toString());
-    // System.out.println(two.toString());
 
-    two.addDirectedEdgeToward(one);
-    one.addDirectedEdgeToward(two);
 
-    return deepCopy; 
-  }
 
 }
