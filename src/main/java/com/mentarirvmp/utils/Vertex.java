@@ -14,8 +14,10 @@ public class Vertex {
   } 
 
   public void addDirectedEdgeToward(Vertex expenseVertex){
-    this.adjacentVertexSet.add(expenseVertex);
-    expenseVertex.incrementIndegree();
+    if(!adjacentVertexSet.contains(expenseVertex)){
+      this.adjacentVertexSet.add(expenseVertex);
+      expenseVertex.incrementIndegree();
+    }
   } 
 
   public Set<Vertex> getAdjacentVertexSet(){

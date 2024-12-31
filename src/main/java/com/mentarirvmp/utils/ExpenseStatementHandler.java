@@ -30,6 +30,11 @@ public class ExpenseStatementHandler implements DataHandler{
     return expenseToVertexMap;
   }
 
+  // //I have yet to decide if I need this exclusive functionality or not. 
+  // protected void resetExpenseToVertexMap(){
+
+  // } 
+
   @Override
   public String getValueById(String ID) {
     String actualExpenseValue = "";
@@ -66,16 +71,11 @@ public class ExpenseStatementHandler implements DataHandler{
       expense.setEquation(equation); 
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
       AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler(this.expenseToVertexMap);
-      // if(dependencyResolver.getTopSortArray() != null){
-      //   //this means that the graph is acyclic and therefore we can refresh the values of the expenses 
-      //   dependencyResolver.refreshExpenseValuesProceeding(expense, this);
-      // }
-      expense.setValue(value); 
-
-      //set value by using the DAG algos here
-      //only set value if the equation isn't cyclic 
-      //So basically, we'll only be updating the values of the proceeding expenses that depend on this current expense's refreshed value. 
-      //well have a flag in a for loop that basically checks that once we pass this current expense in the topsort, we'll update the values of the proceeding expenses. 
+      //update the expense value only if the equation does not resolve to be cyclic. 
+      if(dependencyResolver.getTopSortArray() != null){
+        expense.setValue(value); 
+        dependencyResolver.refreshExpenseValuesProceeding(expense, this);
+      }
       return true; 
     }
     return false; 
