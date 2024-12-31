@@ -58,16 +58,17 @@ public class ExpenseStatementHandler implements DataHandler{
       for(int i = 0; i < validExpensesArray.size() ; i++){
         Expenses independentExpense = validExpensesArray.get(i);
         Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
+
         newVertex.addDirectedEdgeToward(expenseToVertexMap.get(expense));
         this.expenseToVertexMap.put(independentExpense, newVertex);
       }
 
       expense.setEquation(equation); 
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
-      AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler(this.expenseToVertexMap, this);
+      AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler(this.expenseToVertexMap);
       // if(dependencyResolver.getTopSortArray() != null){
       //   //this means that the graph is acyclic and therefore we can refresh the values of the expenses 
-      //   dependencyResolver.refreshExpenseValuesProceeding(expense);
+      //   dependencyResolver.refreshExpenseValuesProceeding(expense, this);
       // }
       expense.setValue(value); 
 

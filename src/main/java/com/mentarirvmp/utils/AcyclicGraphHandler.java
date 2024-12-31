@@ -16,15 +16,12 @@ public class AcyclicGraphHandler {
   private Map<Expenses, Vertex> expenseToVertexMap;
   private Expenses[] topSortArray;
   private int NUMBER_OF_VERTICES; 
-  private ExpenseStatementHandler dataHandler; 
+
 
   public AcyclicGraphHandler(Map<Expenses, Vertex> expenseToVertexMap){
     initializeDAGHandler(expenseToVertexMap);
   }
-  public AcyclicGraphHandler(Map<Expenses, Vertex> expenseToVertexMap, ExpenseStatementHandler dataHandler){
-    initializeDAGHandler(expenseToVertexMap);
-    this.dataHandler = dataHandler; 
-  }
+
 
   public void initializeDAGHandler(Map<Expenses, Vertex> expenseToVertexMap){
     this.expenseToVertexMap = new HashMap<>(expenseToVertexMap);
@@ -78,7 +75,7 @@ public class AcyclicGraphHandler {
 
   } 
 
-  public void refreshExpenseValuesProceeding(Expenses expense){
+  public void refreshExpenseValuesProceeding(Expenses expense, ExpenseStatementHandler dataHandler){
     boolean startingPointFound = false; 
     for(int i = 0; i < this.topSortArray.length;i++){
       Expenses currentExpense = topSortArray[i]; 
