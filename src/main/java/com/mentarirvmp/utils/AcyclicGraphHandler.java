@@ -18,7 +18,7 @@ public class AcyclicGraphHandler {
   private int NUMBER_OF_VERTICES; 
 
   public AcyclicGraphHandler(Map<Expenses, Vertex> expenseToVertexMap){
-    this.expenseToVertexMap = expenseToVertexMap;
+    this.expenseToVertexMap = new HashMap<>(expenseToVertexMap);
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
     this.topSortArray = new Expenses[NUMBER_OF_VERTICES]; 
   }
@@ -54,9 +54,10 @@ public class AcyclicGraphHandler {
     //this means that the graph is cyclic. 
     if(counter != this.NUMBER_OF_VERTICES){
       return null; 
+    }else{
+      return this.topSortArray;
     }
 
-    return this.topSortArray;
 
   } 
 

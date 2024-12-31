@@ -20,6 +20,10 @@ public class Vertex {
     return this.adjacentVertexList;
   }
 
+  protected void setAdjacentVertexList(ArrayList<Vertex> adjacentVertexList ){
+    this.adjacentVertexList = adjacentVertexList; 
+  } 
+
   public Expenses getData(){
     return this.data; 
   }
@@ -34,6 +38,10 @@ public class Vertex {
 
   public void decrementIndegree(){
     this.indegree--; 
+  }
+
+  public String toString(){
+    return this.data.getName(); 
   }
 
 
