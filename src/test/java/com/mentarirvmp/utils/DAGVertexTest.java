@@ -60,11 +60,11 @@ public class DAGVertexTest {
 
 
     // //this is a cyclical sort 
-    // AcyclicGraphHandler dag2 = new AcyclicGraphHandler(expenseToVertexMap);
-    // // dag2.makeSortedArrayIfAcyclic();
-    // Expenses[] sortedArray2 = dag2.getTopSortArray();
-    // // System.out.println(Arrays.toString(sortedArray2));
-    // assertNull(sortedArray2);
+    vertex2.addDirectedEdgeToward(vertex1);
+    AcyclicGraphHandler dag2 = new AcyclicGraphHandler(expenseToVertexMap);
+    Expenses[] sortedArray2 = dag2.getTopSortArray();
+    System.out.println(Arrays.toString(sortedArray2));
+    assertNull(sortedArray2);
   
   } 
 
