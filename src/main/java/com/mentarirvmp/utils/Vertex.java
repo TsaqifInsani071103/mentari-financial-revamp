@@ -44,5 +44,9 @@ public class Vertex {
     return this.data.getName(); 
   }
 
+  public void setIndigree(int num){
+    this.indegree = num; 
+  } 
+
 
 }

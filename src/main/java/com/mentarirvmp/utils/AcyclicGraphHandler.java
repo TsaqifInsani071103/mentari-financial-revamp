@@ -19,13 +19,30 @@ public class AcyclicGraphHandler {
 
 
   public AcyclicGraphHandler(Map<Expenses, Vertex> expenseToVertexMap){
-    initializeDAGHandler(expenseToVertexMap);
+    this.expenseToVertexMap = getDeepCopyMap(expenseToVertexMap);
+    this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   }
 
 
-  public void initializeDAGHandler(Map<Expenses, Vertex> expenseToVertexMap){
-    this.expenseToVertexMap = new HashMap<>(expenseToVertexMap);
-    this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
+
+
+  private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
+    if(expenseToVertexMap.size() == 0) return null;
+    Map<Expenses, Vertex> deepCopy = new HashMap<Expenses, Vertex>();
+    //we dont need recursion since expenseToVertexMap is not a nested map or anything like that  
+    for(Expenses expense: expenseToVertexMap.keySet()){
+      Vertex oriVertex = expenseToVertexMap.get(expense);
+      Vertex copyVertex = new Vertex(expense);
+      copyVertex.setIndigree(oriVertex.getIndegree());
+      for(int i = 0; i<oriVertex.getAdjacentVertexList().size();i++){
+        Vertex oriAdjVertex = oriVertex.getAdjacentVertexList().get(i);
+        Vertex copyAdjacentVertex = new Vertex(oriAdjVertex.getData());
+        copyVertex.addDirectedEdgeToward(copyAdjacentVertex);
+      }
+      deepCopy.put(expense, copyVertex);
+    }
+
+    return deepCopy;
   } 
 
   // public Expenses[] getTopSortArray(){
