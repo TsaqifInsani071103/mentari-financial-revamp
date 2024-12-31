@@ -40,7 +40,7 @@ public class AcyclicGraphHandler {
   private Vertex getDeepCopyVertex(Vertex vertex){
     Vertex oriVertex = vertex; 
     Vertex copyVertex = new Vertex(vertex.getData());
-    copyVertex.setIndigree(copyVertex.getIndegree());
+    copyVertex.setIndigree(oriVertex.getIndegree());
     for(Vertex adjVertex: oriVertex.getAdjacentVertexSet()){
       Vertex copyAdjVertex = getDeepCopyVertex(adjVertex);
       copyVertex.addDirectedEdgeToward(copyAdjVertex);
@@ -51,15 +51,19 @@ public class AcyclicGraphHandler {
   } 
 
   private void printMapContents(Map<Expenses, Vertex> map, String name){
+    int total = 0; 
     for(Expenses expense: map.keySet()){
       System.out.println("MAP NAME: " + name);
       System.out.println("KEY: " + expense);
       Vertex vertex = map.get(expense);
       System.out.println("-Vertex: " + vertex);
       System.out.println("--Indigree: " + vertex.getIndegree());
+      total += vertex.getIndegree();
       System.out.println("---adjList: " + vertex.getAdjacentVertexSet().toString());
       System.out.println();
     }
+
+    System.out.println("TOTAL "+ name + " INDEGREE: " + total);
   } 
 
   // public Expenses[] getTopSortArray(){
