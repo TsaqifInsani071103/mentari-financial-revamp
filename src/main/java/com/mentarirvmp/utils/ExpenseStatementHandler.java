@@ -64,6 +64,10 @@ public class ExpenseStatementHandler implements DataHandler{
 
       expense.setEquation(equation); 
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
+      AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler(this.expenseToVertexMap);
+      // if(dependencyResolver.getTopSortedArray() != null){
+
+      // }
       expense.setValue(value); 
       //set value by using the DAG algos here
       //only set value if the equation isn't cyclic 

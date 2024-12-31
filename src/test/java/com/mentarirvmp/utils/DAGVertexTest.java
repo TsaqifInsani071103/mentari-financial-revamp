@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +51,8 @@ public class DAGVertexTest {
     //REMEMBER THE INDEGREES HOMIE 
     Expenses[] expectedSort = new Expenses[]{expense1,expense2,expense4,expense3};
     AcyclicGraphHandler dag = new AcyclicGraphHandler(getDeepCopy(expenseToVertexMap));
-    Expenses[] sortedArray = dag.getTopSortedArray();
+    // dag.makeSortedArrayIfAcyclic();
+    Expenses[] sortedArray = dag.getTopSortArray();
     assertNotNull(sortedArray);
     for(int i =0; i<sortedArray.length;i++){
       assertEquals(sortedArray[i].getName(), expectedSort[i].getName());
@@ -59,7 +61,9 @@ public class DAGVertexTest {
 
     //this is a cyclical sort 
     AcyclicGraphHandler dag2 = new AcyclicGraphHandler(getDeepCopy2(expenseToVertexMap));
-    Expenses[] sortedArray2 = dag2.getTopSortedArray();
+    // dag2.makeSortedArrayIfAcyclic();
+    Expenses[] sortedArray2 = dag2.getTopSortArray();
+    System.out.println(Arrays.toString(sortedArray2));
     assertNull(sortedArray2);
   
   } 
