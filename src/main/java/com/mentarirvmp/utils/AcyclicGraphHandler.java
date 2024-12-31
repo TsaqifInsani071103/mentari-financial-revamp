@@ -31,18 +31,19 @@ public class AcyclicGraphHandler {
     for(Expenses expense: expenseToVertexMap.keySet()){
       Vertex oriVertex = expenseToVertexMap.get(expense);
       Vertex copyVertex = new Vertex(oriVertex.getData());
-      copyVertex.setIndigree(oriVertex.getIndegree());
+      // copyVertex.setIndigree(oriVertex.getIndegree());
       deepCopy.put(expense, copyVertex);
-
-      for(Vertex adjVertex: oriVertex.getAdjacentVertexSet()){
-        Vertex copyAdjVertex = new Vertex(adjVertex.getData());
-        copyVertex.addDirectedEdgeToward(copyAdjVertex);
-        // copyAdjVertex.setIndigree(adjVertex.getIndegree());
-      }
-
     }
-    printMapContents(deepCopy, "COPY");
-    printMapContents(expenseToVertexMap, "ORIGINAL");
+
+    for(Expenses expense: expenseToVertexMap.keySet()){
+      Vertex oriVertex = expenseToVertexMap.get(expense);
+      Vertex copyVertex = deepCopy.get(expense);
+      for(Vertex oriAdjVertex: oriVertex.getAdjacentVertexSet()){
+        copyVertex.addDirectedEdgeToward(deepCopy.get(oriAdjVertex.getData()));
+      }
+    } 
+
+
     return deepCopy;
   } 
 
