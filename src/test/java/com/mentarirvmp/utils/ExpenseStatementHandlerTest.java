@@ -115,7 +115,28 @@ public class ExpenseStatementHandlerTest {
     assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexList().size());
     assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexList().size());
     assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexList().size());
-    
+
+    String validFormula2 = String.format("MULTIPLY(%s,%s)", expense2.getId(), expense1.getId());
+    dataHandler.ifEquationValidSetExpenseValue(expense4, validFormula2);
+
+    //E2 --> E5, E4. E1 --> E5, E4. E3 --> E5. E4 and E5 has empty adjacency list. 
+    // E4 has indegree 2 and E5 has indegree 3 
+    assertEquals(5, dataHandler.getExpenseToVertexMap().size());
+    assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense4).getIndegree());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexList().size());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexList().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexList().size());
+
+    String invalidFormula = String.format("MULTIPLYawwd(%s,%s)", expense2.getId(), expense1.getId());
+    dataHandler.ifEquationValidSetExpenseValue(expense4, invalidFormula);
+
+    assertEquals(5, dataHandler.getExpenseToVertexMap().size());
+    assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense4).getIndegree());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexList().size());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexList().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexList().size());
 
 
 

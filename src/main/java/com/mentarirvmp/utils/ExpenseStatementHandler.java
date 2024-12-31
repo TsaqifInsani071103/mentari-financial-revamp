@@ -50,14 +50,14 @@ public class ExpenseStatementHandler implements DataHandler{
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
     //RESETTING VALID EXPENSES STACK
     this.validExpensesArray = new ArrayList<>(); 
-    this.expenseToVertexMap.put(expense, new Vertex(expense));
+    if(this.expenseToVertexMap.get(expense) == null) this.expenseToVertexMap.put(expense, new Vertex(expense));
 
     if(this.formulaObject.isFormulaValid(equation)){
       //side effect 
       // this.expenseVertexMap.put(expense, this.validExpensesArray); 
       for(int i = 0; i < validExpensesArray.size() ; i++){
         Expenses independentExpense = validExpensesArray.get(i);
-        Vertex newVertex = new Vertex(independentExpense); 
+        Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
         newVertex.addDirectedEdgeToward(expenseToVertexMap.get(expense));
         this.expenseToVertexMap.put(independentExpense, newVertex);
       }
