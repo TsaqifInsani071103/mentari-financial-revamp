@@ -1,27 +1,29 @@
 package com.mentarirvmp.utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Vertex {
   private Expenses data; 
   private int indegree = 0; 
-  private ArrayList<Vertex> adjacentVertexList = new ArrayList<Vertex>();
+  private Set<Vertex> adjacentVertexSet = new HashSet<Vertex>();
 
   public Vertex(Expenses expense){
     this.data = expense; 
   } 
 
   public void addDirectedEdgeToward(Vertex expenseVertex){
-    this.adjacentVertexList.add(expenseVertex);
+    this.adjacentVertexSet.add(expenseVertex);
     expenseVertex.incrementIndegree();
   } 
 
-  public ArrayList<Vertex> getAdjacentVertexList(){
-    return this.adjacentVertexList;
+  public Set<Vertex> getAdjacentVertexSet(){
+    return this.adjacentVertexSet;
   }
 
-  protected void setAdjacentVertexList(ArrayList<Vertex> adjacentVertexList ){
-    this.adjacentVertexList = adjacentVertexList; 
+  protected void setAdjacentVertexSet(Set<Vertex> adjacentVertexList ){
+    this.adjacentVertexSet = adjacentVertexList; 
   } 
 
   public Expenses getData(){

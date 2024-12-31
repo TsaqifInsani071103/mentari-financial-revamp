@@ -112,9 +112,9 @@ public class ExpenseStatementHandlerTest {
 
     assertEquals(4, dataHandler.getExpenseToVertexMap().size());
     assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexList().size());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexList().size());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexList().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
 
     String validFormula2 = String.format("MULTIPLY(%s,%s)", expense2.getId(), expense1.getId());
     dataHandler.ifEquationValidSetExpenseValue(expense4, validFormula2);
@@ -124,9 +124,9 @@ public class ExpenseStatementHandlerTest {
     assertEquals(5, dataHandler.getExpenseToVertexMap().size());
     assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
     assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense4).getIndegree());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexList().size());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexList().size());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexList().size());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
 
     String invalidFormula = String.format("MULTIPLYawwd(%s,%s)", expense2.getId(), expense1.getId());
     dataHandler.ifEquationValidSetExpenseValue(expense4, invalidFormula);
@@ -134,9 +134,9 @@ public class ExpenseStatementHandlerTest {
     assertEquals(5, dataHandler.getExpenseToVertexMap().size());
     assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
     assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense4).getIndegree());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexList().size());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexList().size());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexList().size());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
+    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
 
 
 
