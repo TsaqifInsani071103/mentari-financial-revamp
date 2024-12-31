@@ -63,7 +63,7 @@ public class DAGVertexTest {
     AcyclicGraphHandler dag2 = new AcyclicGraphHandler(getDeepCopy2(expenseToVertexMap));
     // dag2.makeSortedArrayIfAcyclic();
     Expenses[] sortedArray2 = dag2.getTopSortArray();
-    System.out.println(Arrays.toString(sortedArray2));
+    // System.out.println(Arrays.toString(sortedArray2));
     assertNull(sortedArray2);
   
   } 

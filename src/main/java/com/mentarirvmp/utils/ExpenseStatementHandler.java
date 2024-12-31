@@ -64,11 +64,13 @@ public class ExpenseStatementHandler implements DataHandler{
 
       expense.setEquation(equation); 
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
-      AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler(this.expenseToVertexMap);
-      // if(dependencyResolver.getTopSortedArray() != null){
-
+      AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler(this.expenseToVertexMap, this);
+      // if(dependencyResolver.getTopSortArray() != null){
+      //   //this means that the graph is acyclic and therefore we can refresh the values of the expenses 
+      //   dependencyResolver.refreshExpenseValuesProceeding(expense);
       // }
       expense.setValue(value); 
+
       //set value by using the DAG algos here
       //only set value if the equation isn't cyclic 
       //So basically, we'll only be updating the values of the proceeding expenses that depend on this current expense's refreshed value. 

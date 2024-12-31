@@ -16,12 +16,20 @@ public class AcyclicGraphHandler {
   private Map<Expenses, Vertex> expenseToVertexMap;
   private Expenses[] topSortArray;
   private int NUMBER_OF_VERTICES; 
+  private ExpenseStatementHandler dataHandler; 
 
   public AcyclicGraphHandler(Map<Expenses, Vertex> expenseToVertexMap){
+    initializeDAGHandler(expenseToVertexMap);
+  }
+  public AcyclicGraphHandler(Map<Expenses, Vertex> expenseToVertexMap, ExpenseStatementHandler dataHandler){
+    initializeDAGHandler(expenseToVertexMap);
+    this.dataHandler = dataHandler; 
+  }
+
+  public void initializeDAGHandler(Map<Expenses, Vertex> expenseToVertexMap){
     this.expenseToVertexMap = new HashMap<>(expenseToVertexMap);
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
-    this.topSortArray = new Expenses[NUMBER_OF_VERTICES]; 
-  }
+  } 
 
   // public Expenses[] getTopSortArray(){
   //   return this.topSortArray;
@@ -33,7 +41,12 @@ public class AcyclicGraphHandler {
   //we'll loop through the map and find a node that has an empty adjacency list. 
   //if such a node does not exist, then the dependency is circular. 
 
-  public Expenses[] getTopSortArray(){
+  public Expenses[] getTopSortArray(){ 
+    if(this.topSortArray != null){
+      return this.topSortArray;
+    }else{
+      this.topSortArray = new Expenses[this.NUMBER_OF_VERTICES];
+    }
     int counter = 0; 
     Queue<Vertex> queue = new ArrayDeque<>();
     for(Expenses expense: expenseToVertexMap.keySet()){
@@ -64,6 +77,21 @@ public class AcyclicGraphHandler {
 
 
   } 
+
+  public void refreshExpenseValuesProceeding(Expenses expense){
+    boolean startingPointFound = false; 
+    for(int i = 0; i < this.topSortArray.length;i++){
+      Expenses currentExpense = topSortArray[i]; 
+      if(startingPointFound){
+        // topSortArray[i].
+        dataHandler.ifEquationValidSetExpenseValue(currentExpense, currentExpense.getEquation());
+      }
+      if(currentExpense == expense){
+        startingPointFound = true; 
+      } 
+    }
+
+  }
 
 
   
