@@ -2,6 +2,7 @@ package com.mentarirvmp.utils;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -29,42 +30,23 @@ public class AcyclicGraphHandler {
     //we need recursion 
     for(Expenses expense: expenseToVertexMap.keySet()){
       Vertex oriVertex = expenseToVertexMap.get(expense);
-      Vertex copyVertex = getDeepCopyVertex(oriVertex);
+      Vertex copyVertex = new Vertex(oriVertex.getData());
+      copyVertex.setIndigree(oriVertex.getIndegree());
       deepCopy.put(expense, copyVertex);
+
+      for(Vertex adjVertex: oriVertex.getAdjacentVertexSet()){
+        Vertex copyAdjVertex = new Vertex(adjVertex.getData());
+        copyVertex.addDirectedEdgeToward(copyAdjVertex);
+        // copyAdjVertex.setIndigree(adjVertex.getIndegree());
+      }
+
     }
-    printMapContents(expenseToVertexMap, "ORIGINAL");
     printMapContents(deepCopy, "COPY");
+    printMapContents(expenseToVertexMap, "ORIGINAL");
     return deepCopy;
   } 
 
-  private Vertex getDeepCopyVertex(Vertex vertex){
-    Vertex oriVertex = vertex; 
-    Vertex copyVertex = new Vertex(vertex.getData());
-    copyVertex.setIndigree(oriVertex.getIndegree());
-    for(Vertex adjVertex: oriVertex.getAdjacentVertexSet()){
-      Vertex copyAdjVertex = getDeepCopyVertex(adjVertex);
-      copyVertex.addDirectedEdgeToward(copyAdjVertex);
-    }
 
-    return copyVertex;
-
-  } 
-
-  private void printMapContents(Map<Expenses, Vertex> map, String name){
-    int total = 0; 
-    for(Expenses expense: map.keySet()){
-      System.out.println("MAP NAME: " + name);
-      System.out.println("KEY: " + expense);
-      Vertex vertex = map.get(expense);
-      System.out.println("-Vertex: " + vertex);
-      System.out.println("--Indigree: " + vertex.getIndegree());
-      total += vertex.getIndegree();
-      System.out.println("---adjList: " + vertex.getAdjacentVertexSet().toString());
-      System.out.println();
-    }
-
-    System.out.println("TOTAL "+ name + " INDEGREE: " + total);
-  } 
 
   // public Expenses[] getTopSortArray(){
   //   return this.topSortArray;
@@ -86,8 +68,10 @@ public class AcyclicGraphHandler {
     Queue<Vertex> queue = new ArrayDeque<>();
     for(Expenses expense: expenseToVertexMap.keySet()){
       Vertex vertex = expenseToVertexMap.get(expense);
+      // System.out.println("VERTEX: " + vertex + ", INDEGREE: " + vertex.getIndegree());
       if(vertex.getIndegree() == 0){
         queue.offer(vertex); 
+        System.out.println("VERTEX: " + vertex);
       };
     }
 
@@ -96,6 +80,7 @@ public class AcyclicGraphHandler {
       topSortArray[counter] = vertex.getData(); 
       counter++; 
       for(Vertex adjacentVertex: vertex.getAdjacentVertexSet()){
+        System.out.println("ADJ VERTEX: " + adjacentVertex + ", INDEGREE: " + adjacentVertex.getIndegree());
         adjacentVertex.decrementIndegree();
         if(adjacentVertex.getIndegree() == 0){
           queue.offer(adjacentVertex);
@@ -127,6 +112,22 @@ public class AcyclicGraphHandler {
     }
 
   }
+
+  private void printMapContents(Map<Expenses, Vertex> map, String name){
+    int total = 0; 
+    for(Expenses expense: map.keySet()){
+      System.out.println("MAP NAME: " + name);
+      System.out.println("KEY: " + expense);
+      Vertex vertex = map.get(expense);
+      System.out.println("-Vertex: " + vertex);
+      System.out.println("--Indigree: " + vertex.getIndegree());
+      total += vertex.getIndegree();
+      System.out.println("---adjList: " + vertex.getAdjacentVertexSet().toString());
+      System.out.println();
+    }
+
+    System.out.println("TOTAL "+ name + " INDEGREE: " + total);
+  } 
 
 
   
