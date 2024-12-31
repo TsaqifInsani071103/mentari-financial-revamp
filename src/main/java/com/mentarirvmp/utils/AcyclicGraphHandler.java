@@ -25,7 +25,7 @@ public class AcyclicGraphHandler {
 
   private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
     if(expenseToVertexMap.size() == 0) return null;
-    Map<Expenses, Vertex> deepCopy = expenseToVertexMap;
+    Map<Expenses, Vertex> deepCopy = new HashMap<>();
     //we need recursion 
     for(Expenses expense: expenseToVertexMap.keySet()){
       Vertex oriVertex = expenseToVertexMap.get(expense);
@@ -33,7 +33,7 @@ public class AcyclicGraphHandler {
       deepCopy.put(expense, copyVertex);
     }
     printMapContents(expenseToVertexMap, "ORIGINAL");
-    // printMapContents(deepCopy, "COPY");
+    printMapContents(deepCopy, "COPY");
     return deepCopy;
   } 
 
