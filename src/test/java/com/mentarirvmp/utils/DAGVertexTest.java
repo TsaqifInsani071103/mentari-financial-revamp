@@ -8,12 +8,7 @@ import com.mentarirvmp.utils.AcyclicGraphHandler;
 
 public class DAGVertexTest {
   
-  @Test
-  public void testAddToAdjacencyVertexList(){
-
-
-    
-  }
+  
 
   //under the prequisite that the equation is VALID!! 
   @Test 

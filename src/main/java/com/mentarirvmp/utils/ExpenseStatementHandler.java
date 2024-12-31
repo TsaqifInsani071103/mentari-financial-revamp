@@ -63,11 +63,12 @@ public class ExpenseStatementHandler implements DataHandler{
       }
 
       expense.setEquation(equation); 
-      //set value by using the DAG algos here
-      //only set value if the equation isn't cyclic 
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
       expense.setValue(value); 
-      // System.out.println("This object's value is now: " + value);
+      //set value by using the DAG algos here
+      //only set value if the equation isn't cyclic 
+      //So basically, we'll only be updating the values of the proceeding expenses that depend on this current expense's refreshed value. 
+      //well have a flag in a for loop that basically checks that once we pass this current expense in the topsort, we'll update the values of the proceeding expenses. 
       return true; 
     }
     return false; 

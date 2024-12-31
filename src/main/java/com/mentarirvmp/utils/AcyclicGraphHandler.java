@@ -1,8 +1,11 @@
 package com.mentarirvmp.utils;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
 
 public class AcyclicGraphHandler {
@@ -10,12 +13,14 @@ public class AcyclicGraphHandler {
   //and methods for topsort 
   //methods to confirm acyclic graph? 
   //to make the directed edges between vertices. 
-  private Map<Expenses, ArrayList<Vertex>> expenseToVertexMap;
+  private Map<Expenses, Vertex> expenseToVertexMap;
   private Expenses[] topSortArray;
+  private int NUMBER_OF_VERTICES; 
 
-  public AcyclicGraphHandler(Map<Expenses, ArrayList<Vertex>> expenseToVertexMap){
+  public AcyclicGraphHandler(Map<Expenses, Vertex> expenseToVertexMap){
     this.expenseToVertexMap = expenseToVertexMap;
-    this.topSortArray = new Expenses[expenseToVertexMap.size()]; 
+    this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
+    this.topSortArray = new Expenses[NUMBER_OF_VERTICES]; 
   }
 
   //E2 = SUM(E3, E4) that means E2 depends on the values of E3 and E4, which means 
@@ -24,7 +29,27 @@ public class AcyclicGraphHandler {
   //we'll loop through the map and find a node that has an empty adjacency list. 
   //if such a node does not exist, then the dependency is circular. 
 
-  public void initializeTopSort(){
+  public void topSort(){
+    int counter = 0; 
+    Queue<Vertex> queue = new ArrayDeque<>();
+    for(Expenses expense: expenseToVertexMap.keySet()){
+      Vertex vertex = expenseToVertexMap.get(expense);
+      if(vertex.getIndegree() == 0){
+        queue.offer(vertex); 
+      };
+    }
+
+    while(!queue.isEmpty()){
+      Vertex vertex = queue.poll(); 
+      topSortArray[counter] = vertex.getData(); 
+      counter++; 
+      for(Vertex adjacentVertex: vertex.getAdjacentVertexList()){
+        adjacentVertex.decrementIndegree();
+        if(adjacentVertex.getIndegree() == 0){
+          queue.offer(adjacentVertex);
+        }
+      }
+    } 
 
   } 
 
