@@ -23,29 +23,43 @@ public class AcyclicGraphHandler {
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   }
 
-
-
-
   private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
     if(expenseToVertexMap.size() == 0) return null;
     Map<Expenses, Vertex> deepCopy = expenseToVertexMap;
-    //we dont need recursion since expenseToVertexMap is not a nested map or anything like that  
-    // for(Expenses expense: expenseToVertexMap.keySet()){
-    //   Vertex oriVertex = expenseToVertexMap.get(expense);
-    //   Vertex copyVertex = new Vertex(expense);
-
-    //   for(Vertex adjVertex: oriVertex.getAdjacentVertexSet()){
-    //     Vertex copyAdjacentVertex = new Vertex(adjVertex.getData());
-    //     copyVertex.addDirectedEdgeToward(copyAdjacentVertex);
-    //     // copyAdjacentVertex.setIndigree(adjVertex.getIndegree());
-    //   }
-    //   copyVertex.setIndigree(oriVertex.getIndegree());
-
-    //   deepCopy.put(expense, copyVertex);
-    // }
-
-
+    //we need recursion 
+    for(Expenses expense: expenseToVertexMap.keySet()){
+      Vertex oriVertex = expenseToVertexMap.get(expense);
+      Vertex copyVertex = getDeepCopyVertex(oriVertex);
+      deepCopy.put(expense, copyVertex);
+    }
+    printMapContents(expenseToVertexMap, "ORIGINAL");
+    // printMapContents(deepCopy, "COPY");
     return deepCopy;
+  } 
+
+  private Vertex getDeepCopyVertex(Vertex vertex){
+    Vertex oriVertex = vertex; 
+    Vertex copyVertex = new Vertex(vertex.getData());
+    copyVertex.setIndigree(copyVertex.getIndegree());
+    for(Vertex adjVertex: oriVertex.getAdjacentVertexSet()){
+      Vertex copyAdjVertex = getDeepCopyVertex(adjVertex);
+      copyVertex.addDirectedEdgeToward(copyAdjVertex);
+    }
+
+    return copyVertex;
+
+  } 
+
+  private void printMapContents(Map<Expenses, Vertex> map, String name){
+    for(Expenses expense: map.keySet()){
+      System.out.println("MAP NAME: " + name);
+      System.out.println("KEY: " + expense);
+      Vertex vertex = map.get(expense);
+      System.out.println("-Vertex: " + vertex);
+      System.out.println("--Indigree: " + vertex.getIndegree());
+      System.out.println("---adjList: " + vertex.getAdjacentVertexSet().toString());
+      System.out.println();
+    }
   } 
 
   // public Expenses[] getTopSortArray(){
