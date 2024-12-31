@@ -30,10 +30,6 @@ public class ExpenseStatementHandler implements DataHandler{
     return expenseToVertexMap;
   }
 
-  // //I have yet to decide if I need this exclusive functionality or not. 
-  // protected void resetExpenseToVertexMap(){
-
-  // } 
 
   @Override
   public String getValueById(String ID) {

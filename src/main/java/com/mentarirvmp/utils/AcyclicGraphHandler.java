@@ -93,6 +93,7 @@ public class AcyclicGraphHandler {
       if(startingPointFound){
         // topSortArray[i].
         dataHandler.ifEquationValidSetExpenseValue(currentExpense, currentExpense.getEquation());
+        System.out.println("THE VALUE OF: " + currentExpense.getName() + "HAS BEEN UPDATED TO: " + currentExpense.getValue());
       }
       if(currentExpense == expense){
         startingPointFound = true; 
