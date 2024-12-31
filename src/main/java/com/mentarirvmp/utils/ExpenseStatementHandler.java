@@ -18,7 +18,7 @@ public class ExpenseStatementHandler implements DataHandler{
   private Formula formulaObject = new Formula(this); 
 
   private ArrayList<Expenses> validExpensesArray = new ArrayList<>();
-  private Map<Expenses, ArrayList<Expenses>> expenseVertexMap = new HashMap<>();
+  private Map<Expenses, Vertex> expenseToVertexMap = new HashMap<>();
 
 
   public ExpenseStatementHandler(Statement statement){
@@ -26,8 +26,8 @@ public class ExpenseStatementHandler implements DataHandler{
   }
 
   //this reveals our inner data which we don't really want? But its the ExpenseStatementHandler anyways so I shouldn't mind it. 
-  protected Map<Expenses, ArrayList<Expenses>>  getExpenseVertexMap(){
-    return expenseVertexMap;
+  protected Map<Expenses, Vertex>  getExpenseToVertexMap(){
+    return expenseToVertexMap;
   }
 
   @Override
@@ -50,11 +50,17 @@ public class ExpenseStatementHandler implements DataHandler{
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
     //RESETTING VALID EXPENSES STACK
     this.validExpensesArray = new ArrayList<>(); 
-    this.expenseVertexMap.put(expense, new ArrayList<Expenses>());
+    this.expenseToVertexMap.put(expense, new Vertex(expense));
 
     if(this.formulaObject.isFormulaValid(equation)){
       //side effect 
-      this.expenseVertexMap.put(expense, this.validExpensesArray); 
+      // this.expenseVertexMap.put(expense, this.validExpensesArray); 
+      for(int i = 0; i < validExpensesArray.size() ; i++){
+        Expenses independentExpense = validExpensesArray.get(i);
+        Vertex newVertex = new Vertex(independentExpense); 
+        newVertex.addDirectedEdgeToward(expenseToVertexMap.get(expense));
+        this.expenseToVertexMap.put(independentExpense, newVertex);
+      }
 
       expense.setEquation(equation); 
       //set value by using the DAG algos here

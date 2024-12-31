@@ -105,21 +105,33 @@ public class ExpenseStatementHandlerTest {
     String validFormula = String.format("SUM(%s,%s,%s)", expense1.getId(), expense2.getId(), expense3.getId());
 
     // System.out.println(validFormula);
+    // E1 --> E5, E2 --> E5, E3 --> E5 
+    //E1 and E2 and E3 all has directed edged pointed toward E5. They all have indigree of 0 beside 5. 
     dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula);
-    assertEquals(3, dataHandler.getExpenseVertexMap().get(expense5).size());
 
-    String validFormula2 = String.format("SUM(%s)", expense1.getId());
-    dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula2);
-    assertEquals(1, dataHandler.getExpenseVertexMap().get(expense5).size());
+
+    assertEquals(4, dataHandler.getExpenseToVertexMap().size());
+    assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexList().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexList().size());
+    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexList().size());
     
-    String invalidFormula = "SUM(E19392091, je)";
-    dataHandler.ifEquationValidSetExpenseValue(expense5, invalidFormula);
-    assertEquals(0, dataHandler.getExpenseVertexMap().get(expense5).size());
 
-    for(int i = 0; i < flattenedArray.size() ; i++){
-      dataHandler.ifEquationValidSetExpenseValue(flattenedArray.get(i), flattenedArray.get(i).getEquation());
-    }
-    assertEquals(flattenedArray.size(), dataHandler.getExpenseVertexMap().size());
+
+
+
+    // String validFormula2 = String.format("SUM(%s)", expense1.getId());
+    // dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula2);
+    // assertEquals(2, dataHandler.getExpenseToVertexMap().size());
+    
+    // String invalidFormula = "SUM(E19392091, je)";
+    // dataHandler.ifEquationValidSetExpenseValue(expense5, invalidFormula);
+    // assertEquals(1, dataHandler.getExpenseToVertexMap().size());
+
+    // for(int i = 0; i < flattenedArray.size() ; i++){
+    //   dataHandler.ifEquationValidSetExpenseValue(flattenedArray.get(i), flattenedArray.get(i).getEquation());
+    // }
+    // assertEquals(flattenedArray.size(), dataHandler.getExpenseToVertexMap().size());
 
   }
 

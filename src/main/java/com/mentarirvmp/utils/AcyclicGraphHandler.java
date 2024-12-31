@@ -11,10 +11,11 @@ public class AcyclicGraphHandler {
   //methods to confirm acyclic graph? 
   //to make the directed edges between vertices. 
   private Map<Expenses, ArrayList<Expenses>> expenseVertexMap;
-  private ArrayList<Expenses> topSortArray = new ArrayList<>();
+  private Expenses[] topSortArray;
 
   public AcyclicGraphHandler(Map<Expenses, ArrayList<Expenses>> expenseVertexMap){
     this.expenseVertexMap = expenseVertexMap;
+    this.topSortArray = new Expenses[expenseVertexMap.size()]; 
   }
 
   //E2 = SUM(E3, E4) that means E2 depends on the values of E3 and E4, which means 
@@ -26,6 +27,8 @@ public class AcyclicGraphHandler {
   public void initializeTopSort(){
 
   } 
+
+
   
 }
  
