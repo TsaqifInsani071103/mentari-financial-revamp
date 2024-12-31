@@ -92,8 +92,8 @@ List<Map.Entry<Expenses, Vertex>> entries = new ArrayList<>(deepCopy.entrySet())
     .map(Map.Entry::getValue)                      // Map to the value
     .findFirst()                                   // Get the first match (if any)
     .orElse(null);   
-    System.out.println(one.toString());
-    System.out.println(two.toString());
+    // System.out.println(one.toString());
+    // System.out.println(two.toString());
 
     two.addDirectedEdgeToward(one);
     one.addDirectedEdgeToward(two);
