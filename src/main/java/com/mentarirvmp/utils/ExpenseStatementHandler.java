@@ -1,6 +1,7 @@
 package com.mentarirvmp.utils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -55,7 +56,6 @@ public class ExpenseStatementHandler implements DataHandler{
 
     if(this.formulaObject.isFormulaValid(equation)){
       //side effect 
-      // this.expenseVertexMap.put(expense, this.validExpensesArray); 
       for(int i = 0; i < validExpensesArray.size() ; i++){
         Expenses independentExpense = validExpensesArray.get(i);
         Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
@@ -68,9 +68,12 @@ public class ExpenseStatementHandler implements DataHandler{
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
       AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler(this.expenseToVertexMap);
       //update the expense value only if the equation does not resolve to be cyclic. 
-      if(dependencyResolver.getTopSortArray() != null){
+      //temporary field 
+      Expenses[] topSort = dependencyResolver.getTopSortArray();
+      if(topSort != null){
         expense.setValue(value); 
         dependencyResolver.refreshExpenseValuesProceeding(expense, this);
+        // System.out.println(Arrays.toString(topSort));
       }
       return true; 
     }
