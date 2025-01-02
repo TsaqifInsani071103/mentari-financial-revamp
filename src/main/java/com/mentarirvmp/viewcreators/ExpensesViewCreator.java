@@ -98,6 +98,7 @@ public class ExpensesViewCreator implements ViewCreator {
     });
   }
 
+  //this is only to toggle value and equation UI not to set the value of the expense itself. 
   private void addFocusListener(TextField textField) {
     textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
       toggleChangedByListener();
@@ -105,11 +106,8 @@ public class ExpensesViewCreator implements ViewCreator {
         textField.setText(this.currentExpense.getEquation());
       } else { // Loses focus
         // getAssociatedStatement().updateFormulas();
-        String value = this.dataHandler.getDecimalValueFromEquation(this.currentExpense.getEquation()).toString();
+        String value = this.currentExpense.getValue(); 
         textField.setText(value);
-
-        //This is a hardcoded thing right now, we'll have to do this with DAG later 
-        this.currentExpense.setValue(value);
        
         
       }
