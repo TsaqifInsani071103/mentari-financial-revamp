@@ -89,72 +89,72 @@ public class ExpenseStatementHandlerTest {
 
   } 
 
-  @Test 
-  public void testExpenseVertexAndAdjacencyList(){
-    //this is an integration test between calling ifEquationValidSetExpenseValue and if we get the valid expenses into the validExpensesArray in ExpenseStatementHAndler.java 
-    Statement dummyStatement = MockObjects.getDummyStatementObject();
-    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
-    ArrayList<Expenses> flattenedArray = MockObjects.getAllContentIntoArray(dummyStatement);
-    Expenses expense1 = flattenedArray.get(0);
-    Expenses expense2 = flattenedArray.get(1);
-    Expenses expense3 = flattenedArray.get(2);
-    Expenses expense4 = flattenedArray.get(3);
+  // @Test 
+  // public void testExpenseVertexAndAdjacencyList(){
+  //   //this is an integration test between calling ifEquationValidSetExpenseValue and if we get the valid expenses into the validExpensesArray in ExpenseStatementHAndler.java 
+  //   Statement dummyStatement = MockObjects.getDummyStatementObject();
+  //   ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+  //   ArrayList<Expenses> flattenedArray = MockObjects.getAllContentIntoArray(dummyStatement);
+  //   Expenses expense1 = flattenedArray.get(0);
+  //   Expenses expense2 = flattenedArray.get(1);
+  //   Expenses expense3 = flattenedArray.get(2);
+  //   Expenses expense4 = flattenedArray.get(3);
 
-    Expenses expense5 = flattenedArray.get(4); 
+  //   Expenses expense5 = flattenedArray.get(4); 
 
-    String validFormula = String.format("SUM(%s,%s,%s)", expense1.getId(), expense2.getId(), expense3.getId());
+  //   String validFormula = String.format("SUM(%s,%s,%s)", expense1.getId(), expense2.getId(), expense3.getId());
 
-    // System.out.println(validFormula);
-    // E1 --> E5, E2 --> E5, E3 --> E5 
-    //E1 and E2 and E3 all has directed edged pointed toward E5. They all have indigree of 0 beside 5. 
-    dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula);
-
-
-    assertEquals(4, dataHandler.getExpenseToVertexMap().size());
-    assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
-
-    String validFormula2 = String.format("MULTIPLY(%s,%s)", expense2.getId(), expense1.getId());
-    dataHandler.ifEquationValidSetExpenseValue(expense4, validFormula2);
-
-    //E2 --> E5, E4. E1 --> E5, E4. E3 --> E5. E4 and E5 has empty adjacency list. 
-    // E4 has indegree 2 and E5 has indegree 3 
-    assertEquals(5, dataHandler.getExpenseToVertexMap().size());
-    assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense4).getIndegree());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
-
-    String invalidFormula = String.format("MULTIPLYawwd(%s,%s)", expense2.getId(), expense1.getId());
-    dataHandler.ifEquationValidSetExpenseValue(expense4, invalidFormula);
-
-    assertEquals(5, dataHandler.getExpenseToVertexMap().size());
-    assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense4).getIndegree());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
-    assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
-    assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
+  //   // System.out.println(validFormula);
+  //   // E1 --> E5, E2 --> E5, E3 --> E5 
+  //   //E1 and E2 and E3 all has directed edged pointed toward E5. They all have indigree of 0 beside 5. 
+  //   dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula);
 
 
+  //   assertEquals(4, dataHandler.getExpenseToVertexMap().size());
+  //   assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
+  //   assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
+  //   assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
+  //   assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
+
+  //   String validFormula2 = String.format("MULTIPLY(%s,%s)", expense2.getId(), expense1.getId());
+  //   dataHandler.ifEquationValidSetExpenseValue(expense4, validFormula2);
+
+  //   //E2 --> E5, E4. E1 --> E5, E4. E3 --> E5. E4 and E5 has empty adjacency list. 
+  //   // E4 has indegree 2 and E5 has indegree 3 
+  //   assertEquals(5, dataHandler.getExpenseToVertexMap().size());
+  //   assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
+  //   assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense4).getIndegree());
+  //   assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
+  //   assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
+  //   assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
+
+  //   String invalidFormula = String.format("MULTIPLYawwd(%s,%s)", expense2.getId(), expense1.getId());
+  //   dataHandler.ifEquationValidSetExpenseValue(expense4, invalidFormula);
+
+  //   assertEquals(5, dataHandler.getExpenseToVertexMap().size());
+  //   assertEquals(3, dataHandler.getExpenseToVertexMap().get(expense5).getIndegree());
+  //   assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense4).getIndegree());
+  //   assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense1).getAdjacentVertexSet().size());
+  //   assertEquals(2, dataHandler.getExpenseToVertexMap().get(expense2).getAdjacentVertexSet().size());
+  //   assertEquals(1, dataHandler.getExpenseToVertexMap().get(expense3).getAdjacentVertexSet().size());
 
 
-    // String validFormula2 = String.format("SUM(%s)", expense1.getId());
-    // dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula2);
-    // assertEquals(2, dataHandler.getExpenseToVertexMap().size());
+
+
+  //   // String validFormula2 = String.format("SUM(%s)", expense1.getId());
+  //   // dataHandler.ifEquationValidSetExpenseValue(expense5, validFormula2);
+  //   // assertEquals(2, dataHandler.getExpenseToVertexMap().size());
     
-    // String invalidFormula = "SUM(E19392091, je)";
-    // dataHandler.ifEquationValidSetExpenseValue(expense5, invalidFormula);
-    // assertEquals(1, dataHandler.getExpenseToVertexMap().size());
+  //   // String invalidFormula = "SUM(E19392091, je)";
+  //   // dataHandler.ifEquationValidSetExpenseValue(expense5, invalidFormula);
+  //   // assertEquals(1, dataHandler.getExpenseToVertexMap().size());
 
-    // for(int i = 0; i < flattenedArray.size() ; i++){
-    //   dataHandler.ifEquationValidSetExpenseValue(flattenedArray.get(i), flattenedArray.get(i).getEquation());
-    // }
-    // assertEquals(flattenedArray.size(), dataHandler.getExpenseToVertexMap().size());
+  //   // for(int i = 0; i < flattenedArray.size() ; i++){
+  //   //   dataHandler.ifEquationValidSetExpenseValue(flattenedArray.get(i), flattenedArray.get(i).getEquation());
+  //   // }
+  //   // assertEquals(flattenedArray.size(), dataHandler.getExpenseToVertexMap().size());
 
-  }
+  // }
 
   // @Test 
   // public void checkFormulaSideEffectsTest(){

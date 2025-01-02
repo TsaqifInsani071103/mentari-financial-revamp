@@ -18,8 +18,9 @@ public class ExpenseStatementHandler implements DataHandler{
   private Statement handledStatement; 
   private Formula formulaObject = new Formula(this); 
 
-  private ArrayList<Expenses> validExpensesArray = new ArrayList<>();
-  private Map<Expenses, Vertex> expenseToVertexMap = new HashMap<>();
+  private ArrayList<Expenses> validExpensesInEquation = new ArrayList<>();
+  private AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler();
+  
 
 
   public ExpenseStatementHandler(Statement statement){
@@ -27,9 +28,9 @@ public class ExpenseStatementHandler implements DataHandler{
   }
 
   //this reveals our inner data which we don't really want? But its the ExpenseStatementHandler anyways so I shouldn't mind it. 
-  protected Map<Expenses, Vertex>  getExpenseToVertexMap(){
-    return expenseToVertexMap;
-  }
+  // protected Map<Expenses, Vertex>  getExpenseToVertexMap(){
+  //   return expenseToVertexMap;
+  // }
 
 
   @Override
@@ -40,7 +41,7 @@ public class ExpenseStatementHandler implements DataHandler{
     checkedExpense=this.handledStatement.getExpenseById(ID);
     if(checkedExpense != Expenses.INVALID_EXPENSE){
       //SIDE EFFECT 
-      this.validExpensesArray.add(checkedExpense); 
+      this.validExpensesInEquation.add(checkedExpense); 
 
       actualExpenseValue = checkedExpense.getValue(); 
       return actualExpenseValue; 
@@ -51,24 +52,12 @@ public class ExpenseStatementHandler implements DataHandler{
 
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
     //RESETTING VALID EXPENSES STACK
-    this.validExpensesArray = new ArrayList<>(); 
-    if(this.expenseToVertexMap.get(expense) == null) this.expenseToVertexMap.put(expense, new Vertex(expense));
-
+    this.validExpensesInEquation = new ArrayList<>(); 
     if(this.formulaObject.isFormulaValid(equation)){
-      //side effect 
-      for(int i = 0; i < validExpensesArray.size() ; i++){
-        Expenses independentExpense = validExpensesArray.get(i);
-        Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
-
-        newVertex.addDirectedEdgeToward(expenseToVertexMap.get(expense));
-        this.expenseToVertexMap.put(independentExpense, newVertex);
-      }
-
+      this.dependencyResolver.notifyOfValidExpenses(this.validExpensesInEquation);
+      this.dependencyResolver.putExpenseIntoDependencyGraph(expense);
       expense.setEquation(equation); 
       String value = this.formulaObject.getValueWhenFormulaValid().toString();
-      AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler(this.expenseToVertexMap);
-      //update the expense value only if the equation does not resolve to be cyclic. 
-      //temporary field 
       Expenses[] topSort = dependencyResolver.getTopSortArray();
       if(topSort != null){
         expense.setValue(value); 

@@ -15,38 +15,56 @@ public class AcyclicGraphHandler {
   //that means a node with indegree zero, which is what we want to find, will have an adjacency list of size 0 
   //we'll loop through the map and find a node that has an empty adjacency list. 
   //if such a node does not exist, then the dependency is circular. 
-  private Map<Expenses, Vertex> expenseToVertexMap;
+  private ArrayList<Expenses> validExpensesInEquation; 
+  private Map<Expenses, Vertex> expenseToVertexMap = new HashMap<>();
   private Expenses[] topSortArray;
   private int NUMBER_OF_VERTICES; 
 
 
-  public AcyclicGraphHandler(Map<Expenses, Vertex> expenseToVertexMap){
-    this.expenseToVertexMap = getDeepCopyMap(expenseToVertexMap);
-    this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
+  public AcyclicGraphHandler(){
   }
 
-  private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
-    if(expenseToVertexMap.size() == 0) return null;
-    Map<Expenses, Vertex> deepCopy = new HashMap<>();
-    //we need recursion 
-    for(Expenses expense: expenseToVertexMap.keySet()){
-      Vertex oriVertex = expenseToVertexMap.get(expense);
-      Vertex copyVertex = new Vertex(oriVertex.getData());
-      // copyVertex.setIndigree(oriVertex.getIndegree());
-      deepCopy.put(expense, copyVertex);
+  public void notifyOfValidExpenses(ArrayList<Expenses> validExpensesArray){
+    this.validExpensesInEquation = validExpensesArray;
+  } 
+
+  public void putExpenseIntoDependencyGraph(Expenses expense){
+    if(this.expenseToVertexMap.get(expense) == null) this.expenseToVertexMap.put(expense, new Vertex(expense));
+
+    for(int i = 0; i < this.validExpensesInEquation.size() ; i++){
+      Expenses independentExpense = validExpensesInEquation.get(i);
+      Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
+
+      newVertex.addDirectedEdgeToward(this.expenseToVertexMap.get(expense));
+      this.expenseToVertexMap.put(independentExpense, newVertex);
     }
 
-    for(Expenses expense: expenseToVertexMap.keySet()){
-      Vertex oriVertex = expenseToVertexMap.get(expense);
-      Vertex copyVertex = deepCopy.get(oriVertex.getData());
-      for(Vertex oriAdjVertex: oriVertex.getAdjacentVertexSet()){
-        copyVertex.addDirectedEdgeToward(deepCopy.get(oriAdjVertex.getData()));
-      }
-    } 
+    this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
 
-
-    return deepCopy;
   } 
+
+  // private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
+  //   if(expenseToVertexMap.size() == 0) return null;
+  //   Map<Expenses, Vertex> deepCopy = new HashMap<>();
+  //   //we need recursion 
+  //   for(Expenses expense: expenseToVertexMap.keySet()){
+  //     Vertex oriVertex = expenseToVertexMap.get(expense);
+  //     Vertex copyVertex = new Vertex(oriVertex.getData());
+  //     // copyVertex.setIndigree(oriVertex.getIndegree());
+  //     deepCopy.put(expense, copyVertex);
+  //   }
+
+  //   for(Expenses expense: expenseToVertexMap.keySet()){
+  //     Vertex oriVertex = expenseToVertexMap.get(expense);
+  //     Vertex copyVertex = deepCopy.get(oriVertex.getData());
+  //     for(Vertex oriAdjVertex: oriVertex.getAdjacentVertexSet()){
+  //       copyVertex.addDirectedEdgeToward(deepCopy.get(oriAdjVertex.getData()));
+  //     }
+  //   } 
+
+
+  //   return deepCopy;
+  // } 
 
   public Expenses[] getTopSortArray(){ 
     if(this.topSortArray != null){
