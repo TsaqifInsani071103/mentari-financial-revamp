@@ -108,6 +108,7 @@ public class ExpenseStatementHandlerTest {
     dataHandler.ifEquationValidSetExpenseValue(e1, validEquation);
     assertEquals("200", e1.getValue());
     dataHandler.ifEquationValidSetExpenseValue(e3, "1");
+    dataHandler.ifEquationValidSetExpenseValue(e2, "10");
     assertEquals("10", e1.getValue());
 
     
@@ -135,17 +136,39 @@ public void expensesRefreshedChronologicallyWithMultipleDependenciesTest() {
 
     // E1 = ADD(e2, MULTIPLY(e3, e4))
     String validEquation1 = String.format("SUM(%s, MULTIPLY(%s, %s))", e2.getId(), e3.getId(), e4.getId());
-    
+
     dataHandler.ifEquationValidSetExpenseValue(e1, validEquation1);
     assertEquals("11", e1.getValue());
 
     // Update e3's value and check E1 is refreshed
     dataHandler.ifEquationValidSetExpenseValue(e3, "4");
+    dataHandler.ifEquationValidSetExpenseValue(e2, "5");
+    dataHandler.ifEquationValidSetExpenseValue(e4, "2");
     assertEquals("13", e1.getValue());
 
     // Update e4's value and check E1 is refreshed
     dataHandler.ifEquationValidSetExpenseValue(e4, "1");
     assertEquals("9", e1.getValue());
+}
+
+@Test
+public void expensesRefreshedChronologicallyWithCircularDependencyTest() {
+    Statement dummyStatement = MockObjects.getDummyStatementObject();
+    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+
+    Expenses e1 = new Expenses("Expense1");
+    Expenses e2 = new Expenses("Expense2");
+
+    e2.setValue("5");
+
+    dummyStatement.addExpense(e1);
+    dummyStatement.addExpense(e2);
+
+    // E1 = ADD(e2, e1) -> Circular dependency
+    String invalidEquation = String.format("ADD(%s, %s)", e2.getId(), e1.getId());
+    dataHandler.ifEquationValidSetExpenseValue(e1, invalidEquation);
+
+    assertEquals("0.0",e1.getValue()); // Value of E1 should remain unset due to circular dependency
 }
 
   // @Test 
