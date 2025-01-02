@@ -29,13 +29,18 @@ public class AcyclicGraphHandler {
   } 
 
   public void putExpenseIntoDependencyGraph(Expenses expense){
-    if(this.expenseToVertexMap.get(expense) == null) this.expenseToVertexMap.put(expense, new Vertex(expense));
+    Vertex currentVertex = this.expenseToVertexMap.get(expense);
+    if( currentVertex == null) {
+      currentVertex = new Vertex(expense);
+      this.expenseToVertexMap.put(expense, currentVertex);
+    }
+    currentVertex.resetAdjacentVertexSet();
 
     for(int i = 0; i < this.validExpensesInEquation.size() ; i++){
       Expenses independentExpense = validExpensesInEquation.get(i);
       Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
 
-      newVertex.addDirectedEdgeToward(this.expenseToVertexMap.get(expense));
+      newVertex.addDirectedEdgeToward(currentVertex);
       this.expenseToVertexMap.put(independentExpense, newVertex);
     }
 
@@ -43,30 +48,10 @@ public class AcyclicGraphHandler {
 
   } 
 
-  // private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
-  //   if(expenseToVertexMap.size() == 0) return null;
-  //   Map<Expenses, Vertex> deepCopy = new HashMap<>();
-  //   //we need recursion 
-  //   for(Expenses expense: expenseToVertexMap.keySet()){
-  //     Vertex oriVertex = expenseToVertexMap.get(expense);
-  //     Vertex copyVertex = new Vertex(oriVertex.getData());
-  //     // copyVertex.setIndigree(oriVertex.getIndegree());
-  //     deepCopy.put(expense, copyVertex);
-  //   }
-
-  //   for(Expenses expense: expenseToVertexMap.keySet()){
-  //     Vertex oriVertex = expenseToVertexMap.get(expense);
-  //     Vertex copyVertex = deepCopy.get(oriVertex.getData());
-  //     for(Vertex oriAdjVertex: oriVertex.getAdjacentVertexSet()){
-  //       copyVertex.addDirectedEdgeToward(deepCopy.get(oriAdjVertex.getData()));
-  //     }
-  //   } 
-
-
-  //   return deepCopy;
-  // } 
+ 
 
   public Expenses[] getTopSortArray(){ 
+    Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
     if(this.topSortArray != null){
       return this.topSortArray;
     }else{
@@ -74,8 +59,8 @@ public class AcyclicGraphHandler {
     }
     int counter = 0; 
     Queue<Vertex> queue = new ArrayDeque<>();
-    for(Expenses expense: expenseToVertexMap.keySet()){
-      Vertex vertex = expenseToVertexMap.get(expense);
+    for(Expenses expense: expenseToVertexMapCopy.keySet()){
+      Vertex vertex = expenseToVertexMapCopy.get(expense);
       if(vertex.getIndegree() == 0){
         queue.offer(vertex); 
       };
@@ -102,6 +87,29 @@ public class AcyclicGraphHandler {
     }
 
 
+  } 
+
+  private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
+    if(expenseToVertexMap.size() == 0) return null;
+    Map<Expenses, Vertex> deepCopy = new HashMap<>();
+    //we need recursion 
+    for(Expenses expense: expenseToVertexMap.keySet()){
+      Vertex oriVertex = expenseToVertexMap.get(expense);
+      Vertex copyVertex = new Vertex(oriVertex.getData());
+      // copyVertex.setIndigree(oriVertex.getIndegree());
+      deepCopy.put(expense, copyVertex);
+    }
+
+    for(Expenses expense: expenseToVertexMap.keySet()){
+      Vertex oriVertex = expenseToVertexMap.get(expense);
+      Vertex copyVertex = deepCopy.get(oriVertex.getData());
+      for(Vertex oriAdjVertex: oriVertex.getAdjacentVertexSet()){
+        copyVertex.addDirectedEdgeToward(deepCopy.get(oriAdjVertex.getData()));
+      }
+    } 
+
+
+    return deepCopy;
   } 
 
   public void refreshExpenseValuesProceeding(Expenses expense, ExpenseStatementHandler dataHandler){

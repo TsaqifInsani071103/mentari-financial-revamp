@@ -24,6 +24,10 @@ public class Vertex {
     return this.adjacentVertexSet;
   }
 
+  public void resetAdjacentVertexSet(){
+    this.adjacentVertexSet = new HashSet<Vertex>(); 
+  } 
+
   protected void setAdjacentVertexSet(Set<Vertex> adjacentVertexList ){
     this.adjacentVertexSet = adjacentVertexList; 
   } 
