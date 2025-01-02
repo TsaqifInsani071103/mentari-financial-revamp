@@ -57,6 +57,7 @@ public class ExpenseStatementHandler implements DataHandler{
         String value = this.formulaObject.getValueWhenFormulaValid().toString();
         expense.setValue(value); 
         dependencyResolver.refreshExpenseValuesProceeding(expense, this);
+        System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }
       return true; 

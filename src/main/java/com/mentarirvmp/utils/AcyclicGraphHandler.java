@@ -109,7 +109,7 @@ public class AcyclicGraphHandler {
     boolean startingPointFound = false; 
     for(int i = 0; i < this.topSortArray.length;i++){
       Expenses currentExpense = topSortArray[i]; 
-      if(startingPointFound){
+      if(startingPointFound && this.expenseToVertexMap.get(expense).getAdjacentVertexSet().contains(this.expenseToVertexMap.get(currentExpense))){
         // topSortArray[i].
         dataHandler.ifEquationValidSetExpenseValue(currentExpense, currentExpense.getEquation());
         System.out.println("THE VALUE OF: " + currentExpense.getName() + "HAS BEEN UPDATED TO: " + currentExpense.getValue());
