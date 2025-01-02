@@ -26,6 +26,7 @@ public class Vertex {
 
   public void resetAdjacentVertexSet(){
     this.adjacentVertexSet = new HashSet<Vertex>(); 
+    this.indegree = 0; 
   } 
 
   protected void setAdjacentVertexSet(Set<Vertex> adjacentVertexList ){

@@ -29,8 +29,6 @@ public class AcyclicGraphHandler {
     if( currentVertex == null) {
       currentVertex = new Vertex(expense);
       this.expenseToVertexMap.put(expense, currentVertex);
-    }else{
-      // currentVertex.resetAdjacentVertexSet();
     }
     
     if(independentExpenses.size() > 0){
@@ -44,20 +42,14 @@ public class AcyclicGraphHandler {
     }
 
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
-
   } 
 
- 
+
 
   public Expenses[] getTopSortArray(){ 
     
     Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
-    printMapContents(expenseToVertexMapCopy, "A");
-    if(this.topSortArray != null){
-      return this.topSortArray;
-    }else{
-      this.topSortArray = new Expenses[this.NUMBER_OF_VERTICES];
-    }
+    this.topSortArray = new Expenses[this.NUMBER_OF_VERTICES];
     int counter = 0; 
     Queue<Vertex> queue = new ArrayDeque<>();
     for(Expenses expense: expenseToVertexMapCopy.keySet()){
@@ -87,8 +79,6 @@ public class AcyclicGraphHandler {
     }else{
       return this.topSortArray;
     }
-
-
 
   } 
 

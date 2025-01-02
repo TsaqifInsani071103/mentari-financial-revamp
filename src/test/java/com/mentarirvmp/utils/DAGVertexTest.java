@@ -52,18 +52,16 @@ public class DAGVertexTest {
     Expenses[] expectedSort = new Expenses[]{E1, E2, E4, E3};
 
     Expenses[] sortedArray = dag.getTopSortArray();
-    System.out.println(Arrays.toString(sortedArray));
     assertNotNull(sortedArray);
     for(int i =0; i<sortedArray.length;i++){
       assertEquals(sortedArray[i].getName(), expectedSort[i].getName());
     }
 
     // //this is a cyclical sort 
-    // vertex2.addDirectedEdgeToward(vertex1);
-    // AcyclicGraphHandler dag2 = new AcyclicGraphHandler(expenseToVertexMap);
-    // Expenses[] sortedArray2 = dag2.getTopSortArray();
-    // System.out.println(Arrays.toString(sortedArray2));
-    // assertNull(sortedArray2);
+    ArrayList<Expenses> dependencies1 = new ArrayList<>(Arrays.asList(E2));
+    dag.initializeExpenseAndDependencies(E1, dependencies1);
+    Expenses[] sortedArray2 = dag.getTopSortArray();
+    assertNull(sortedArray2);
   
   } 
 
