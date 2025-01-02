@@ -29,9 +29,10 @@ public class AcyclicGraphHandler {
     if( currentVertex == null) {
       currentVertex = new Vertex(expense);
       this.expenseToVertexMap.put(expense, currentVertex);
+    }else{
+      // currentVertex.resetAdjacentVertexSet();
     }
-    currentVertex.resetAdjacentVertexSet();
-
+    
     if(independentExpenses.size() > 0){
       for(int i = 0; i < independentExpenses.size() ; i++){
         Expenses independentExpense = independentExpenses.get(i);
@@ -49,7 +50,9 @@ public class AcyclicGraphHandler {
  
 
   public Expenses[] getTopSortArray(){ 
+    
     Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
+    printMapContents(expenseToVertexMapCopy, "A");
     if(this.topSortArray != null){
       return this.topSortArray;
     }else{
@@ -77,12 +80,14 @@ public class AcyclicGraphHandler {
       }
     } 
 
+
     //this means that the graph is cyclic. 
     if(counter != this.NUMBER_OF_VERTICES){
       return null; 
     }else{
       return this.topSortArray;
     }
+
 
 
   } 
@@ -128,8 +133,8 @@ public class AcyclicGraphHandler {
 
   private void printMapContents(Map<Expenses, Vertex> map, String name){
     int total = 0; 
+    System.out.println("MAP NAME: " + name);
     for(Expenses expense: map.keySet()){
-      System.out.println("MAP NAME: " + name);
       System.out.println("KEY: " + expense);
       Vertex vertex = map.get(expense);
       System.out.println("-Vertex: " + vertex);

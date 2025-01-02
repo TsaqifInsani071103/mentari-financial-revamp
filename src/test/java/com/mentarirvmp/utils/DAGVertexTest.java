@@ -36,12 +36,18 @@ public class DAGVertexTest {
     // first graph = 1 --> 2, 3. 2--> 4. 4 --> 3
     //this should be an acylic graph where the topological sort is 
     //1,2,4,3 
-    ArrayList<Expenses> e1Dependencies = new ArrayList<>(Arrays.asList(E2, E3));
-    dag.initializeExpenseAndDependencies(E1, e1Dependencies);
-    ArrayList<Expenses> e2Dependencies = new ArrayList<>(Arrays.asList(E4));
-    dag.initializeExpenseAndDependencies(E2, e2Dependencies);
-    ArrayList<Expenses> e4Dependencies = new ArrayList<>(Arrays.asList(E3));
-    dag.initializeExpenseAndDependencies(E4, e4Dependencies);
+    //E2 = SUM(E1) 
+    //E3 = SUM(E1, E4)
+    //E1 = none 
+    //E4 = SUM(E2)
+    
+    ArrayList<Expenses> dependencies2 = new ArrayList<>(Arrays.asList(E1)); 
+    ArrayList<Expenses> dependencies3 = new ArrayList<>(Arrays.asList(E1, E4)); 
+    ArrayList<Expenses> dependencies4 = new ArrayList<>(Arrays.asList(E2));
+    dag.initializeExpenseAndDependencies(E1, new ArrayList<>());
+    dag.initializeExpenseAndDependencies(E2, dependencies2); 
+    dag.initializeExpenseAndDependencies(E3, dependencies3); 
+    dag.initializeExpenseAndDependencies(E4, dependencies4); 
 
     Expenses[] expectedSort = new Expenses[]{E1, E2, E4, E3};
 
