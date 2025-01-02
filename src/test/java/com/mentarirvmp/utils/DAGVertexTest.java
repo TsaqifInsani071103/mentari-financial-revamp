@@ -30,9 +30,6 @@ public class DAGVertexTest {
 
     AcyclicGraphHandler dag = new AcyclicGraphHandler();
 
- 
-
-
     // first graph = 1 --> 2, 3. 2--> 4. 4 --> 3
     //this should be an acylic graph where the topological sort is 
     //1,2,4,3 
@@ -62,6 +59,40 @@ public class DAGVertexTest {
     dag.initializeExpenseAndDependencies(E1, dependencies1);
     Expenses[] sortedArray2 = dag.getTopSortArray();
     assertNull(sortedArray2);
+
+    // Test 5: Cyclic graph with a complex cycle
+    AcyclicGraphHandler dag5 = new AcyclicGraphHandler();
+    Expenses M = new Expenses("M");
+    Expenses N = new Expenses("N");
+    Expenses O = new Expenses("O");
+
+    dag5.initializeExpenseAndDependencies(M, new ArrayList<>(Arrays.asList(N)));
+    dag5.initializeExpenseAndDependencies(N, new ArrayList<>(Arrays.asList(O)));
+    dag5.initializeExpenseAndDependencies(O, new ArrayList<>(Arrays.asList(M)));
+
+    Expenses[] sortedArray5 = dag5.getTopSortArray();
+    assertNull(sortedArray5);
+
+
+    // Test 4: Complex acyclic graph
+    AcyclicGraphHandler dag4 = new AcyclicGraphHandler();
+    Expenses P = new Expenses("P");
+    Expenses Q = new Expenses("Q");
+    Expenses R = new Expenses("R");
+    Expenses S = new Expenses("S");
+
+    dag4.initializeExpenseAndDependencies(P, new ArrayList<>());
+    dag4.initializeExpenseAndDependencies(Q, new ArrayList<>(Arrays.asList(P)));
+    dag4.initializeExpenseAndDependencies(R, new ArrayList<>(Arrays.asList(P)));
+    dag4.initializeExpenseAndDependencies(S, new ArrayList<>(Arrays.asList(Q, R)));
+
+    // Expected order: P, Q, R, S
+    Expenses[] expectedSort4 = new Expenses[]{P, Q, R, S};
+    Expenses[] sortedArray4 = dag4.getTopSortArray();
+    assertNotNull(sortedArray4);
+    for (int i = 0; i < sortedArray4.length; i++) {
+        assertEquals(sortedArray4[i].getName(), expectedSort4[i].getName());
+    }
   
   } 
 

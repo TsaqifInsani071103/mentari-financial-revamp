@@ -27,12 +27,6 @@ public class ExpenseStatementHandler implements DataHandler{
     this.handledStatement = statement;
   }
 
-  //this reveals our inner data which we don't really want? But its the ExpenseStatementHandler anyways so I shouldn't mind it. 
-  // protected Map<Expenses, Vertex>  getExpenseToVertexMap(){
-  //   return expenseToVertexMap;
-  // }
-
-
   @Override
   public String getValueById(String ID) {
     String actualExpenseValue = "";
