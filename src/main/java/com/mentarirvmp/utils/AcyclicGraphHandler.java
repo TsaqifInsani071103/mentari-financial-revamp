@@ -15,7 +15,6 @@ public class AcyclicGraphHandler {
   //that means a node with indegree zero, which is what we want to find, will have an adjacency list of size 0 
   //we'll loop through the map and find a node that has an empty adjacency list. 
   //if such a node does not exist, then the dependency is circular. 
-  private ArrayList<Expenses> validExpensesInEquation; 
   private Map<Expenses, Vertex> expenseToVertexMap = new HashMap<>();
   private Expenses[] topSortArray;
   private int NUMBER_OF_VERTICES; 
@@ -24,11 +23,8 @@ public class AcyclicGraphHandler {
   public AcyclicGraphHandler(){
   }
 
-  public void notifyOfValidExpenses(ArrayList<Expenses> validExpensesArray){
-    this.validExpensesInEquation = validExpensesArray;
-  } 
 
-  public void putExpenseIntoDependencyGraph(Expenses expense){
+  public void initializeExpenseAndDependencies(Expenses expense, ArrayList<Expenses> independentExpenses){
     Vertex currentVertex = this.expenseToVertexMap.get(expense);
     if( currentVertex == null) {
       currentVertex = new Vertex(expense);
@@ -36,12 +32,14 @@ public class AcyclicGraphHandler {
     }
     currentVertex.resetAdjacentVertexSet();
 
-    for(int i = 0; i < this.validExpensesInEquation.size() ; i++){
-      Expenses independentExpense = validExpensesInEquation.get(i);
-      Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
-
-      newVertex.addDirectedEdgeToward(currentVertex);
-      this.expenseToVertexMap.put(independentExpense, newVertex);
+    if(independentExpenses.size() > 0){
+      for(int i = 0; i < independentExpenses.size() ; i++){
+        Expenses independentExpense = independentExpenses.get(i);
+        Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
+  
+        newVertex.addDirectedEdgeToward(currentVertex);
+        this.expenseToVertexMap.put(independentExpense, newVertex);
+      }
     }
 
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();

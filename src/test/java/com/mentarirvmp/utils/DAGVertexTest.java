@@ -19,54 +19,47 @@ public class DAGVertexTest {
   
 
   //under the prequisite that the equation is VALID!! 
-  // @Test 
-  // public void topologicalSortTest(){
-  //   //if no valid Expense ID I wont make a graph out of it. \
-  //   Map<Expenses, Vertex> expenseToVertexMap = new HashMap<>();
-  //   Expenses expense1= new Expenses("1");
-  //   Expenses expense2= new Expenses("2");
-  //   Expenses expense3= new Expenses("3");
-  //   Expenses expense4= new Expenses("4");
+  @Test 
+  public void topologicalSortTest(){
+    //if no valid Expense ID I wont make a graph out of it. \
 
-  //   Vertex vertex1 = new Vertex(expense1);
-  //   Vertex vertex2 = new Vertex(expense2);
-  //   Vertex vertex3 = new Vertex(expense3);
-  //   Vertex vertex4 = new Vertex(expense4);
+    Expenses E1= new Expenses("1");
+    Expenses E2= new Expenses("2");
+    Expenses E3= new Expenses("3");
+    Expenses E4= new Expenses("4");
+
+    AcyclicGraphHandler dag = new AcyclicGraphHandler();
+
  
 
-  //   expenseToVertexMap.put(expense1, vertex1);
-  //   expenseToVertexMap.put(expense2, vertex2);
-  //   expenseToVertexMap.put(expense3, vertex3);
-  //   expenseToVertexMap.put(expense4, vertex4);
 
+    // first graph = 1 --> 2, 3. 2--> 4. 4 --> 3
+    //this should be an acylic graph where the topological sort is 
+    //1,2,4,3 
+    ArrayList<Expenses> e1Dependencies = new ArrayList<>(Arrays.asList(E2, E3));
+    dag.initializeExpenseAndDependencies(E1, e1Dependencies);
+    ArrayList<Expenses> e2Dependencies = new ArrayList<>(Arrays.asList(E4));
+    dag.initializeExpenseAndDependencies(E2, e2Dependencies);
+    ArrayList<Expenses> e4Dependencies = new ArrayList<>(Arrays.asList(E3));
+    dag.initializeExpenseAndDependencies(E4, e4Dependencies);
 
-  //   // first graph = 1 --> 2, 3. 2--> 4. 4 --> 3
-  //   //this should be an acylic graph where the topological sort is 
-  //   //1,2,4,3 
-  //   vertex1.addDirectedEdgeToward(vertex2);
-  //   vertex1.addDirectedEdgeToward(vertex3);
-  //   vertex2.addDirectedEdgeToward(vertex4);
-  //   vertex4.addDirectedEdgeToward(vertex3);
+    Expenses[] expectedSort = new Expenses[]{E1, E2, E4, E3};
 
-  //   //REMEMBER THE INDEGREES HOMIE 
-  //   Expenses[] expectedSort = new Expenses[]{expense1,expense2,expense4,expense3};
-  //   AcyclicGraphHandler dag = new AcyclicGraphHandler(expenseToVertexMap);
-  //   // dag.makeSortedArrayIfAcyclic();
-  //   Expenses[] sortedArray = dag.getTopSortArray();
-  //   assertNotNull(sortedArray);
-  //   for(int i =0; i<sortedArray.length;i++){
-  //     assertEquals(sortedArray[i].getName(), expectedSort[i].getName());
-  //   }
+    Expenses[] sortedArray = dag.getTopSortArray();
+    System.out.println(Arrays.toString(sortedArray));
+    assertNotNull(sortedArray);
+    for(int i =0; i<sortedArray.length;i++){
+      assertEquals(sortedArray[i].getName(), expectedSort[i].getName());
+    }
 
-
-  //   // //this is a cyclical sort 
-  //   vertex2.addDirectedEdgeToward(vertex1);
-  //   AcyclicGraphHandler dag2 = new AcyclicGraphHandler(expenseToVertexMap);
-  //   Expenses[] sortedArray2 = dag2.getTopSortArray();
-  //   System.out.println(Arrays.toString(sortedArray2));
-  //   assertNull(sortedArray2);
+    // //this is a cyclical sort 
+    // vertex2.addDirectedEdgeToward(vertex1);
+    // AcyclicGraphHandler dag2 = new AcyclicGraphHandler(expenseToVertexMap);
+    // Expenses[] sortedArray2 = dag2.getTopSortArray();
+    // System.out.println(Arrays.toString(sortedArray2));
+    // assertNull(sortedArray2);
   
-  // } 
+  } 
 
 
 

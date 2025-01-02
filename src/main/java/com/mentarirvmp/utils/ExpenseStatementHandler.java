@@ -54,10 +54,9 @@ public class ExpenseStatementHandler implements DataHandler{
     //RESETTING VALID EXPENSES STACK
     this.validExpensesInEquation = new ArrayList<>(); 
     if(this.formulaObject.isFormulaValid(equation)){
-      
+
       expense.setEquation(equation); 
-      this.dependencyResolver.notifyOfValidExpenses(this.validExpensesInEquation);
-      this.dependencyResolver.putExpenseIntoDependencyGraph(expense);
+      this.dependencyResolver.initializeExpenseAndDependencies(expense, validExpensesInEquation);
       Expenses[] topSort = dependencyResolver.getTopSortArray();
 
       if(topSort != null){
