@@ -10,32 +10,32 @@ import com.mentarirvmp.statements.Statement;
 
 public class ExpenseStatementHandlerTest {
   
-  @Test 
-  public void getExpenseArrayFromEquationTest(){
-    Statement dummyStatement = new Statement("dummyStatement"); 
-    Expenses expense1 = new Expenses("expense1");
-    Expenses expense2 = new Expenses("expense2");
-    Expenses expense3 = new Expenses("expense3");
-    dummyStatement.addExpense(expense1);
-    dummyStatement.addExpense(expense2);
-    dummyStatement.addExpense(expense3);
+  // @Test 
+  // public void getExpenseArrayFromEquationTest(){
+  //   Statement dummyStatement = new Statement("dummyStatement"); 
+  //   Expenses expense1 = new Expenses("expense1");
+  //   Expenses expense2 = new Expenses("expense2");
+  //   Expenses expense3 = new Expenses("expense3");
+  //   dummyStatement.addExpense(expense1);
+  //   dummyStatement.addExpense(expense2);
+  //   dummyStatement.addExpense(expense3);
 
-    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
-    ArrayList<Expenses> actualArray = dataHandler.getExpenseArrayFromEquation("SUM(E1, MULTIPLY(E2, SUM(E3)))");
-    ArrayList<Expenses> expectedArray = new ArrayList<>();
-    expectedArray.add(expense1);
-    expectedArray.add(expense2);
-    expectedArray.add(expense3);
-    for(int i = 0; i < actualArray.size(); i++){
-      assertEquals(expectedArray.get(i), actualArray.get(i));
-    }
+  //   ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+  //   ArrayList<Expenses> actualArray = dataHandler.getExpenseArrayFromEquation("SUM(E1, MULTIPLY(E2, SUM(E3)))");
+  //   ArrayList<Expenses> expectedArray = new ArrayList<>();
+  //   expectedArray.add(expense1);
+  //   expectedArray.add(expense2);
+  //   expectedArray.add(expense3);
+  //   for(int i = 0; i < actualArray.size(); i++){
+  //     assertEquals(expectedArray.get(i), actualArray.get(i));
+  //   }
 
-    //valid equation but no Expense Id's
-    ArrayList<Expenses> actualArray2 = dataHandler.getExpenseArrayFromEquation("SUM(1,2,3)");
-    assertEquals(0, actualArray2.size()); 
+  //   //valid equation but no Expense Id's
+  //   ArrayList<Expenses> actualArray2 = dataHandler.getExpenseArrayFromEquation("SUM(1,2,3)");
+  //   assertEquals(0, actualArray2.size()); 
     
 
-  }
+  // }
 
   @Test
   public void getValueByIdTest(){
@@ -86,6 +86,31 @@ public class ExpenseStatementHandlerTest {
     dataHandler.setExpenseValueByFalseEquation(dummyExpense, falseEquation);
     assertEquals("0.0", dummyExpense.getValue()); 
 
+
+  } 
+
+  @Test 
+  public void expensesRefreshedChronologicallyTest(){
+    Statement dummyStatement = MockObjects.getDummyStatementObject();
+    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+
+    Expenses e1 = new Expenses("Expense1");
+    Expenses e2 = new Expenses("Expense2");
+    e2.setValue("10");
+    Expenses e3 = new Expenses("Expense3");
+    e3.setValue("20");
+    dummyStatement.addExpense(e1);
+    dummyStatement.addExpense(e2);
+    dummyStatement.addExpense(e3);
+
+    //E1 = MULTIPLY(e2,e3)
+    String validEquation = String.format("MULTIPLY(%s,%s)", e2.getId(), e3.getId());
+    dataHandler.ifEquationValidSetExpenseValue(e1, validEquation);
+    assertEquals("200", e1.getValue());
+    dataHandler.ifEquationValidSetExpenseValue(e3, "1");
+    assertEquals("10", e1.getValue());
+
+    
 
   } 
 

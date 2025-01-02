@@ -48,7 +48,7 @@ public class ExpenseStatementHandler implements DataHandler{
     //RESETTING VALID EXPENSES STACK
     this.validExpensesInEquation = new ArrayList<>(); 
     if(this.formulaObject.isFormulaValid(equation)){
-
+      // System.out.println("VALID EQUATION : " + equation);
       expense.setEquation(equation); 
       this.dependencyResolver.initializeExpenseAndDependencies(expense, validExpensesInEquation);
       Expenses[] topSort = dependencyResolver.getTopSortArray();
@@ -71,19 +71,19 @@ public class ExpenseStatementHandler implements DataHandler{
   } 
 
   //with the prerequisite that the equation is valid in the first place. 
-  protected ArrayList<Expenses> getExpenseArrayFromEquation(String equation){
-    ArrayList<Expenses> expenseArray = new ArrayList<>(); 
-    String regex = "\\bE\\d+\\b";
-    Pattern pattern = Pattern.compile(regex); 
-    Matcher matcher = pattern.matcher(equation); 
-    while(matcher.find()){
-      expenseArray.add(handledStatement.getExpenseById(matcher.group()));
-    }
+  // protected ArrayList<Expenses> getExpenseArrayFromEquation(String equation){
+  //   ArrayList<Expenses> expenseArray = new ArrayList<>(); 
+  //   String regex = "\\bE\\d+\\b";
+  //   Pattern pattern = Pattern.compile(regex); 
+  //   Matcher matcher = pattern.matcher(equation); 
+  //   while(matcher.find()){
+  //     expenseArray.add(handledStatement.getExpenseById(matcher.group()));
+  //   }
 
-    return expenseArray;
+  //   return expenseArray;
 
 
-  } 
+  // } 
 
   public boolean verifyEquationIntoFormulaNode(String equation){
     return this.formulaObject.isFormulaValid(equation);
