@@ -37,7 +37,7 @@ import javafx.scene.control.Control;
 
 
 public class ExpensesViewCreator implements ViewCreator {
-  private Expenses currentExpense; 
+  public Expenses currentExpense; 
   private transient TextField textFieldReference; 
   private ChildControllers controller; 
   //either use statement or statementExpenseHandler, we dont know yet. 
@@ -48,6 +48,8 @@ public class ExpensesViewCreator implements ViewCreator {
   public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
     this.currentExpense = expense; 
     this.dataHandler = dataHandler; 
+    dataHandler.addExpenseView(expense, this);
+
     //we'll initialize an expense dependency map here in dataHandler. 
     // dataHandler.ifEquationValidSetExpenseValue(expense, expense.getEquation());
 
@@ -96,6 +98,15 @@ public class ExpensesViewCreator implements ViewCreator {
         }
       }
     });
+  }
+
+  public void updateValueDisplay(){
+    if(textFieldReference != null) {
+      toggleChangedByListener();
+      textFieldReference.setText(this.currentExpense.getValue());
+      toggleChangedByListener();
+    }
+
   }
 
   //this is only to toggle value and equation UI not to set the value of the expense itself. 

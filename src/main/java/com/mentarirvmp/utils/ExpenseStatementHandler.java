@@ -13,12 +13,15 @@ import java.util.Stack;
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.Expenses;
 import com.mentarirvmp.utils.Formula;
+import com.mentarirvmp.viewcreators.ExpensesViewCreator;
+
 
 public class ExpenseStatementHandler implements DataHandler{
   private Statement handledStatement; 
   private Formula formulaObject = new Formula(this); 
 
   private ArrayList<Expenses> validExpensesInEquation = new ArrayList<>();
+  private Map<Expenses, ExpensesViewCreator> expenseToViewMap = new HashMap<>();
   private AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler();
   
 
@@ -26,6 +29,10 @@ public class ExpenseStatementHandler implements DataHandler{
   public ExpenseStatementHandler(Statement statement){
     this.handledStatement = statement;
   }
+
+  public void addExpenseView(Expenses expense, ExpensesViewCreator view){
+    this.expenseToViewMap.put(expense, view);
+  } 
 
   @Override
   public String getValueById(String ID) {
@@ -56,8 +63,18 @@ public class ExpenseStatementHandler implements DataHandler{
       if(topSort != null){
         String value = this.formulaObject.getValueWhenFormulaValid().toString();
         expense.setValue(value); 
-        dependencyResolver.refreshExpenseValuesProceeding(expense, this);
-        System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
+        ArrayList<Expenses> chronologicalArrays = dependencyResolver.getValuesProceeding(expense);
+        if(chronologicalArrays.size() > 0){
+          for(Expenses item : chronologicalArrays){
+            this.ifEquationValidSetExpenseValue(item, item.getEquation());
+            System.out.println("CHANGED THE VALUE OF: " + item.getName() + "   " + item.getValue());
+            if(this.expenseToViewMap.size() > 0){
+              this.expenseToViewMap.get(item).updateValueDisplay();
+            }
+          }
+        } 
+        // dependencyResolver.refreshExpenseValuesProceeding(expense, this);
+        // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }
       return true; 

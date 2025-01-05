@@ -78,8 +78,8 @@ public class StatementViewCreator implements ViewCreator {
   public TreeItem<Expenses> createTreeItem(Expenses expense) {
     checkForUpdatedExpenses(expense);
     TreeItem<Expenses> treeItem = new TreeItem<>(expense);
-    ExpensesViewCreator viewCreator = new ExpensesViewCreator(expense, this.dataHandler);
-    treeItem.setGraphic(viewCreator.getView());
+    // ExpensesViewCreator viewCreator = new ExpensesViewCreator(expense, this.dataHandler);
+    // treeItem.setGraphic(viewCreator.getView());
     treeItem.setExpanded(true);
     return treeItem;
   } 
@@ -161,7 +161,7 @@ public class StatementViewCreator implements ViewCreator {
   private TreeCell<Expenses> createTreeCell(){
     TreeCell<Expenses> newCell = new TreeCell<Expenses>(){
       @Override
-      protected void updateItem(Expenses itemExpense, boolean empty){
+      public void updateItem(Expenses itemExpense, boolean empty){
         super.updateItem(itemExpense, empty);
         if(empty){
           clearCell(this);
