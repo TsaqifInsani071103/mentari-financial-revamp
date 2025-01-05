@@ -106,8 +106,15 @@ public class ExpensesViewCreator implements ViewCreator {
       textFieldReference.setText(this.currentExpense.getValue());
       toggleChangedByListener();
     }
-
   }
+
+  public void updateFalseValue(){
+    toggleChangedByListener();
+    dataHandler.setExpenseValueByFalseEquation(currentExpense, this.currentExpense.getValue());
+    textFieldReference.getStyleClass().add("red-underline");
+    toggleChangedByListener();
+    
+  } 
 
   //this is only to toggle value and equation UI not to set the value of the expense itself. 
   private void addFocusListener(TextField textField) {

@@ -56,16 +56,21 @@ public class ExpenseStatementHandler implements DataHandler{
     this.validExpensesInEquation = new ArrayList<>(); 
     if(this.formulaObject.isFormulaValid(equation)){
       // System.out.println("EXPENSE + " + expense.getName() + "VALID EQUATION : " + equation);
-      expense.setEquation(equation); 
       this.dependencyResolver.initializeExpenseAndDependencies(expense, validExpensesInEquation);
       Expenses[] topSort = dependencyResolver.getTopSortArray();
 
       if(topSort != null){
+        expense.setEquation(equation); 
         String value = this.formulaObject.getValueWhenFormulaValid().toString();
         expense.setValue(value); 
         refreshExpenseValuesProceeding(expense);
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
+      }else{
+        //if the graph is cyclic, well set the equation to be the previous equation 
+        // this.expenseToViewMap.get(expense).updateFalseValue();
+
+
       }
       return true; 
     }
@@ -77,7 +82,7 @@ public class ExpenseStatementHandler implements DataHandler{
     if(chronologicalArrays.size() > 0){
       for(Expenses item : chronologicalArrays){
         this.ifEquationValidSetExpenseValue(item, item.getEquation());
-        System.out.println("CHANGED THE VALUE OF: " + item.getName() + "   " + item.getValue());
+        // System.out.println("CHANGED THE VALUE OF: " + item.getName() + "   " + item.getValue());
         if(this.expenseToViewMap.size() > 0){
           this.expenseToViewMap.get(item).updateValueDisplay();
         }
