@@ -63,23 +63,26 @@ public class ExpenseStatementHandler implements DataHandler{
       if(topSort != null){
         String value = this.formulaObject.getValueWhenFormulaValid().toString();
         expense.setValue(value); 
-        ArrayList<Expenses> chronologicalArrays = dependencyResolver.getValuesProceeding(expense);
-        if(chronologicalArrays.size() > 0){
-          for(Expenses item : chronologicalArrays){
-            this.ifEquationValidSetExpenseValue(item, item.getEquation());
-            System.out.println("CHANGED THE VALUE OF: " + item.getName() + "   " + item.getValue());
-            if(this.expenseToViewMap.size() > 0){
-              this.expenseToViewMap.get(item).updateValueDisplay();
-            }
-          }
-        } 
-        // dependencyResolver.refreshExpenseValuesProceeding(expense, this);
+        refreshExpenseValuesProceeding(expense);
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }
       return true; 
     }
     return false; 
+  } 
+
+  private void refreshExpenseValuesProceeding(Expenses expense){
+    ArrayList<Expenses> chronologicalArrays = dependencyResolver.getValuesProceeding(expense);
+    if(chronologicalArrays.size() > 0){
+      for(Expenses item : chronologicalArrays){
+        this.ifEquationValidSetExpenseValue(item, item.getEquation());
+        System.out.println("CHANGED THE VALUE OF: " + item.getName() + "   " + item.getValue());
+        if(this.expenseToViewMap.size() > 0){
+          this.expenseToViewMap.get(item).updateValueDisplay();
+        }
+      }
+    } 
   } 
 
 
