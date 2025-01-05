@@ -169,6 +169,11 @@ public class StatementViewCreator implements ViewCreator {
           updateCell(this, itemExpense);
         }
       }
+
+      // @Override
+      // public void startEdit(){
+
+      // }
     };
 
     return newCell; 
@@ -191,6 +196,7 @@ public class StatementViewCreator implements ViewCreator {
         // System.out.println("The name of the expense: " + item.getName() + " The value is: " + item.getValue());
         // cell.setContextMenu(getContextMenuItems(item));
     }
+
   }
 
 
