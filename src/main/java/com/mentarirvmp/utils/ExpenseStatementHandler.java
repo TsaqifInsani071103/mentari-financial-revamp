@@ -77,7 +77,7 @@ public class ExpenseStatementHandler implements DataHandler{
       }
       return true; 
     }
-    System.out.println(String.format("%s's new equation: %s as opposed to curret equation: , is FALSE!!! value: %s", expense.getName(), equation, expense.getEquation(), expense.getValue()));
+    // System.out.println(String.format("%s's new equation: %s as opposed to curret equation: , is FALSE!!! value: %s", expense.getName(), equation, expense.getEquation(), expense.getValue()));
     return false; 
   } 
 

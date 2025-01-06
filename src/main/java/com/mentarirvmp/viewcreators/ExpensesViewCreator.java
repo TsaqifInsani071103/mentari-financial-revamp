@@ -87,7 +87,7 @@ public class ExpensesViewCreator implements ViewCreator {
     textField.textProperty().addListener(new ChangeListener<String>(){
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-        System.out.println(currentExpense.getName() + " CHANGED BY LISTENER: " + changedByListener);
+        // System.out.println(currentExpense.getName() + " CHANGED BY LISTENER: " + changedByListener);
         if(!changedByListener){
           textFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
           if(dataHandler.ifEquationValidSetExpenseValue(currentExpense, newValue)){
