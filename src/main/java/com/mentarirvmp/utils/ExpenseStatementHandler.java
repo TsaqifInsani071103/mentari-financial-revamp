@@ -18,7 +18,7 @@ import com.mentarirvmp.viewcreators.ExpensesViewCreator;
 
 public class ExpenseStatementHandler implements DataHandler{
   private Statement handledStatement; 
-  private Formula formulaObject = new Formula(this); 
+  // private Formula formulaObject = new Formula(this); 
 
   private ArrayList<Expenses> validExpensesInEquation = new ArrayList<>();
   private Map<Expenses, ExpensesViewCreator> expenseToViewMap = new HashMap<>();
@@ -54,14 +54,15 @@ public class ExpenseStatementHandler implements DataHandler{
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
     //RESETTING VALID EXPENSES STACK
     this.validExpensesInEquation = new ArrayList<>(); 
-    if(this.formulaObject.isFormulaValid(equation)){
+    Formula formulaObject = new Formula(this);
+    if(formulaObject.isFormulaValid(equation)){
       // System.out.println("EXPENSE + " + expense.getName() + "VALID EQUATION : " + equation);
       this.dependencyResolver.initializeExpenseAndDependencies(expense, validExpensesInEquation);
       Expenses[] topSort = dependencyResolver.getTopSortArray();
 
       if(topSort != null){
         expense.setEquation(equation); 
-        String value = this.formulaObject.getValueWhenFormulaValid().toString();
+        String value = formulaObject.getValueWhenFormulaValid().toString();
         expense.setValue(value); 
         refreshExpenseValuesProceeding(expense);
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
@@ -74,6 +75,7 @@ public class ExpenseStatementHandler implements DataHandler{
       }
       return true; 
     }
+    System.out.println(String.format("%s's new equation: %s as opposed to curret equation: , is FALSE!!! value: %s", expense.getName(), equation, expense.getEquation(), expense.getValue()));
     return false; 
   } 
 
@@ -92,8 +94,9 @@ public class ExpenseStatementHandler implements DataHandler{
 
 
   public void setExpenseValueByFalseEquation(Expenses expense, String equation){
+    Formula formulaObject = new Formula(this);
     expense.setEquation(equation);
-    expense.setValue(this.formulaObject.DEFAULT_VALUE.toString()); 
+    expense.setValue(formulaObject.DEFAULT_VALUE.toString()); 
   } 
 
   //with the prerequisite that the equation is valid in the first place. 
@@ -112,12 +115,14 @@ public class ExpenseStatementHandler implements DataHandler{
   // } 
 
   public boolean verifyEquationIntoFormulaNode(String equation){
-    return this.formulaObject.isFormulaValid(equation);
+    Formula formulaObject = new Formula(this);
+    return formulaObject.isFormulaValid(equation);
   } 
 
   //this one resets the Formula Field's equation node, so it shouldn't clash with formulaObject.getValueWhenFormulaValid(). 
   public BigDecimal getDecimalValueFromEquation(String formula){
-    return this.formulaObject.getValueIfFormulaValid(formula);
+    Formula formulaObject = new Formula(this);
+    return formulaObject.getValueIfFormulaValid(formula);
 
   } 
 
