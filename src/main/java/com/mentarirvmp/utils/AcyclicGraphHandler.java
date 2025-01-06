@@ -44,6 +44,11 @@ public class AcyclicGraphHandler {
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   } 
 
+  public void resetDependencyGraph(){
+    this.expenseToVertexMap = new HashMap<>();
+    this.topSortArray = new Expenses[NUMBER_OF_VERTICES];
+  } 
+
 
 
   public Expenses[] getTopSortArray(){ 
