@@ -126,11 +126,11 @@ public class ExpenseStatementHandler implements DataHandler{
   } 
 
   //this one resets the Formula Field's equation node, so it shouldn't clash with formulaObject.getValueWhenFormulaValid(). 
-  public BigDecimal getDecimalValueFromEquation(String formula){
-    Formula formulaObject = new Formula(this);
-    return formulaObject.getValueIfFormulaValid(formula);
+  // public BigDecimal getDecimalValueFromEquation(String formula){
+  //   Formula formulaObject = new Formula(this);
+  //   return formulaObject.getValueIfFormulaValid(formula);
 
-  } 
+  // } 
 
   public boolean expenseNameUnique(String name){
     boolean[] flag = new boolean[1]; 

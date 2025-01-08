@@ -26,8 +26,8 @@ public class BigDecimalHandler {
     return number; 
   }
 
-  public static boolean validNumberFormat(String userInput){
-    if(userInput.matches(validUserInputRegex)) return true; 
+  public static boolean validNumberFormat(String inputString){
+    if(inputString.matches(validUserInputRegex)) return true; 
     return false; 
   } 
 
@@ -35,15 +35,15 @@ public class BigDecimalHandler {
 
   //constructor method 
   //This actually takes in a bigDecimal String instead of the original userInput String 
-  public BigDecimalHandler(String userInput){
-    this.userInput = userInput; 
-    if(this.userInput.contains("-")){
-      this.sign = "-"; 
-      this.userInput = this.userInput.substring(1); 
-    }
+  // public BigDecimalHandler(String userInput){
+  //   this.userInput = userInput; 
+  //   if(this.userInput.contains("-")){
+  //     this.sign = "-"; 
+  //     this.userInput = this.userInput.substring(1); 
+  //   }
     
-    parseUserInput();
-  }
+  //   parseUserInput();
+  // }
 
   //assigning originalString to sumAs String just resets the whole process. 
   private void parseUserInput(){

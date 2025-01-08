@@ -50,14 +50,14 @@ public class ExpenseStatementHandlerTest {
   } 
 
   //testing formula in DataHandler 
-  @Test 
-  public void getValueFromFormulaTest(){
-    Statement dummyStatement = MockObjects.getDummyStatementObject();
-    ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+  // @Test 
+  // public void getValueFromFormulaTest(){
+  //   Statement dummyStatement = MockObjects.getDummyStatementObject();
+  //   ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
    
-    assertEquals(new BigDecimal("543"),  dataHandler.getDecimalValueFromEquation("SUM(123,420)")); 
+  //   assertEquals(new BigDecimal("543"),  dataHandler.getDecimalValueFromEquation("SUM(123,420)")); 
 
-  } 
+  // } 
 
   @Test
   public void checkUniqueExpenseName(){
