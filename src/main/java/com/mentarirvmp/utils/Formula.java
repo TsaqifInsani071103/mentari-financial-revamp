@@ -108,11 +108,12 @@ public class Formula {
   } 
 
   public BigDecimal getValueWhenFormulaValid(){
+    //if its just a number then turn it into a bigDecimal 
     if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
       return BigDecimalHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
-      //This checks if its a FORMULA and not an empty FORMULA at that. unlike SUM() 
 
-    //if not integer or properNumberFormat then its an expense ID 
+
+    //if its not a vliad number or a number format, then its a formula, so we need to dissect the formulas and get the values. 
     }else if(!isIntegerOrProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
       return getValueOfNodesRecursively(this.validFormulaRootNode);
     }else{
@@ -242,15 +243,6 @@ public class Formula {
     return total;
   }
 
-  //change isInteger to isValidDecimalFormat
-  private boolean isInteger(String str){
-    try{
-      Integer.parseInt(str);
-    }catch(NumberFormatException e){
-      return false; 
-    }
-    return true; 
-  } 
 
   public boolean checkAllEdgeCases(String formula){
     if(isIntegerOrProperNumberFormat(formula) && isEmptyString(formula)){
@@ -264,6 +256,17 @@ public class Formula {
     if(isInteger(formula) || BigDecimalHandler.validNumberFormat(formula)) return true; 
     return false; 
   } 
+
+    //change isInteger to isValidDecimalFormat
+    private boolean isInteger(String str){
+      try{
+        Integer.parseInt(str);
+      }catch(NumberFormatException e){
+        return false; 
+      }
+      return true; 
+    } 
+  
 
   private boolean isEmptyString(String formula){
     if(formula.equals(""))return true;
