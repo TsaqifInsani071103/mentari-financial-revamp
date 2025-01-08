@@ -44,11 +44,12 @@ public class ExpensesViewCreator implements ViewCreator {
   private ExpenseStatementHandler dataHandler; 
 
   protected static boolean changedByListener = false; 
+  private VBox alreadyMadeView; 
 
   public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
     this.currentExpense = expense; 
-    this.dataHandler = dataHandler; 
-    dataHandler.addExpenseView(expense, this);
+    // this.dataHandler = dataHandler; 
+    // dataHandler.addExpenseView(expense, this);
 
     //we'll initialize an expense dependency map here in dataHandler. 
     // dataHandler.ifEquationValidSetExpenseValue(expense, expense.getEquation());
@@ -57,9 +58,12 @@ public class ExpensesViewCreator implements ViewCreator {
 
   @Override
    public Parent getView() {
-    VBox overallContainer = new VBox();
-    getInnerContainer(overallContainer);
-    return overallContainer; 
+    if(alreadyMadeView == null){
+      VBox overallContainer = new VBox();
+      getInnerContainer(overallContainer);
+      this.alreadyMadeView = overallContainer;
+    }
+    return alreadyMadeView; 
   } 
 
   public HBox getBox(){
@@ -109,13 +113,6 @@ public class ExpensesViewCreator implements ViewCreator {
     }
   }
 
-  public void updateFalseValue(){
-    toggleChangedByListener();
-    dataHandler.setExpenseValueByFalseEquation(currentExpense, this.currentExpense.getValue());
-    textFieldReference.getStyleClass().add("red-underline");
-    toggleChangedByListener();
-    
-  } 
 
   //this is only to toggle value and equation UI not to set the value of the expense itself. 
   private void addFocusListener(TextField textField) {

@@ -34,6 +34,10 @@ public class ExpenseStatementHandler implements DataHandler{
     this.expenseToViewMap.put(expense, view);
   } 
 
+  public ExpensesViewCreator getViewGreatorByExpense(Expenses expense){
+    return this.expenseToViewMap.get(expense); 
+  }
+
   @Override
   public String getValueById(String ID) {
     String actualExpenseValue = "";

@@ -190,8 +190,14 @@ public class StatementViewCreator implements ViewCreator {
 
   private void updateCell(TreeCell<Expenses> cell, Expenses item) {
     if (item != null) {
-        ExpensesViewCreator viewCreator = new ExpensesViewCreator(item, this.dataHandler);
-        cell.setGraphic(viewCreator.getView()); // Setting custom view
+        if(this.dataHandler.getViewGreatorByExpense(item) == null){
+          ExpensesViewCreator viewCreator = new ExpensesViewCreator(item, this.dataHandler);
+          this.dataHandler.addExpenseView(item, viewCreator);
+          cell.setGraphic(viewCreator.getView());
+        }else{
+          cell.setGraphic(this.dataHandler.getViewGreatorByExpense(item).getView());
+        }
+         // Setting custom view
         // System.out.println("CELL HAS BEEN UPDATED!!!");
         // System.out.println("The name of the expense: " + item.getName() + " The value is: " + item.getValue());
         // cell.setContextMenu(getContextMenuItems(item));
