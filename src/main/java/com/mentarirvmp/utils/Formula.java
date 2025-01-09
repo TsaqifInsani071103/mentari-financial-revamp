@@ -109,12 +109,12 @@ public class Formula {
 
   public BigDecimal getValueWhenFormulaValid(){
     //if its just a number then turn it into a bigDecimal 
-    if(isIntegerOrProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
+    if(isProperNumberFormat(validFormulaRootNode.getValue()) && validFormulaRootNode.getChildNodes().isEmpty()){ 
       return BigDecimalHandler.parseInputToBigDecimal(validFormulaRootNode.getValue());
 
 
     //if its not a vliad number or a number format, then its a formula, so we need to dissect the formulas and get the values. 
-    }else if(!isIntegerOrProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
+    }else if(!isProperNumberFormat(this.validFormulaRootNode.getValue()) && !this.validFormulaRootNode.getChildNodes().isEmpty()){
       return getValueOfNodesRecursively(this.validFormulaRootNode);
     }else{
       return DEFAULT_VALUE; 
@@ -134,7 +134,7 @@ public class Formula {
 
     if(formula.equals(FORMULA_MULTIPLY)) total = new BigDecimal("1"); 
     for(FormulaNode child: rootNode.getChildNodes()){
-      if(isIntegerOrProperNumberFormat(child.getValue())){
+      if(isProperNumberFormat(child.getValue())){
         total = calculateByFormulaIntoTotal(formula, BigDecimalHandler.parseInputToBigDecimal(child.getValue()), total);
       }else{
         BigDecimal calculatedInnerFormulaValue = getValueOfNodesRecursively(child); 
@@ -196,7 +196,7 @@ public class Formula {
       return true; 
     }
 
-    if(isIntegerOrProperNumberFormat(formulaSubstring)){
+    if(isProperNumberFormat(formulaSubstring)){
       if(rootNode == null){
         this.validFormulaRootNode = new FormulaNode(formulaSubstring);
       }else{
@@ -250,27 +250,18 @@ public class Formula {
 
 
   public boolean checkAllEdgeCases(String formula){
-    if(isIntegerOrProperNumberFormat(formula) && isEmptyString(formula)){
+    if(isProperNumberFormat(formula) && isEmptyString(formula)){
       return true; 
     }
     return false; 
 
   } 
 
-  private boolean isIntegerOrProperNumberFormat(String formula){
-    if(isInteger(formula) || BigDecimalHandler.validNumberFormat(formula)) return true; 
+  private boolean isProperNumberFormat(String formula){
+    if(BigDecimalHandler.validNumberFormat(formula)) return true; 
     return false; 
   } 
 
-    //change isInteger to isValidDecimalFormat
-    private boolean isInteger(String str){
-      try{
-        Integer.parseInt(str);
-      }catch(NumberFormatException e){
-        return false; 
-      }
-      return true; 
-    } 
   
 
   private boolean isEmptyString(String formula){

@@ -26,11 +26,19 @@ public class BigDecimalHandler {
   }
 
   public static boolean validNumberFormat(String inputString){
-    if(inputString.matches(validUserInputRegex)) return true; 
+    if(inputString.matches(validUserInputRegex) || isInteger(inputString)) return true; 
     return false; 
   } 
 
-
+  //change isInteger to isValidDecimalFormat
+  private static boolean isInteger(String str){
+    try{
+      Integer.parseInt(str);
+    }catch(NumberFormatException e){
+      return false; 
+    }
+    return true; 
+  } 
 
   //constructor method 
   //This actually takes in a bigDecimal String instead of the original userInput String 
