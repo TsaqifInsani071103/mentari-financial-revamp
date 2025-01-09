@@ -96,7 +96,7 @@ public class ExpenseStatementHandlerTest {
 
     Expenses e1 = new Expenses("Expense1");
     Expenses e2 = new Expenses("Expense2");
-    e2.setValue("10.0");
+    e2.setValue("10");
     Expenses e3 = new Expenses("Expense3");
     e3.setValue("20.0");
     dummyStatement.addExpense(e1);
