@@ -26,6 +26,20 @@ public class BigDecimalHandlerTest {
 
   } 
 
+  @Test 
+  public void validNumberFormatTest(){
+    String number = "100";
+    assertTrue(BigDecimalHandler.validNumberFormat(number));
+
+    String number2 = "1,000";
+    assertTrue(BigDecimalHandler.validNumberFormat(number2));
+
+    String number3 = "-100";
+    assertTrue(BigDecimalHandler.validNumberFormat(number3));
+    String number4 = "-1,000";
+    assertTrue(BigDecimalHandler.validNumberFormat(number4));
+  } 
+
 
 
   
