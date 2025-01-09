@@ -66,7 +66,7 @@ public class ExpenseStatementHandler implements DataHandler{
 
       if(topSort != null){
         expense.setEquation(equation); 
-        String value = formulaObject.getValueWhenFormulaValid().toString();
+        String value = formulaObject.turnIntoCommadString(formulaObject.getValueWhenFormulaValid());
         expense.setValue(value); 
         refreshExpenseValuesProceeding(expense);
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
@@ -125,12 +125,6 @@ public class ExpenseStatementHandler implements DataHandler{
     return formulaObject.isFormulaValid(equation);
   } 
 
-  //this one resets the Formula Field's equation node, so it shouldn't clash with formulaObject.getValueWhenFormulaValid(). 
-  // public BigDecimal getDecimalValueFromEquation(String formula){
-  //   Formula formulaObject = new Formula(this);
-  //   return formulaObject.getValueIfFormulaValid(formula);
-
-  // } 
 
   public boolean expenseNameUnique(String name){
     boolean[] flag = new boolean[1]; 

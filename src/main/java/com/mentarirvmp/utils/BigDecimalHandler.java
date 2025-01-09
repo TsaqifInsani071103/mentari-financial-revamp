@@ -55,6 +55,9 @@ public class BigDecimalHandler {
     if(this.userInput.contains(".")){
       int indexOfDecimal = this.userInput.indexOf(".");
       this.decimalPoints = this.userInput.substring(indexOfDecimal); 
+      if(new BigDecimal(this.decimalPoints).compareTo(new BigDecimal("0.0")) == 0){
+        this.decimalPoints = ".0";
+      }
       this.userInput = this.userInput.substring(0, indexOfDecimal); 
     }else{
       this.decimalPoints = ".0"; 

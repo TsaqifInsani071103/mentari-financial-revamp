@@ -80,7 +80,7 @@ public class ExpenseStatementHandlerTest {
 
     String validEquation = "MULTIPLY(2,2)";
     dataHandler.ifEquationValidSetExpenseValue(dummyExpense, validEquation);
-    assertEquals("4", dummyExpense.getValue());
+    assertEquals("4.0", dummyExpense.getValue());
 
     String falseEquation = "awdasd";
     dataHandler.setExpenseValueByFalseEquation(dummyExpense, falseEquation);
@@ -96,9 +96,9 @@ public class ExpenseStatementHandlerTest {
 
     Expenses e1 = new Expenses("Expense1");
     Expenses e2 = new Expenses("Expense2");
-    e2.setValue("10");
+    e2.setValue("10.0");
     Expenses e3 = new Expenses("Expense3");
-    e3.setValue("20");
+    e3.setValue("20.0");
     dummyStatement.addExpense(e1);
     dummyStatement.addExpense(e2);
     dummyStatement.addExpense(e3);
@@ -106,10 +106,10 @@ public class ExpenseStatementHandlerTest {
     //E1 = MULTIPLY(e2,e3)
     String validEquation = String.format("MULTIPLY(%s,%s)", e2.getId(), e3.getId());
     dataHandler.ifEquationValidSetExpenseValue(e1, validEquation);
-    assertEquals("200", e1.getValue());
-    dataHandler.ifEquationValidSetExpenseValue(e3, "1");
-    dataHandler.ifEquationValidSetExpenseValue(e2, "10");
-    assertEquals("10", e1.getValue());
+    assertEquals("200.0", e1.getValue());
+    dataHandler.ifEquationValidSetExpenseValue(e3, "1.0");
+    dataHandler.ifEquationValidSetExpenseValue(e2, "10.0");
+    assertEquals("10.0", e1.getValue());
 
     
 
@@ -138,17 +138,17 @@ public void expensesRefreshedChronologicallyWithMultipleDependenciesTest() {
     String validEquation1 = String.format("SUM(%s, MULTIPLY(%s, %s))", e2.getId(), e3.getId(), e4.getId());
 
     dataHandler.ifEquationValidSetExpenseValue(e1, validEquation1);
-    assertEquals("11", e1.getValue());
+    assertEquals("11.0", e1.getValue());
 
     // Update e3's value and check E1 is refreshed
     dataHandler.ifEquationValidSetExpenseValue(e3, "4");
     dataHandler.ifEquationValidSetExpenseValue(e2, "5");
     dataHandler.ifEquationValidSetExpenseValue(e4, "2");
-    assertEquals("13", e1.getValue());
+    assertEquals("13.0", e1.getValue());
 
     // Update e4's value and check E1 is refreshed
     dataHandler.ifEquationValidSetExpenseValue(e4, "1");
-    assertEquals("9", e1.getValue());
+    assertEquals("9.0", e1.getValue());
 }
 
 @Test
@@ -159,7 +159,7 @@ public void expensesRefreshedChronologicallyWithCircularDependencyTest() {
     Expenses e1 = new Expenses("Expense1");
     Expenses e2 = new Expenses("Expense2");
 
-    e2.setValue("5");
+    e2.setValue("5.0");
 
     dummyStatement.addExpense(e1);
     dummyStatement.addExpense(e2);

@@ -122,6 +122,11 @@ public class Formula {
     
   }
 
+  public String turnIntoCommadString(BigDecimal number){
+    BigDecimalHandler handler = new BigDecimalHandler(number);
+    return handler.getCalculatedSumAsString();
+  } 
+
   //CLEAN THIS UP 
   public BigDecimal getValueOfNodesRecursively(FormulaNode rootNode){
     BigDecimal total = new BigDecimal("0");
