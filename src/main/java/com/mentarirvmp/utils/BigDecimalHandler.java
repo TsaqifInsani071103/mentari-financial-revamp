@@ -26,14 +26,14 @@ public class BigDecimalHandler {
   }
 
   public static boolean validNumberFormat(String inputString){
-    if(inputString.matches(validUserInputRegex) || isInteger(inputString)) return true; 
+    if(inputString.matches(validUserInputRegex) || isNumber(inputString)) return true; 
     return false; 
   } 
 
   //change isInteger to isValidDecimalFormat
-  private static boolean isInteger(String str){
+  private static boolean isNumber(String str){
     try{
-      Integer.parseInt(str);
+      BigDecimal validIfTrue = new BigDecimal(str);
     }catch(NumberFormatException e){
       return false; 
     }
