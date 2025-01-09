@@ -5,7 +5,6 @@ import java.lang.StringBuilder;
 //this class just adds commas and decimal points to the final sum calculated in Formula 
 public class BigDecimalHandler {
   private String sign = "";
-  private int indexOfDecimal; 
   private String userInput; 
   private String decimalPoints; 
 
@@ -37,7 +36,7 @@ public class BigDecimalHandler {
   //This actually takes in a bigDecimal String instead of the original userInput String 
   public BigDecimalHandler(String userInput){
     this.userInput = userInput; 
-    if(this.userInput.contains("-")){
+    if(this.userInput.startsWith("-")){
       this.sign = "-"; 
       this.userInput = this.userInput.substring(1); 
     }
@@ -54,7 +53,7 @@ public class BigDecimalHandler {
   //upon initialization 
   private void extractDecimalPoints(){
     if(this.userInput.contains(".")){
-      this.indexOfDecimal = this.userInput.indexOf(".");
+      int indexOfDecimal = this.userInput.indexOf(".");
       this.decimalPoints = this.userInput.substring(indexOfDecimal); 
       this.userInput = this.userInput.substring(0, indexOfDecimal); 
     }else{

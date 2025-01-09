@@ -15,9 +15,18 @@ public class BigDecimalHandlerTest {
 
   @Test 
   public void scientificNotationTest(){
-    String bigNumber = "-100000000000.0000000";
+    //only turns into big decimal when the adjusted exponent is less than -6
+    String bigNumber = "0.0000000000321";
     BigDecimal potentialSN = BigDecimalHandler.parseInputToBigDecimal(bigNumber);
-    System.out.println("POTENTIAL SN: " + potentialSN.toString());
+    assertTrue(BigDecimalHandler.checkIfScientificNotation(potentialSN.toString())); 
+
+    //now we account for scientific notation and get the string by having it parsed by BigDecimal instead of directly calling BigDecimal.toString. 
+
+    BigDecimalHandler DH = new BigDecimalHandler(potentialSN.toString());
+    assertFalse(BigDecimalHandler.checkIfScientificNotation(DH.getCalculatedSumAsString()));
+    
+
+
   } 
 
 
