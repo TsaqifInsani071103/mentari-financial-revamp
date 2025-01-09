@@ -13,17 +13,17 @@ public class BigDecimalHandler {
 
   private static String validUserInputRegex = "^-?\\d{1,3}(,\\d{3})*(\\.\\d+)?$";
 
-  public static BigDecimal parseInputToBigDecimal(String number){
-    String strippedNumber = getCleanedCommas(number);
+  public static BigDecimal parseInputToBigDecimal(String numberString){
+    String strippedNumber = getCleanedCommas(numberString);
     return new BigDecimal(strippedNumber);
   } 
   
   //to be used as a standalone 
-  private static String getCleanedCommas(String number){
-    if(number.contains(",")){
-      return number.replaceAll(",", ""); 
+  private static String getCleanedCommas(String numberString){
+    if(numberString.contains(",")){
+      return numberString.replaceAll(",", ""); 
     }
-    return number; 
+    return numberString; 
   }
 
   public static boolean validNumberFormat(String inputString){
@@ -35,15 +35,15 @@ public class BigDecimalHandler {
 
   //constructor method 
   //This actually takes in a bigDecimal String instead of the original userInput String 
-  // public BigDecimalHandler(String userInput){
-  //   this.userInput = userInput; 
-  //   if(this.userInput.contains("-")){
-  //     this.sign = "-"; 
-  //     this.userInput = this.userInput.substring(1); 
-  //   }
+  public BigDecimalHandler(String userInput){
+    this.userInput = userInput; 
+    if(this.userInput.contains("-")){
+      this.sign = "-"; 
+      this.userInput = this.userInput.substring(1); 
+    }
     
-  //   parseUserInput();
-  // }
+    parseUserInput();
+  }
 
   //assigning originalString to sumAs String just resets the whole process. 
   private void parseUserInput(){
@@ -112,7 +112,7 @@ public class BigDecimalHandler {
 
 
   //because BigDecimal's string representation is with the ScientificNotation. 
-  private boolean checkIfScientificNotation(String str) {
+  protected static boolean checkIfScientificNotation(String str) {
     return str.matches("-?\\d\\.\\d+E[+-]?\\d+");
   }
   
