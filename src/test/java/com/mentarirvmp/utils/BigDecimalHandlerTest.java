@@ -21,11 +21,8 @@ public class BigDecimalHandlerTest {
     assertTrue(BigDecimalHandler.checkIfScientificNotation(potentialSN.toString())); 
 
     //now we account for scientific notation and get the string by having it parsed by BigDecimal instead of directly calling BigDecimal.toString. 
-
-    BigDecimalHandler DH = new BigDecimalHandler(potentialSN.toString());
+    BigDecimalHandler DH = new BigDecimalHandler(potentialSN);
     assertFalse(BigDecimalHandler.checkIfScientificNotation(DH.getCalculatedSumAsString()));
-    
-
 
   } 
 

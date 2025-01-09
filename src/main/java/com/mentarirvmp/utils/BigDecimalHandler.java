@@ -34,8 +34,8 @@ public class BigDecimalHandler {
 
   //constructor method 
   //This actually takes in a bigDecimal String instead of the original userInput String 
-  public BigDecimalHandler(String userInput){
-    this.userInput = userInput; 
+  public BigDecimalHandler(BigDecimal userInput){
+    this.userInput = userInput.toString(); 
     if(this.userInput.startsWith("-")){
       this.sign = "-"; 
       this.userInput = this.userInput.substring(1); 
