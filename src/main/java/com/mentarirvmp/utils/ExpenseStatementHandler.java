@@ -68,6 +68,12 @@ public class ExpenseStatementHandler implements DataHandler{
         expense.setEquation(equation); 
         String value = formulaObject.turnIntoCommadString(formulaObject.getValueWhenFormulaValid());
         expense.setValue(value); 
+        try {
+          BigDecimal trueIfProperNumberFormat = new BigDecimal(equation);
+          expense.setEquation(value);
+        } catch (NumberFormatException e) {
+          expense.setEquation(equation);
+        }
         refreshExpenseValuesProceeding(expense);
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
