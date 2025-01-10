@@ -64,7 +64,7 @@ public class ExpenseStatementHandler implements DataHandler{
       this.dependencyResolver.initializeExpenseAndDependencies(expense, validExpensesInEquation);
       Expenses[] topSort = dependencyResolver.getTopSortArray();
 
-      if(topSort != null){
+      if(topSort.length > 0){
         expense.setEquation(equation); 
         String value = formulaObject.turnIntoCommadString(formulaObject.getValueWhenFormulaValid());
         expense.setValue(value); 

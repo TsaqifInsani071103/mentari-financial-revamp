@@ -44,8 +44,9 @@ public class AcyclicGraphHandler {
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   } 
 
+  //only delete an entry to expenseToVertexMap IF we either add or delete an expense 
   public void resetDependencyGraph(){
-    this.expenseToVertexMap = new HashMap<>();
+    // this.expenseToVertexMap = new HashMap<>();
     this.topSortArray = new Expenses[NUMBER_OF_VERTICES];
   } 
 
@@ -80,10 +81,11 @@ public class AcyclicGraphHandler {
 
     //this means that the graph is cyclic. 
     if(counter != this.NUMBER_OF_VERTICES){
-      return null; 
-    }else{
-      return this.topSortArray;
+      this.topSortArray = new Expenses[0];
     }
+
+    return this.topSortArray;
+    
 
   } 
 

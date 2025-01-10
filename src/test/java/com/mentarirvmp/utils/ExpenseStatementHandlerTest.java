@@ -198,8 +198,27 @@ public void dependencyResolverTest(){
   String topSortInString = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
   boolean validOrder = topSortInString.equals("[expense3, expense2, expense1]") || topSortInString.equals("expense2, expense3, expense1");
   System.out.println(topSortInString);
+
   assertTrue(validOrder);
   assertEquals("30.0", E1.getValue());
+ 
+  String equationForE2 = "SUM(E3)";
+  dataHandler.ifEquationValidSetExpenseValue(E2, equationForE2);
+  String topSortInString2 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
+  boolean validOrder2 = topSortInString2.equals("[expense3, expense2, expense1]");
+
+  assertTrue(validOrder2);
+  assertEquals("40.0", E1.getValue());
+
+  //at this point, this is going to be cyclic 
+  String equationForE3 = "SUM(E1)";
+  dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3);
+
+  String topSortInString3 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
+  System.out.println("EMPTY? "+ topSortInString3);
+
+
+
   
 
 } 
