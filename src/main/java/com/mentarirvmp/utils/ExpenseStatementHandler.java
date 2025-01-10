@@ -79,7 +79,6 @@ public class ExpenseStatementHandler implements DataHandler{
         // System.out.println(Arrays.toString(topSort));
       }else{
         setExpenseValueByFalseEquation(expense, equation);
-        this.dependencyResolver.resetDependencyGraph();
         //if the graph is cyclic, well set the equation to be the previous equation 
         // this.expenseToViewMap.get(expense).updateFalseValue();
 

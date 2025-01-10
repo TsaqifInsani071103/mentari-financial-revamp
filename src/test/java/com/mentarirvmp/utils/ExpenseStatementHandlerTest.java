@@ -213,9 +213,20 @@ public void dependencyResolverTest(){
   //at this point, this is going to be cyclic 
   String equationForE3 = "SUM(E1)";
   dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3);
-
   String topSortInString3 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
-  System.out.println("EMPTY? "+ topSortInString3);
+  System.out.println("EMPTY? "+ topSortInString3.length());
+  
+  System.out.println(E1.getValue());
+  System.out.println(E2.getValue());
+  System.out.println(E3.getValue());
+
+  //now im going to break the cycle and make it acyclic again 
+  String equationForE3New = "10.0";
+  dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3New);
+
+  String topSortInString4 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
+  assertNotEquals(0, topSortInString4.length());
+
 
 
 
