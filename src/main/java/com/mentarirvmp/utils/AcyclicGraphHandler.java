@@ -29,13 +29,21 @@ public class AcyclicGraphHandler {
     if( currentVertex == null) {
       currentVertex = new Vertex(expense);
       this.expenseToVertexMap.put(expense, currentVertex);
+    }else{
+      resetAdjacencyLists(currentVertex);
     }
+
+    //current vertex is E3. IndependentExpenses was E1. 
+    //right now, E1 -> E3, 
+    //but now since current vertex is E3, and IndependentExpenses is [] empty array, 
+    //I want E1, to be rid of its arrows to E3. 
+    //therefore I need to also refresh the expenseToVertexMap no? 
     
     if(independentExpenses.size() > 0){
       for(int i = 0; i < independentExpenses.size() ; i++){
         Expenses independentExpense = independentExpenses.get(i);
         Vertex newVertex = this.expenseToVertexMap.get(independentExpense) == null? new Vertex(independentExpense) : this.expenseToVertexMap.get(independentExpense);
-  
+        
         newVertex.addDirectedEdgeToward(currentVertex);
         this.expenseToVertexMap.put(independentExpense, newVertex);
       }
@@ -43,6 +51,14 @@ public class AcyclicGraphHandler {
 
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   } 
+
+  private void resetAdjacencyLists(Vertex targetVertex){
+    for(Expenses expense: this.expenseToVertexMap.keySet()){
+      if(this.expenseToVertexMap.get(expense).getAdjacentVertexSet().contains(targetVertex)){
+        this.expenseToVertexMap.get(expense).getAdjacentVertexSet().remove(targetVertex);
+      }
+    }
+  }
 
   //only delete an entry to expenseToVertexMap IF we either add or delete an expense 
   public void resetDependencyGraph(){
@@ -120,7 +136,7 @@ public class AcyclicGraphHandler {
         // topSortArray[i].
         dataHandler.ifEquationValidSetExpenseValue(currentExpense, currentExpense.getEquation());
       }
-      
+
       if(currentExpense == expense){
         startingPointFound = true; 
       } 

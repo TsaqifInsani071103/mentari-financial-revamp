@@ -197,7 +197,7 @@ public void dependencyResolverTest(){
   //E1 is supposed to be 10 + 20 = 30. 
   String topSortInString = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
   boolean validOrder = topSortInString.equals("[expense3, expense2, expense1]") || topSortInString.equals("expense2, expense3, expense1");
-  System.out.println(topSortInString);
+  // System.out.println(topSortInString);
 
   assertTrue(validOrder);
   assertEquals("20.0", E1.getValue());
@@ -217,18 +217,18 @@ public void dependencyResolverTest(){
   //empty array for cyclic topSort
   assertEquals("[]", topSortInString3);
 
-  System.out.println(E1.getValue());
-  System.out.println(E2.getValue());
-  System.out.println(E3.getValue());
+  // System.out.println(E1.getValue());
+  // System.out.println(E2.getValue());
+  // System.out.println(E3.getValue());
 
   //now im going to break the cycle and make it acyclic again 
   String equationForE3New = "10.0";
   dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3New);
 
   String topSortInString4 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
-  System.out.println(topSortInString4);
+  // System.out.println(topSortInString4);
   // System.out.println(E3.getEquation());
-  // assertNotEquals("[]", topSortInString4);
+  assertNotEquals("[]", topSortInString4);
 
 
 
