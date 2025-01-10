@@ -214,8 +214,9 @@ public void dependencyResolverTest(){
   String equationForE3 = "SUM(E1)";
   dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3);
   String topSortInString3 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
-  System.out.println("EMPTY? "+ topSortInString3.length());
-  
+  //empty array for cyclic topSort
+  assertEquals("[]", topSortInString3);
+
   System.out.println(E1.getValue());
   System.out.println(E2.getValue());
   System.out.println(E3.getValue());
@@ -225,7 +226,7 @@ public void dependencyResolverTest(){
   dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3New);
 
   String topSortInString4 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
-  assertNotEquals(0, topSortInString4.length());
+  assertNotEquals("[]", topSortInString4);
 
 
 

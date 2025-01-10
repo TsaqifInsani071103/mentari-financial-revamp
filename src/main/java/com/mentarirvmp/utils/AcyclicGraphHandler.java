@@ -81,7 +81,7 @@ public class AcyclicGraphHandler {
 
     //this means that the graph is cyclic. 
     if(counter != this.NUMBER_OF_VERTICES){
-      this.topSortArray = new Expenses[0];
+      this.topSortArray = new Expenses[]{};
     }
 
     return this.topSortArray;

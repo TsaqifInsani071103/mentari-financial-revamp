@@ -78,7 +78,9 @@ public class ExpenseStatementHandler implements DataHandler{
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }else{
+        System.out.println("TOP SORT LENGTH IS ZERO");
         setExpenseValueByFalseEquation(expense, equation);
+        // dependencyResolver.resetDependencyGraph();
         //if the graph is cyclic, well set the equation to be the previous equation 
         // this.expenseToViewMap.get(expense).updateFalseValue();
 
