@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.mentarirvmp.statements.Statement;
 
@@ -153,7 +154,7 @@ public void expensesRefreshedChronologicallyWithMultipleDependenciesTest() {
 
 @Test
 public void expensesRefreshedChronologicallyWithCircularDependencyTest() {
-    Statement dummyStatement = MockObjects.getDummyStatementObject();
+    Statement dummyStatement = new Statement("newStatement");
     ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
 
     Expenses e1 = new Expenses("Expense1");
@@ -170,6 +171,38 @@ public void expensesRefreshedChronologicallyWithCircularDependencyTest() {
 
     assertEquals("0.0",e1.getValue()); // Value of E1 should remain unset due to circular dependency
 }
+
+@Test 
+public void dependencyResolverTest(){
+  Statement dummyStatement = new Statement("newStatement");
+  ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+
+  Expenses E1 = new Expenses("expense1");
+  E1.setValue("0.0");
+  Expenses E2 = new Expenses("expense2");
+  E2.setValue("10.0");
+  Expenses E3 = new Expenses("expense3");
+  E3.setValue("20.0");
+  Expenses E4 = new Expenses("expense4");
+  Expenses E5 = new Expenses("expense5");
+
+  dummyStatement.addExpense(E1);
+  dummyStatement.addExpense(E2);
+  dummyStatement.addExpense(E3);
+  dummyStatement.addExpense(E4);
+  dummyStatement.addExpense(E5);
+
+  String equationForE1 = "SUM(E2, E3)";
+  dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1);
+  //E1 is supposed to be 10 + 20 = 30. 
+  String topSortInString = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
+  boolean validOrder = topSortInString.equals("[expense3, expense2, expense1]") || topSortInString.equals("expense2, expense3, expense1");
+  System.out.println(topSortInString);
+  assertTrue(validOrder);
+  assertEquals("30.0", E1.getValue());
+  
+
+} 
 
   // @Test 
   // public void testExpenseVertexAndAdjacencyList(){

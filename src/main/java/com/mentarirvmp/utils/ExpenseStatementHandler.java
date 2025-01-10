@@ -22,7 +22,7 @@ public class ExpenseStatementHandler implements DataHandler{
 
   private ArrayList<Expenses> validExpensesInEquation = new ArrayList<>();
   private Map<Expenses, ExpensesViewCreator> expenseToViewMap = new HashMap<>();
-  private AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler();
+  protected AcyclicGraphHandler dependencyResolver = new AcyclicGraphHandler();
   
 
 
@@ -79,7 +79,7 @@ public class ExpenseStatementHandler implements DataHandler{
         // System.out.println(Arrays.toString(topSort));
       }else{
         setExpenseValueByFalseEquation(expense, equation);
-        dependencyResolver.resetDependencyGraph();
+        this.dependencyResolver.resetDependencyGraph();
         //if the graph is cyclic, well set the equation to be the previous equation 
         // this.expenseToViewMap.get(expense).updateFalseValue();
 
