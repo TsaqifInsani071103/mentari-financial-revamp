@@ -119,8 +119,8 @@ public class AcyclicGraphHandler {
       if(startingPointFound && this.expenseToVertexMap.get(expense).getAdjacentVertexSet().contains(this.expenseToVertexMap.get(currentExpense))){
         // topSortArray[i].
         dataHandler.ifEquationValidSetExpenseValue(currentExpense, currentExpense.getEquation());
-        System.out.println("THE VALUE OF: " + currentExpense.getName() + "HAS BEEN UPDATED TO: " + currentExpense.getValue());
       }
+      
       if(currentExpense == expense){
         startingPointFound = true; 
       } 

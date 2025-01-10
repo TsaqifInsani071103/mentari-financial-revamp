@@ -65,7 +65,6 @@ public class ExpenseStatementHandler implements DataHandler{
       Expenses[] topSort = dependencyResolver.getTopSortArray();
 
       if(topSort.length > 0){
-        expense.setEquation(equation); 
         String value = formulaObject.turnIntoCommadString(formulaObject.getValueWhenFormulaValid());
         expense.setValue(value); 
         try {
@@ -78,7 +77,6 @@ public class ExpenseStatementHandler implements DataHandler{
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }else{
-        System.out.println("TOP SORT LENGTH IS ZERO");
         setExpenseValueByFalseEquation(expense, equation);
         // dependencyResolver.resetDependencyGraph();
         //if the graph is cyclic, well set the equation to be the previous equation 
