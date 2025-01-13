@@ -183,14 +183,10 @@ public void dependencyResolverTest(){
   E2.setValue("10.0");
   Expenses E3 = new Expenses("expense3");
   E3.setValue("10.0");
-  Expenses E4 = new Expenses("expense4");
-  Expenses E5 = new Expenses("expense5");
 
   dummyStatement.addExpense(E1);
   dummyStatement.addExpense(E2);
   dummyStatement.addExpense(E3);
-  dummyStatement.addExpense(E4);
-  dummyStatement.addExpense(E5);
 
   String equationForE1 = "SUM(E2, E3)";
   dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1);
@@ -235,6 +231,23 @@ public void dependencyResolverTest(){
 
   
 
+} 
+
+@Test 
+public void dependencyResolverTest2(){
+  Statement dummyStatement = new Statement("newStatement");
+  ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+
+  Expenses E1 = new Expenses("expense1");
+  E1.setValue("0.0");
+  Expenses E2 = new Expenses("expense2");
+  E2.setValue("10.0");
+  Expenses E3 = new Expenses("expense3");
+  E3.setValue("10.0");
+
+  dummyStatement.addExpense(E1);
+  dummyStatement.addExpense(E2);
+  dummyStatement.addExpense(E3);
 } 
 
   // @Test 
