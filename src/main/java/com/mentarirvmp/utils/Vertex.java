@@ -8,6 +8,7 @@ public class Vertex {
   private Expenses data; 
   private int indegree = 0; 
   private Set<Vertex> adjacentVertexSet = new HashSet<Vertex>();
+  private Set<Vertex> incomingVerticesSet = new HashSet<Vertex>(); 
 
   public Vertex(Expenses expense){
     this.data = expense; 
