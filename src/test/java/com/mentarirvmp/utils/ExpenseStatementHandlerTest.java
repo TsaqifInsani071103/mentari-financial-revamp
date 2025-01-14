@@ -116,7 +116,7 @@ public class ExpenseStatementHandlerTest {
 
   } 
 
-  // @Test
+  @Test
 public void expensesRefreshedChronologicallyWithMultipleDependenciesTest() {
     Statement dummyStatement = MockObjects.getDummyStatementObject();
     ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);

@@ -10,11 +10,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class AcyclicGraphHandler {
-  //E2 = SUM(E3, E4) that means E2 depends on the values of E3 and E4, which means 
-  //E2 has an indegree of 2: E3 and E4 if directed edges from E3 and E4 to E2 mean that E2 depends on the values E3 and E4 to get its own value. 
-  //that means a node with indegree zero, which is what we want to find, will have an adjacency list of size 0 
-  //we'll loop through the map and find a node that has an empty adjacency list. 
-  //if such a node does not exist, then the dependency is circular. 
+
   private Map<Expenses, Vertex> expenseToVertexMap = new HashMap<>();
   private Expenses[] topSortArray;
   private int NUMBER_OF_VERTICES; 
@@ -57,16 +53,22 @@ public class AcyclicGraphHandler {
 
   public Expenses[] getTopSortArray(){ 
     Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
-    this.topSortArray = new Expenses[this.NUMBER_OF_VERTICES];
     int counter = 0; 
+    int numberOfLeftOutStandaloneVertices = 0; 
     Queue<Vertex> queue = new ArrayDeque<>();
     for(Expenses expense: expenseToVertexMapCopy.keySet()){
       Vertex vertex = expenseToVertexMapCopy.get(expense);
+      if(vertex.getIndegree() ==0 && vertex.getAdjacentVertexSet().size() == 0){
+        numberOfLeftOutStandaloneVertices++;
+        continue; 
+      }
+
       if(vertex.getIndegree() == 0){
         queue.offer(vertex); 
       };
     }
 
+    this.topSortArray = new Expenses[this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices];
     while(!queue.isEmpty()){
       Vertex vertex = queue.poll(); 
       topSortArray[counter] = vertex.getData(); 
@@ -82,8 +84,8 @@ public class AcyclicGraphHandler {
 
 
     //this means that the graph is cyclic. 
-    if(counter != this.NUMBER_OF_VERTICES){
-      this.topSortArray = new Expenses[]{};
+    if(counter != this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices){
+      return null; 
     }
 
     return this.topSortArray;
