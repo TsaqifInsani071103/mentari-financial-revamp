@@ -66,27 +66,13 @@ public class ExpenseStatementHandler implements DataHandler{
       Expenses[] topSort = dependencyResolver.getTopSortArray();
 
       if(topSort!=null){
-        String value = formulaObject.turnIntoCommadString(formulaObject.getValueWhenFormulaValid());
-        expense.setValue(value); 
-        try {
-          BigDecimal trueIfProperNumberFormat = new BigDecimal(equation);
-          expense.setEquation(value);
-        } catch (NumberFormatException e) {
-          expense.setEquation(equation);
-        }
+        calculateAndSetExpenseValue(expense,formulaObject, equation);
         refreshExpenseValuesProceeding(expense);
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }else{
         if(validExpensesInEquation.size() ==0){
-          String value = formulaObject.turnIntoCommadString(formulaObject.getValueWhenFormulaValid());
-        expense.setValue(value); 
-        try {
-          BigDecimal trueIfProperNumberFormat = new BigDecimal(equation);
-          expense.setEquation(value);
-        } catch (NumberFormatException e) {
-          expense.setEquation(equation);
-        }
+          calculateAndSetExpenseValue(expense, formulaObject, equation);
         }else{
           setExpenseValueByFalseEquation(expense, equation);
         }
@@ -115,6 +101,16 @@ public class ExpenseStatementHandler implements DataHandler{
     } 
   } 
 
+  private void calculateAndSetExpenseValue(Expenses expense,Formula formulaObject, String equation){
+    String value = formulaObject.turnIntoCommadString(formulaObject.getValueWhenFormulaValid());
+    expense.setValue(value); 
+    try {
+      BigDecimal trueIfProperNumberFormat = new BigDecimal(equation);
+      expense.setEquation(value);
+    } catch (NumberFormatException e) {
+      expense.setEquation(equation);
+    }
+  } 
 
   public void setExpenseValueByFalseEquation(Expenses expense, String equation){
     Formula formulaObject = new Formula(this);
