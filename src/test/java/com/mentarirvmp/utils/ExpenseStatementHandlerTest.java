@@ -152,7 +152,7 @@ public void expensesRefreshedChronologicallyWithMultipleDependenciesTest() {
     assertEquals("9.0", e1.getValue());
 }
 
-// @Test
+@Test
 public void expensesRefreshedChronologicallyWithCircularDependencyTest() {
     Statement dummyStatement = new Statement("newStatement");
     ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
@@ -172,7 +172,7 @@ public void expensesRefreshedChronologicallyWithCircularDependencyTest() {
     assertEquals("0.0",e1.getValue()); // Value of E1 should remain unset due to circular dependency
 }
 
-// @Test 
+@Test 
 public void dependencyResolverTest(){
   Statement dummyStatement = new Statement("newStatement");
   ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
@@ -211,7 +211,7 @@ public void dependencyResolverTest(){
   dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3);
   String topSortInString3 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
   //empty array for cyclic topSort
-  assertEquals("[]", topSortInString3);
+  assertEquals("null", topSortInString3);
 
   // System.out.println(E1.getValue());
   // System.out.println(E2.getValue());
@@ -224,7 +224,7 @@ public void dependencyResolverTest(){
   String topSortInString4 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
   // System.out.println(topSortInString4);
   // System.out.println(E3.getEquation());
-  assertNotEquals("[]", topSortInString4);
+  assertNotEquals("null", topSortInString4);
 
 
 
@@ -233,7 +233,7 @@ public void dependencyResolverTest(){
 
 } 
 
-// @Test 
+@Test 
 public void dependencyResolverTest2(){
   Statement dummyStatement = new Statement("newStatement");
   ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
@@ -254,23 +254,23 @@ public void dependencyResolverTest2(){
 
   String equationForE1 = "SUM(E2, E3)";
   dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1); 
-  assertTrue(dataHandler.dependencyResolver.getTopSortArray().length == 0 );
+  assertTrue(dataHandler.dependencyResolver.getTopSortArray().length == 3 );
   assertEquals("30.0", E1.getValue());
   assertEquals("10.0", E2.getValue());
   assertEquals("20.0", E3.getValue());
   
   String cyclicEquationForE1 = "SUM(E2, E1)";
   dataHandler.ifEquationValidSetExpenseValue(E1, cyclicEquationForE1); 
-  System.out.println(Arrays.toString(dataHandler.dependencyResolver.getTopSortArray())); 
+
   assertEquals("0.0", E1.getValue());
   assertEquals("10.0", E2.getValue());
   assertEquals("20.0", E3.getValue());
 
-  // dataHandler.ifEquationValidSetExpenseValue(E2, "15.0");
-  // dataHandler.ifEquationValidSetExpenseValue(E3, "25.0");
-  // assertEquals("0.0", E1.getValue());
-  // assertEquals("15.0", E2.getValue());
-  // assertEquals("25.0", E3.getValue());
+  dataHandler.ifEquationValidSetExpenseValue(E2, "15.0");
+  dataHandler.ifEquationValidSetExpenseValue(E3, "25.0");
+  assertEquals("0.0", E1.getValue());
+  assertEquals("15.0", E2.getValue());
+  assertEquals("25.0", E3.getValue());
 } 
 
   // @Test 
