@@ -114,21 +114,6 @@ public class AcyclicGraphHandler {
     return deepCopy;
   } 
 
-  public void refreshExpenseValuesProceeding(Expenses expense, ExpenseStatementHandler dataHandler){
-    boolean startingPointFound = false; 
-    for(int i = 0; i < this.topSortArray.length;i++){
-      Expenses currentExpense = topSortArray[i]; 
-      if(startingPointFound && this.expenseToVertexMap.get(expense).getAdjacentVertexSet().contains(this.expenseToVertexMap.get(currentExpense))){
-        // topSortArray[i].
-        dataHandler.ifEquationValidSetExpenseValue(currentExpense, currentExpense.getEquation());
-      }
-
-      if(currentExpense == expense){
-        startingPointFound = true; 
-      } 
-    }
-
-  }
 
   public ArrayList<Expenses> getValuesProceeding(Expenses expense){
     boolean startingPointFound = false; 
