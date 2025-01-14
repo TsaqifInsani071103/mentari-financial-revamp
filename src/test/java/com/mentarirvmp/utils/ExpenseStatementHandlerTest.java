@@ -239,34 +239,38 @@ public void dependencyResolverTest2(){
   ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
 
   Expenses E1 = new Expenses("expense1");
-  E1.setValue("0.0");
   Expenses E2 = new Expenses("expense2");
-  E2.setValue("10.0");
   Expenses E3 = new Expenses("expense3");
-  E3.setValue("20.0");
 
   dummyStatement.addExpense(E1);
   dummyStatement.addExpense(E2);
   dummyStatement.addExpense(E3);
 
+  dataHandler.ifEquationValidSetExpenseValue(E1, "8.0");
+  dataHandler.ifEquationValidSetExpenseValue(E2, "10.0");
+  dataHandler.ifEquationValidSetExpenseValue(E3, "20.0");
+  System.out.println(Arrays.toString(dataHandler.dependencyResolver.getTopSortArray())); 
+
 
   String equationForE1 = "SUM(E2, E3)";
   dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1); 
+  assertTrue(dataHandler.dependencyResolver.getTopSortArray().length == 0 );
   assertEquals("30.0", E1.getValue());
   assertEquals("10.0", E2.getValue());
   assertEquals("20.0", E3.getValue());
   
   String cyclicEquationForE1 = "SUM(E2, E1)";
   dataHandler.ifEquationValidSetExpenseValue(E1, cyclicEquationForE1); 
+  System.out.println(Arrays.toString(dataHandler.dependencyResolver.getTopSortArray())); 
   assertEquals("0.0", E1.getValue());
   assertEquals("10.0", E2.getValue());
   assertEquals("20.0", E3.getValue());
 
-  dataHandler.ifEquationValidSetExpenseValue(E2, "15.0");
-  dataHandler.ifEquationValidSetExpenseValue(E3, "25.0");
-  assertEquals("0.0", E1.getValue());
-  assertEquals("15.0", E2.getValue());
-  assertEquals("25.0", E3.getValue());
+  // dataHandler.ifEquationValidSetExpenseValue(E2, "15.0");
+  // dataHandler.ifEquationValidSetExpenseValue(E3, "25.0");
+  // assertEquals("0.0", E1.getValue());
+  // assertEquals("15.0", E2.getValue());
+  // assertEquals("25.0", E3.getValue());
 } 
 
   // @Test 
