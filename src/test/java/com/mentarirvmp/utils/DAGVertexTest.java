@@ -19,7 +19,7 @@ public class DAGVertexTest {
   
 
   //under the prequisite that the equation is VALID!! 
-
+@Test 
   public void topologicalSortTest(){
     //if no valid Expense ID I wont make a graph out of it. \
 
@@ -58,7 +58,7 @@ public class DAGVertexTest {
     ArrayList<Expenses> dependencies1 = new ArrayList<>(Arrays.asList(E2));
     dag.initializeExpenseAndDependencies(E1, dependencies1);
     Expenses[] sortedArray2 = dag.getTopSortArray();
-    assertEquals(0, sortedArray2.length);
+    assertNull(sortedArray2);
 
     // Test 5: Cyclic graph with a complex cycle
     AcyclicGraphHandler dag5 = new AcyclicGraphHandler();
@@ -71,7 +71,7 @@ public class DAGVertexTest {
     dag5.initializeExpenseAndDependencies(O, new ArrayList<>(Arrays.asList(M)));
 
     Expenses[] sortedArray5 = dag5.getTopSortArray();
-    assertEquals(0,sortedArray5.length);
+    assertNull(sortedArray5);
 
 
     // Test 4: Complex acyclic graph
