@@ -78,7 +78,18 @@ public class ExpenseStatementHandler implements DataHandler{
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }else{
-        setExpenseValueByFalseEquation(expense, equation);
+        if(validExpensesInEquation.size() ==0){
+          String value = formulaObject.turnIntoCommadString(formulaObject.getValueWhenFormulaValid());
+        expense.setValue(value); 
+        try {
+          BigDecimal trueIfProperNumberFormat = new BigDecimal(equation);
+          expense.setEquation(value);
+        } catch (NumberFormatException e) {
+          expense.setEquation(equation);
+        }
+        }else{
+          setExpenseValueByFalseEquation(expense, equation);
+        }
         // dependencyResolver.resetDependencyGraph();
         //if the graph is cyclic, well set the equation to be the previous equation 
         // this.expenseToViewMap.get(expense).updateFalseValue();
