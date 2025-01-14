@@ -249,7 +249,6 @@ public void dependencyResolverTest2(){
   dataHandler.ifEquationValidSetExpenseValue(E1, "8.0");
   dataHandler.ifEquationValidSetExpenseValue(E2, "10.0");
   dataHandler.ifEquationValidSetExpenseValue(E3, "20.0");
-  System.out.println(Arrays.toString(dataHandler.dependencyResolver.getTopSortArray())); 
 
 
   String equationForE1 = "SUM(E2, E3)";
@@ -271,6 +270,46 @@ public void dependencyResolverTest2(){
   assertEquals("0.0", E1.getValue());
   assertEquals("15.0", E2.getValue());
   assertEquals("25.0", E3.getValue());
+} 
+
+@Test 
+public void dependencyResolverTest3(){
+  Statement dummyStatement = new Statement("newStatement");
+  ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+
+  Expenses E1 = new Expenses("expense1");
+  Expenses E2 = new Expenses("expense2");
+  Expenses E3 = new Expenses("expense3");
+  Expenses E4 = new Expenses("expense4");
+  Expenses E5 = new Expenses("expense5");
+  dummyStatement.addExpense(E1);
+  dummyStatement.addExpense(E2);
+  dummyStatement.addExpense(E3);
+  dummyStatement.addExpense(E4);
+  dummyStatement.addExpense(E5);
+
+  dataHandler.ifEquationValidSetExpenseValue(E1, "8.0");
+  dataHandler.ifEquationValidSetExpenseValue(E2, "10.0");
+  dataHandler.ifEquationValidSetExpenseValue(E3, "20.0");
+  dataHandler.ifEquationValidSetExpenseValue(E4, "25.0");
+  dataHandler.ifEquationValidSetExpenseValue(E5, "30.0");
+  //we'll start off with two different topSortGraphs and then what happens when the two of them are eventually combined? 
+
+  String equationForE1 = "SUM(E2, E3)";
+  String equationForE4 = "MULTIPLY(E5, 2)"; 
+  dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1);
+  dataHandler.ifEquationValidSetExpenseValue(E4, equationForE4);
+  assertEquals("30.0", E1.getValue());
+  assertEquals("60.0", E4.getValue());
+
+  String equationForE4New = "SUM(E5, E1)";
+  dataHandler.ifEquationValidSetExpenseValue(E4, equationForE4New);
+  assertEquals("60.0", E4.getValue());
+
+  dataHandler.ifEquationValidSetExpenseValue(E2, "20");
+  //E1 becomes 40 , and therefore E4 needs to be 70.0
+  assertEquals("70.0", E4.getValue());
+
 } 
 
   // @Test 
