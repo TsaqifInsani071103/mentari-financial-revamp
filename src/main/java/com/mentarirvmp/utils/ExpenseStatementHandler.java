@@ -61,6 +61,12 @@ public class ExpenseStatementHandler implements DataHandler{
     Formula formulaObject = new Formula(this);
     if(formulaObject.isFormulaValid(equation)){
       // System.out.println("EXPENSE + " + expense.getName() + "VALID EQUATION : " + equation);
+
+      //just an integer 
+      if(validExpensesInEquation.size() == 0){
+        
+      }
+
       this.dependencyResolver.initializeExpenseAndDependencies(expense, validExpensesInEquation);
       Expenses[] topSort = dependencyResolver.getTopSortArray();
 

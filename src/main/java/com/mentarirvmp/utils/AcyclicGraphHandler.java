@@ -32,12 +32,6 @@ public class AcyclicGraphHandler {
     }else{
       resetAdjacencyLists(currentVertex);
     }
-
-    //current vertex is E3. IndependentExpenses was E1. 
-    //right now, E1 -> E3, 
-    //but now since current vertex is E3, and IndependentExpenses is [] empty array, 
-    //I want E1, to be rid of its arrows to E3. 
-    //therefore I need to also refresh the expenseToVertexMap no? 
     
     if(independentExpenses.size() > 0){
       for(int i = 0; i < independentExpenses.size() ; i++){
@@ -55,21 +49,13 @@ public class AcyclicGraphHandler {
   private void resetAdjacencyLists(Vertex targetVertex){
     for(Expenses expense: this.expenseToVertexMap.keySet()){
       if(this.expenseToVertexMap.get(expense).getAdjacentVertexSet().contains(targetVertex)){
-        this.expenseToVertexMap.get(expense).getAdjacentVertexSet().remove(targetVertex);
+        this.expenseToVertexMap.get(expense).removeDirectedEdgeToward(targetVertex);
       }
     }
   }
 
-  //only delete an entry to expenseToVertexMap IF we either add or delete an expense 
-  public void resetDependencyGraph(){
-    // this.expenseToVertexMap = new HashMap<>();
-    this.topSortArray = new Expenses[NUMBER_OF_VERTICES];
-  } 
-
-
 
   public Expenses[] getTopSortArray(){ 
-    
     Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
     this.topSortArray = new Expenses[this.NUMBER_OF_VERTICES];
     int counter = 0; 

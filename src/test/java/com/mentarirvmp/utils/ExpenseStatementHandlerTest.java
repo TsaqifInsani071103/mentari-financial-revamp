@@ -192,7 +192,7 @@ public void dependencyResolverTest(){
   dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1);
   //E1 is supposed to be 10 + 20 = 30. 
   String topSortInString = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
-  boolean validOrder = topSortInString.equals("[expense3, expense2, expense1]") || topSortInString.equals("expense2, expense3, expense1");
+  boolean validOrder = topSortInString.equals("[expense3, expense2, expense1]") || topSortInString.equals("[expense2, expense3, expense1]");
   // System.out.println(topSortInString);
 
   assertTrue(validOrder);
@@ -243,15 +243,34 @@ public void dependencyResolverTest2(){
   Expenses E2 = new Expenses("expense2");
   E2.setValue("10.0");
   Expenses E3 = new Expenses("expense3");
-  E3.setValue("10.0");
+  E3.setValue("20.0");
 
   dummyStatement.addExpense(E1);
   dummyStatement.addExpense(E2);
   dummyStatement.addExpense(E3);
+
+
+  String equationForE1 = "SUM(E2, E3)";
+  dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1); 
+  assertEquals("30.0", E1.getValue());
+  assertEquals("10.0", E2.getValue());
+  assertEquals("20.0", E3.getValue());
+  
+  String cyclicEquationForE1 = "SUM(E2, E1)";
+  dataHandler.ifEquationValidSetExpenseValue(E1, cyclicEquationForE1); 
+  assertEquals("0.0", E1.getValue());
+  assertEquals("10.0", E2.getValue());
+  assertEquals("20.0", E3.getValue());
+
+  dataHandler.ifEquationValidSetExpenseValue(E2, "15.0");
+  dataHandler.ifEquationValidSetExpenseValue(E3, "25.0");
+  assertEquals("0.0", E1.getValue());
+  assertEquals("15.0", E2.getValue());
+  assertEquals("25.0", E3.getValue());
 } 
 
   // @Test 
-  // public void testExpenseVertexAndAdjacencyList(){
+  // public void testgExpenseVertexAndAdjacencyList(){
   //   //this is an integration test between calling ifEquationValidSetExpenseValue and if we get the valid expenses into the validExpensesArray in ExpenseStatementHAndler.java 
   //   Statement dummyStatement = MockObjects.getDummyStatementObject();
   //   ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);

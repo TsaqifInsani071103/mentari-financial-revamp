@@ -20,6 +20,13 @@ public class Vertex {
     }
   } 
 
+  public void removeDirectedEdgeToward(Vertex expenseVertex){
+    if(adjacentVertexSet.contains(expenseVertex)){
+      this.adjacentVertexSet.remove(expenseVertex);
+      expenseVertex.decrementIndegree();
+    }
+  } 
+
   public Set<Vertex> getAdjacentVertexSet(){
     return this.adjacentVertexSet;
   }
