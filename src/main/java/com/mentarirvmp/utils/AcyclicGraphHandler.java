@@ -88,22 +88,26 @@ public class AcyclicGraphHandler {
     if(counter != this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices){
       return null; 
     }else{
-      // Vertex anchorVertex = this.expenseToVertexMap.get(anchorExpense);
-      // Map<Vertex, Boolean> narrowedVerticesFromAnchor = new HashMap<Vertex, Boolean>(); 
-      // populateMapWithVertices(anchorVertex, narrowedVerticesFromAnchor);
+      Vertex anchorVertex = this.expenseToVertexMap.get(anchorExpense);
+      Map<Vertex, Boolean> narrowedVerticesFromAnchor = new HashMap<Vertex, Boolean>(); 
+      if(narrowedVerticesFromAnchor.size() > 0){
+        populateMapWithVertices(anchorVertex, narrowedVerticesFromAnchor);
+        if(narrowedVerticesFromAnchor.size() > 0){
+          Expenses[] newTopSort = new Expenses[narrowedVerticesFromAnchor.size() + 1];
+          newTopSort[0] = anchorExpense;
+          int position = 1; 
+          for(Expenses item:this.topSortArray){
+            if(narrowedVerticesFromAnchor.get(this.expenseToVertexMap.get(item))){
+              newTopSort[position] = item; 
+              position++; 
+            }
+          }
+          this.topSortArray = newTopSort;
+      }else{
+        return null; 
+      }
 
-      // if(narrowedVerticesFromAnchor.size() > 0){
-      //   Expenses[] newTopSort = new Expenses[narrowedVerticesFromAnchor.size() + 1];
-      //   newTopSort[0] = anchorExpense;
-      //   int position = 1; 
-      //   for(Expenses item:this.topSortArray){
-      //     if(narrowedVerticesFromAnchor.get(this.expenseToVertexMap.get(item))){
-      //       newTopSort[position] = item; 
-      //       position++; 
-      //     }
-      //   }
-      //   this.topSortArray = newTopSort;
-      // }
+      }
     } 
 
     return this.topSortArray;
