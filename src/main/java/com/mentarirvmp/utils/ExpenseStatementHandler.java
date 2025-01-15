@@ -63,7 +63,7 @@ public class ExpenseStatementHandler implements DataHandler{
       // System.out.println("EXPENSE + " + expense.getName() + "VALID EQUATION : " + equation);
 
       this.dependencyResolver.initializeExpenseAndDependencies(expense, validExpensesInEquation);
-      Expenses[] topSort = dependencyResolver.getTopSortArray();
+      Expenses[] topSort = dependencyResolver.getTopSortArray(expense);
 
       if(topSort!=null){
         calculateAndSetExpenseValue(expense,formulaObject, equation);

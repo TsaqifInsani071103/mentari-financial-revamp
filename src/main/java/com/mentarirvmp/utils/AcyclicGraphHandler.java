@@ -51,24 +51,15 @@ public class AcyclicGraphHandler {
   }
 
 
-  public Expenses[] getTopSortArray(){ 
+  public Expenses[] getTopSortArray(Expenses anchorExpense){ 
     Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
     int counter = 0; 
-    int numberOfLeftOutStandaloneVertices = 0; 
+    Vertex anchorVertex = this.expenseToVertexMap.get(anchorExpense);
+    int numberOfRefreshedVertices = getNumberOfValidVertices(anchorVertex, 0);  
     Queue<Vertex> queue = new ArrayDeque<>();
-    for(Expenses expense: expenseToVertexMapCopy.keySet()){
-      Vertex vertex = expenseToVertexMapCopy.get(expense);
-      if(vertex.getIndegree() ==0 && vertex.getAdjacentVertexSet().size() == 0){
-        numberOfLeftOutStandaloneVertices++;
-        continue; 
-      }
-
-      if(vertex.getIndegree() == 0){
-        queue.offer(vertex); 
-      };
-    }
-
-    this.topSortArray = new Expenses[this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices];
+    queue.offer(anchorVertex);
+    this.topSortArray = new Expenses[numberOfRefreshedVertices];
+    
     while(!queue.isEmpty()){
       Vertex vertex = queue.poll(); 
       topSortArray[counter] = vertex.getData(); 
@@ -84,13 +75,24 @@ public class AcyclicGraphHandler {
 
 
     //this means that the graph is cyclic. 
-    if(counter != this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices){
+    if(counter != numberOfRefreshedVertices){
       return null; 
     }
 
     return this.topSortArray;
     
 
+  } 
+
+  private int getNumberOfValidVertices(Vertex parentVertex, int num){
+    if(parentVertex.getAdjacentVertexSet().isEmpty()) return 1;
+    num = num + 1;
+    for(Vertex adj:parentVertex.getAdjacentVertexSet()){
+      num = num + getNumberOfValidVertices(adj, num);
+    
+    }
+
+    return num; 
   } 
 
   private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
