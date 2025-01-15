@@ -270,6 +270,9 @@ public void dependencyResolverTest2(){
   assertEquals("0.0", E1.getValue());
   assertEquals("15.0", E2.getValue());
   assertEquals("25.0", E3.getValue());
+
+  //if they're all integer or decimal values, and not formula values, they dont qualify to be put into topSort. which means topsosrt is null without the formulas
+  assertNull(dataHandler.dependencyResolver.getTopSortArray(E1));
 } 
 
 @Test 
