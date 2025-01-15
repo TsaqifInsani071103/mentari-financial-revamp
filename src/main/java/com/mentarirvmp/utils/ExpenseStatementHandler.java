@@ -75,6 +75,7 @@ public class ExpenseStatementHandler implements DataHandler{
           calculateAndSetExpenseValue(expense, formulaObject, equation);
         }else{
           setExpenseValueByFalseEquation(expense, equation);
+          return false; 
         }
         // dependencyResolver.resetDependencyGraph();
         //if the graph is cyclic, well set the equation to be the previous equation 
