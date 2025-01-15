@@ -48,7 +48,7 @@ public class DAGVertexTest {
 
     Expenses[] expectedSort = new Expenses[]{E1, E2, E4, E3};
 
-    Expenses[] sortedArray = dag.getTopSortArray(E1);
+    Expenses[] sortedArray = dag.getTopSortArray();
     assertNotNull(sortedArray);
     for(int i =0; i<sortedArray.length;i++){
       assertEquals(sortedArray[i].getName(), expectedSort[i].getName());
@@ -57,7 +57,7 @@ public class DAGVertexTest {
     // //this is a cyclical sort 
     ArrayList<Expenses> dependencies1 = new ArrayList<>(Arrays.asList(E2));
     dag.initializeExpenseAndDependencies(E1, dependencies1);
-    Expenses[] sortedArray2 = dag.getTopSortArray(E1);
+    Expenses[] sortedArray2 = dag.getTopSortArray();
     assertNull(sortedArray2);
 
     // Test 5: Cyclic graph with a complex cycle
@@ -70,7 +70,7 @@ public class DAGVertexTest {
     dag5.initializeExpenseAndDependencies(N, new ArrayList<>(Arrays.asList(O)));
     dag5.initializeExpenseAndDependencies(O, new ArrayList<>(Arrays.asList(M)));
 
-    Expenses[] sortedArray5 = dag5.getTopSortArray(M);
+    Expenses[] sortedArray5 = dag5.getTopSortArray();
     assertNull(sortedArray5);
 
 
@@ -88,7 +88,7 @@ public class DAGVertexTest {
 
     // Expected order: P, Q, R, S
     Expenses[] expectedSort4 = new Expenses[]{P, Q, R, S};
-    Expenses[] sortedArray4 = dag4.getTopSortArray(P);
+    Expenses[] sortedArray4 = dag4.getTopSortArray();
     assertNotNull(sortedArray4);
 
   

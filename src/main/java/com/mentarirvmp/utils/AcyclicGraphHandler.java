@@ -51,7 +51,7 @@ public class AcyclicGraphHandler {
   }
 
 
-  public Expenses[] getTopSortArray(Expenses anchorExpense){ 
+  public Expenses[] getTopSortArray(){ 
     Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
     int counter = 0; 
     int numberOfLeftOutStandaloneVertices = 0; 
@@ -87,28 +87,7 @@ public class AcyclicGraphHandler {
     //this means that the graph is cyclic. 
     if(counter != this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices){
       return null; 
-    }else{
-      Vertex anchorVertex = this.expenseToVertexMap.get(anchorExpense);
-      Map<Vertex, Boolean> narrowedVerticesFromAnchor = new HashMap<Vertex, Boolean>(); 
-      if(narrowedVerticesFromAnchor.size() > 0){
-        populateMapWithVertices(anchorVertex, narrowedVerticesFromAnchor);
-        if(narrowedVerticesFromAnchor.size() > 0){
-          Expenses[] newTopSort = new Expenses[narrowedVerticesFromAnchor.size() + 1];
-          newTopSort[0] = anchorExpense;
-          int position = 1; 
-          for(Expenses item:this.topSortArray){
-            if(narrowedVerticesFromAnchor.get(this.expenseToVertexMap.get(item))){
-              newTopSort[position] = item; 
-              position++; 
-            }
-          }
-          this.topSortArray = newTopSort;
-      }else{
-        return null; 
-      }
-
-      }
-    } 
+    }
 
     return this.topSortArray;
     
@@ -152,13 +131,12 @@ public class AcyclicGraphHandler {
   public ArrayList<Expenses> getValuesProceeding(Expenses expense){
     boolean startingPointFound = false; 
     ArrayList<Expenses> valuesProceedingArray = new ArrayList<>();
+    Vertex anchorVertex = this.expenseToVertexMap.get(expense);
     for(int i = 0; i < this.topSortArray.length;i++){
       Expenses currentExpense = topSortArray[i]; 
-      if(startingPointFound && this.expenseToVertexMap.get(expense).getAdjacentVertexSet().contains(this.expenseToVertexMap.get(currentExpense))){
-        // topSortArray[i].
-        // dataHandler.ifEquationValidSetExpenseValue(currentExpense, currentExpense.getEquation());
+      Vertex currentVertex = this.expenseToVertexMap.get(currentExpense);
+      if(startingPointFound && anchorVertex.getAdjacentVertexSet().contains(currentVertex)){
         valuesProceedingArray.add(currentExpense);
-        // System.out.println("THE VALUE OF: " + currentExpense.getName() + "HAS BEEN UPDATED TO: " + currentExpense.getValue());
       }
       if(currentExpense == expense){
         startingPointFound = true; 

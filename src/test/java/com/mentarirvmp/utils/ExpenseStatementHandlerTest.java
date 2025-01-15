@@ -191,7 +191,7 @@ public void dependencyResolverTest(){
   String equationForE1 = "SUM(E2, E3)";
   dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1);
   //E1 is supposed to be 10 + 20 = 30. 
-  String topSortInString = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray(E1));
+  String topSortInString = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
   boolean validOrder = topSortInString.equals("[expense3, expense2, expense1]") || topSortInString.equals("[expense2, expense3, expense1]");
   // System.out.println(topSortInString);
 
@@ -200,7 +200,7 @@ public void dependencyResolverTest(){
  
   String equationForE2 = "SUM(E3)";
   dataHandler.ifEquationValidSetExpenseValue(E2, equationForE2);
-  String topSortInString2 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray(E2));
+  String topSortInString2 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
   boolean validOrder2 = topSortInString2.equals("[expense3, expense2, expense1]");
 
   assertTrue(validOrder2);
@@ -209,7 +209,7 @@ public void dependencyResolverTest(){
   //at this point, this is going to be cyclic 
   String equationForE3 = "SUM(E1)";
   dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3);
-  String topSortInString3 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray(E3));
+  String topSortInString3 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
   //empty array for cyclic topSort
   assertEquals("null", topSortInString3);
 
@@ -221,7 +221,7 @@ public void dependencyResolverTest(){
   String equationForE3New = "10.0";
   dataHandler.ifEquationValidSetExpenseValue(E3, equationForE3New);
 
-  String topSortInString4 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray(E3));
+  String topSortInString4 = Arrays.toString(dataHandler.dependencyResolver.getTopSortArray());
   // System.out.println(topSortInString4);
   // System.out.println(E3.getEquation());
   assertNotEquals("null", topSortInString4);
@@ -253,7 +253,7 @@ public void dependencyResolverTest2(){
 
   String equationForE1 = "SUM(E2, E3)";
   dataHandler.ifEquationValidSetExpenseValue(E1, equationForE1); 
-  assertTrue(dataHandler.dependencyResolver.getTopSortArray(E1).length == 3 );
+  assertTrue(dataHandler.dependencyResolver.getTopSortArray().length == 3 );
   assertEquals("30.0", E1.getValue());
   assertEquals("10.0", E2.getValue());
   assertEquals("20.0", E3.getValue());
@@ -272,7 +272,7 @@ public void dependencyResolverTest2(){
   assertEquals("25.0", E3.getValue());
 
   //if they're all integer or decimal values, and not formula values, they dont qualify to be put into topSort. which means topsosrt is null without the formulas
-  assertNull(dataHandler.dependencyResolver.getTopSortArray(E1));
+  assertNull(dataHandler.dependencyResolver.getTopSortArray());
 } 
 
 @Test 
