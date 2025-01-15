@@ -54,12 +54,23 @@ public class AcyclicGraphHandler {
   public Expenses[] getTopSortArray(Expenses anchorExpense){ 
     Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
     int counter = 0; 
-    Vertex anchorVertex = this.expenseToVertexMap.get(anchorExpense);
-    int numberOfRefreshedVertices = getNumberOfValidVertices(anchorVertex, 0);  
+    int numberOfLeftOutStandaloneVertices = 0; 
+
+
     Queue<Vertex> queue = new ArrayDeque<>();
-    queue.offer(anchorVertex);
-    this.topSortArray = new Expenses[numberOfRefreshedVertices];
-    
+    for(Expenses expense: expenseToVertexMapCopy.keySet()){
+      Vertex vertex = expenseToVertexMapCopy.get(expense);
+      if(vertex.getIndegree() ==0 && vertex.getAdjacentVertexSet().size() == 0){
+        numberOfLeftOutStandaloneVertices++;
+        continue; 
+      }
+
+      if(vertex.getIndegree() == 0){
+        queue.offer(vertex); 
+      };
+    }
+
+    this.topSortArray = new Expenses[this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices];
     while(!queue.isEmpty()){
       Vertex vertex = queue.poll(); 
       topSortArray[counter] = vertex.getData(); 
@@ -75,24 +86,37 @@ public class AcyclicGraphHandler {
 
 
     //this means that the graph is cyclic. 
-    if(counter != numberOfRefreshedVertices){
+    if(counter != this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices){
       return null; 
-    }
+
+    }else{
+      Vertex anchorVertex = this.expenseToVertexMap.get(anchorExpense);
+      Map<Vertex, Boolean> narrowedVerticesFromAnchor = populateMapWithVertices(anchorVertex, new HashMap<Vertex, Boolean>());
+      // Expenses[] newTopSort = new Expenses[narrowedVerticesFromAnchor.size() + 1];
+      // newTopSort[0] = anchorExpense;
+      // int position = 1; 
+      // for(Expenses item:this.topSortArray){
+      //   if(narrowedVerticesFromAnchor.get(this.expenseToVertexMap.get(item))){
+      //     newTopSort[position] = item; 
+      //     position++; 
+      //   }
+      // }
+      // this.topSortArray = newTopSort;
+    } 
 
     return this.topSortArray;
     
 
   } 
 
-  private int getNumberOfValidVertices(Vertex parentVertex, int num){
-    if(parentVertex.getAdjacentVertexSet().isEmpty()) return 1;
-    num = num + 1;
-    for(Vertex adj:parentVertex.getAdjacentVertexSet()){
-      num = num + getNumberOfValidVertices(adj, num);
-    
+  private Map<Vertex, Boolean> populateMapWithVertices(Vertex parentVertex, Map<Vertex, Boolean> map){
+    for(Vertex adj: parentVertex.getAdjacentVertexSet()){
+      map.put(adj, true);
+      populateMapWithVertices(adj, map); 
     }
+    
 
-    return num; 
+    return map; 
   } 
 
   private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
