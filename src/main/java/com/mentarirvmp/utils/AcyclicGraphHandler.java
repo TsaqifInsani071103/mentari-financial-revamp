@@ -56,7 +56,6 @@ public class AcyclicGraphHandler {
     int counter = 0; 
     int numberOfLeftOutStandaloneVertices = 0; 
 
-
     Queue<Vertex> queue = new ArrayDeque<>();
     for(Expenses expense: expenseToVertexMapCopy.keySet()){
       Vertex vertex = expenseToVertexMapCopy.get(expense);
@@ -88,20 +87,23 @@ public class AcyclicGraphHandler {
     //this means that the graph is cyclic. 
     if(counter != this.NUMBER_OF_VERTICES - numberOfLeftOutStandaloneVertices){
       return null; 
-
     }else{
-      Vertex anchorVertex = this.expenseToVertexMap.get(anchorExpense);
-      Map<Vertex, Boolean> narrowedVerticesFromAnchor = populateMapWithVertices(anchorVertex, new HashMap<Vertex, Boolean>());
-      // Expenses[] newTopSort = new Expenses[narrowedVerticesFromAnchor.size() + 1];
-      // newTopSort[0] = anchorExpense;
-      // int position = 1; 
-      // for(Expenses item:this.topSortArray){
-      //   if(narrowedVerticesFromAnchor.get(this.expenseToVertexMap.get(item))){
-      //     newTopSort[position] = item; 
-      //     position++; 
+      // Vertex anchorVertex = this.expenseToVertexMap.get(anchorExpense);
+      // Map<Vertex, Boolean> narrowedVerticesFromAnchor = new HashMap<Vertex, Boolean>(); 
+      // populateMapWithVertices(anchorVertex, narrowedVerticesFromAnchor);
+
+      // if(narrowedVerticesFromAnchor.size() > 0){
+      //   Expenses[] newTopSort = new Expenses[narrowedVerticesFromAnchor.size() + 1];
+      //   newTopSort[0] = anchorExpense;
+      //   int position = 1; 
+      //   for(Expenses item:this.topSortArray){
+      //     if(narrowedVerticesFromAnchor.get(this.expenseToVertexMap.get(item))){
+      //       newTopSort[position] = item; 
+      //       position++; 
+      //     }
       //   }
+      //   this.topSortArray = newTopSort;
       // }
-      // this.topSortArray = newTopSort;
     } 
 
     return this.topSortArray;
@@ -109,14 +111,14 @@ public class AcyclicGraphHandler {
 
   } 
 
-  private Map<Vertex, Boolean> populateMapWithVertices(Vertex parentVertex, Map<Vertex, Boolean> map){
+  private void populateMapWithVertices(Vertex parentVertex, Map<Vertex, Boolean> map){
     for(Vertex adj: parentVertex.getAdjacentVertexSet()){
       map.put(adj, true);
       populateMapWithVertices(adj, map); 
     }
     
 
-    return map; 
+
   } 
 
   private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
