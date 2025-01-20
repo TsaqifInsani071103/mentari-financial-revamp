@@ -51,6 +51,7 @@ public class AcyclicGraphHandler {
   }
 
 
+  //topsort makes sure that all the dependencies between all the initialized expenses dont result in a cyclic behavior. 
   public Expenses[] getTopSortArray(){ 
     Map<Expenses, Vertex> expenseToVertexMapCopy = getDeepCopyMap(this.expenseToVertexMap);
     int counter = 0; 
@@ -127,7 +128,7 @@ public class AcyclicGraphHandler {
     return deepCopy;
   } 
 
-
+  //just gets all the adjacent vertices and recursively updates all the relevant vertices 
   public ArrayList<Expenses> getValuesProceeding(Expenses expense){
     ArrayList<Expenses> valuesProceedingArray = new ArrayList<>();
     Vertex anchorVertex = this.expenseToVertexMap.get(expense);
