@@ -129,18 +129,11 @@ public class AcyclicGraphHandler {
 
 
   public ArrayList<Expenses> getValuesProceeding(Expenses expense){
-    boolean startingPointFound = false; 
     ArrayList<Expenses> valuesProceedingArray = new ArrayList<>();
     Vertex anchorVertex = this.expenseToVertexMap.get(expense);
-    for(int i = 0; i < this.topSortArray.length;i++){
-      Expenses currentExpense = topSortArray[i]; 
-      Vertex currentVertex = this.expenseToVertexMap.get(currentExpense);
-      if(startingPointFound && anchorVertex.getAdjacentVertexSet().contains(currentVertex)){
-        valuesProceedingArray.add(currentExpense);
-      }
-      if(currentExpense == expense){
-        startingPointFound = true; 
-      } 
+    for(Vertex adjVertices : anchorVertex.getAdjacentVertexSet()){
+      valuesProceedingArray.add(adjVertices.getData());
+
     }
     return valuesProceedingArray;
   } 
