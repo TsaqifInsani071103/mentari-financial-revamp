@@ -315,4 +315,92 @@ public void dependencyResolverTest3(){
 
 } 
 
+@Test 
+public void adjListRefreshValueTest(){
+  Statement dummyStatement =  new Statement("dummyStatement"); 
+  Expenses expense1 = new Expenses("1");
+  dummyStatement.addExpense(expense1);
+  expense1.setValue("10");
+  Expenses expense2 = new Expenses("2");
+  dummyStatement.addExpense(expense2);
+  expense2.setValue("10");
+  Expenses expense3 = new Expenses("3");
+  dummyStatement.addExpense(expense3);
+  expense3.setValue("10");
+  Expenses expense4 = new Expenses("4");
+  dummyStatement.addExpense(expense4);
+  expense4.setValue("10");
+  Expenses expense5 = new Expenses("5");
+  dummyStatement.addExpense(expense5);
+  expense5.setValue("10");
+  Expenses expense6 = new Expenses("6");
+  dummyStatement.addExpense(expense6);
+  expense6.setValue("10");
+  Expenses expense7 = new Expenses("7");
+  dummyStatement.addExpense(expense7);
+  expense7.setValue("10");
+  Expenses expense8 = new Expenses("8");
+  dummyStatement.addExpense(expense8);
+  expense8.setValue("10");
+  Expenses expense9 = new Expenses("9");
+  dummyStatement.addExpense(expense9);
+  expense9.setValue("10");
+
+  ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+
+  String equation1 = String.format("SUM(%s, %s)", expense2.getId(), expense3.getId());
+  String equation5 = String.format("SUM(%s, 10)", expense1.getId()); 
+  String equation6 = String.format("MULTIPLY(%s, 10)", expense5.getId()); 
+  String equation7 = String.format("MULTIPLY(%s, 10)", expense5.getId()); 
+  String equation8 = String.format("SUM(%s, 10)", expense1.getId());
+  String equation9 = String.format("SUM(%s, 10)", expense8.getId()); 
+
+  //this makes it CYCLICAL 
+  String equation3 = String.format("SUM(%s, 10)", expense9.getId());
+
+
+
+  dataHandler.ifEquationValidSetExpenseValue(expense1, equation1); 
+  dataHandler.ifEquationValidSetExpenseValue(expense5, equation5); 
+  dataHandler.ifEquationValidSetExpenseValue(expense6, equation6); 
+  dataHandler.ifEquationValidSetExpenseValue(expense7, equation7); 
+  dataHandler.ifEquationValidSetExpenseValue(expense8, equation8); 
+  dataHandler.ifEquationValidSetExpenseValue(expense9, equation9); 
+
+  //THIS IS CYCLICAL 
+  // dataHandler.ifEquationValidSetExpenseValue(expense3, equation3);
+
+  //this gives directed edges toward E1 for E2 and E3. E2 -> E1, E3 -> E1. 
+  //uncomment this to test cyclical 
+  // assertEquals("0.0",expense3.getValue()); 
+
+  //if I refresh the value of E5, then the values of E2, E3, E8, and E9 should not be refreshed. 
+
+  String oldValue1 = expense1.getValue(); 
+  String oldValue2 = expense2.getValue(); 
+  String oldValue3 = expense3.getValue(); 
+  String oldValue4 = expense4.getValue(); 
+  String oldValue5 = expense5.getValue(); 
+  String oldValue6 = expense6.getValue(); 
+  String oldValue7 = expense7.getValue(); 
+  String oldValue8 = expense8.getValue(); 
+  String oldValue9 = expense9.getValue(); 
+  dataHandler.ifEquationValidSetExpenseValue(expense5, "0");
+  assertEquals(oldValue1, expense1.getValue()); 
+  assertEquals(oldValue2, expense2.getValue()); 
+  assertEquals(oldValue3, expense3.getValue()); 
+  assertEquals(oldValue4, expense4.getValue()); 
+  assertEquals(oldValue8, expense8.getValue()); 
+  assertEquals(oldValue9, expense9.getValue()); 
+  
+  assertNotEquals(oldValue5, expense5.getValue());
+  assertNotEquals(oldValue6, expense6.getValue());
+  assertNotEquals(oldValue7, expense7.getValue());
+
+
+  
+
+
+} 
+
 }
