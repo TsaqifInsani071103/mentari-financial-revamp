@@ -105,6 +105,14 @@ public class ExpensesViewCreator implements ViewCreator {
     });
   }
 
+  private void highlightBox(int i){
+    if(i == 1){
+      this.textFieldReference.setText("HIGHLGHTED!");
+    }else{
+      this.textFieldReference.setText(this.currentExpense.getValue()); 
+    }
+  } 
+
   public void updateValueDisplay(){
     if(textFieldReference != null) {
       toggleChangedByListener();
@@ -123,10 +131,23 @@ public class ExpensesViewCreator implements ViewCreator {
       toggleChangedByListener();
       if (newValue) { // Gains focus
         textField.setText(this.currentExpense.getEquation());
+
+        if(!this.ExpensesToHighlightFocused.isEmpty()){
+          System.out.println(ExpensesToHighlightFocused);
+          for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+            expensesViewCreator.highlightBox(1);
+          }
+        }
       } else { // Loses focus
         // getAssociatedStatement().updateFormulas();
         String value = this.currentExpense.getValue(); 
         textField.setText(value);
+
+        if(!this.ExpensesToHighlightFocused.isEmpty()){
+          for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+            expensesViewCreator.highlightBox(0);
+          }
+        }
        
         
       }
