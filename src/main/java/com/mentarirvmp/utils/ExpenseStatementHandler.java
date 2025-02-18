@@ -70,18 +70,20 @@ public class ExpenseStatementHandler implements DataHandler{
 
       if(topSort!=null){
         calculateAndSetExpenseValue(expense,formulaObject, equation);
-        refreshExpenseViewsProceeding(expense);
-        if(this.getViewGreatorByExpense(expense) !=null){
+        if(this.getViewGreatorByExpense(expense) !=null && !this.validExpensesInEquation.contains(expense)){
+          System.out.println("Looking at: " + expense.getName());
+          System.out.println("Looking at: " + validExpensesInEquation.toString());
+          System.out.println();
           this.validExpensesInEquation.forEach((validExpense) -> {
             expenseToHighlightMap.add(this.getViewGreatorByExpense(validExpense)); 
           });
           this.getViewGreatorByExpense(expense).populateHighlightMap(expenseToHighlightMap);
         }
+        refreshExpenseViewsProceeding(expense);
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }else{
         if(validExpensesInEquation.size() ==0){
-          // this.getViewGreatorByExpense(expense).populateHighlightMap(expenseToHighlightMap);
           calculateAndSetExpenseValue(expense, formulaObject, equation);
         }else{
           setExpenseValueByFalseEquation(expense, equation);

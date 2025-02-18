@@ -107,10 +107,39 @@ public class ExpensesViewCreator implements ViewCreator {
     });
   }
 
+    //this is only to toggle value and equation UI not to set the value of the expense itself. 
+    private void addFocusListener(TextField textField) {
+      textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        toggleChangedByListener();
+        if (newValue) { // Gains focus
+          textField.setText(this.currentExpense.getEquation());
+  
+          if(!this.ExpensesToHighlightFocused.isEmpty()){
+            for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+              expensesViewCreator.highlightBox(1);
+            }
+          }
+        } else { // Loses focus
+          // getAssociatedStatement().updateFormulas();
+          String value = this.currentExpense.getValue(); 
+          textField.setText(value);
+  
+          if(!this.ExpensesToHighlightFocused.isEmpty()){
+            for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+              expensesViewCreator.highlightBox(0);
+            }
+          }
+         
+          
+        }
+        toggleChangedByListener();
+      });
+    }
+  
+
 
 
   private void highlightBox(int i){
-    System.out.println("CURRENT EXPENSE FOCUSED: " + this.currentExpense.getName());
     boxReference.getStyleClass().removeAll("white-box", "green-box");
     if(i == 1){
       boxReference.getStyleClass().add("green-box");
@@ -138,35 +167,6 @@ public class ExpensesViewCreator implements ViewCreator {
   } 
   
 
-  //this is only to toggle value and equation UI not to set the value of the expense itself. 
-  private void addFocusListener(TextField textField) {
-    textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-      toggleChangedByListener();
-      if (newValue) { // Gains focus
-        textField.setText(this.currentExpense.getEquation());
-
-        if(!this.ExpensesToHighlightFocused.isEmpty()){
-          System.out.println(ExpensesToHighlightFocused);
-          for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
-            expensesViewCreator.highlightBox(1);
-          }
-        }
-      } else { // Loses focus
-        // getAssociatedStatement().updateFormulas();
-        String value = this.currentExpense.getValue(); 
-        textField.setText(value);
-
-        if(!this.ExpensesToHighlightFocused.isEmpty()){
-          for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
-            expensesViewCreator.highlightBox(0);
-          }
-        }
-       
-        
-      }
-      toggleChangedByListener();
-    });
-  }
 
   public void toggleChangedByListener(){
     changedByListener = !changedByListener;
