@@ -6,6 +6,7 @@ import javafx.application.Platform;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import java.util.ArrayList;
 
 import javafx.scene.Parent;
 // import com.mentari.utils.ExpenseType;
@@ -43,16 +44,15 @@ public class ExpensesViewCreator implements ViewCreator {
   //either use statement or statementExpenseHandler, we dont know yet. 
   private ExpenseStatementHandler dataHandler; 
 
+  private ArrayList<ExpensesViewCreator> ExpensesToHighlightFocused = new ArrayList<>();
+
   protected static boolean changedByListener = false; 
   private VBox alreadyMadeView; 
 
   public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
     this.currentExpense = expense; 
     this.dataHandler = dataHandler; 
-    // dataHandler.addExpenseView(expense, this);
 
-    //we'll initialize an expense dependency map here in dataHandler. 
-    // dataHandler.ifEquationValidSetExpenseValue(expense, expense.getEquation());
 
   } 
 
@@ -113,6 +113,9 @@ public class ExpensesViewCreator implements ViewCreator {
     }
   }
 
+  public void populateHighlightMap(ArrayList<ExpensesViewCreator> expenseToHighlightMap){
+    this.ExpensesToHighlightFocused = expenseToHighlightMap; 
+  } 
 
   //this is only to toggle value and equation UI not to set the value of the expense itself. 
   private void addFocusListener(TextField textField) {
