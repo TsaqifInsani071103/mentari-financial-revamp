@@ -60,6 +60,7 @@ public class ExpenseStatementHandler implements DataHandler{
   public boolean ifEquationValidSetExpenseValue(Expenses expense, String equation){
     //RESETTING VALID EXPENSES STACK
     this.validExpensesInEquation = new ArrayList<>(); 
+    ArrayList<ExpensesViewCreator> expenseToHighlightMap = new ArrayList<>();
     Formula formulaObject = new Formula(this);
     if(formulaObject.isFormulaValid(equation)){
       // System.out.println("EXPENSE + " + expense.getName() + "VALID EQUATION : " + equation);
@@ -70,6 +71,12 @@ public class ExpenseStatementHandler implements DataHandler{
       if(topSort!=null){
         calculateAndSetExpenseValue(expense,formulaObject, equation);
         refreshExpenseViewsProceeding(expense);
+        if(this.getViewGreatorByExpense(expense) !=null){
+          this.validExpensesInEquation.forEach((validExpense) -> {
+            expenseToHighlightMap.add(this.getViewGreatorByExpense(validExpense)); 
+          });
+          this.getViewGreatorByExpense(expense).populateHighlightMap(expenseToHighlightMap);
+        }
         // System.out.println("THIS IS TOP SORT: " + Arrays.toString(topSort));
         // System.out.println(Arrays.toString(topSort));
       }else{
@@ -94,23 +101,22 @@ public class ExpenseStatementHandler implements DataHandler{
   private void refreshExpenseViewsProceeding(Expenses expense){
     ArrayList<Expenses> chronologicalArrays = dependencyResolver.getValuesProceeding(expense);
     if(chronologicalArrays.size() > 0){
-      ArrayList<ExpensesViewCreator> expenseToHighlightMap = new ArrayList<>();
       for(Expenses item : chronologicalArrays){
         this.ifEquationValidSetExpenseValue(item, item.getEquation());
         // System.out.println("CHANGED THE VALUE OF: " + item.getName() + "   " + item.getValue());
         if(this.expenseToViewMap.size() > 0){
           ExpensesViewCreator dependentExpenseView = this.expenseToViewMap.get(item);
           dependentExpenseView.updateValueDisplay();
-          expenseToHighlightMap.add(dependentExpenseView);
+          // expenseToHighlightMap.add(dependentExpenseView);
 
         }
       }
-      //ANOTHER SIDE EFFECT THATS RUINING THE SRP OF THIS FUNCTION!! 
+      // //ANOTHER SIDE EFFECT THATS RUINING THE SRP OF THIS FUNCTION!! 
 
-        if(this.expenseToViewMap.get(expense) != null){
+      //   if(this.expenseToViewMap.get(expense) != null){
 
-          this.expenseToViewMap.get(expense).populateHighlightMap(expenseToHighlightMap); 
-        }
+      //     this.expenseToViewMap.get(expense).populateHighlightMap(expenseToHighlightMap); 
+      //   }
    
 
     } 
