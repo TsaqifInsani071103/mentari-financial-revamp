@@ -95,7 +95,7 @@
 }
 
 .green-box {
-  -fx-background-color: green;
+  -fx-background-color: rgba(144, 238, 144, 0.5);
 }
 
 .white-box {
