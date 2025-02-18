@@ -94,6 +94,14 @@
   -fx-border-width: 0 0 1 0;
 }
 
+.green-box {
+  -fx-background-color: green;
+}
+
+.white-box {
+  -fx-background-color: white;
+}
+
 /* .text-field:focused {
   -fx-border-color: #bdc3c7;
 } */

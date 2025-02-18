@@ -81,6 +81,7 @@ public class ExpenseStatementHandler implements DataHandler{
         // System.out.println(Arrays.toString(topSort));
       }else{
         if(validExpensesInEquation.size() ==0){
+          // this.getViewGreatorByExpense(expense).populateHighlightMap(expenseToHighlightMap);
           calculateAndSetExpenseValue(expense, formulaObject, equation);
         }else{
           setExpenseValueByFalseEquation(expense, equation);

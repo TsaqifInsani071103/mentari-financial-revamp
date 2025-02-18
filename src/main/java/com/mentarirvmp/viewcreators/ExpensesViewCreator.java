@@ -40,6 +40,7 @@ import javafx.scene.control.Control;
 public class ExpensesViewCreator implements ViewCreator {
   public Expenses currentExpense; 
   private transient TextField textFieldReference; 
+  private transient HBox boxReference; 
   private ChildControllers controller; 
   //either use statement or statementExpenseHandler, we dont know yet. 
   private ExpenseStatementHandler dataHandler; 
@@ -73,6 +74,7 @@ public class ExpensesViewCreator implements ViewCreator {
     Region spacer = new Region();
     HBox.setHgrow(spacer, Priority.ALWAYS);
     box.getChildren().addAll(idLabel,nameTextField,spacer, getValueTextField()); 
+    this.boxReference = box;
     return box; 
   } 
 
@@ -105,10 +107,15 @@ public class ExpensesViewCreator implements ViewCreator {
     });
   }
 
+
+
   private void highlightBox(int i){
+    System.out.println("CURRENT EXPENSE FOCUSED: " + this.currentExpense.getName());
+    boxReference.getStyleClass().removeAll("white-box", "green-box");
     if(i == 1){
-      this.textFieldReference.setText("HIGHLGHTED!");
+      boxReference.getStyleClass().add("green-box");
     }else{
+      boxReference.getStyleClass().add("white-box");
       this.textFieldReference.setText(this.currentExpense.getValue()); 
     }
   } 
@@ -122,8 +129,14 @@ public class ExpensesViewCreator implements ViewCreator {
   }
 
   public void populateHighlightMap(ArrayList<ExpensesViewCreator> expenseToHighlightMap){
+    if(this.ExpensesToHighlightFocused.size() > 0 && this.ExpensesToHighlightFocused.size() != expenseToHighlightMap.size()){
+      this.ExpensesToHighlightFocused.forEach((vc) -> {
+        vc.highlightBox(0);
+      });
+    }
     this.ExpensesToHighlightFocused = expenseToHighlightMap; 
   } 
+  
 
   //this is only to toggle value and equation UI not to set the value of the expense itself. 
   private void addFocusListener(TextField textField) {
