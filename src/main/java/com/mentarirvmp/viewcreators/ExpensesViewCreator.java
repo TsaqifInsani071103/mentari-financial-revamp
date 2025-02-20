@@ -80,6 +80,7 @@ public class ExpensesViewCreator implements ViewCreator {
     expandedTextField.setManaged(false); 
     expandedTextField.getStyleClass().addAll("yellow-text-field", "black-underline"); 
     addFocusListenerExpanded(expandedTextField);
+    addExpandedTextListener(expandedTextField);
     this.expandedTextFieldRef = expandedTextField; 
 
     overallContainer.getChildren().addAll(box, expandedTextField, descriptionFieldArray[0]);
@@ -205,13 +206,18 @@ private void clickAction(Control textArea, Line icon){
     });
   } 
 
-  public void addExpandedTextListener(TextField expandedTextField){
-    // if(!changedByListener){
-    //   expandedTextField.getStyleClass().removeAll("red-underline", "black-underline");
+  public void addExpandedTextListener(TextField expandedTextField){    expandedTextField.textProperty().addListener(new ChangeListener<String>(){
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
+        System.out.println("CHANGED BY LISTENER?");
+        if(!changedByListener){
+          // expandedTextField.getStyleClass().removeAll("red-underline", "black-underline");
+          System.out.println("CHANGED BY MAIN FIELD, BE CAREFUL WITH THIS INFO");
 
 
-    // }
-
+        }
+      } 
+    });
   } 
 
 
