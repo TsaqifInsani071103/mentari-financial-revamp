@@ -186,6 +186,7 @@ private void clickAction(Control textArea, Line icon){
         // System.out.println(currentExpense.getName() + " CHANGED BY LISTENER: " + changedByListener);
         if(!changedByListener){
           textField.getStyleClass().removeAll("red-underline", "black-underline");
+          expandedTextFieldRef.getStyleClass().removeAll("red-underline", "black-underline");
 
           //NEW SHID 
           expandedTextFieldRef.setText(newValue);
@@ -193,8 +194,10 @@ private void clickAction(Control textArea, Line icon){
 
           if(dataHandler.ifEquationValidSetExpenseValue(currentExpense, newValue)){
             textField.getStyleClass().add("black-underline");
+            expandedTextFieldRef.getStyleClass().add("black-underline");
           }else{
             dataHandler.setExpenseValueByFalseEquation(currentExpense, newValue);
+            expandedTextFieldRef.getStyleClass().add("red-underline"); 
             textField.getStyleClass().add("red-underline");
           }
         }
@@ -203,7 +206,11 @@ private void clickAction(Control textArea, Line icon){
   } 
 
   public void addExpandedTextListener(TextField expandedTextField){
+    // if(!changedByListener){
+    //   expandedTextField.getStyleClass().removeAll("red-underline", "black-underline");
 
+
+    // }
 
   } 
 
