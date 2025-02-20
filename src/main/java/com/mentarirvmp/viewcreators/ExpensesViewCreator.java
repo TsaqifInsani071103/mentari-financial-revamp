@@ -257,8 +257,11 @@ private void clickAction(Control textArea, Line icon){
       expandedTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
         toggleChangedByListener();
         if (newValue) { // When expanded field is focused
-          textFieldReference.setText(currentExpense.getEquation()); // Show equation in main field
+          // textFieldReference.setText(currentExpense.getEquation()); // Show equation in main field
         } else { // When expanded field loses focus
+          if(!textFieldReference.isFocused()){
+            textFieldReference.setText(this.currentExpense.getValue());
+          }
           expandedTextField.setVisible(false); // Hide expanded text 
           expandedTextField.setManaged(false); 
         }
