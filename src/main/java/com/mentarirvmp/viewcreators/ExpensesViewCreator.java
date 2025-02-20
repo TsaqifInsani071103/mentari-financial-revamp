@@ -50,7 +50,6 @@ public class ExpensesViewCreator implements ViewCreator {
   private ArrayList<ExpensesViewCreator> ExpensesToHighlightFocused = new ArrayList<>();
 
   protected static boolean changedByListener = false; 
-  protected static boolean focusedOnMain = false; 
   private VBox alreadyMadeView; 
 
   public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
@@ -211,7 +210,8 @@ private void clickAction(Control textArea, Line icon){
   public void addExpandedTextListener(TextField expandedTextField){    expandedTextField.textProperty().addListener(new ChangeListener<String>(){
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-        if(!changedByListener && !focusedOnMain){
+        if(!changedByListener && !textFieldReference.isFocused()){
+          System.out.println("CHANGING MAIN TEXT");
           textFieldReference.setText(newValue);
 
         }
@@ -225,7 +225,6 @@ private void clickAction(Control textArea, Line icon){
     textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
       toggleChangedByListener();
       if (newValue) { // Gains focus
-        focusedOnMain = true; 
         // System.out.println("main in focus: " + focusedOnMain);
         textField.setText(this.currentExpense.getEquation());
         expandedTextFieldRef.setText(textField.getText());
@@ -240,7 +239,6 @@ private void clickAction(Control textArea, Line icon){
 
       } else { // Loses focus
         // getAssociatedStatement().updateFormulas();
-        focusedOnMain = false; 
         // System.out.println("main in focus: " + focusedOnMain);
         if(!expandedTextFieldRef.isFocused()){
           String value = this.currentExpense.getValue(); 
@@ -267,10 +265,21 @@ private void clickAction(Control textArea, Line icon){
         toggleChangedByListener();
         if (newValue) { // When expanded field is focused
           // textFieldReference.setText(currentExpense.getEquation()); // Show equation in main field
+          if(!this.ExpensesToHighlightFocused.isEmpty()){
+            for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+              expensesViewCreator.highlightBox(1);
+            }
+          }
         } else { // When expanded field loses focus
           if(!textFieldReference.isFocused()){
             textFieldReference.setText(this.currentExpense.getValue());
+            if(!this.ExpensesToHighlightFocused.isEmpty()){
+              for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+                expensesViewCreator.highlightBox(0);
+              }
+            }
           }
+          
           expandedTextField.setVisible(false); // Hide expanded text 
           expandedTextField.setManaged(false); 
         }
