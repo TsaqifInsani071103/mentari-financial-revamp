@@ -185,16 +185,26 @@ private void clickAction(Control textArea, Line icon){
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
         // System.out.println(currentExpense.getName() + " CHANGED BY LISTENER: " + changedByListener);
         if(!changedByListener){
-          textFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
+          textField.getStyleClass().removeAll("red-underline", "black-underline");
+
+          //NEW SHID 
+          expandedTextFieldRef.setText(newValue);
+
+
           if(dataHandler.ifEquationValidSetExpenseValue(currentExpense, newValue)){
-            textFieldReference.getStyleClass().add("black-underline");
+            textField.getStyleClass().add("black-underline");
           }else{
             dataHandler.setExpenseValueByFalseEquation(currentExpense, newValue);
-            textFieldReference.getStyleClass().add("red-underline");
+            textField.getStyleClass().add("red-underline");
           }
         }
       }
     });
+  } 
+
+  public void addExpandedTextListener(TextField expandedTextField){
+
+
   } 
 
 
@@ -222,10 +232,11 @@ private void clickAction(Control textArea, Line icon){
           expandedTextFieldRef.setVisible(false); 
           expandedTextFieldRef.setManaged(false); 
   
-          if(!this.ExpensesToHighlightFocused.isEmpty()){
-            for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
-              expensesViewCreator.highlightBox(0);
-            }
+        }
+
+        if(!this.ExpensesToHighlightFocused.isEmpty()){
+          for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+            expensesViewCreator.highlightBox(0);
           }
         }
         
@@ -241,9 +252,7 @@ private void clickAction(Control textArea, Line icon){
         if (newValue) { // When expanded field is focused
           textFieldReference.setText(currentExpense.getEquation()); // Show equation in main field
         } else { // When expanded field loses focus
-          //FIX THIS AND CHANGEDBYLISTENER NEXT!! 
-          textFieldReference.setText(expandedTextField.getText()); // Update main field with new input
-          expandedTextField.setVisible(false); // Hide expanded text field
+          expandedTextField.setVisible(false); // Hide expanded text 
           expandedTextField.setManaged(false); 
         }
         toggleChangedByListener();
