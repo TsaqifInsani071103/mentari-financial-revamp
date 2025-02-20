@@ -50,6 +50,7 @@ public class ExpensesViewCreator implements ViewCreator {
   private ArrayList<ExpensesViewCreator> ExpensesToHighlightFocused = new ArrayList<>();
 
   protected static boolean changedByListener = false; 
+  protected static boolean focusedOnMain = false; 
   private VBox alreadyMadeView; 
 
   public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
@@ -209,10 +210,9 @@ private void clickAction(Control textArea, Line icon){
   public void addExpandedTextListener(TextField expandedTextField){    expandedTextField.textProperty().addListener(new ChangeListener<String>(){
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-        System.out.println("CHANGED BY LISTENER?");
-        if(!changedByListener){
+        if(!changedByListener && !focusedOnMain){
           // expandedTextField.getStyleClass().removeAll("red-underline", "black-underline");
-          System.out.println("CHANGED BY MAIN FIELD, BE CAREFUL WITH THIS INFO");
+          System.out.println("NOT CHANGED BY MAIN");
 
 
         }
@@ -226,6 +226,8 @@ private void clickAction(Control textArea, Line icon){
     textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
       toggleChangedByListener();
       if (newValue) { // Gains focus
+        focusedOnMain = true; 
+        System.out.println("main in focus: " + focusedOnMain);
         textField.setText(this.currentExpense.getEquation());
         expandedTextFieldRef.setText(textField.getText());
         expandedTextFieldRef.setVisible(true); 
@@ -239,6 +241,8 @@ private void clickAction(Control textArea, Line icon){
 
       } else { // Loses focus
         // getAssociatedStatement().updateFormulas();
+        focusedOnMain = false; 
+        System.out.println("main in focus: " + focusedOnMain);
         if(!expandedTextFieldRef.isFocused()){
           String value = this.currentExpense.getValue(); 
           textField.setText(value);
@@ -341,9 +345,10 @@ private void clickAction(Control textArea, Line icon){
   } 
   
 
-  public void toggleChangedByListener(){
+  private void toggleChangedByListener(){
     changedByListener = !changedByListener;
   } 
+
 
   
 
