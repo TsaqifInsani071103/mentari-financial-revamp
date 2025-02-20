@@ -187,6 +187,7 @@ private void clickAction(Control textArea, Line icon){
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
         // System.out.println(currentExpense.getName() + " CHANGED BY LISTENER: " + changedByListener);
         if(!changedByListener){
+          // System.out.println("CHANGED BY expanded");
           textField.getStyleClass().removeAll("red-underline", "black-underline");
           expandedTextFieldRef.getStyleClass().removeAll("red-underline", "black-underline");
 
@@ -211,9 +212,7 @@ private void clickAction(Control textArea, Line icon){
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
         if(!changedByListener && !focusedOnMain){
-          // expandedTextField.getStyleClass().removeAll("red-underline", "black-underline");
-          System.out.println("NOT CHANGED BY MAIN");
-
+          textFieldReference.setText(newValue);
 
         }
       } 
@@ -227,7 +226,7 @@ private void clickAction(Control textArea, Line icon){
       toggleChangedByListener();
       if (newValue) { // Gains focus
         focusedOnMain = true; 
-        System.out.println("main in focus: " + focusedOnMain);
+        // System.out.println("main in focus: " + focusedOnMain);
         textField.setText(this.currentExpense.getEquation());
         expandedTextFieldRef.setText(textField.getText());
         expandedTextFieldRef.setVisible(true); 
@@ -242,7 +241,7 @@ private void clickAction(Control textArea, Line icon){
       } else { // Loses focus
         // getAssociatedStatement().updateFormulas();
         focusedOnMain = false; 
-        System.out.println("main in focus: " + focusedOnMain);
+        // System.out.println("main in focus: " + focusedOnMain);
         if(!expandedTextFieldRef.isFocused()){
           String value = this.currentExpense.getValue(); 
           textField.setText(value);
