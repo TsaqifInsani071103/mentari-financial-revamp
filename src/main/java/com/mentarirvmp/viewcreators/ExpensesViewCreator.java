@@ -41,6 +41,7 @@ import javafx.scene.control.Control;
 public class ExpensesViewCreator implements ViewCreator {
   public Expenses currentExpense; 
   private transient TextField textFieldReference; 
+  private transient TextField expandedTextFieldRef; 
   private transient HBox boxReference; 
   private ChildControllers controller; 
   //either use statement or statementExpenseHandler, we dont know yet. 
@@ -75,8 +76,11 @@ public class ExpensesViewCreator implements ViewCreator {
 
     //temporarytextFieldMake 
     TextField expandedTextField = new TextField(); 
-    expandedTextField.setVisible(true); 
-    expandedTextField.getStyleClass().addAll("text-field", "black-underline"); 
+    expandedTextField.setVisible(false); 
+    expandedTextField.setManaged(false); 
+    expandedTextField.getStyleClass().addAll("yellow-text-field", "black-underline"); 
+    addFocusListenerExpanded(expandedTextField);
+    this.expandedTextFieldRef = expandedTextField; 
 
     overallContainer.getChildren().addAll(box, expandedTextField, descriptionFieldArray[0]);
 
@@ -193,34 +197,59 @@ private void clickAction(Control textArea, Line icon){
     });
   } 
 
+
     //this is only to toggle value and equation UI not to set the value of the expense itself. 
-    private void addFocusListener(TextField textField) {
-      textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-        toggleChangedByListener();
-        if (newValue) { // Gains focus
-          textField.setText(this.currentExpense.getEquation());
-  
-          if(!this.ExpensesToHighlightFocused.isEmpty()){
-            for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
-              expensesViewCreator.highlightBox(1);
-            }
+  private void addFocusListener(TextField textField) {
+    textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+      toggleChangedByListener();
+      if (newValue) { // Gains focus
+        textField.setText(this.currentExpense.getEquation());
+        expandedTextFieldRef.setText(textField.getText());
+        expandedTextFieldRef.setVisible(true); 
+        expandedTextFieldRef.setManaged(true); 
+
+        if(!this.ExpensesToHighlightFocused.isEmpty()){
+          for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+            expensesViewCreator.highlightBox(1);
           }
-        } else { // Loses focus
-          // getAssociatedStatement().updateFormulas();
+        }
+
+      } else { // Loses focus
+        // getAssociatedStatement().updateFormulas();
+        if(!expandedTextFieldRef.isFocused()){
           String value = this.currentExpense.getValue(); 
           textField.setText(value);
+          expandedTextFieldRef.setVisible(false); 
+          expandedTextFieldRef.setManaged(false); 
   
           if(!this.ExpensesToHighlightFocused.isEmpty()){
             for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
               expensesViewCreator.highlightBox(0);
             }
           }
-         
-          
+        }
+        
+        
+      }
+      toggleChangedByListener();
+    });
+    }
+
+    private void addFocusListenerExpanded(TextField expandedTextField){
+      expandedTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        toggleChangedByListener();
+        if (newValue) { // When expanded field is focused
+          textFieldReference.setText(currentExpense.getEquation()); // Show equation in main field
+        } else { // When expanded field loses focus
+          //FIX THIS AND CHANGEDBYLISTENER NEXT!! 
+          textFieldReference.setText(expandedTextField.getText()); // Update main field with new input
+          expandedTextField.setVisible(false); // Hide expanded text field
+          expandedTextField.setManaged(false); 
         }
         toggleChangedByListener();
-      });
-    }
+    });
+    } 
+  
 
     private void addNameListener(TextField textField){
       textField.textProperty().addListener(new ChangeListener<String>(){

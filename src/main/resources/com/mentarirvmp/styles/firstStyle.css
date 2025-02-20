@@ -84,6 +84,13 @@
   -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
 }
 
+.yellow-text-field {
+  -fx-background-color: #fffacd;
+  -fx-background-insets: 0;
+  -fx-text-fill: black;
+  -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
+
 .black-underline {
   -fx-border-color: transparent transparent black transparent;
   -fx-border-width: 0 0 1 0;

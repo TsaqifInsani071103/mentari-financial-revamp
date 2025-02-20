@@ -71,7 +71,6 @@ public class ExpenseStatementHandler implements DataHandler{
       if(topSort!=null){
         calculateAndSetExpenseValue(expense,formulaObject, equation);
         if(this.getViewGreatorByExpense(expense) !=null && !this.validExpensesInEquation.contains(expense)){
-          System.out.println();
           this.validExpensesInEquation.forEach((validExpense) -> {
             expenseToHighlightMap.add(this.getViewGreatorByExpense(validExpense)); 
           });
