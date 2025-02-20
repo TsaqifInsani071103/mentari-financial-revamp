@@ -25,6 +25,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import java.util.ArrayList;
+import javafx.scene.layout.StackPane;
 
 import com.mentarirvmp.controllers.ChildControllers;
 import com.mentarirvmp.controllers.IndivProjectViewController;
@@ -67,14 +68,37 @@ public class ExpensesViewCreator implements ViewCreator {
     return alreadyMadeView; 
   } 
 
+  private HBox getInnerContainer(VBox overallContainer){
+    Control[] descriptionFieldArray = getDescriptionAndButtonArray();
+    HBox box = getBox(); 
+    box.getChildren().add(0, descriptionFieldArray[1]);
+
+    //temporarytextFieldMake 
+    TextField expandedTextField = new TextField(); 
+    expandedTextField.setVisible(true); 
+    expandedTextField.getStyleClass().addAll("text-field", "black-underline"); 
+
+    overallContainer.getChildren().addAll(box, expandedTextField, descriptionFieldArray[0]);
+
+
+
+    return box; 
+  } 
+
+
   public HBox getBox(){
     HBox box = new HBox(5);
     Label idLabel = new Label(String.valueOf(currentExpense.getParsedId()) + ")"); 
     Control nameTextField = getNameTextField(); 
     Region spacer = new Region();
     HBox.setHgrow(spacer, Priority.ALWAYS);
+
+
     box.getChildren().addAll(idLabel,nameTextField,spacer, getValueTextField()); 
+
     this.boxReference = box;
+
+    
     return box; 
   } 
 
@@ -88,14 +112,6 @@ public class ExpensesViewCreator implements ViewCreator {
     textFieldReference = textField;
     return textField; 
   }
-
-  private HBox getInnerContainer(VBox overallContainer){
-    Control[] descriptionFieldArray = getDescriptionAndButtonArray();
-    HBox box = getBox(); 
-    box.getChildren().add(0, descriptionFieldArray[1]);
-    overallContainer.getChildren().addAll(box, descriptionFieldArray[0]);
-    return box; 
-  } 
 
 
   protected Control getNameTextField(){
