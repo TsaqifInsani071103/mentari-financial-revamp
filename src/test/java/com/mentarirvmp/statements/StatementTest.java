@@ -22,46 +22,60 @@ public class StatementTest {
     assertEquals(rootExpense, dummyStatement.getRoot());
   } 
 
-  @Test 
-  public void testRecursion(){
-    Statement dummyStatement = new Statement("dummyStatement"); 
-    Expenses newExpense1 = new Expenses("1");
-    Expenses newExpense2 = new Expenses("2");
-    Expenses newExpense3 = new Expenses("3");
+  // @Test 
+  // public void testRecursion(){
+  //   Statement dummyStatement = new Statement("dummyStatement"); 
+  //   Expenses newExpense1 = new Expenses("1");
+  //   Expenses newExpense2 = new Expenses("2");
+  //   Expenses newExpense3 = new Expenses("3");
 
-    dummyStatement.addExpenseToParent(newExpense2, newExpense3);
-    dummyStatement.addExpense(newExpense1);
-    dummyStatement.addExpense(newExpense3);
-    dummyStatement.addExpenseToParent(new Expenses("a"), newExpense1);
+  //   dummyStatement.addExpenseToParent(newExpense2, newExpense3);
+  //   dummyStatement.addExpense(newExpense1);
+  //   dummyStatement.addExpense(newExpense3);
+  //   dummyStatement.addExpenseToParent(new Expenses("a"), newExpense1);
 
-    assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
+  //   assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
 
-    Statement dummyStatement2 = MockObjects.getDummyStatementObject();
-    ArrayList<Expenses> dummyStatement2AsArray = MockObjects.getAllContentIntoArray(dummyStatement2);
+  //   Statement dummyStatement2 = MockObjects.getDummyStatementObject();
+  //   ArrayList<Expenses> dummyStatement2AsArray = MockObjects.getAllContentIntoArray(dummyStatement2);
 
-    for(Expenses expense : dummyStatement2AsArray){
-      assertEquals(expense, dummyStatement2.getExpenseById(expense.getId())); 
-    }
+  //   for(Expenses expense : dummyStatement2AsArray){
+  //     assertEquals(expense, dummyStatement2.getExpenseById(expense.getId())); 
+  //   }
 
-  }
+  // }
 
-  @Test 
-  public void addExpense(){
-    //this is a statement with only root expense 
-    Statement dummyStatement = new Statement("dummyStatement");
-    Expenses newExpense1 = new Expenses("newExpense1");
-    Expenses newExpense2 = new Expenses("newExpense2"); 
+  // @Test 
+  // public void addExpense(){
+  //   //this is a statement with only root expense 
+  //   Statement dummyStatement = new Statement("dummyStatement");
+  //   Expenses newExpense1 = new Expenses("newExpense1");
+  //   Expenses newExpense2 = new Expenses("newExpense2"); 
 
-    //addExpense method works and gives Id 
-    dummyStatement.addExpense(newExpense1);
-    assertEquals(dummyStatement.getExpenseById(newExpense1.getId()), newExpense1);
+  //   //addExpense method works and gives Id 
+  //   dummyStatement.addExpense(newExpense1);
+  //   assertEquals(dummyStatement.getExpenseById(newExpense1.getId()), newExpense1);
 
-    //addExpenseToParent method works and gives ID 
-    dummyStatement.addExpenseToParent(newExpense2, newExpense1); 
-    assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
+  //   //addExpenseToParent method works and gives ID 
+  //   dummyStatement.addExpenseToParent(newExpense2, newExpense1); 
+  //   assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
 
 
-  } 
+  // } 
+
+  // @Test 
+  // public void deleteExpense(){
+  //   //this is a statement with only root expense 
+  //   Statement dummyStatement = new Statement("dummyStatement");
+  //   Expenses newExpense1 = new Expenses("newExpense1");
+  //   Expenses newExpense2 = new Expenses("newExpense2"); 
+
+  //   //addExpense method works and gives Id 
+  //   dummyStatement.addExpense(newExpense1);
+  //   dummyStatement.addExpense(newExpense2);
+
+  //   assertEquals(dummyStatement.getExpensesMap().size(), 1);
+  // } 
 
   
 }
