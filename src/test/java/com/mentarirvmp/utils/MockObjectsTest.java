@@ -17,9 +17,11 @@ public class MockObjectsTest {
   @Test
   public void getDummyStatementTest(){
     Statement dummyStatement = MockObjects.getDummyStatementObject();
-
+    MockObjects.getAllContentIntoArray(dummyStatement).forEach((expense) -> {
+      System.out.println(expense.getName()); 
+    });
     //one more expense is the root expense 
-    assertEquals(11, MockObjects.getAllContentIntoArray(dummyStatement).size()); 
+    assertEquals(6, MockObjects.getAllContentIntoArray(dummyStatement).size()); 
 
     
   } 

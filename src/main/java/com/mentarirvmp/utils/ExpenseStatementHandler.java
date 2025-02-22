@@ -179,9 +179,9 @@ public class ExpenseStatementHandler implements DataHandler{
 
   private void traverse(Expenses expense, Expenses parentExpense, BiConsumer<Expenses, Expenses> expenseConsumer) {
 
-      expenseConsumer.accept(expense, parentExpense); // Process the current expense
-      if(parentExpense == null) return; 
-      for(Expenses childExpense: this.handledStatement.getParentChildExpenses().get(parentExpense)){
+      expenseConsumer.accept(expense, parentExpense); // Process the current expense 
+      for(Expenses childExpense: this.handledStatement.getParentChildExpenses().get(expense)){
+        // System.out.println(childExpense.getName());
         traverse(childExpense, expense, expenseConsumer);
       }
   }
