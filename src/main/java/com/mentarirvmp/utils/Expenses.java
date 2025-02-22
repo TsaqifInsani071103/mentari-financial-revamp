@@ -21,7 +21,6 @@ public class Expenses {
   //added a formulaString in Expenses so they can switch between formula and actual value in the UI. 
   private String formulaString =""; 
   private String id = ""; 
-  private LinkedHashMap<String, Expenses> childMap = new LinkedHashMap<>();
 
   //I dont really need this. I could just, for optimization sake, look through each formulas in each expenses and check if this expense's id exists within their formulas and only refresh their values if it is. (If the formula for this expense is changed.)
   private ArrayList<Expenses> relatedExpensesByFormula = new ArrayList<Expenses>(); 
@@ -88,13 +87,6 @@ public class Expenses {
     this.id = newId;
   } 
 
-  public LinkedHashMap<String, Expenses> getChildMap(){
-    return this.childMap; 
-  } 
-
-  public boolean hasChildren(){
-    return this.childMap.size() > 0? true: false; 
-  }
 
   public String toString(){
     return getName(); 

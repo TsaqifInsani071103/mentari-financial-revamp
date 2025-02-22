@@ -48,17 +48,7 @@ public class MockObjects {
     return expenseList;
   } 
 
-  private static ArrayList<Expenses> recursiveAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildExpenses, Expenses expense){
-    allParentAndChildExpenses.add(expense);
-    if(expense.hasChildren()){
-      for(Map.Entry<String, Expenses> mapElement:expense.getChildMap().entrySet()){
-        recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
-      }
-    } 
 
-    return allParentAndChildExpenses;
-    
-  } 
 
 
 
