@@ -46,6 +46,22 @@ public class Statement {
     return this.rootExpense;
   } 
 
+  public LinkedHashMap<String, Expenses> getExpensesMap(){
+    return this.idToExpenseMap;
+  } 
+
+  public LinkedHashMap<Expenses, Set<Expenses>> getParentChildExpenses(){
+    return parentToChildMap;
+  }   
+
+  public Expenses getExpenseById(String ID){
+    if(this.idToExpenseMap.get(ID) == null){
+      return Expenses.INVALID_EXPENSE;
+    }else{
+      return this.idToExpenseMap.get(ID); 
+    }
+  } 
+
   public void setName(String newName){
     this.statementName = newName; 
   } 
@@ -113,17 +129,7 @@ public class Statement {
     this.uniqueCounter++; 
   }
 
-  public LinkedHashMap<String, Expenses> getExpensesMap(){
-    return this.idToExpenseMap;
-  } 
 
-  public Expenses getExpenseById(String ID){
-    if(this.idToExpenseMap.get(ID) == null){
-      return Expenses.INVALID_EXPENSE;
-    }else{
-      return this.idToExpenseMap.get(ID); 
-    }
-  } 
 
   // private Expenses recursiveGetExpenseById(LinkedHashMap<String,Expenses> childMap, String ID){
   //   if(childMap.containsKey(ID)) return childMap.get(ID);

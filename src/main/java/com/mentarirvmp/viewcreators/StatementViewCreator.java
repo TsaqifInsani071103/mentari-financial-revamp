@@ -72,6 +72,7 @@ public class StatementViewCreator implements ViewCreator {
         parentExpenseNode.getChildren().add(expenseItem);
       }
     });
+
     initializeTreeView();
   } 
 

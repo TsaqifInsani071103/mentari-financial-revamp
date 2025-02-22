@@ -3,7 +3,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -161,14 +163,12 @@ public class ExpenseStatementHandler implements DataHandler{
 
 
   public boolean expenseNameUnique(String name){
-    boolean[] flag = new boolean[1]; 
-    flag[0] = true; 
-    traverseThroughAllData((expense, expenseParent) -> {
-      if(name.equals(expense.getName())){
-        flag[0] = false;
-      }
-    });
-    return flag[0]; 
+    for(Object expense:this.handledStatement.getAllUnderlyingStatementData()){
+      Expenses object = (Expenses) expense;
+      if(object.getName().equals(name)) return false; 
+      
+    }
+    return true; 
   } 
 
 
@@ -180,12 +180,14 @@ public class ExpenseStatementHandler implements DataHandler{
   private void traverse(Expenses expense, Expenses parentExpense, BiConsumer<Expenses, Expenses> expenseConsumer) {
 
       expenseConsumer.accept(expense, parentExpense); // Process the current expense
-      
-      for(Map.Entry<String, Expenses> mapElement : expense.getChildMap().entrySet()){
-        Expenses childExpense = mapElement.getValue(); 
-        traverse(childExpense, expense, expenseConsumer); 
+      if(parentExpense == null) return; 
+      for(Expenses childExpense: this.handledStatement.getParentChildExpenses().get(parentExpense)){
+        traverse(childExpense, expense, expenseConsumer);
       }
   }
+
+
+
 
 
   //SHOULD BE RESPONSIBLE FOR MAKING A NEW EXPENSE AND ADDING IT TO THE STATEMENT 

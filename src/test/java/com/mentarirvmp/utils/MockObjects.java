@@ -1,5 +1,6 @@
 package com.mentarirvmp.utils;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Map;
 import com.mentarirvmp.statements.Statement;
@@ -51,11 +52,12 @@ public class MockObjects {
   } 
 
   public static ArrayList<Expenses> getAllContentIntoArray(Statement dummyStatement){
-    ArrayList<Expenses> allParentAndChildExpenses = new ArrayList<Expenses>();
-    for(Map.Entry<String, Expenses> mapElement: dummyStatement.getExpensesMap().entrySet()){
-      recursiveAllNestedExpensesIntoArray(allParentAndChildExpenses, mapElement.getValue());
+    ArrayList<Expenses> expenseList = new ArrayList<Expenses>();
+    for(Object object: dummyStatement.getAllUnderlyingStatementData()){
+      Expenses expense = (Expenses) object;
+      expenseList.add(expense);
     }
-    return allParentAndChildExpenses;
+    return expenseList;
   } 
 
   private static ArrayList<Expenses> recursiveAllNestedExpensesIntoArray(ArrayList<Expenses> allParentAndChildExpenses, Expenses expense){
