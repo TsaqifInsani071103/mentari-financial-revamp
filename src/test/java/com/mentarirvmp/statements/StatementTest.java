@@ -46,23 +46,23 @@ public class StatementTest {
 
   }
 
-  // @Test 
-  // public void addExpense(){
-  //   //this is a statement with only root expense 
-  //   Statement dummyStatement = new Statement("dummyStatement");
-  //   Expenses newExpense1 = new Expenses("newExpense1");
-  //   Expenses newExpense2 = new Expenses("newExpense2"); 
+  @Test 
+  public void addExpense(){
+    //this is a statement with only root expense 
+    Statement dummyStatement = new Statement("dummyStatement");
+    Expenses newExpense1 = new Expenses("newExpense1");
+    Expenses newExpense2 = new Expenses("newExpense2"); 
 
-  //   //addExpense method works and gives Id 
-  //   dummyStatement.addExpense(newExpense1);
-  //   assertEquals(dummyStatement.getExpenseById(newExpense1.getId()), newExpense1);
+    //addExpense method works and gives Id 
+    dummyStatement.addExpense(newExpense1);
+    assertEquals(dummyStatement.getExpenseById(newExpense1.getId()), newExpense1);
 
-  //   //addExpenseToParent method works and gives ID 
-  //   dummyStatement.addExpenseToParent(newExpense2, newExpense1); 
-  //   assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
+    //addExpenseToParent method works and gives ID 
+    dummyStatement.addExpenseToParent(newExpense2, newExpense1); 
+    assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
 
 
-  // } 
+  } 
 
   // @Test 
   // public void deleteExpense(){

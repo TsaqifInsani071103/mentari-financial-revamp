@@ -4,7 +4,9 @@ import com.mentarirvmp.utils.Expenses;
 import com.mentarirvmp.viewcreators.StatementViewCreator;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class Statement {
@@ -16,7 +18,7 @@ public class Statement {
   private Expenses rootExpense;
   //Id to Expense 
   private LinkedHashMap<String, Expenses> idToExpenseMap = new LinkedHashMap<>();
-  private LinkedHashMap<Expenses, ArrayList<Expenses>> parentToChildMap = new LinkedHashMap<>(); 
+  private LinkedHashMap<Expenses, Set<Expenses>> parentToChildMap = new LinkedHashMap<>(); 
    
   private String id = ""; 
 
@@ -28,7 +30,7 @@ public class Statement {
     Expenses rootExpense = new Expenses("root");
     setIdFor(rootExpense);
     this.idToExpenseMap.put(rootExpense.getId(), rootExpense);
-    this.parentToChildMap.put(rootExpense, new ArrayList<Expenses>());
+    this.parentToChildMap.put(rootExpense, new LinkedHashSet<Expenses>());
     this.rootExpense=rootExpense;
   } 
 
@@ -66,7 +68,7 @@ public class Statement {
     if(newExpense.getId().equals("")) setIdFor(newExpense);
     this.idToExpenseMap.put(newExpense.getId(), newExpense); 
     if(!this.parentToChildMap.containsKey(parentExpense)){
-      ArrayList<Expenses> childMap = new ArrayList<Expenses>();
+      LinkedHashSet<Expenses> childMap = new LinkedHashSet<Expenses>();
       childMap.add(newExpense);
       this.parentToChildMap.put(parentExpense,childMap);
     }else{
@@ -77,7 +79,7 @@ public class Statement {
 
 
   public void deleteExpense(Expenses targetExpense){
-    
+    this.idToExpenseMap.remove(targetExpense.getId()); 
 
   }
 
