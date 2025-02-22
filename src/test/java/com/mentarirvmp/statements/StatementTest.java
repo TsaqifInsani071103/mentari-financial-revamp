@@ -22,28 +22,29 @@ public class StatementTest {
     assertEquals(rootExpense, dummyStatement.getRoot());
   } 
 
-  // @Test 
-  // public void testRecursion(){
-  //   Statement dummyStatement = new Statement("dummyStatement"); 
-  //   Expenses newExpense1 = new Expenses("1");
-  //   Expenses newExpense2 = new Expenses("2");
-  //   Expenses newExpense3 = new Expenses("3");
+  @Test 
+  public void testRecursion(){
+    Statement dummyStatement = new Statement("dummyStatement"); 
+    Expenses newExpense1 = new Expenses("1");
+    Expenses newExpense2 = new Expenses("2");
+    Expenses newExpense3 = new Expenses("3");
 
-  //   dummyStatement.addExpenseToParent(newExpense2, newExpense3);
-  //   dummyStatement.addExpense(newExpense1);
-  //   dummyStatement.addExpense(newExpense3);
-  //   dummyStatement.addExpenseToParent(new Expenses("a"), newExpense1);
+    dummyStatement.addExpenseToParent(newExpense2, newExpense3);
+    dummyStatement.addExpense(newExpense1);
+    dummyStatement.addExpense(newExpense3);
+    dummyStatement.addExpenseToParent(new Expenses("a"), newExpense1);
 
-  //   assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
+    assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
 
-  //   Statement dummyStatement2 = MockObjects.getDummyStatementObject();
-  //   ArrayList<Expenses> dummyStatement2AsArray = MockObjects.getAllContentIntoArray(dummyStatement2);
+    Statement dummyStatement2 = MockObjects.getDummyStatementObject();
+    Object[] dummyStatement2Data = dummyStatement2.getAllUnderlyingStatementData();
 
-  //   for(Expenses expense : dummyStatement2AsArray){
-  //     assertEquals(expense, dummyStatement2.getExpenseById(expense.getId())); 
-  //   }
+    for(Object expenseObject : dummyStatement2Data){
+      Expenses expense= (Expenses) expenseObject; 
+      assertEquals(expense, dummyStatement2.getExpenseById(expense.getId())); 
+    }
 
-  // }
+  }
 
   // @Test 
   // public void addExpense(){

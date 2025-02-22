@@ -13,8 +13,11 @@ public class Statement {
   //If I want the expense class to just be a single class I don't think I would need an expenseCounter like I did with the original codebase. 
   private String statementName; 
   private int uniqueCounter = 0; 
+  private Expenses rootExpense;
   //Id to Expense 
-  private LinkedHashMap<String, Expenses> idToExpenseMap = new LinkedHashMap<>(); 
+  private LinkedHashMap<String, Expenses> idToExpenseMap = new LinkedHashMap<>();
+  private LinkedHashMap<Expenses, ArrayList<Expenses>> parentToChildMap = new LinkedHashMap<>(); 
+   
   private String id = ""; 
 
 
@@ -25,6 +28,12 @@ public class Statement {
     Expenses rootExpense = new Expenses("root");
     setIdFor(rootExpense);
     this.idToExpenseMap.put(rootExpense.getId(), rootExpense);
+    this.parentToChildMap.put(rootExpense, new ArrayList<Expenses>());
+    this.rootExpense=rootExpense;
+  } 
+
+  public Object[] getAllUnderlyingStatementData(){
+    return this.idToExpenseMap.values().toArray();
   } 
 
   public String getName(){
@@ -32,9 +41,7 @@ public class Statement {
   } 
 
   public Expenses getRoot(){
-    //does this mutate the iterator? 
-    String firstKey = this.idToExpenseMap.keySet().iterator().next(); 
-    return this.idToExpenseMap.get(firstKey);
+    return this.rootExpense;
   } 
 
   public void setName(String newName){
@@ -49,22 +56,25 @@ public class Statement {
     return this.id; 
   } 
 
-  public void addExpenseToParent(Expenses newExpense, Expenses parentExpense){
-    // System.out.println("ADDING: " + newExpense + " To " + parentExpense);
-    addExpense(newExpense, parentExpense.getChildMap());
-  } 
+   //when Adding a new expense, always put it in the root Expense. 
+   public void addExpense(Expenses newExpense){
+    addExpenseToParent(newExpense, this.rootExpense);
+  }
 
   //do I need to check for duplicate entries? 
-  public void addExpense(Expenses newExpense, LinkedHashMap<String, Expenses> childMap){
+  public void addExpenseToParent(Expenses newExpense, Expenses parentExpense){
     if(newExpense.getId().equals("")) setIdFor(newExpense);
-    childMap.put(newExpense.getId(), newExpense);
+    this.idToExpenseMap.put(newExpense.getId(), newExpense); 
+    if(!this.parentToChildMap.containsKey(parentExpense)){
+      ArrayList<Expenses> childMap = new ArrayList<Expenses>();
+      childMap.add(newExpense);
+      this.parentToChildMap.put(parentExpense,childMap);
+    }else{
+      this.parentToChildMap.get(parentExpense).add(newExpense); 
+    }
   } 
 
- //when Adding a new expense, always put it in the root Expense. 
-  public void addExpense(Expenses newExpense){
-    if(newExpense.getId().equals("")) setIdFor(newExpense);
-    getRoot().getChildMap().put(newExpense.getId(), newExpense);
-  }
+
 
   public void deleteExpense(Expenses targetExpense){
     
@@ -88,36 +98,27 @@ public class Statement {
     return this.idToExpenseMap;
   } 
 
-
-  // public Expenses getExpenseByName(String name){
-  //   return recursiveGetExpenseByName(this.expenseMap, name);
-  // }
-
-  // private Expenses recursiveGetExpenseByName(){
-
-  // }
-
   public Expenses getExpenseById(String ID){
-    return recursiveGetExpenseById(this.idToExpenseMap, ID);
+    return this.idToExpenseMap.get(ID); 
   } 
 
-  private Expenses recursiveGetExpenseById(LinkedHashMap<String,Expenses> childMap, String ID){
-    if(childMap.containsKey(ID)) return childMap.get(ID);
+  // private Expenses recursiveGetExpenseById(LinkedHashMap<String,Expenses> childMap, String ID){
+  //   if(childMap.containsKey(ID)) return childMap.get(ID);
   
-    for(Map.Entry<String, Expenses> mapElement : childMap.entrySet()){
-      Expenses expense = mapElement.getValue(); 
-      if(expense.hasChildren()){
-        if(expense.getChildMap().containsKey(ID)) return expense.getChildMap().get(ID); 
+  //   for(Map.Entry<String, Expenses> mapElement : childMap.entrySet()){
+  //     Expenses expense = mapElement.getValue(); 
+  //     if(expense.hasChildren()){
+  //       if(expense.getChildMap().containsKey(ID)) return expense.getChildMap().get(ID); 
 
-        Expenses foundExpense = recursiveGetExpenseById(expense.getChildMap(), ID);
-        if(foundExpense != Expenses.INVALID_EXPENSE){
-          return foundExpense; 
-        }
-      }
-    }
+  //       Expenses foundExpense = recursiveGetExpenseById(expense.getChildMap(), ID);
+  //       if(foundExpense != Expenses.INVALID_EXPENSE){
+  //         return foundExpense; 
+  //       }
+  //     }
+  //   }
 
-    return Expenses.INVALID_EXPENSE;
-  } 
+  //   return Expenses.INVALID_EXPENSE;
+  // } 
 
 }
 
