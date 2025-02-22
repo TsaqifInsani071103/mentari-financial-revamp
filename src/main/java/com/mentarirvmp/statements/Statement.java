@@ -80,8 +80,25 @@ public class Statement {
 
   public void deleteExpense(Expenses targetExpense){
     this.idToExpenseMap.remove(targetExpense.getId()); 
-
+    for(Expenses parent: this.parentToChildMap.keySet()){
+      if(this.parentToChildMap.get(parent).contains(targetExpense)){
+        if(this.parentToChildMap.containsKey(targetExpense)){
+          //then our target expense has a child, we have to decide if we want to move the child to a targetExpenses parent, or delete them all entirely, 
+          //we'll just delete them entirely for now. 
+          deleteAllChildren(targetExpense);
+          this.parentToChildMap.remove(targetExpense); 
+        }
+        this.parentToChildMap.get(parent).remove(targetExpense);
+        break; 
+      }
+    }
   }
+
+  private void deleteAllChildren(Expenses targetExpenses){
+    for(Expenses child: this.parentToChildMap.get(targetExpenses)){
+      this.idToExpenseMap.remove(child.getId()); 
+    }
+  } 
 
 
   
@@ -101,7 +118,11 @@ public class Statement {
   } 
 
   public Expenses getExpenseById(String ID){
-    return this.idToExpenseMap.get(ID); 
+    if(this.idToExpenseMap.get(ID) == null){
+      return Expenses.INVALID_EXPENSE;
+    }else{
+      return this.idToExpenseMap.get(ID); 
+    }
   } 
 
   // private Expenses recursiveGetExpenseById(LinkedHashMap<String,Expenses> childMap, String ID){

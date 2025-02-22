@@ -47,7 +47,7 @@ public class StatementTest {
   }
 
   @Test 
-  public void addExpense(){
+  public void addAndDeleteExpense(){
     //this is a statement with only root expense 
     Statement dummyStatement = new Statement("dummyStatement");
     Expenses newExpense1 = new Expenses("newExpense1");
@@ -61,6 +61,9 @@ public class StatementTest {
     dummyStatement.addExpenseToParent(newExpense2, newExpense1); 
     assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), newExpense2);
 
+    dummyStatement.deleteExpense(newExpense1);
+    assertEquals(dummyStatement.getExpenseById(newExpense1.getId()), Expenses.INVALID_EXPENSE);
+    assertEquals(dummyStatement.getExpenseById(newExpense2.getId()), Expenses.INVALID_EXPENSE);
 
   } 
 
