@@ -67,6 +67,50 @@ public class StatementTest {
 
   } 
 
+  @Test
+public void addAndDeleteMultipleExpenses() {
+    // Create a dummy statement with a root expense
+    Statement dummyStatement = new Statement("dummyStatement");
+    
+    // Create multiple expenses
+    Expenses rootExpense = new Expenses("Root Expense");
+    Expenses childExpense1 = new Expenses("Child Expense 1");
+    Expenses childExpense2 = new Expenses("Child Expense 2");
+    Expenses grandChildExpense1 = new Expenses("GrandChild Expense 1");
+    Expenses grandChildExpense2 = new Expenses("GrandChild Expense 2");
+
+    // Add root expense
+    dummyStatement.addExpense(rootExpense);
+    assertEquals(dummyStatement.getExpenseById(rootExpense.getId()), rootExpense);
+
+    // Add children to root expense
+    dummyStatement.addExpenseToParent(childExpense1, rootExpense);
+    dummyStatement.addExpenseToParent(childExpense2, rootExpense);
+    assertEquals(dummyStatement.getExpenseById(childExpense1.getId()), childExpense1);
+    assertEquals(dummyStatement.getExpenseById(childExpense2.getId()), childExpense2);
+
+    // Add grandchildren to childExpense1
+    dummyStatement.addExpenseToParent(grandChildExpense1, childExpense1);
+    dummyStatement.addExpenseToParent(grandChildExpense2, childExpense1);
+    assertEquals(dummyStatement.getExpenseById(grandChildExpense1.getId()), grandChildExpense1);
+    assertEquals(dummyStatement.getExpenseById(grandChildExpense2.getId()), grandChildExpense2);
+
+    // Now delete childExpense1 (should delete its children too)
+    dummyStatement.deleteExpense(childExpense1);
+    assertEquals(dummyStatement.getExpenseById(childExpense1.getId()), Expenses.INVALID_EXPENSE);
+    assertEquals(dummyStatement.getExpenseById(grandChildExpense1.getId()), Expenses.INVALID_EXPENSE);
+    assertEquals(dummyStatement.getExpenseById(grandChildExpense2.getId()), Expenses.INVALID_EXPENSE);
+
+    // Ensure childExpense2 still exists
+    assertEquals(dummyStatement.getExpenseById(childExpense2.getId()), childExpense2);
+
+    // Delete the entire root expense (should remove all)
+    dummyStatement.deleteExpense(rootExpense);
+    assertEquals(dummyStatement.getExpenseById(rootExpense.getId()), Expenses.INVALID_EXPENSE);
+    assertEquals(dummyStatement.getExpenseById(childExpense2.getId()), Expenses.INVALID_EXPENSE);
+}
+
+
   // @Test 
   // public void deleteExpense(){
   //   //this is a statement with only root expense 
