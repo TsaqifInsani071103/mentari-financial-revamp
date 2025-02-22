@@ -67,6 +67,17 @@ public class StatementTest {
 
   } 
 
+  @Test 
+  public void statementDataTest(){
+    Statement dummyStatement = new Statement("dummyStatement");
+    Expenses newExpense1 = new Expenses("newExpense1");
+    Expenses newExpense2 = new Expenses("newExpense2"); 
+    dummyStatement.addExpense(newExpense1);
+    dummyStatement.addExpense(newExpense2);
+
+    assertEquals(dummyStatement.getAllUnderlyingStatementData().length, dummyStatement.getParentChildExpenses().size());
+  } 
+
   @Test
 public void addAndDeleteMultipleExpenses() {
     // Create a dummy statement with a root expense

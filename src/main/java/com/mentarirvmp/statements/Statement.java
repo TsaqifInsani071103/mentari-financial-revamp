@@ -82,7 +82,9 @@ public class Statement {
   //do I need to check for duplicate entries? 
   public void addExpenseToParent(Expenses newExpense, Expenses parentExpense){
     if(newExpense.getId().equals("")) setIdFor(newExpense);
-    this.idToExpenseMap.put(newExpense.getId(), newExpense); 
+    this.idToExpenseMap.put(newExpense.getId(), newExpense);
+    //also immediately add the children into the parentChildMap 
+    this.parentToChildMap.put(newExpense, new LinkedHashSet<Expenses>());
     if(!this.parentToChildMap.containsKey(parentExpense)){
       LinkedHashSet<Expenses> childMap = new LinkedHashSet<Expenses>();
       childMap.add(newExpense);
