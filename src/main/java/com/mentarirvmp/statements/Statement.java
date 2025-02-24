@@ -97,25 +97,29 @@ public class Statement {
 
 
   public void deleteExpense(Expenses targetExpense){
-    this.idToExpenseMap.remove(targetExpense.getId()); 
+    Set<Expenses> childrenSet = getAllChildren(targetExpense);
     for(Expenses parent: this.parentToChildMap.keySet()){
       if(this.parentToChildMap.get(parent).contains(targetExpense)){
-        if(this.parentToChildMap.containsKey(targetExpense)){
-          //then our target expense has a child, we have to decide if we want to move the child to a targetExpenses parent, or delete them all entirely, 
-          //we'll just delete them entirely for now. 
-          deleteAllChildren(targetExpense);
-          this.parentToChildMap.remove(targetExpense); 
-        }
+        this.parentToChildMap.remove(targetExpense); 
         this.parentToChildMap.get(parent).remove(targetExpense);
         break; 
       }
     }
+
+    this.idToExpenseMap.remove(targetExpense.getId()); 
+    if(childrenSet.size() > 0){
+      for(Expenses child: childrenSet){
+        deleteExpense(child);
+      }
+    }
   }
 
-  private void deleteAllChildren(Expenses targetExpenses){
+  private Set<Expenses> getAllChildren(Expenses targetExpenses){
+    Set<Expenses> childrenSet = new LinkedHashSet<Expenses>();
     for(Expenses child: this.parentToChildMap.get(targetExpenses)){
-      this.idToExpenseMap.remove(child.getId()); 
+      childrenSet.add(child); 
     }
+    return childrenSet;
   } 
 
 
