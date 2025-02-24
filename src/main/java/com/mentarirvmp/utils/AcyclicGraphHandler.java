@@ -19,6 +19,10 @@ public class AcyclicGraphHandler {
   public AcyclicGraphHandler(){
   }
 
+  protected Map<Expenses, Vertex> getVerticesMap(){
+    return this.expenseToVertexMap;
+  } 
+
 
   public void initializeExpenseAndDependencies(Expenses expense, ArrayList<Expenses> independentExpenses){
     Vertex currentVertex = this.expenseToVertexMap.get(expense);
@@ -95,15 +99,6 @@ public class AcyclicGraphHandler {
 
   } 
 
-  private void populateMapWithVertices(Vertex parentVertex, Map<Vertex, Boolean> map){
-    for(Vertex adj: parentVertex.getAdjacentVertexSet()){
-      map.put(adj, true);
-      populateMapWithVertices(adj, map); 
-    }
-    
-
-
-  } 
 
   private  Map<Expenses, Vertex> getDeepCopyMap(Map<Expenses, Vertex> expenseToVertexMap){
     if(expenseToVertexMap.size() == 0) return null;

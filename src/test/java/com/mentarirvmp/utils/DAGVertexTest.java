@@ -16,7 +16,33 @@ import com.mentarirvmp.utils.AcyclicGraphHandler;
 
 public class DAGVertexTest {
   
-  
+  @Test 
+  public void adjacencyListTest(){
+
+    Expenses E1= new Expenses("1");
+    Expenses E2= new Expenses("2");
+    Expenses E3 = new Expenses("3");
+    Expenses E4= new Expenses("4");
+
+    AcyclicGraphHandler dag = new AcyclicGraphHandler();
+    //E2 = SUM(E1) meaning E1.adjList = {E2}
+    //E3 = SUM(E1, E4) meaning E1.adjList = {E2, E3}, E4.adjList = {E3}
+    //E4 = SUM(E2) Meaning E2.adjList = {E4}
+    ArrayList<Expenses> dependencies2 = new ArrayList<>(Arrays.asList(E1)); 
+    ArrayList<Expenses> dependencies3 = new ArrayList<>(Arrays.asList(E1, E4)); 
+    ArrayList<Expenses> dependencies4 = new ArrayList<>(Arrays.asList(E2));
+    dag.initializeExpenseAndDependencies(E1, new ArrayList<>());
+    dag.initializeExpenseAndDependencies(E2, dependencies2); 
+    dag.initializeExpenseAndDependencies(E3, dependencies3); 
+    dag.initializeExpenseAndDependencies(E4, dependencies4); 
+
+    assertEquals(dag.getVerticesMap().get(E2).getAdjacentVertexSet().size(), 1);
+    assertEquals(dag.getVerticesMap().get(E4).getAdjacentVertexSet().size(), 1);
+    assertEquals(dag.getVerticesMap().get(E1).getAdjacentVertexSet().size(), 2);
+
+
+
+  } 
 
   //under the prequisite that the equation is VALID!! 
 @Test 

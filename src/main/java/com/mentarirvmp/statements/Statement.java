@@ -106,6 +106,7 @@ public class Statement {
       }
     }
 
+    //HAVE THE OPTION TO JUST MOVE SOME EXPENSES UP A LEVEL INSTEAD OF DELETING ALL OF THE EXPENSE CHILDREN. 
     this.idToExpenseMap.remove(targetExpense.getId()); 
     if(childrenSet.size() > 0){
       for(Expenses child: childrenSet){
