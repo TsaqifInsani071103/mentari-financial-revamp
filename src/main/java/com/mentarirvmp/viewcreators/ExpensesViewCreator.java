@@ -211,7 +211,7 @@ private void clickAction(Control textArea, Line icon){
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
         if(!changedByListener && !textFieldReference.isFocused()){
-          System.out.println("CHANGING MAIN TEXT");
+          // System.out.println("CHANGING MAIN TEXT");
           textFieldReference.setText(newValue);
 
         }

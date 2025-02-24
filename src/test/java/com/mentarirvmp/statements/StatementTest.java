@@ -76,6 +76,13 @@ public class StatementTest {
     dummyStatement.addExpense(newExpense2);
 
     assertEquals(dummyStatement.getAllUnderlyingStatementData().length, dummyStatement.getParentChildExpenses().size());
+
+    dummyStatement.deleteExpense(newExpense2);
+    assertEquals(dummyStatement.getAllUnderlyingStatementData().length, dummyStatement.getParentChildExpenses().size());
+
+    dummyStatement.deleteExpense(newExpense1);
+    assertEquals(dummyStatement.getAllUnderlyingStatementData().length, dummyStatement.getParentChildExpenses().size());
+
   } 
 
   @Test
