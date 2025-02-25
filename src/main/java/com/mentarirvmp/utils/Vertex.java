@@ -8,7 +8,7 @@ public class Vertex {
   private Expenses data; 
   private int indegree = 0; 
   private Set<Vertex> outgoingVertexSet = new HashSet<Vertex>();
-  private Set<Vertex> incomingVerticesSet = new HashSet<Vertex>(); 
+  private Set<Vertex> incomingVertexSet = new HashSet<Vertex>(); 
 
   public Vertex(Expenses expense){
     this.data = expense; 
@@ -17,6 +17,7 @@ public class Vertex {
   public void addDirectedEdgeToward(Vertex expenseVertex){
     if(!outgoingVertexSet.contains(expenseVertex)){
       this.outgoingVertexSet.add(expenseVertex);
+      expenseVertex.getIncomingVertexSet().add(this);
       expenseVertex.incrementIndegree();
     }
   } 
@@ -24,6 +25,7 @@ public class Vertex {
   public void removeDirectedEdgeToward(Vertex expenseVertex){
     if(outgoingVertexSet.contains(expenseVertex)){
       this.outgoingVertexSet.remove(expenseVertex);
+      expenseVertex.getIncomingVertexSet().remove(this);
       expenseVertex.decrementIndegree();
     }
   } 
@@ -31,6 +33,12 @@ public class Vertex {
   public Set<Vertex> getOutgoingVertexSet(){
     return this.outgoingVertexSet;
   }
+
+  public Set<Vertex> getIncomingVertexSet(){
+    return this.incomingVertexSet;
+  }
+
+
 
   public void resetAdjacentVertexSet(){
     this.outgoingVertexSet = new HashSet<Vertex>(); 
