@@ -30,6 +30,12 @@ public class Vertex {
     }
   } 
 
+  public void removeAllIncomingEdges(){
+    for(Vertex incoming: getIncomingVertexSet()){
+      incoming.removeDirectedEdgeToward(this);
+    }
+  } 
+
   public Set<Vertex> getOutgoingVertexSet(){
     return this.outgoingVertexSet;
   }

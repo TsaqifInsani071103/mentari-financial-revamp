@@ -48,10 +48,10 @@ public class AcyclicGraphHandler {
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   } 
 
-  // public void deleteExpenseFromGraph(Expenses expense){
+  public void deleteExpenseFromGraph(Expenses expense){
+    
 
-
-  // } 
+  } 
 
   private void resetAdjacencyLists(Vertex targetVertex){
     // for(Expenses expense: this.expenseToVertexMap.keySet()){
