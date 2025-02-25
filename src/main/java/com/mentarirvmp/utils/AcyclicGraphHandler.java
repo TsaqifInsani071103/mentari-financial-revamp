@@ -46,9 +46,14 @@ public class AcyclicGraphHandler {
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   } 
 
+  // public void deleteExpenseFromGraph(Expenses expense){
+
+
+  // } 
+
   private void resetAdjacencyLists(Vertex targetVertex){
     for(Expenses expense: this.expenseToVertexMap.keySet()){
-      if(this.expenseToVertexMap.get(expense).getAdjacentVertexSet().contains(targetVertex)){
+      if(this.expenseToVertexMap.get(expense).getOutgoingVertexSet().contains(targetVertex)){
         this.expenseToVertexMap.get(expense).removeDirectedEdgeToward(targetVertex);
       }
     }
@@ -64,7 +69,7 @@ public class AcyclicGraphHandler {
     Queue<Vertex> queue = new ArrayDeque<>();
     for(Expenses expense: expenseToVertexMapCopy.keySet()){
       Vertex vertex = expenseToVertexMapCopy.get(expense);
-      if(vertex.getIndegree() ==0 && vertex.getAdjacentVertexSet().size() == 0){
+      if(vertex.getIndegree() ==0 && vertex.getOutgoingVertexSet().size() == 0){
         numberOfLeftOutStandaloneVertices++;
         continue; 
       }
@@ -79,7 +84,7 @@ public class AcyclicGraphHandler {
       Vertex vertex = queue.poll(); 
       topSortArray[counter] = vertex.getData(); 
       counter++; 
-      for(Vertex adjacentVertex: vertex.getAdjacentVertexSet()){
+      for(Vertex adjacentVertex: vertex.getOutgoingVertexSet()){
         //System.out.println("ADJ VERTEX: " + adjacentVertex + ", INDEGREE: " + adjacentVertex.getIndegree());
         adjacentVertex.decrementIndegree();
         if(adjacentVertex.getIndegree() == 0){
@@ -114,7 +119,7 @@ public class AcyclicGraphHandler {
     for(Expenses expense: expenseToVertexMap.keySet()){
       Vertex oriVertex = expenseToVertexMap.get(expense);
       Vertex copyVertex = deepCopy.get(oriVertex.getData());
-      for(Vertex oriAdjVertex: oriVertex.getAdjacentVertexSet()){
+      for(Vertex oriAdjVertex: oriVertex.getOutgoingVertexSet()){
         copyVertex.addDirectedEdgeToward(deepCopy.get(oriAdjVertex.getData()));
       }
     } 
@@ -127,7 +132,7 @@ public class AcyclicGraphHandler {
   public ArrayList<Expenses> getValuesProceeding(Expenses expense){
     ArrayList<Expenses> valuesProceedingArray = new ArrayList<>();
     Vertex anchorVertex = this.expenseToVertexMap.get(expense);
-    for(Vertex adjVertices : anchorVertex.getAdjacentVertexSet()){
+    for(Vertex adjVertices : anchorVertex.getOutgoingVertexSet()){
       valuesProceedingArray.add(adjVertices.getData());
 
     }
@@ -143,7 +148,7 @@ public class AcyclicGraphHandler {
       System.out.println("-Vertex: " + vertex);
       System.out.println("--Indigree: " + vertex.getIndegree());
       total += vertex.getIndegree();
-      System.out.println("---adjList: " + vertex.getAdjacentVertexSet().toString());
+      System.out.println("---adjList: " + vertex.getOutgoingVertexSet().toString());
       System.out.println();
     }
 

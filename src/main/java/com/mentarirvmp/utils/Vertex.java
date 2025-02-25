@@ -7,7 +7,7 @@ import java.util.Set;
 public class Vertex {
   private Expenses data; 
   private int indegree = 0; 
-  private Set<Vertex> adjacentVertexSet = new HashSet<Vertex>();
+  private Set<Vertex> outgoingVertexSet = new HashSet<Vertex>();
   private Set<Vertex> incomingVerticesSet = new HashSet<Vertex>(); 
 
   public Vertex(Expenses expense){
@@ -15,30 +15,30 @@ public class Vertex {
   } 
 
   public void addDirectedEdgeToward(Vertex expenseVertex){
-    if(!adjacentVertexSet.contains(expenseVertex)){
-      this.adjacentVertexSet.add(expenseVertex);
+    if(!outgoingVertexSet.contains(expenseVertex)){
+      this.outgoingVertexSet.add(expenseVertex);
       expenseVertex.incrementIndegree();
     }
   } 
 
   public void removeDirectedEdgeToward(Vertex expenseVertex){
-    if(adjacentVertexSet.contains(expenseVertex)){
-      this.adjacentVertexSet.remove(expenseVertex);
+    if(outgoingVertexSet.contains(expenseVertex)){
+      this.outgoingVertexSet.remove(expenseVertex);
       expenseVertex.decrementIndegree();
     }
   } 
 
-  public Set<Vertex> getAdjacentVertexSet(){
-    return this.adjacentVertexSet;
+  public Set<Vertex> getOutgoingVertexSet(){
+    return this.outgoingVertexSet;
   }
 
   public void resetAdjacentVertexSet(){
-    this.adjacentVertexSet = new HashSet<Vertex>(); 
+    this.outgoingVertexSet = new HashSet<Vertex>(); 
     this.indegree = 0; 
   } 
 
-  protected void setAdjacentVertexSet(Set<Vertex> adjacentVertexList ){
-    this.adjacentVertexSet = adjacentVertexList; 
+  protected void setOutgoingVertexSet(Set<Vertex> adjacentVertexList ){
+    this.outgoingVertexSet = adjacentVertexList; 
   } 
 
   public Expenses getData(){

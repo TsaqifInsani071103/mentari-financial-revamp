@@ -36,9 +36,9 @@ public class DAGVertexTest {
     dag.initializeExpenseAndDependencies(E3, dependencies3); 
     dag.initializeExpenseAndDependencies(E4, dependencies4); 
 
-    assertEquals(dag.getVerticesMap().get(E2).getAdjacentVertexSet().size(), 1);
-    assertEquals(dag.getVerticesMap().get(E4).getAdjacentVertexSet().size(), 1);
-    assertEquals(dag.getVerticesMap().get(E1).getAdjacentVertexSet().size(), 2);
+    assertEquals(dag.getVerticesMap().get(E2).getOutgoingVertexSet().size(), 1);
+    assertEquals(dag.getVerticesMap().get(E4).getOutgoingVertexSet().size(), 1);
+    assertEquals(dag.getVerticesMap().get(E1).getOutgoingVertexSet().size(), 2);
 
 
 
