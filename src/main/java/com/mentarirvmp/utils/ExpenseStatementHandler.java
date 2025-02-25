@@ -100,6 +100,18 @@ public class ExpenseStatementHandler implements DataHandler{
     return false; 
   } 
 
+  public void deleteExpense(Expenses targetExpense){
+    //first delete the expense in the grap handler, (AGH.java)
+    //get the expenses dependent on thhis expense too (AGH.java)
+    //delete the expense from current Statement (Statement.java)
+    //loop through the dependent Expense Set and refresh all their values. 
+    this.handledStatement.deleteExpense(targetExpense);
+    this.dependencyResolver.deleteExpenseFromGraph(targetExpense);
+    this.dependencyResolver.getExpensesDependentOnDeletedExpense(targetExpense).forEach((v) -> {
+      ifEquationValidSetExpenseValue(v.getData(), v.getData().getEquation());
+    });
+  } 
+
   private void refreshExpenseViewsProceeding(Expenses expense){
     ArrayList<Expenses> chronologicalArrays = dependencyResolver.getValuesProceeding(expense);
     if(chronologicalArrays.size() > 0){

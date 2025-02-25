@@ -48,17 +48,20 @@ public class AcyclicGraphHandler {
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   } 
 
-  public void deleteExpenseFromGraph(Expenses expense){
-    
+  public Set<Vertex> getExpensesDependentOnDeletedExpense(Expenses deletedExpense){
+    return this.expenseToVertexMap.get(deletedExpense).getOutgoingVertexSet(); 
+  } 
+
+  public void deleteExpenseFromGraph(Expenses targetExpense){
+    //we first remove the outgoing edges from our parent expense, 
+    if(this.expenseToVertexMap.keySet().contains(targetExpense)){
+      this.expenseToVertexMap.get(targetExpense).removeAllIncomingEdges();
+    }
 
   } 
 
   private void resetAdjacencyLists(Vertex targetVertex){
-    // for(Expenses expense: this.expenseToVertexMap.keySet()){
-    //   if(this.expenseToVertexMap.get(expense).getOutgoingVertexSet().contains(targetVertex)){
-    //     this.expenseToVertexMap.get(expense).removeDirectedEdgeToward(targetVertex);
-    //   }
-    // }
+
     Set<Vertex> incomingVertexSetCopy = new HashSet<Vertex>(targetVertex.getIncomingVertexSet());
     for(Vertex incomingVertex: incomingVertexSetCopy){
       incomingVertex.removeDirectedEdgeToward(targetVertex);
