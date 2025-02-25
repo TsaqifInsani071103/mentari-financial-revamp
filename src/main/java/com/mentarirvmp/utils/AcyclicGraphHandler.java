@@ -4,9 +4,11 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 public class AcyclicGraphHandler {
@@ -52,10 +54,14 @@ public class AcyclicGraphHandler {
   // } 
 
   private void resetAdjacencyLists(Vertex targetVertex){
-    for(Expenses expense: this.expenseToVertexMap.keySet()){
-      if(this.expenseToVertexMap.get(expense).getOutgoingVertexSet().contains(targetVertex)){
-        this.expenseToVertexMap.get(expense).removeDirectedEdgeToward(targetVertex);
-      }
+    // for(Expenses expense: this.expenseToVertexMap.keySet()){
+    //   if(this.expenseToVertexMap.get(expense).getOutgoingVertexSet().contains(targetVertex)){
+    //     this.expenseToVertexMap.get(expense).removeDirectedEdgeToward(targetVertex);
+    //   }
+    // }
+    Set<Vertex> incomingVertexSetCopy = new HashSet<Vertex>(targetVertex.getIncomingVertexSet());
+    for(Vertex incomingVertex: incomingVertexSetCopy){
+      incomingVertex.removeDirectedEdgeToward(targetVertex);
     }
   }
 
