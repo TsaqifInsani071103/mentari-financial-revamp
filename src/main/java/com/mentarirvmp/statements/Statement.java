@@ -25,7 +25,7 @@ public class Statement {
 
   public Statement(String statementName){
     this.statementName = statementName; 
-    setId(UUID.randomUUID().toString());
+    setStatementId(UUID.randomUUID().toString());
     //automatically makes a root expense 
     Expenses rootExpense = new Expenses("root");
     setIdFor(rootExpense);
@@ -66,7 +66,7 @@ public class Statement {
     this.statementName = newName; 
   } 
 
-  public void setId(String id){
+  public void setStatementId(String id){
     this.id = id; 
   } 
 

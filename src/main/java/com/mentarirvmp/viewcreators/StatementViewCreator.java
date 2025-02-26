@@ -84,13 +84,6 @@ public class StatementViewCreator implements ViewCreator {
   } 
   
 
-
- 
-
-
-
-
-
   private void initializeStatementExpandedState(){
     // if(currentStatement.expandedState == null){
     //   currentStatement.expandedState = new HashMap<Expenses, Boolean>();
@@ -190,6 +183,7 @@ public class StatementViewCreator implements ViewCreator {
   private void updateCell(TreeCell<Expenses> cell, Expenses item) {
     if (item != null) {
       if(this.dataHandler.getViewGreatorByExpense(item) == null){
+        System.out.println("NEWLY MADE EXPENSE!" + item.getId());
         ExpensesViewCreator viewCreator = new ExpensesViewCreator(item, this.dataHandler);
         viewCreator.setParentController(controller);
         this.dataHandler.addExpenseView(item, viewCreator);

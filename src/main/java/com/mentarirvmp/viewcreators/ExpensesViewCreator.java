@@ -344,8 +344,23 @@ private void clickAction(Control textArea, Line icon){
     }
   } 
 
-  public void updateValueDisplay(){
+  public void updateCorrectEquationDisplay(){
     if(textFieldReference != null) {
+      textFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
+      expandedTextFieldRef.getStyleClass().removeAll("red-underline", "black-underline");
+      textFieldReference.getStyleClass().add("black-underline");
+      expandedTextFieldRef.getStyleClass().add("black-underline");
+      toggleChangedByListener();
+      textFieldReference.setText(this.currentExpense.getValue());
+      toggleChangedByListener();
+    }
+  }
+  public void updateFalseEquationDisplay(){
+    if(textFieldReference != null) {
+      textFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
+      expandedTextFieldRef.getStyleClass().removeAll("red-underline", "black-underline");
+      textFieldReference.getStyleClass().add("red-underline");
+      expandedTextFieldRef.getStyleClass().add("red-underline");
       toggleChangedByListener();
       textFieldReference.setText(this.currentExpense.getValue());
       toggleChangedByListener();
