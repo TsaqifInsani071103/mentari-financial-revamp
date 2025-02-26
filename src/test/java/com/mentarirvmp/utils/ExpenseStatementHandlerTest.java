@@ -458,8 +458,8 @@ public void deleteExpenseTest(){
   //E4.outgoinEdgeSet = {E5}
   assertEquals(Expenses.INVALID_EXPENSE, dummyStatement.getExpenseById(E1.getId()));
   assertEquals("0.0", E4.getValue());
+  assertEquals("100.0", E5.getValue());
   // dataHandler.ifEquationValidSetExpenseValue(E5, "SUM(E4, E2)");
-  // assertEquals("100.0", E5.getValue());
 
   
 

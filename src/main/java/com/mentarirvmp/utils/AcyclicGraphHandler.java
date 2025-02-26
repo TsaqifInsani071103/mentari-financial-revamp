@@ -132,9 +132,11 @@ public class AcyclicGraphHandler {
   //just gets all the adjacent vertices and recursively updates all the relevant vertices 
   public ArrayList<Expenses> getValuesProceeding(Expenses expense){
     ArrayList<Expenses> valuesProceedingArray = new ArrayList<>();
-    Vertex anchorVertex = this.expenseToVertexMap.get(expense);
-    for(Vertex adjVertices : anchorVertex.getOutgoingVertexSet()){
-      valuesProceedingArray.add(adjVertices.getData());
+    if(this.expenseToVertexMap.get(expense) != null){
+      Vertex anchorVertex = this.expenseToVertexMap.get(expense);
+      for(Vertex adjVertices : anchorVertex.getOutgoingVertexSet()){
+        valuesProceedingArray.add(adjVertices.getData());
+      }
     }
     return valuesProceedingArray;
   } 
