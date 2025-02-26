@@ -79,8 +79,6 @@ public class StatementViewCreator implements ViewCreator {
   public TreeItem<Expenses> createTreeItem(Expenses expense) {
     checkForUpdatedExpenses(expense);
     TreeItem<Expenses> treeItem = new TreeItem<>(expense);
-    // ExpensesViewCreator viewCreator = new ExpensesViewCreator(expense, this.dataHandler);
-    // treeItem.setGraphic(viewCreator.getView());
     treeItem.setExpanded(true);
     return treeItem;
   } 
@@ -193,6 +191,7 @@ public class StatementViewCreator implements ViewCreator {
     if (item != null) {
       if(this.dataHandler.getViewGreatorByExpense(item) == null){
         ExpensesViewCreator viewCreator = new ExpensesViewCreator(item, this.dataHandler);
+        viewCreator.setParentController(controller);
         this.dataHandler.addExpenseView(item, viewCreator);
         cell.setGraphic(viewCreator.getView());
         cell.setContextMenu(viewCreator.getContextMenuItems());

@@ -46,7 +46,7 @@ public class ExpensesViewCreator implements ViewCreator {
   private transient TextField textFieldReference; 
   private transient TextField expandedTextFieldRef; 
   private transient HBox boxReference; 
-  private ChildControllers controller; 
+  private IndivProjectViewController controller; 
   //either use statement or statementExpenseHandler, we dont know yet. 
   private ExpenseStatementHandler dataHandler; 
 
@@ -54,6 +54,12 @@ public class ExpensesViewCreator implements ViewCreator {
 
   protected static boolean changedByListener = false; 
   private VBox alreadyMadeView; 
+
+  @Override
+  public void setParentController(ChildControllers moduleController) {
+    this.controller = (IndivProjectViewController) moduleController; 
+  }
+
 
   public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
     this.currentExpense = expense; 
@@ -378,6 +384,7 @@ private void clickAction(Control textArea, Line icon){
     item.setOnAction(event -> {
       // ModalMenu.addExpenseModal();
       this.dataHandler.addNewDefaultExpense(this.currentExpense);
+      this.controller.refreshStatementView();
     });
 
     return item; 
@@ -386,6 +393,7 @@ private void clickAction(Control textArea, Line icon){
     MenuItem item = new MenuItem("delete this expense");
     item.setOnAction(event -> {
       this.dataHandler.deleteExpense(currentExpense);
+      this.controller.refreshStatementView();
     });
 
     return item; 
@@ -417,10 +425,6 @@ private void clickAction(Control textArea, Line icon){
 
 
 
-  @Override
-  public void setParentController(ChildControllers moduleController) {
-    this.controller = (IndivProjectViewController) moduleController; 
-  }
 
   
 }
