@@ -31,7 +31,8 @@ public class Vertex {
   } 
 
   public void removeAllIncomingEdges(){
-    for(Vertex incoming: getIncomingVertexSet()){
+    Set<Vertex> incomingVertexSetCopy = new HashSet<Vertex>(this.getIncomingVertexSet());
+    for(Vertex incoming: incomingVertexSetCopy){
       incoming.removeDirectedEdgeToward(this);
     }
   } 

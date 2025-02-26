@@ -32,7 +32,7 @@ public class AcyclicGraphHandler {
       currentVertex = new Vertex(expense);
       this.expenseToVertexMap.put(expense, currentVertex);
     }else{
-      resetAdjacencyLists(currentVertex);
+      currentVertex.removeAllIncomingEdges();
     }
     
     if(independentExpenses.size() > 0){
@@ -60,13 +60,7 @@ public class AcyclicGraphHandler {
 
   } 
 
-  private void resetAdjacencyLists(Vertex targetVertex){
 
-    Set<Vertex> incomingVertexSetCopy = new HashSet<Vertex>(targetVertex.getIncomingVertexSet());
-    for(Vertex incomingVertex: incomingVertexSetCopy){
-      incomingVertex.removeDirectedEdgeToward(targetVertex);
-    }
-  }
 
 
   //topsort makes sure that all the dependencies between all the initialized expenses dont result in a cyclic behavior. 

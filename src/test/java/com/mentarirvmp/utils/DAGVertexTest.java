@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.mentarirvmp.utils.Vertex;
 import com.mentarirvmp.statements.Statement;
 import com.mentarirvmp.utils.AcyclicGraphHandler;
 
@@ -118,6 +119,49 @@ public class DAGVertexTest {
     assertNotNull(sortedArray4);
 
   
+  } 
+
+  @Test 
+  public void VertexDependenciesTest(){
+    Expenses E1= new Expenses("1");
+    Expenses E2= new Expenses("2");
+    Expenses E3= new Expenses("3");
+    Expenses E4= new Expenses("4");
+
+    Vertex V1= new Vertex(E1);
+    Vertex V2= new Vertex(E2);
+    Vertex V3= new Vertex(E3);
+    Vertex V4= new Vertex(E4);
+
+    V1.addDirectedEdgeToward(V2);
+    assertEquals(V1.getOutgoingVertexSet().size(), V2.getIncomingVertexSet().size());
+
+    V3.addDirectedEdgeToward(V2);
+    assertEquals(V1.getOutgoingVertexSet().size(), V3.getOutgoingVertexSet().size());
+    assertNotEquals(V1.getOutgoingVertexSet().size(), V2.getIncomingVertexSet().size());
+
+    V3.addDirectedEdgeToward(V4);
+    assertEquals(1,V4.getIncomingVertexSet().size());
+    assertEquals(0,V4.getOutgoingVertexSet().size());
+
+    V2.removeAllIncomingEdges();
+    assertEquals(0, V1.getOutgoingVertexSet().size());
+    assertEquals(1, V3.getOutgoingVertexSet().size());
+    assertEquals(0, V2.getIncomingVertexSet().size());
+
+    AcyclicGraphHandler dag = new AcyclicGraphHandler();
+
+    //resetAdjacency() Test 
+    V1.addDirectedEdgeToward(V2);
+    V3.addDirectedEdgeToward(V2);
+    assertEquals(2, V2.getIncomingVertexSet().size());
+    assertEquals(1, V1.getOutgoingVertexSet().size());
+    assertEquals(2, V3.getOutgoingVertexSet().size());
+
+    
+
+
+    
   } 
 
 
