@@ -433,24 +433,37 @@ public void deleteExpenseTest(){
 
 
   dataHandler.ifEquationValidSetExpenseValue(E1, "SUM(E2, E3)");
+  dataHandler.ifEquationValidSetExpenseValue(E4, "SUM(E1,10)");
+  dataHandler.ifEquationValidSetExpenseValue(E5, "SUM(E4, E2)");
   //E1.incomingEdgesSet = {E2, E3}
-  //E1.outGoingEdgeSet = {}
-  //E2.outgoingEdgeSet = {E1}
+  //E4.incomingEdgeSet = {E1}
+  //E5.incomingEdgeSet = {E4}
+
+  //E1.outGoingEdgeSet = {E4}
+  //E2.outgoingEdgeSet = {E1, E5}
   //E3.outgoingEdgeSet = {E1}
+  //E4.outgoinEdgeSet = {E5}
   assertEquals("1,100.0", E1.getValue());
+  assertEquals("1,110.0", E4.getValue());
+  assertEquals("1,210.0", E5.getValue());
   assertEquals(E1, dummyStatement.getExpenseById(E1.getId()));
 
-  //E1.incomingEdgesSet = {E2, E3}
-  //E1.outGoingEdgeSet = {E4}
-  //E2.outgoingEdgeSet = {E1}
-  //E3.outgoingEdgeSet = {E1}
-  //E4.incomingEdgeSet = {E1}
-  dataHandler.ifEquationValidSetExpenseValue(E4, "MULTIPLY(E1, 2)");
-  assertEquals("2,200.0", E4.getValue());
+  //when I delete expense I want E1 to be refreshed and E4 to also be refreshed. 
   dataHandler.deleteExpense(E1);
+  //E4.incomingEdgeSet = {} => false equation, 0.0 
+  //E5.incomingEdgeSet = {E4, E2} => should be SUM(0.0, 100) => 100.0
+
+  //E2.outgoingEdgeSet = {E5}
+  //E3.outgoingEdgeSet = {}
+  //E4.outgoinEdgeSet = {E5}
   assertEquals(Expenses.INVALID_EXPENSE, dummyStatement.getExpenseById(E1.getId()));
-  assertFalse(dataHandler.ifEquationValidSetExpenseValue(E4, E4.getEquation()));
-  assertEquals("0.0",E4.getValue());
+  assertEquals("0.0", E4.getValue());
+  // dataHandler.ifEquationValidSetExpenseValue(E5, "SUM(E4, E2)");
+  // assertEquals("100.0", E5.getValue());
+
+  
+
+ 
   
   
 
