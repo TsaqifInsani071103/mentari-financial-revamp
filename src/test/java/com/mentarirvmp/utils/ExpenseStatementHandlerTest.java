@@ -462,11 +462,12 @@ public void deleteExpenseTest(){
   // dataHandler.ifEquationValidSetExpenseValue(E5, "SUM(E4, E2)");
 } 
 
-@Test 
-public void deleteAfterAddingExpenseTest(){
+@Test
+public void multipleExpensesDeleteAndAddTest() {
   Statement dummyStatement = new Statement("newStatement");
   ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
 
+  // Create multiple expenses
   Expenses E1 = new Expenses("expense1");
   E1.setValue("10");
   Expenses E2 = new Expenses("expense2");
@@ -477,19 +478,70 @@ public void deleteAfterAddingExpenseTest(){
   E4.setValue("10000");
   Expenses E5 = new Expenses("expense5");
   E5.setValue("100000");
+  Expenses E6 = new Expenses("expense6");
+  E6.setValue("500");
+
+  // Add expenses to the statement
   dummyStatement.addExpense(E1);
   dummyStatement.addExpense(E2);
   dummyStatement.addExpense(E3);
   dummyStatement.addExpense(E4);
   dummyStatement.addExpense(E5);
+  dummyStatement.addExpense(E6);
 
-  dataHandler.ifEquationValidSetExpenseValue(E1, "SUM(E2, E3, E4)");
-  assertEquals("11,100.0", E1.getValue());
+  // Define relationships between expenses
+  dataHandler.ifEquationValidSetExpenseValue(E1, "SUM(E2, E3)"); // E1 = E2 + E3
+  dataHandler.ifEquationValidSetExpenseValue(E4, "SUM(E1,10)"); // E4 = E1 + 10
+  dataHandler.ifEquationValidSetExpenseValue(E5, "SUM(E4, E2)"); // E5 = E4 + E2
+  dataHandler.ifEquationValidSetExpenseValue(E6, "SUM(E5, E1)"); // E6 = E5 + E1
 
-  dataHandler.deleteExpense(E3);
-  assertEquals("0.0", E1.getValue());
+  // Before Deletion: Expected Values
+  assertEquals("1,100.0", E1.getValue());  // E1 = 100 + 1000 = 1100
+  assertEquals("1,110.0", E4.getValue());  // E4 = 1100 + 10 = 1110
+  assertEquals("1,210.0", E5.getValue());  // E5 = 1110 + 100 = 1210
+  assertEquals("2,310.0", E6.getValue());  // E6 = 1210 + 1100 = 2310
 
+  // Ensure E1 exists
+  assertEquals(E1, dummyStatement.getExpenseById(E1.getId()));
 
+  // Deleting E1 - Should affect E4, E5, and E6
+  dataHandler.deleteExpense(E1);
+  
+  // After Deletion:
+  // E1 should be removed
+  assertEquals(Expenses.INVALID_EXPENSE, dummyStatement.getExpenseById(E1.getId()));
+
+  // E4's equation is now invalid (E1 was removed)
+  assertEquals("0.0", E4.getValue()); 
+
+  // E5 = SUM(E4, E2) => SUM(0.0, 100) => 100.0
+  assertEquals("100.0", E5.getValue()); 
+
+  // E6 = SUM(E5, E1) => SUM(100.0, INVALID) => Should be invalid or 100.0
+  assertEquals("0.0", E6.getValue()); 
+
+  // Now delete E5 and check that E6 is updated correctly
+  dataHandler.deleteExpense(E5);
+
+  // E6 = SUM(E5, E1) => SUM(INVALID, INVALID) => Should be invalid
+  assertEquals("0.0", E6.getValue());
+
+  // Now add a new expense and make sure updates work correctly
+  Expenses E7 = new Expenses("expense7");
+  E7.setValue("700");
+  dummyStatement.addExpense(E7);
+  
+  // Connect E6 to E7
+  dataHandler.ifEquationValidSetExpenseValue(E6, "SUM(E7, 50)"); // E6 = E7 + 50
+
+  // E6 should now be updated
+  assertEquals("750.0", E6.getValue()); // E6 = 700 + 50 = 750
+
+  // Clean up by deleting E7
+  dataHandler.deleteExpense(E7);
+
+  // After deleting E7, E6 should be invalid again
+  assertEquals("0.0", E6.getValue());
 }
 
 }
