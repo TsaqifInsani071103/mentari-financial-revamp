@@ -198,7 +198,6 @@ private void clickAction(Control textArea, Line icon){
             textField.getStyleClass().add("black-underline");
             expandedTextFieldRef.getStyleClass().add("black-underline");
           }else{
-            dataHandler.setExpenseValueByFalseEquation(currentExpense, newValue);
             expandedTextFieldRef.getStyleClass().add("red-underline"); 
             textField.getStyleClass().add("red-underline");
           }

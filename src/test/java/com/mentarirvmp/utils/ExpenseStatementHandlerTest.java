@@ -403,4 +403,56 @@ public void adjListRefreshValueTest(){
 
 } 
 
+@Test 
+public void deleteExpenseTest(){
+  Statement dummyStatement = new Statement("newStatement");
+  ExpenseStatementHandler dataHandler = new ExpenseStatementHandler(dummyStatement);
+
+  Expenses E1 = new Expenses("expense1");
+  E1.setValue("10");
+  Expenses E2 = new Expenses("expense2");
+  E2.setValue("100");
+  Expenses E3 = new Expenses("expense3");
+  E3.setValue("1000");
+  Expenses E4 = new Expenses("expense4");
+  E4.setValue("10000");
+  Expenses E5 = new Expenses("expense5");
+  E5.setValue("100000");
+  dummyStatement.addExpense(E1);
+  dummyStatement.addExpense(E2);
+  dummyStatement.addExpense(E3);
+  dummyStatement.addExpense(E4);
+  dummyStatement.addExpense(E5);
+
+
+  dataHandler.ifEquationValidSetExpenseValue(E1, "SUM(E2, E3)");
+  //E1.incomingEdgesSet = {E2, E3}
+  //E1.outGoingEdgeSet = {}
+  //E2.outgoingEdgeSet = {E1}
+  //E3.outgoingEdgeSet = {E1}
+  assertEquals("1,100.0", E1.getValue());
+  assertEquals(E1, dummyStatement.getExpenseById(E1.getId()));
+
+  //E1.incomingEdgesSet = {E2, E3}
+  //E1.outGoingEdgeSet = {E4}
+  //E2.outgoingEdgeSet = {E1}
+  //E3.outgoingEdgeSet = {E1}
+  //E4.incomingEdgeSet = {E1}
+  dataHandler.ifEquationValidSetExpenseValue(E4, "MULTIPLY(E1, 2)");
+  assertEquals("2,200.0", E4.getValue());
+  dataHandler.deleteExpense(E1);
+  assertEquals(Expenses.INVALID_EXPENSE, dummyStatement.getExpenseById(E1.getId()));
+  assertFalse(dataHandler.ifEquationValidSetExpenseValue(E4, E4.getEquation()));
+  assertEquals("0.0",E4.getValue());
+  
+  
+
+
+  
+
+
+
+
+} 
+
 }

@@ -135,6 +135,11 @@ public class FormulaTest {
       String dummyFormula29 = "34l";
       assertEquals(false, frmlObject.isFormulaValid(dummyFormula29));
 
+      //when theres no E1 to check with 
+      String dummyFormula30 = "SUM(E1)";
+      assertFalse(frmlObject.isFormulaValid(dummyFormula30));
+
+
   } 
 
   @Test

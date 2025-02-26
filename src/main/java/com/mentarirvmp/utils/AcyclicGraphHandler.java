@@ -57,6 +57,7 @@ public class AcyclicGraphHandler {
     if(this.expenseToVertexMap.keySet().contains(targetExpense)){
       this.expenseToVertexMap.get(targetExpense).removeAllIncomingEdges();
     }
+    this.expenseToVertexMap.remove(targetExpense); 
 
   } 
 

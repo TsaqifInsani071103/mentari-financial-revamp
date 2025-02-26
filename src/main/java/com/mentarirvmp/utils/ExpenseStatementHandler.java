@@ -36,6 +36,10 @@ public class ExpenseStatementHandler implements DataHandler{
     this.expenseToViewMap.put(expense, view);
   } 
 
+  private void removeExpenseView(Expenses expense){
+    this.expenseToViewMap.remove(expense); 
+  }
+
   public ExpensesViewCreator getViewGreatorByExpense(Expenses expense){
     return this.expenseToViewMap.get(expense); 
   }
@@ -97,6 +101,7 @@ public class ExpenseStatementHandler implements DataHandler{
       return true; 
     }
     // System.out.println(String.format("%s's new equation: %s as opposed to curret equation: , is FALSE!!! value: %s", expense.getName(), equation, expense.getEquation(), expense.getValue()));
+    setExpenseValueByFalseEquation(expense, equation);
     return false; 
   } 
 
@@ -105,11 +110,10 @@ public class ExpenseStatementHandler implements DataHandler{
     //get the expenses dependent on thhis expense too (AGH.java)
     //delete the expense from current Statement (Statement.java)
     //loop through the dependent Expense Set and refresh all their values. 
+    removeExpenseView(targetExpense);
     this.handledStatement.deleteExpense(targetExpense);
+    refreshExpenseViewsProceeding(targetExpense);
     this.dependencyResolver.deleteExpenseFromGraph(targetExpense);
-    this.dependencyResolver.getExpensesDependentOnDeletedExpense(targetExpense).forEach((v) -> {
-      ifEquationValidSetExpenseValue(v.getData(), v.getData().getEquation());
-    });
   } 
 
   private void refreshExpenseViewsProceeding(Expenses expense){
