@@ -292,11 +292,12 @@ private void clickAction(Control textArea, Line icon){
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
           textField.getStyleClass().removeAll("red-underline");
-          if(dataHandler.expenseNameUnique(newValue)){
-            changeTextOnValue(textField, newValue);
-          }else{
-            textField.getStyleClass().add("red-underline");
-          }
+          // if(dataHandler.expenseNameUnique(newValue)){
+          //   changeTextOnValue(textField, newValue);
+          // }else{
+          //   textField.getStyleClass().add("red-underline");
+          // }
+          changeTextOnValue(textField, newValue);
         }
       });
     } 

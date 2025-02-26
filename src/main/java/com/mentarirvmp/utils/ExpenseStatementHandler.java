@@ -117,6 +117,10 @@ public class ExpenseStatementHandler implements DataHandler{
     this.dependencyResolver.deleteExpenseFromGraph(targetExpense);
   } 
 
+  public void addNewDefaultExpense(){
+    this.handledStatement.addExpense(new Expenses("defaultExpense"));
+  } 
+
   private void refreshExpenseViewsProceeding(Expenses expense){
     ArrayList<Expenses> chronologicalArrays = dependencyResolver.getValuesProceeding(expense);
     if(chronologicalArrays.size() > 0){
@@ -179,14 +183,14 @@ public class ExpenseStatementHandler implements DataHandler{
   } 
 
 
-  public boolean expenseNameUnique(String name){
-    for(Object expense:this.handledStatement.getAllUnderlyingStatementData()){
-      Expenses object = (Expenses) expense;
-      if(object.getName().equals(name)) return false; 
+  // public boolean expenseNameUnique(String name){
+  //   for(Object expense:this.handledStatement.getAllUnderlyingStatementData()){
+  //     Expenses object = (Expenses) expense;
+  //     if(object.getName().equals(name)) return false; 
       
-    }
-    return true; 
-  } 
+  //   }
+  //   return true; 
+  // } 
 
 
   //maybe you can return a true or a false from here to stop traversing through all the data 
