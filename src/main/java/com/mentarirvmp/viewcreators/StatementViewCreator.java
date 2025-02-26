@@ -195,8 +195,10 @@ public class StatementViewCreator implements ViewCreator {
         ExpensesViewCreator viewCreator = new ExpensesViewCreator(item, this.dataHandler);
         this.dataHandler.addExpenseView(item, viewCreator);
         cell.setGraphic(viewCreator.getView());
+        cell.setContextMenu(viewCreator.getContextMenuItems());
       }else{
         cell.setGraphic(this.dataHandler.getViewGreatorByExpense(item).getView());
+        cell.setContextMenu(this.dataHandler.getViewGreatorByExpense(item).getContextMenuItems());
       }
     }
 
