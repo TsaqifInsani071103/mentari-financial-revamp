@@ -48,9 +48,6 @@ public class AcyclicGraphHandler {
     this.NUMBER_OF_VERTICES = expenseToVertexMap.size();
   } 
 
-  public Set<Vertex> getExpensesDependentOnDeletedExpense(Expenses deletedExpense){
-    return this.expenseToVertexMap.get(deletedExpense).getOutgoingVertexSet(); 
-  } 
 
   public void deleteExpenseFromGraph(Expenses targetExpense){
     //we first remove the outgoing edges from our parent expense, 
@@ -138,7 +135,6 @@ public class AcyclicGraphHandler {
     Vertex anchorVertex = this.expenseToVertexMap.get(expense);
     for(Vertex adjVertices : anchorVertex.getOutgoingVertexSet()){
       valuesProceedingArray.add(adjVertices.getData());
-
     }
     return valuesProceedingArray;
   } 
