@@ -106,7 +106,7 @@
 }
 
 .white-box {
-  -fx-background-color: white;
+  -fx-background-color: transparent;
 }
 
 /* .text-field:focused {
