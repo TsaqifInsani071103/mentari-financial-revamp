@@ -1,5 +1,8 @@
 package com.mentarirvmp.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.mentarirvmp.controllers.ChildControllers;
 import com.mentarirvmp.utils.Project;
 import com.mentarirvmp.utils.ViewCreator;
@@ -20,6 +23,8 @@ public class IndivProjectViewController extends ChildControllers {
   private MainLayoutController mainController; 
   private Project projectObject; 
   private Statement currentStatement;  
+
+  private Map<Statement, StatementViewCreator> statementToViewMap = new HashMap<>();
 
   @FXML
   private Label projectName; 
@@ -57,9 +62,14 @@ public class IndivProjectViewController extends ChildControllers {
 
   public void refreshStatementView(){
     // this.currentStatement.setController(this);
-    StatementViewCreator viewCreator = new StatementViewCreator(this.currentStatement);
-    viewCreator.setParentController(this);
-    numbersContainer.setContent(viewCreator.getView());
+    if(this.statementToViewMap.get(this.currentStatement) == null){
+      StatementViewCreator viewCreator = new StatementViewCreator(this.currentStatement);
+      this.statementToViewMap.put(this.currentStatement, viewCreator); 
+      viewCreator.setParentController(this);
+      numbersContainer.setContent(viewCreator.getView());
+    }else{
+      numbersContainer.setContent(this.statementToViewMap.get(this.currentStatement).getView());
+    }
     setProjectName(); 
   } 
 

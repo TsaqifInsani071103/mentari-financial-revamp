@@ -113,12 +113,38 @@ public class ExpenseStatementHandler implements DataHandler{
     //loop through the dependent Expense Set and refresh all their values. 
     removeExpenseView(targetExpense);
     this.handledStatement.deleteExpense(targetExpense);
-    refreshExpenseViewsProceeding(targetExpense);
+    System.out.println("THIS IS DELETED EXPENSE: " + targetExpense.getName());
+    refreshExpenseViewsProceeding(targetExpense, 1);
     this.dependencyResolver.deleteExpenseFromGraph(targetExpense);
   } 
 
   public void addNewDefaultExpense(Expenses parentExpense){
     this.handledStatement.addExpenseToParent(new Expenses("defaultExpense"), parentExpense);
+  } 
+
+  private void refreshExpenseViewsProceeding(Expenses expense, int i){
+    ArrayList<Expenses> chronologicalArrays = dependencyResolver.getValuesProceeding(expense);
+    if(chronologicalArrays.size() > 0){
+      for(Expenses item : chronologicalArrays){
+        System.out.println("FOLLOWING " + expense.getName() + " IS " + item.getName());
+        this.ifEquationValidSetExpenseValue(item, item.getEquation());
+        // System.out.println("CHANGED THE VALUE OF: " + item.getName() + "   " + item.getValue());
+        if(this.expenseToViewMap.size() > 0){
+          ExpensesViewCreator dependentExpenseView = this.expenseToViewMap.get(item);
+          dependentExpenseView.updateValueDisplay();
+          // expenseToHighlightMap.add(dependentExpenseView);
+
+        }
+      }
+      // //ANOTHER SIDE EFFECT THATS RUINING THE SRP OF THIS FUNCTION!! 
+
+      //   if(this.expenseToViewMap.get(expense) != null){
+
+      //     this.expenseToViewMap.get(expense).populateHighlightMap(expenseToHighlightMap); a
+      //   }
+   
+
+    }
   } 
 
   private void refreshExpenseViewsProceeding(Expenses expense){
