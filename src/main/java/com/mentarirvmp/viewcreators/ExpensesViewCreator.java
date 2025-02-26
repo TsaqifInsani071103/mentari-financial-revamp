@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 // import com.mentari.utils.ExpenseType;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -24,6 +25,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+
 import java.util.ArrayList;
 import javafx.scene.layout.StackPane;
 
@@ -359,11 +362,34 @@ private void clickAction(Control textArea, Line icon){
 
 
   
-
   private void changeTextOnValue(TextField textField, String value){
     this.currentExpense.setName(value); 
     textField.setPrefWidth(getTextWidth(value,textField)); // Set TextField width (add some padding)
   }
+
+  public ContextMenu getContextMenuItems(){
+    ContextMenu menu = new ContextMenu();
+    menu.getItems().addAll(addExpense(), deleteExpense());
+    return menu; 
+  }
+
+  public MenuItem addExpense(){
+    MenuItem item = new MenuItem("Add new expense here");
+    item.setOnAction(event -> {
+      // ModalMenu.addExpenseModal();
+      this.dataHandler.addNewDefaultExpense(this.currentExpense);
+    });
+
+    return item; 
+  } 
+  public MenuItem deleteExpense(){
+    MenuItem item = new MenuItem("delete this expense");
+    item.setOnAction(event -> {
+      this.dataHandler.deleteExpense(currentExpense);
+    });
+
+    return item; 
+  } 
 
   // private void checkForUniqueName(TextField textField, String newValue, String oldValue){
   //   if(nameIsUnique(newValue)){

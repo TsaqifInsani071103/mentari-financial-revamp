@@ -117,8 +117,8 @@ public class ExpenseStatementHandler implements DataHandler{
     this.dependencyResolver.deleteExpenseFromGraph(targetExpense);
   } 
 
-  public void addNewDefaultExpense(){
-    this.handledStatement.addExpense(new Expenses("defaultExpense"));
+  public void addNewDefaultExpense(Expenses parentExpense){
+    this.handledStatement.addExpenseToParent(new Expenses("defaultExpense"), parentExpense);
   } 
 
   private void refreshExpenseViewsProceeding(Expenses expense){
