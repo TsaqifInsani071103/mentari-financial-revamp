@@ -52,13 +52,13 @@ public class IndivProjectViewController extends ChildControllers {
   } 
 
   public void setDefaultStatement(){
-    this.currentStatement = getFirstStatement();
+    this.currentStatement = this.projectObject.getFirstStatement();
   }
 
   //if Folder node is the only node, or is the only FIRST NODE, then it doesnt have an attachedStatement dong 
-  private Statement getFirstStatement(){
-    return this.projectObject.getFirstStatementNode().getAttachedStatement();
-  } 
+  // private Statement getFirstStatement(){
+  //   return this.projectObject.getFirstStatement();
+  // } 
 
   public void refreshStatementView(){
     // this.currentStatement.setController(this);

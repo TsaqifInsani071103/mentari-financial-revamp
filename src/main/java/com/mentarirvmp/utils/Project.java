@@ -44,12 +44,12 @@ public class Project {
     return this.fileTree; 
   } 
 
-  public TreeNode getFirstStatementNode(){
+  public Statement getFirstStatement(){
     TreeNode firstNode = getFirstNodeByRoot(this.fileTree.getRoot()); 
     if(firstNode == this.fileTree.getRoot()){
       addDefaultStatementNode(); //add a default statement Node if there exists no other node 
     }
-    return getFirstNodeByRoot(this.fileTree.getRoot());
+    return getFirstNodeByRoot(this.fileTree.getRoot()).getAttachedStatement();
   } 
 
   public TreeNode getFirstNodeByRoot(TreeNode currentNode){

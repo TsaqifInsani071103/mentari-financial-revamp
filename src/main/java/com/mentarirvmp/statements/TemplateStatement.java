@@ -22,7 +22,7 @@ public class TemplateStatement {
 
   public static void addAsStatementTemplate(Statement statement){
     //checks for statement unique name 
-    if(getTemplateByName(statement.getName()).getName() == "Default"){
+    if(getTemplateByName(statement.getName()).getName().equals("Default")){
       statementTemplatesArray.add(duplicateIntoStatementTemplate(statement)); 
     }else{
       // String warning = "The name you entered for the custom template already exists";
@@ -65,10 +65,10 @@ public class TemplateStatement {
 
   private static void addDefaultStatement(){
     Statement defaultStatement = new Statement("Default");
-    Expenses expense1 = new Expenses("dummyExpense1"); 
+    Expenses expense1 = new Expenses("Assets"); 
     defaultStatement.addExpense(expense1);
-    defaultStatement.addExpenseToParent(new Expenses("child"), expense1);
-    defaultStatement.addExpense(new Expenses("dummyExpense2"));
+    defaultStatement.addExpenseToParent(new Expenses("Nested Expense"), expense1);
+    defaultStatement.addExpense(new Expenses("Liabilities"));
     statementTemplatesArray.add(defaultStatement);
   } 
 
