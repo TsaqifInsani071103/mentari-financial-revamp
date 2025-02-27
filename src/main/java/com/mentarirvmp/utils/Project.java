@@ -74,7 +74,7 @@ public class Project {
       
   } 
 
-  public void addDefaultStatementNode(){
+  private void addDefaultStatementNode(){
     TreeNode newNode = new TreeNode("Default Statement", TreeNode.NodeType.STATEMENT, this.fileTree.getRoot());
     newNode.setAttachedStatement(TemplateStatement.getTemplateByName("Default"));
   }

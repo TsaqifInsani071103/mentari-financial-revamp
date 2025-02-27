@@ -86,12 +86,10 @@ public class Statement {
     //also immediately add the children into the parentChildMap 
     this.parentToChildMap.put(newExpense, new LinkedHashSet<Expenses>());
     if(!this.parentToChildMap.containsKey(parentExpense)){
-      LinkedHashSet<Expenses> childMap = new LinkedHashSet<Expenses>();
-      childMap.add(newExpense);
-      this.parentToChildMap.put(parentExpense,childMap);
-    }else{
-      this.parentToChildMap.get(parentExpense).add(newExpense); 
+      addExpense(parentExpense);
     }
+    this.parentToChildMap.get(parentExpense).add(newExpense); 
+  
   } 
 
 
