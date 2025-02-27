@@ -56,9 +56,13 @@ public class ExpensesViewCreator implements ViewCreator {
   private VBox alreadyMadeView; 
 
   @Override
-  public void setParentController(ChildControllers moduleController) {
-    this.controller = (IndivProjectViewController) moduleController; 
+  public void setParentController(ChildControllers parentController) {
+    this.controller = (IndivProjectViewController) parentController; 
   }
+
+  public IndivProjectViewController getParentController(){
+    return this.controller;
+  } 
 
 
   public ExpensesViewCreator(Expenses expense, ExpenseStatementHandler dataHandler){
