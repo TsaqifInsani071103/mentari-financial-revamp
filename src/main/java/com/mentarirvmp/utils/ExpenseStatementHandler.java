@@ -100,17 +100,12 @@ public class ExpenseStatementHandler implements DataHandler{
       }
       return true; 
     }
-    // System.out.println(String.format("%s's new equation: %s as opposed to curret equation: , is FALSE!!! value: %s", expense.getName(), equation, expense.getEquation(), expense.getValue()));
     setExpenseValueByFalseEquation(expense, equation);
     refreshExpenseViewsProceeding(expense);
     return false; 
   } 
 
   public void deleteExpense(Expenses targetExpense){
-    //first delete the expense in the grap handler, (AGH.java)
-    //get the expenses dependent on thhis expense too (AGH.java)
-    //delete the expense from current Statement (Statement.java)
-    //loop through the dependent Expense Set and refresh all their values. 
     removeExpenseView(targetExpense);
     this.handledStatement.deleteExpense(targetExpense);
     refreshExpenseViewsProceeding(targetExpense);
@@ -118,29 +113,31 @@ public class ExpenseStatementHandler implements DataHandler{
   } 
 
   public void addNewDefaultExpense(Expenses parentExpense){
-    this.handledStatement.addExpenseToParent(new Expenses("defaultExpense"), parentExpense);
+    Expenses newExpense = new Expenses("defaultExpense");
+    this.handledStatement.addExpenseToParent(newExpense, parentExpense);
+    traverseThroughAllData((e, p) -> {
+      if(e.getEquation().contains(newExpense.getId())){
+        updateViewAccordingly(e);
+      }
+    });
   } 
 
   private void refreshExpenseViewsProceeding(Expenses expense){
     ArrayList<Expenses> chronologicalArrays = dependencyResolver.getValuesProceeding(expense);
     if(chronologicalArrays.size() > 0){
       for(Expenses item : chronologicalArrays){
-        ExpensesViewCreator dependentExpenseView = this.expenseToViewMap.size() > 0? this.expenseToViewMap.get(item) : null;
-        if(ifEquationValidSetExpenseValue(item, item.getEquation()) && dependentExpenseView != null){
-          dependentExpenseView.updateCorrectEquationDisplay();
-        }else if (dependentExpenseView != null){
-          dependentExpenseView.updateFalseEquationDisplay();
-        }
+        updateViewAccordingly(item);
       }
-      // //ANOTHER SIDE EFFECT THATS RUINING THE SRP OF THIS FUNCTION!! 
-
-      //   if(this.expenseToViewMap.get(expense) != null){
-
-      //     this.expenseToViewMap.get(expense).populateHighlightMap(expenseToHighlightMap); 
-      //   }
-   
-
     } 
+  } 
+
+  private void updateViewAccordingly(Expenses item){
+    ExpensesViewCreator itemView = this.expenseToViewMap.size() > 0? this.expenseToViewMap.get(item) : null;
+    if(ifEquationValidSetExpenseValue(item, item.getEquation()) && itemView != null){
+      itemView.updateCorrectEquationDisplay();
+    }else if (itemView != null){
+      itemView.updateFalseEquationDisplay();
+    }
   } 
 
   private void calculateAndSetExpenseValue(Expenses expense,Formula formulaObject, String equation){
