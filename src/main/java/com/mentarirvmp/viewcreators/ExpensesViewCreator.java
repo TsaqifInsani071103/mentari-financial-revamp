@@ -79,9 +79,6 @@ public class ExpensesViewCreator implements ViewCreator {
   } 
 
   private HBox getInnerContainer(VBox overallContainer){
-    Control[] descriptionFieldArray = getDescriptionAndButtonArray();
-    HBox box = getBox(); 
-    box.getChildren().add(0, descriptionFieldArray[1]);
 
     //temporarytextFieldMake 
     TextField expandedTextField = new TextField(); 
@@ -91,6 +88,10 @@ public class ExpensesViewCreator implements ViewCreator {
     addFocusListenerExpanded(expandedTextField);
     addExpandedTextListener(expandedTextField);
     this.expandedTextFieldRef = expandedTextField; 
+
+    Control[] descriptionFieldArray = getDescriptionAndButtonArray();
+    HBox box = getBox(); 
+    box.getChildren().add(0, descriptionFieldArray[1]);
 
     overallContainer.getChildren().addAll(box, expandedTextField, descriptionFieldArray[0]);
 
@@ -121,9 +122,9 @@ public class ExpensesViewCreator implements ViewCreator {
     textField.getStyleClass().addAll("text-field", "black-underline"); 
     textField.setId(this.currentExpense.getId());
     // textField.setStyle("-fx-font-weight: bold");
+    textFieldReference = textField;
     addListener(textField);
     addFocusListener(textField);
-    textFieldReference = textField;
     return textField; 
   }
 
@@ -193,26 +194,29 @@ private void clickAction(Control textArea, Line icon){
     textField.textProperty().addListener(new ChangeListener<String>(){
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
-        // System.out.println(currentExpense.getName() + " CHANGED BY LISTENER: " + changedByListener);
-        if(!changedByListener){
-          // System.out.println("CHANGED BY expanded");
-          textField.getStyleClass().removeAll("red-underline", "black-underline");
-          expandedTextFieldRef.getStyleClass().removeAll("red-underline", "black-underline");
-
-          //NEW SHID 
-          expandedTextFieldRef.setText(newValue);
-
-
-          if(dataHandler.ifEquationValidSetExpenseValue(currentExpense, newValue)){
-            textField.getStyleClass().add("black-underline");
-            expandedTextFieldRef.getStyleClass().add("black-underline");
-          }else{
-            expandedTextFieldRef.getStyleClass().add("red-underline"); 
-            textField.getStyleClass().add("red-underline");
-          }
-        }
+        refreshExpenseEquation(newValue);
       }
     });
+  } 
+
+  private void refreshExpenseEquation(String newValue){
+    if(!changedByListener){
+      // System.out.println("CHANGED BY expanded");
+      textFieldReference.getStyleClass().removeAll("red-underline", "black-underline");
+      expandedTextFieldRef.getStyleClass().removeAll("red-underline", "black-underline");
+
+      //NEW SHID 
+      expandedTextFieldRef.setText(newValue);
+
+
+      if(dataHandler.ifEquationValidSetExpenseValue(currentExpense, newValue)){
+        textFieldReference.getStyleClass().add("black-underline");
+        expandedTextFieldRef.getStyleClass().add("black-underline");
+      }else{
+        expandedTextFieldRef.getStyleClass().add("red-underline"); 
+        textFieldReference.getStyleClass().add("red-underline");
+      }
+    }
   } 
 
   public void addExpandedTextListener(TextField expandedTextField){    expandedTextField.textProperty().addListener(new ChangeListener<String>(){

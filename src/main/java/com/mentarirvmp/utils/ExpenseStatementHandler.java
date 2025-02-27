@@ -119,9 +119,6 @@ public class ExpenseStatementHandler implements DataHandler{
 
   public void addNewDefaultExpense(Expenses parentExpense){
     this.handledStatement.addExpenseToParent(new Expenses("defaultExpense"), parentExpense);
-    traverseThroughAllData((e, p)->{
-      System.out.println(e.getId());
-    });
   } 
 
   private void refreshExpenseViewsProceeding(Expenses expense){
