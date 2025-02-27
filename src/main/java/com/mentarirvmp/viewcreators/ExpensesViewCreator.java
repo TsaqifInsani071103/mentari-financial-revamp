@@ -212,9 +212,19 @@ private void clickAction(Control textArea, Line icon){
       if(dataHandler.ifEquationValidSetExpenseValue(currentExpense, newValue)){
         textFieldReference.getStyleClass().add("black-underline");
         expandedTextFieldRef.getStyleClass().add("black-underline");
+        if(!this.ExpensesToHighlightFocused.isEmpty()){
+          for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+            expensesViewCreator.highlightBox(1);
+          }
+        }
       }else{
         expandedTextFieldRef.getStyleClass().add("red-underline"); 
         textFieldReference.getStyleClass().add("red-underline");
+        if(!this.ExpensesToHighlightFocused.isEmpty()){
+          for (ExpensesViewCreator expensesViewCreator : ExpensesToHighlightFocused) {
+            expensesViewCreator.highlightBox(0);
+          }
+        }
       }
     }
   } 
