@@ -19,6 +19,7 @@ public class ExpenseUIFlowTest {
     Project project = new Project("dumProj");
     
     
+    
 
   } 
 

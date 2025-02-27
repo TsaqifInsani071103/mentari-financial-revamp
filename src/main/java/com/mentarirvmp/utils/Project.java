@@ -40,6 +40,12 @@ public class Project {
     this.fileTree.addNode(qFolder, node1); 
   } 
 
+  // public void addStatement(Statement statement){
+  //   TreeNode node = new TreeNode(statement.getName(), TreeNode.NodeType.STATEMENT);
+
+  //   node.setAttachedStatement(statement);
+  // } 
+
   public FilesTree getNodeTree(){
     return this.fileTree; 
   } 
