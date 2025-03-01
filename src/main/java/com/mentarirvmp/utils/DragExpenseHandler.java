@@ -94,18 +94,20 @@ public class DragExpenseHandler {
    private void onDragDropped(TreeCell<Expenses> cell, DragEvent event){
     Dragboard db = event.getDragboard();
     if(event.getGestureSource() != cell && db.hasString()){
-      // handleDroppedMeasurements(cell, event, db);
+      handleDroppedMeasurements(cell, event, db);
       controller.refreshStatementView();
     }
     event.consume();
   }
 
-  // private void handleDroppedMeasurements(TreeCell<Expenses> cell, DragEvent event, Dragboard db){
-  //   HashMap<String, Expenses> referencePackage = getExpenseReferencePackage(cell, db);
-  //   if(!referencePackage.get("draggedExpense").getChildMap().contains(referencePackage.get("targetExpense"))){
-  //    confirmDroppedHandling(cell, event, referencePackage);
-  //   }
-  // } 
+  //if draggedExpense goes into one of its child expense only then you can confirm the dropHandling. 
+  private void handleDroppedMeasurements(TreeCell<Expenses> cell, DragEvent event, Dragboard db){
+    HashMap<String, Expenses> referencePackage = getExpenseReferencePackage(cell, db);
+    if(this.dataHandler.getParentExpenseFromChild(referencePackage.get("targetExpense")) != referencePackage.get("draggedExpense"))
+    {
+     confirmDroppedHandling(cell, event, referencePackage);
+    }
+  } 
 
   //Im thinking that the dragboard contains the idString? 
   private HashMap<String, Expenses> getExpenseReferencePackage(TreeCell<Expenses> cell, Dragboard db){
@@ -117,26 +119,26 @@ public class DragExpenseHandler {
     return referencePackage;
   } 
 
-  // private void confirmDroppedHandling(TreeCell<Expenses> cell, DragEvent event, HashMap<String, Expenses> referencePackage){
-  //   double cellHeight = cell.getHeight();
-  //   double mouseY = event.getY();
-  //   referencePackage.get("draggedExpenseParent").getChildren().remove(referencePackage.get("draggedExpense")); 
-  //   if (mouseY < cellHeight * 0.33) {
-  //     handlePeripheralInsert(referencePackage, 0);
-  //   } else if (mouseY > cellHeight * 0.66) {
-  //     handlePeripheralInsert(referencePackage, 1);
-  //   } else {
-  //     referencePackage.get("targetExpense").addChild(referencePackage.get("draggedExpense"));
-  //   }
-  // } 
+  private void confirmDroppedHandling(TreeCell<Expenses> cell, DragEvent event, HashMap<String, Expenses> referencePackage){
+    double cellHeight = cell.getHeight();
+    double mouseY = event.getY();
+    referencePackage.get("draggedExpenseParent").getChildren().remove(referencePackage.get("draggedExpense")); 
+    if (mouseY < cellHeight * 0.33) {
+      handlePeripheralInsert(referencePackage, 0);
+    } else if (mouseY > cellHeight * 0.66) {
+      handlePeripheralInsert(referencePackage, 1);
+    } else {
+      referencePackage.get("targetExpense").addChild(referencePackage.get("draggedExpense"));
+    }
+  } 
 
-  // private void handlePeripheralInsert(HashMap<String, Expenses> referencePackage, int insertion){
-  //   Expenses targetExpense = referencePackage.get("targetExpense");
-  //   Expenses targetExpenseParent = referencePackage.get("targetExpenseParent");
-  //   Expenses draggedExpense = referencePackage.get("draggedExpense"); 
-  //   int targetIndex = targetExpenseParent.getChildren().indexOf(targetExpense); 
-  //   targetExpenseParent.getChildren().add(targetIndex+insertion, draggedExpense); 
-  // } 
+  private void handlePeripheralInsert(HashMap<String, Expenses> referencePackage, int insertion){
+    Expenses targetExpense = referencePackage.get("targetExpense");
+    Expenses targetExpenseParent = referencePackage.get("targetExpenseParent");
+    Expenses draggedExpense = referencePackage.get("draggedExpense"); 
+    int targetIndex = targetExpenseParent.getChildren().indexOf(targetExpense); 
+    targetExpenseParent.getChildren().add(targetIndex+insertion, draggedExpense); 
+  } 
 
 
 
