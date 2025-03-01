@@ -16,32 +16,39 @@ import javafx.scene.input.TransferMode;
 public class DragExpenseHandler {
   private TreeCell<Expenses> cell; 
   private IndivProjectViewController controller; 
+  private ExpenseStatementHandler dataHandler; 
 
 
   
-  public DragExpenseHandler(TreeCell<Expenses> cell){
+  public DragExpenseHandler(TreeCell<Expenses> cell, ExpenseStatementHandler dataHandler){
     this.cell = cell; 
+    this.dataHandler = dataHandler; 
   } 
 
-  public void setProjectControllerAndStatement(IndivProjectViewController controller, Statement currentStatement){
+  //the prerogative of this module when it comes to controller to just 
+  //call controller.refreshView()  
+  public void setProjectController(IndivProjectViewController controller){
     this.controller = controller; 
-
   } 
 
   public void setDragListener(TreeCell<Expenses> cell){
     cell.setOnDragDetected((event) -> {
       if(cell.getItem() == null) return;  
       // if(cell.getItem() == treeView.getRoot().getValue()) return; 
+      //check if this is right? 
+      if(cell.getItem() == dataHandler.getRootExpense()) return; 
       onDragDetected(cell, event);
     });
     cell.setOnDragOver(event -> {
       if(cell.getItem() == null) return;  
       // if(cell.getItem() == treeView.getRoot().getValue()) return; 
+      if(cell.getItem() == dataHandler.getRootExpense()) return; 
       onDragOver(cell, event);
   });
     cell.setOnDragDropped(event -> {
       if(cell.getItem() == null) return;  
       // if(cell.getItem() == treeView.getRoot().getValue()) return; 
+      if(cell.getItem() == dataHandler.getRootExpense()) return; 
       onDragDropped(cell, event);
   });
     cell.setOnDragExited(event -> {

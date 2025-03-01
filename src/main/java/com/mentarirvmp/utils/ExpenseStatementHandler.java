@@ -44,6 +44,10 @@ public class ExpenseStatementHandler implements DataHandler{
     return this.expenseToViewMap.get(expense); 
   }
 
+  public Expenses getRootExpense(){
+    return this.handledStatement.getRoot(); 
+  } 
+
   @Override
   public String getValueById(String ID) {
     String actualExpenseValue = "";
