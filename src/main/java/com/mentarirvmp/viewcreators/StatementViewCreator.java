@@ -169,15 +169,15 @@ public class StatementViewCreator implements ViewCreator {
 
       // }
     };
+    setDraggedListener(newCell);
 
     return newCell; 
   } 
   
   private void setDraggedListener(TreeCell<Expenses> cell){
-    //maybe put dataHandler instead of treeView to check for root() 
-    // DragExpenseHandler dragHandler = new DragExpenseHandler(cell, treeView);
-    // dragHandler.setProjectControllerAndStatement(controller, currentStatement);
-    // dragHandler.setDragListener(cell);
+    DragExpenseHandler dragHandler = new DragExpenseHandler(cell, this.dataHandler);
+    dragHandler.setProjectController((IndivProjectViewController) controller);
+    dragHandler.setDragListener(cell);
   } 
 
 
