@@ -52,15 +52,20 @@ public class ExpenseStatementHandler implements DataHandler{
 
   public Expenses getParentExpenseFromChild(Expenses child){
     for(Expenses parent: this.handledStatement.getParentChildExpenses().keySet()){  
-      if(this.handledStatement.getParentChildExpenses().get(parent) == child){
+      if(this.handledStatement.getParentChildExpenses().get(parent).contains(child)){
         return parent;
       }
     }
-    return null; 
+    return Expenses.INVALID_EXPENSE; 
   } 
 
   public void removeExpenseFromParent(Expenses child, Expenses parent){
-    this.handledStatement.getParentChildExpenses().get(parent).remove(child);
+
+
+      this.handledStatement.getParentChildExpenses().get(parent).remove(child);
+    
+    // System.out.println(parent);
+    // System.out.println(child);
   } 
 
 public void addExpenseToParentAtIndex(Expenses child, Expenses parent, int index){
