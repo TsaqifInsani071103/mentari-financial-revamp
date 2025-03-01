@@ -62,7 +62,7 @@ public class ExpenseStatementHandler implements DataHandler{
   public void removeExpenseFromParent(Expenses child, Expenses parent){
 
 
-      this.handledStatement.getParentChildExpenses().get(parent).remove(child);
+    this.handledStatement.getParentChildExpenses().get(parent).remove(child);
     
     // System.out.println(parent);
     // System.out.println(child);
