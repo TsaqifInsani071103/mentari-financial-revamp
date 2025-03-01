@@ -48,6 +48,19 @@ public class ExpenseStatementHandler implements DataHandler{
     return this.handledStatement.getRoot(); 
   } 
 
+  public Expenses getParentExpenseFromChild(Expenses child){
+    for(Expenses parent: this.handledStatement.getParentChildExpenses().keySet()){  
+      if(this.handledStatement.getParentChildExpenses().get(parent) == child){
+        return parent;
+      }
+    }
+    return null; 
+  } 
+
+  public Expenses getExpenseById(String id){
+    return this.handledStatement.getExpenseById(id);
+  } 
+
   @Override
   public String getValueById(String ID) {
     String actualExpenseValue = "";

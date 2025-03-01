@@ -64,7 +64,7 @@ public class DragExpenseHandler {
   private void makeDbOnDetected(TreeCell<Expenses> cell, MouseEvent event){
     Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);
     ClipboardContent content = new ClipboardContent();
-    content.putString(cell.getItem().getName()); 
+    content.putString(cell.getItem().getId()); 
     db.setContent(content); 
     db.setDragView(cell.snapshot(null,null));
     event.consume(); 
@@ -107,14 +107,15 @@ public class DragExpenseHandler {
   //   }
   // } 
 
-  // private HashMap<String, Expenses> getExpenseReferencePackage(TreeCell<Expenses> cell, Dragboard db){
-  //   HashMap<String, Expenses> referencePackage = new HashMap<String, Expenses>();
-  //   referencePackage.put("targetExpense", cell.getItem());
-  //   referencePackage.put("targetExpenseParent", currentStatement.getParentNodeByChild(referencePackage.get("targetExpense")));
-  //   referencePackage.put("draggedExpense", currentStatement.findExpenseByName(db.getString()));
-  //   referencePackage.put("draggedExpenseParent", currentStatement.getParentNodeByChild(referencePackage.get("draggedExpense")));
-  //   return referencePackage;
-  // } 
+  //Im thinking that the dragboard contains the idString? 
+  private HashMap<String, Expenses> getExpenseReferencePackage(TreeCell<Expenses> cell, Dragboard db){
+    HashMap<String, Expenses> referencePackage = new HashMap<String, Expenses>();
+    referencePackage.put("targetExpense", cell.getItem());
+    referencePackage.put("targetExpenseParent", dataHandler.getParentExpenseFromChild(cell.getItem()));
+    referencePackage.put("draggedExpense", dataHandler.getExpenseById(db.getString()));
+    referencePackage.put("draggedExpenseParent", dataHandler.getParentExpenseFromChild(referencePackage.get("draggedExpense")));
+    return referencePackage;
+  } 
 
   // private void confirmDroppedHandling(TreeCell<Expenses> cell, DragEvent event, HashMap<String, Expenses> referencePackage){
   //   double cellHeight = cell.getHeight();

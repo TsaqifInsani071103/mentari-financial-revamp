@@ -46,7 +46,7 @@ public class Statement {
     return this.rootExpense;
   } 
 
-  public LinkedHashMap<String, Expenses> getExpensesMap(){
+  public LinkedHashMap<String, Expenses> getIdExpensesMap(){
     return this.idToExpenseMap;
   } 
 
