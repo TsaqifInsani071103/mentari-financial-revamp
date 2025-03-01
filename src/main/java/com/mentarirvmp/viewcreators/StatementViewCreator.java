@@ -8,6 +8,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.mentarirvmp.utils.DataHandler;
+import com.mentarirvmp.utils.DragExpenseHandler;
 import com.mentarirvmp.controllers.ChildControllers;
 import com.mentarirvmp.controllers.IndivProjectViewController;
 import com.mentarirvmp.statements.Statement;
@@ -82,6 +83,7 @@ public class StatementViewCreator implements ViewCreator {
     treeItem.setExpanded(true);
     return treeItem;
   } 
+
   
 
   private void initializeStatementExpandedState(){
@@ -169,6 +171,13 @@ public class StatementViewCreator implements ViewCreator {
     };
 
     return newCell; 
+  } 
+  
+  private void setDraggedListener(TreeCell<Expenses> cell){
+    //maybe put dataHandler instead of treeView to check for root() 
+    // DragExpenseHandler dragHandler = new DragExpenseHandler(cell, treeView);
+    // dragHandler.setProjectControllerAndStatement(controller, currentStatement);
+    // dragHandler.setDragListener(cell);
   } 
 
 
