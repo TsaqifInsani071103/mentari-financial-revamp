@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -55,6 +57,29 @@ public class ExpenseStatementHandler implements DataHandler{
       }
     }
     return null; 
+  } 
+
+  public void removeExpenseFromParent(Expenses child, Expenses parent){
+    this.handledStatement.getParentChildExpenses().get(parent).remove(child);
+  } 
+
+public void addExpenseToParentAtIndex(Expenses child, Expenses parent, int index){
+    LinkedHashSet<Expenses> expensesSet = (LinkedHashSet<Expenses>) this.handledStatement.getParentChildExpenses().get(parent);
+    
+    List<Expenses> expenseList = new ArrayList<>(expensesSet);  // Convert set to list
+
+    // If index is -1 or out of bounds, insert at the end
+    if (index < 0 || index > expenseList.size()) {
+        index = expenseList.size();
+    }
+
+    expenseList.add(index, child);  // Insert at the calculated index
+    this.handledStatement.getParentChildExpenses().put(parent, new LinkedHashSet<>(expenseList));  // Update the set
+}
+
+  public int getExpenseIndexInParentSet(Expenses child, Expenses parent){
+   ArrayList<Expenses> list = new ArrayList<Expenses>(this.handledStatement.getParentChildExpenses().get(parent));
+   return list.indexOf(child); 
   } 
 
   public Expenses getExpenseById(String id){

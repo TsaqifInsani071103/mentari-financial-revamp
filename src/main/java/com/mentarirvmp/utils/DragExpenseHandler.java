@@ -122,22 +122,27 @@ public class DragExpenseHandler {
   private void confirmDroppedHandling(TreeCell<Expenses> cell, DragEvent event, HashMap<String, Expenses> referencePackage){
     double cellHeight = cell.getHeight();
     double mouseY = event.getY();
-    referencePackage.get("draggedExpenseParent").getChildren().remove(referencePackage.get("draggedExpense")); 
+    this.dataHandler.removeExpenseFromParent(referencePackage.get("draggedExpense"), referencePackage.get("draggedExpenseParent"));
+    // referencePackage.get("draggedExpenseParent").getChildren().remove(referencePackage.get("draggedExpense")); 
     if (mouseY < cellHeight * 0.33) {
       handlePeripheralInsert(referencePackage, 0);
     } else if (mouseY > cellHeight * 0.66) {
       handlePeripheralInsert(referencePackage, 1);
     } else {
-      referencePackage.get("targetExpense").addChild(referencePackage.get("draggedExpense"));
+      // referencePackage.get("targetExpense").addChild(referencePackage.get("draggedExpense"));
+      this.dataHandler.addExpenseToParentAtIndex(referencePackage.get("draggedExpense"), referencePackage.get("targetExpense"), -1);
     }
   } 
 
+  //landingExpense = targetExpense 
+  //I want to get targetExpenseParent to get targetExpenses index 
+  //
   private void handlePeripheralInsert(HashMap<String, Expenses> referencePackage, int insertion){
     Expenses targetExpense = referencePackage.get("targetExpense");
     Expenses targetExpenseParent = referencePackage.get("targetExpenseParent");
     Expenses draggedExpense = referencePackage.get("draggedExpense"); 
-    int targetIndex = targetExpenseParent.getChildren().indexOf(targetExpense); 
-    targetExpenseParent.getChildren().add(targetIndex+insertion, draggedExpense); 
+    int targetIndex = this.dataHandler.getExpenseIndexInParentSet(targetExpense, targetExpenseParent);
+    this.dataHandler.addExpenseToParentAtIndex(draggedExpense, targetExpenseParent, targetIndex);
   } 
 
 
